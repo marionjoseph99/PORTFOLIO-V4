@@ -7,6 +7,8 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000000'/><text x='50%' y='53%' font-family='monospace' font-weight='bold' font-size='52' fill='%23facc15' dominant-baseline='middle' text-anchor='middle'>MP</text></svg>">
     
     <!-- Google Fonts: Outfit (Sans) & Space Mono (Monospace) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,10 +75,17 @@
             <div id="sidebar-profile" class="flex flex-col gap-4 mb-16 opacity-0 translate-y-[-20px] pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] absolute top-10 left-10 w-full pr-10">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-none overflow-hidden border border-studio-700 relative group">
-                        <!-- Crosshair acccents -->
-                        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <img src="profile%20pic.png" alt="Marjo Paguia" class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500">
+                        <!-- Crosshair accents -->
+                        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+                        
+                        <!-- Default Photo (Side View) -->
+                        <img src="profile%20pic.png" alt="Marjo Paguia" 
+                            class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-0 transition-all duration-500">
+                        
+                        <!-- Hover Photo (Facing Front) -->
+                        <img src="profile%20pic%201.png" alt="Marjo Paguia Front" 
+                            class="absolute inset-0 w-full h-full object-cover grayscale opacity-0 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
                     </div>
                     <a href="#home" class="block group hover-trigger">
                         <h1 class="font-bold text-2xl tracking-tight group-hover:text-accent transition-colors">Marjo Paguia</h1>
@@ -160,9 +169,16 @@
                         
                         <!-- Image Wrapper -->
                         <div class="relative aspect-[3/4] w-full overflow-hidden bg-studio-900 mb-3">
-                            <img src="profile%20pic.png" alt="Marjo Paguia Portrait" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                            <!-- Default Photo (Side View) -->
+                            <img src="profile%20pic.png" alt="Marjo Paguia Portrait - Side View" 
+                                class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-0 transition-all duration-500">
+                            
+                            <!-- Hover Photo (Facing Front) -->
+                            <img src="profile%20pic%201.png" alt="Marjo Paguia Portrait - Front View" 
+                                class="absolute inset-0 w-full h-full object-cover grayscale opacity-0 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                            
                             <!-- Overlay gradient -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-40"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-40 pointer-events-none"></div>
                         </div>
                         
                         <!-- Tech Label -->
