@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marjo Paguia | Architecture & Visual Arts</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Outfit (Sans) & Space Mono (Monospace) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        studio: {
+                            900: '#0a0a0a',
+                            800: '#141414',
+                            700: '#262626',
+                            100: '#f5f5f5',
+                        },
+                        accent: '#facc15', // Architectural safety/blueprint yellow
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-studio-900 text-studio-100 font-sans antialiased flex flex-col md:flex-row h-screen overflow-hidden selection:bg-accent selection:text-studio-900">
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Mobile Header (Visible only on small screens) -->
+    <header class="md:hidden flex justify-between items-center p-6 border-b border-studio-700 bg-studio-900 z-50">
+        <a href="#home" class="font-mono font-bold text-xl tracking-tighter">A.C.</a>
+        <button id="mobile-menu-btn" class="text-2xl text-studio-100 hover-trigger">
+            <i class="ph ph-list"></i>
+        </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-studio-900 z-40 hidden flex-col justify-center items-center gap-8 border-b border-studio-700 pb-10 pt-24 px-6 h-screen w-full">
+        <button id="close-menu-btn" class="absolute top-6 right-6 text-2xl hover-trigger">
+            <i class="ph ph-x"></i>
+        </button>
+        <a href="#home" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">00. Home</a>
+        <a href="#projects" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">01. Projects</a>
+        <a href="#specs" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">02. Specs</a>
+        <a href="#gallery" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">03. Gallery</a>
+        <a href="#contact" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">04. Contact</a>
+    </div>
+
+    <!-- Desktop Sidebar (Fixed Left) -->
+    <aside class="hidden md:flex w-72 h-screen border-r border-studio-700 bg-studio-900/80 backdrop-blur-md flex-col justify-between p-10 z-50 shrink-0 gs-reveal is-active">
+        <div>
+            <!-- Hidden by default, fades in on scroll -->
+            <div id="sidebar-profile" class="flex flex-col gap-4 mb-16 opacity-0 translate-y-[-20px] pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] absolute top-10 left-10 w-full pr-10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-none overflow-hidden border border-studio-700 relative group">
+                        <!-- Crosshair acccents -->
+                        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <img src="profile%20pic.png" alt="Marjo Paguia" class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <a href="#home" class="block group hover-trigger">
+                        <h1 class="font-bold text-2xl tracking-tight group-hover:text-accent transition-colors">Marjo Paguia</h1>
+                        <p class="font-mono text-[10px] text-studio-400 mt-1 tracking-widest uppercase">Architecture Student / Visual Artist</p>
+                    </a>
+                </div>
+                <!-- Blueprint division line -->
+                <div class="w-full border-t border-studio-700 border-dashed opacity-50 block mr-10 relative">
+                    <div class="absolute -top-1 right-10 w-2 h-2 bg-accent opacity-0 transition-opacity" id="sidebar-indicator"></div>
+                </div>
+            </div>
+
+            <!-- Empty space when scrolled up so nav stays put, optional depending on desired layout, but we'll use absolute position or standard height to prevent jumping -->
+            <nav class="flex flex-col gap-6 font-mono text-sm tracking-widest mt-24">
+                <a href="#home" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">00</span> Home
+                </a>
+                <a href="#projects" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">01</span> Projects
+                </a>
+                <a href="#specs" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">02</span> Specs
+                </a>
+                <a href="#gallery" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">03</span> Gallery
+                </a>
+                <a href="#contact" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">04</span> Contact
+                </a>
+            </nav>
+        </div>
+
+        <div class="space-y-6">
+                <a href="#contact" class="block w-full border border-studio-700 text-center py-3 font-mono text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-all duration-300 hover-trigger">
+                Contact Marjo <i class="ph ph-arrow-right inline-block ml-1"></i>
+            </a>
+            <div class="flex gap-4 text-xl text-studio-400">
+                <a href="#" class="hover:text-accent transition-colors hover-trigger"><i class="ph ph-linkedin-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors hover-trigger"><i class="ph ph-instagram-logo"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area (Scrollable) -->
+    <main class="flex-1 h-screen overflow-y-auto bg-blueprint scroll-smooth" id="main-content">
+        
+        <!-- 00. Home Section -->
+        <section id="home" class="min-h-screen flex items-center p-8 md:p-16 lg:p-24 relative">
+            <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Text Content -->
+                <div class="lg:col-span-7 order-2 lg:order-1 gs-reveal">
+                    <div class="font-mono text-accent text-sm md:text-base tracking-widest mb-6 flex items-center gap-4">
+                        <span class="w-12 h-px bg-accent"></span> Status: BS Architecture Student
+                    </div>
+                    <h2 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-8">
+                        Architecture is <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-studio-100 to-studio-500">the thoughtful making</span><br>
+                        of places.
+                    </h2>
+                    <p class="font-mono text-studio-400 text-sm md:text-base max-w-xl leading-relaxed mb-12 border-l border-studio-700 pl-6">
+                        Ongoing architecture studies focused on design development, technical drafting, 3D visualization, and creative expression across built and non-built works.
+                    </p>
+                    <a href="#projects" class="inline-flex items-center gap-3 font-mono text-sm uppercase tracking-widest hover:text-accent transition-colors group hover-trigger">
+                        View Project Index 
+                        <i class="ph ph-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Student Photo -->
+                <div class="lg:col-span-5 order-1 lg:order-2 flex justify-start lg:justify-end gs-reveal delay-200">
+                    <div class="relative w-64 md:w-80 border border-studio-700 bg-studio-800 p-2 group hover-trigger">
+                        <!-- Crosshair decorations -->
+                        <div class="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute -top-2 -right-2 w-4 h-4 border-t border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute -bottom-2 -left-2 w-4 h-4 border-b border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute -bottom-2 -right-2 w-4 h-4 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <!-- Image Wrapper -->
+                        <div class="relative aspect-[3/4] w-full overflow-hidden bg-studio-900 mb-3">
+                            <img src="profile%20pic.png" alt="Marjo Paguia Portrait" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-40"></div>
+                        </div>
+                        
+                        <!-- Tech Label -->
+                        <div class="flex flex-col justify-between items-start font-mono text-[10px] text-studio-400 uppercase tracking-widest mt-4 border-t border-studio-700 pt-2">
+                            <div class="w-full flex justify-between mb-2">
+                                <span>[FIG. 01]</span>
+                                <span>Marjo_Paguia.jpg</span>
+                            </div>
+                            <!-- Name Displayed Under Photo -->
+                            <div class="text-left w-full mt-2">
+                                <h1 class="font-bold text-3xl tracking-tight text-white mb-1">Marjo Paguia</h1>
+                                <p class="text-xs text-studio-400 tracking-widest uppercase">Architecture & Visual Arts Portfolio</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Decorative scale element -->
+            <div id="distanceRuler" class="scroll-meter fixed bottom-6 right-6 hidden lg:flex items-center gap-3 z-40 pointer-events-none">
+                <span class="scroll-meter-label">0m</span>
+                <div class="scroll-meter-track">
+                    <div id="distanceFill" class="scroll-meter-fill"></div>
+                    <div id="distanceMarker" class="scroll-meter-marker"></div>
+                </div>
+                <span id="distanceValue" class="scroll-meter-value">0m</span>
+            </div>
+        </section>
+
+        <!-- 01. Projects Section (Tiles) -->
+        <section id="projects" class="min-h-screen flex flex-col pt-24 pb-16 border-t border-studio-700">
+            <div class="px-8 md:px-16 mb-8 gs-reveal">
+                    <h2 class="font-bold text-3xl md:text-4xl">Project Index</h2>
+                    <p class="font-mono text-sm text-studio-400 mt-2 uppercase tracking-widest">Selected Architecture and Planning Works</p>
+            </div>
+
+            <!-- Grid Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-8 md:px-16" id="project-grid">
+                
+                <!-- Project 1 -->
+                <a href="portfolio/airport/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-100" data-project="airport">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
+                            <img src="portfolio/airport/1.png" alt="Layag Airport" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        </div>
+                        <div class="pt-6 pb-4 px-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold">Layag Airport</h3>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                            </div>
+                            <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
+                                <span>Typology: Architecture</span>
+                                <span>Focus: Terminal Design</span>
+                            </div>
+                            <p class="project-meta font-mono text-sm text-studio-300 mt-4 hidden md:block">
+                                A conceptual airport proposal that balances movement, structure, and visual clarity.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="portfolio/amping/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-200" data-project="amping">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
+                            <img src="portfolio/amping/1.png" alt="Amparo Hospital" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        </div>
+                        <div class="pt-6 pb-4 px-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold">Amparo Hospital</h3>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2023</span>
+                            </div>
+                            <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
+                                <span>Typology: Healthcare</span>
+                                <span>Focus: Planning</span>
+                            </div>
+                            <p class="project-meta font-mono text-sm text-studio-300 mt-4 hidden md:block">
+                                A hospital concept centered on calm circulation, clarity, and efficient spatial organization.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 3 -->
+                <a href="portfolio/marahuyo/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-300" data-project="marahuyo">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
+                            <img src="portfolio/marahuyo/1.png" alt="Marahuyo Park" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        </div>
+                        <div class="pt-6 pb-4 px-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold">Marahuyo Park</h3>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                            </div>
+                            <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
+                                <span>Typology: Planning</span>
+                                <span>Focus: Public Realm</span>
+                            </div>
+                            <p class="project-meta font-mono text-sm text-studio-300 mt-4 hidden md:block">
+                                A landscape and circulation study shaped for open gathering, pause, and movement.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 4 -->
+                <a href="portfolio/marikina/1.jpg" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-400" data-project="marikina">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
+                            <img src="portfolio/marikina/1.jpg" alt="Marikina Riverside" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        </div>
+                        <div class="pt-6 pb-4 px-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold">Marikina Riverside</h3>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                            </div>
+                            <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
+                                <span>Typology: Planning</span>
+                                <span>Focus: Urban Renewal</span>
+                            </div>
+                            <p class="project-meta font-mono text-sm text-studio-300 mt-4 hidden md:block">
+                                A riverside proposal highlighting pedestrian flow, edge conditions, and site character.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 5 -->
+                <a href="portfolio/subdivision/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-500" data-project="subdivision">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
+                            <img src="portfolio/subdivision/PAGE%201.png" alt="Hinabi Heights Subdivision" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        </div>
+                        <div class="pt-6 pb-4 px-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold">Hinabi Heights Subdivision</h3>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                            </div>
+                            <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
+                                <span>Typology: Residential</span>
+                                <span>Focus: Site Planning</span>
+                            </div>
+                            <p class="project-meta font-mono text-sm text-studio-300 mt-4 hidden md:block">
+                                A subdivision concept organized around livability, hierarchy, and practical circulation.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 6 -->
+                <a href="portfolio/plaza/plaza.png" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-600" data-project="plaza">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
+                            <img src="portfolio/plaza/plaza.png" alt="Plaza" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        </div>
+                        <div class="pt-6 pb-4 px-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold">Plaza</h3>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                            </div>
+                            <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
+                                <span>Typology: Planning</span>
+                                <span>Focus: Civic Space</span>
+                            </div>
+                            <p class="project-meta font-mono text-sm text-studio-300 mt-4 hidden md:block">
+                                A civic plaza study focused on public gathering, proportion, and open-air experience.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 02. Technical Specs (Skills) Section -->
+        <section id="specs" class="min-h-screen p-8 md:p-16 lg:p-24 border-t border-studio-700">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-16 gs-reveal">
+                    <h2 class="font-bold text-3xl md:text-4xl">Technical Specifications</h2>
+                    <p class="font-mono text-sm text-studio-400 mt-2 uppercase tracking-widest">Software, drafting, and creative capabilities</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Left Column: Software Schedule -->
+                    <div class="gs-reveal delay-100">
+                        <h3 class="font-mono text-accent text-sm uppercase tracking-widest mb-6 border-b border-studio-700 pb-2">Software Schedule</h3>
+                        
+                        <!-- Table structure for skills -->
+                        <div class="flex flex-col border border-studio-700 bg-studio-800/50 text-sm font-mono hover-trigger">
+                            <!-- Header -->
+                            <div class="grid grid-cols-12 bg-studio-700 text-studio-300 p-3 uppercase text-xs tracking-wider">
+                                <div class="col-span-4">Program</div>
+                                <div class="col-span-4">Category</div>
+                                <div class="col-span-4">Proficiency</div>
+                            </div>
+                            <!-- Rows -->
+                            <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
+                                <div class="col-span-4 text-white">Autodesk AutoCAD</div>
+                                <div class="col-span-4 text-studio-400 text-xs">Drafting</div>
+                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                            </div>
+                            <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
+                                <div class="col-span-4 text-white">Lumion</div>
+                                <div class="col-span-4 text-studio-400 text-xs">Rendering</div>
+                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                            </div>
+                            <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
+                                <div class="col-span-4 text-white">Autodesk Revit</div>
+                                <div class="col-span-4 text-studio-400 text-xs">BIM</div>
+                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
+                            </div>
+                            <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
+                                <div class="col-span-4 text-white">Adobe Photoshop</div>
+                                <div class="col-span-4 text-studio-400 text-xs">Post-Production</div>
+                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                            </div>
+                            <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
+                                <div class="col-span-4 text-white">SketchUp Pro</div>
+                                <div class="col-span-4 text-studio-400 text-xs">3D Modeling</div>
+                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                            </div>
+                            <div class="grid grid-cols-12 p-3 hover:bg-studio-800 transition-colors items-center">
+                                <div class="col-span-4 text-white">Adobe Illustrator / Premiere Pro</div>
+                                <div class="col-span-4 text-studio-400 text-xs">Layout & Editing</div>
+                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Fabrication & Education -->
+                    <div class="space-y-12 gs-reveal delay-200">
+                        <div>
+                            <h3 class="font-mono text-accent text-sm uppercase tracking-widest mb-6 border-b border-studio-700 pb-2">Creative Disciplines</h3>
+                            <div class="flex flex-wrap gap-3 font-mono text-xs">
+                                <span class="px-3 py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Technical Drafting</span>
+                                <span class="px-3 py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">3D Visualization</span>
+                                <span class="px-3 py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Manual Drawings</span>
+                                <span class="px-3 py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Visual Arts</span>
+                                <span class="px-3 py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Board Layout</span>
+                                <span class="px-3 py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Walkthroughs</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="font-mono text-accent text-sm uppercase tracking-widest mb-6 border-b border-studio-700 pb-2">Academic Record</h3>
+                            <div class="space-y-4">
+                                <div class="hover-trigger border-l-2 border-transparent hover:border-accent pl-4 transition-all">
+                                    <h4 class="font-bold text-lg text-white">B.S. Architecture</h4>
+                                    <p class="font-mono text-sm text-studio-400">National University PH | 2024 — 2025</p>
+                                </div>
+                                <ul class="font-mono text-xs text-studio-400 space-y-2 list-disc list-inside">
+                                    <li>Currently focused on architectural design and visualization</li>
+                                    <li>Previous studies at Eulogio "Amang" Rodriguez Institute of Science and Technology</li>
+                                    <li>Foundation in drafting and visual arts from Mandaluyong City High School and Felimon P. Javier Elementary School</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. Gallery Section -->
+        <section id="gallery" class="min-h-screen p-8 md:p-16 lg:p-24 border-t border-studio-700">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16 gs-reveal">
+                    <h2 class="font-bold text-3xl md:text-4xl">Gallery</h2>
+                    <p class="font-mono text-sm text-studio-400 mt-2 uppercase tracking-widest">Selected manual drawings, interiors, and exteriors</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="space-y-6">
+                        <div class="gs-reveal">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/manual/m1.jpg" alt="Manual drawing 1" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                        <div class="gs-reveal delay-100">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/manual/m2.jpg" alt="Manual drawing 2" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 md:pt-14">
+                        <div class="gs-reveal delay-100">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/interior/i1.jpg" alt="Interior rendering 1" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                        <div class="gs-reveal delay-200">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/interior/i2.jpg" alt="Interior rendering 2" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="gs-reveal delay-200">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/exterior/e1.jpg" alt="Exterior rendering 1" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                        <div class="gs-reveal delay-300">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/exterior/e2.jpg" alt="Exterior rendering 2" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 md:pt-14">
+                        <div class="gs-reveal delay-300">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/manual/m3.jpg" alt="Manual drawing 3" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                        <div class="gs-reveal delay-400">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
+                                <img src="gallery/interior/i3.jpg" alt="Interior rendering 3" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04. Contact Section -->
+        <section id="contact" class="min-h-[80vh] p-8 md:p-16 lg:p-24 border-t border-studio-700 flex flex-col justify-center">
+            <div class="max-w-3xl gs-reveal">
+                <p class="font-mono text-accent text-sm uppercase tracking-widest mb-6">Initialize Communication</p>
+                    <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-8">
+                    Open for architectural commissions, visuals, and collaborative design work.
+                </h2>
+                
+                <div class="mt-12 space-y-6 font-mono gs-reveal delay-100">
+                    <div class="flex items-center gap-6">
+                        <span class="text-studio-500 uppercase text-xs tracking-widest w-24">Email</span>
+                        <a href="mailto:norioniomarjo@gmail.com" class="text-lg hover:text-accent border-b border-transparent hover:border-accent transition-all pb-1 hover-trigger">norioniomarjo@gmail.com</a>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <span class="text-studio-500 uppercase text-xs tracking-widest w-24">Phone</span>
+                        <a href="tel:+639917484985" class="text-lg hover:text-accent border-b border-transparent hover:border-accent transition-all pb-1 hover-trigger">+63 991 748 4985</a>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <span class="text-studio-500 uppercase text-xs tracking-widest w-24">Location</span>
+                        <span class="text-lg text-studio-300">General Trias, Cavite, Philippines</span>
+                    </div>
+                </div>
+
+                <div class="mt-20 pt-8 border-t border-studio-800 text-studio-500 font-mono text-xs flex justify-between items-center gs-reveal delay-200">
+                    <p>&copy; <span id="year"></span> Marjo Paguia. All rights reserved.</p>
+                    <p>Designed with precision.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

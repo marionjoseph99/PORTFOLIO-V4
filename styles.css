@@ -1,0 +1,167 @@
+/* Blueprint Grid Background */
+.bg-blueprint {
+    background-color: #0a0a0a;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* Hide scrollbar for clean horizontal scroll */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Custom subtle scrollbar for the main page */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #facc15;
+}
+
+/* Project Card Hover Effects */
+.project-img-wrapper img {
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.project-card:hover .project-img-wrapper img {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+.project-meta {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+.project-card:hover .project-meta {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* --- NEW ANIMATION & CURSOR STYLES --- */
+@media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    .cursor-dot {
+        width: 6px; height: 6px; background: #facc15;
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+        border-radius: 50%; z-index: 9999; pointer-events: none;
+    }
+    .cursor-outline {
+        width: 32px; height: 32px; border: 1px solid rgba(250, 204, 21, 0.5);
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+        border-radius: 0; z-index: 9998; pointer-events: none;
+        transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease, border-color 0.3s ease;
+    }
+    /* Class toggled via JS on hover */
+    .cursor-outline.cursor-hover {
+        width: 50px; height: 50px; 
+        background-color: rgba(250, 204, 21, 0.1); 
+        border-color: #facc15; 
+        border-radius: 50%;
+    }
+}
+
+/* Scroll Reveal Animations */
+.gs-reveal {
+    opacity: 0; visibility: hidden; transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.gs-reveal.is-active {
+    opacity: 1; visibility: visible; transform: translateY(0);
+}
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+
+/* Proficiency Animation */
+@keyframes pulse-op {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.9); }
+}
+
+.prof-dot {
+    animation: pulse-op 2s infinite ease-in-out;
+}
+.prof-dot:nth-child(1) { animation-delay: 0.1s; }
+.prof-dot:nth-child(2) { animation-delay: 0.2s; }
+.prof-dot:nth-child(3) { animation-delay: 0.3s; }
+.prof-dot:nth-child(4) { animation-delay: 0.4s; }
+.prof-dot:nth-child(5) { animation-delay: 0.5s; }
+
+/* Scroll Meter */
+.scroll-meter {
+    padding: 0.65rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    background: rgba(10, 10, 10, 0.72);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+.scroll-meter-label,
+.scroll-meter-value {
+    font-size: 0.65rem;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    color: #f5f5f5;
+    min-width: 2.1rem;
+    text-align: center;
+}
+
+.scroll-meter-label {
+    color: #facc15;
+    opacity: 0.9;
+}
+
+.scroll-meter-value {
+    color: #facc15;
+    text-shadow: 0 0 14px rgba(250, 204, 21, 0.35);
+}
+
+.scroll-meter-track {
+    position: relative;
+    width: 8rem;
+    height: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+        rgba(0, 0, 0, 0.35);
+}
+
+.scroll-meter-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgba(250, 204, 21, 0.18), rgba(250, 204, 21, 0.95));
+    box-shadow: 0 0 18px rgba(250, 204, 21, 0.3);
+    transition: width 120ms linear;
+}
+
+.scroll-meter-marker {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: #f5f5f5;
+    border: 2px solid #facc15;
+    box-shadow: 0 0 0 6px rgba(250, 204, 21, 0.08);
+    transform: translate(-50%, -50%);
+    transition: left 120ms linear;
+}
