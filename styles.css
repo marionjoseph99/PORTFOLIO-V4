@@ -165,3 +165,10 @@
     transform: translate(-50%, -50%);
     transition: left 120ms linear;
 }
+/* --- NEW: Blueprint Loader Fade-Out State --- */
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(1.03);
+}

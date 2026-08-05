@@ -1,3 +1,29 @@
+// --- NEW: Architectural Blueprint Loader Logic ---
+const loader = document.getElementById('loader');
+const loaderBar = document.getElementById('loader-bar');
+const loaderPercent = document.getElementById('loader-percent');
+
+if (loader && loaderBar && loaderPercent) {
+    let progress = 0;
+    const interval = setInterval(() => {
+        // Increment progress with slight randomness for a natural technical feel
+        progress += Math.floor(Math.random() * 14) + 6;
+        if (progress > 100) progress = 100;
+
+        loaderBar.style.width = `${progress}%`;
+        loaderPercent.textContent = `${progress}%`;
+
+        if (progress === 100) {
+            clearInterval(interval);
+            // Brief pause at 100% before triggering smooth fade-out
+            setTimeout(() => {
+                loader.classList.add('loader-hidden');
+            }, 450);
+        }
+    }, 60);
+}
+
+
 // Set current year
 document.getElementById('year').textContent = new Date().getFullYear();
 
