@@ -47,7 +47,7 @@
 
     <!-- Mobile Header (Visible only on small screens) -->
     <header class="md:hidden flex justify-between items-center p-6 border-b border-studio-700 bg-studio-900 z-50">
-        <a href="#home" class="font-mono font-bold text-xl tracking-tighter">A.C.</a>
+        <a href="#home" class="font-mono font-bold text-xl tracking-tighter">M.P.</a>
         <button id="mobile-menu-btn" class="text-2xl text-studio-100 hover-trigger">
             <i class="ph ph-list"></i>
         </button>
@@ -61,8 +61,9 @@
         <a href="#home" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">00. Home</a>
         <a href="#projects" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">01. Projects</a>
         <a href="#specs" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">02. Specs</a>
-        <a href="#gallery" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">03. Gallery</a>
-        <a href="#contact" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">04. Contact</a>
+        <a href="#services" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">03. Services</a>
+        <a href="#gallery" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">04. Gallery</a>
+        <a href="#contact" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">05. Contact</a>
     </div>
 
     <!-- Desktop Sidebar (Fixed Left) -->
@@ -88,7 +89,7 @@
                 </div>
             </div>
 
-            <!-- Empty space when scrolled up so nav stays put, optional depending on desired layout, but we'll use absolute position or standard height to prevent jumping -->
+            <!-- Navigation Links -->
             <nav class="flex flex-col gap-6 font-mono text-sm tracking-widest mt-24">
                 <a href="#home" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
                     <span class="text-xs opacity-50">00</span> Home
@@ -99,11 +100,14 @@
                 <a href="#specs" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
                     <span class="text-xs opacity-50">02</span> Specs
                 </a>
+                <a href="#services" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">03</span> Services
+                </a>
                 <a href="#gallery" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">03</span> Gallery
+                    <span class="text-xs opacity-50">04</span> Gallery
                 </a>
                 <a href="#contact" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">04</span> Contact
+                    <span class="text-xs opacity-50">05</span> Contact
                 </a>
             </nav>
         </div>
@@ -191,20 +195,31 @@
 
         <!-- 01. Projects Section (Tiles) -->
         <section id="projects" class="min-h-screen flex flex-col pt-24 pb-16 border-t border-studio-700">
-            <div class="px-8 md:px-16 mb-8 gs-reveal">
-                    <h2 class="font-bold text-3xl md:text-4xl">Project Index</h2>
-                    <p class="font-mono text-sm text-studio-400 mt-2 uppercase tracking-widest">Selected Architecture and Planning Works</p>
+            <div class="px-8 md:px-16 mb-12 gs-reveal">
+                <div class="font-mono text-accent text-sm tracking-widest mb-4 flex items-center gap-4">
+                    <span class="w-12 h-px bg-accent"></span> [SELECTED WORKS]
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="font-mono font-bold text-xl md:text-3xl text-accent">01</span>
+                    <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                        PROJECTS
+                    </h2>
+                </div>
+                <p class="font-mono text-studio-400 text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-6">
+                    Selected architecture, master planning, and spatial design works.
+                </p>
             </div>
 
             <!-- Grid Container -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-8 md:px-16" id="project-grid">
                 
                 <!-- Project 1 -->
-                <a href="portfolio/airport/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-100" data-project="airport">
+                <a href="portfolio/airport/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-100 transition-transform duration-500 hover:-translate-y-1" data-project="airport">
                     <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
-                            <img src="portfolio/airport/1.png" alt="Layag Airport" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                            <img src="portfolio/cover/airport.webp" alt="Layag Airport" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
@@ -223,15 +238,16 @@
                 </a>
 
                 <!-- Project 2 -->
-                <a href="portfolio/amping/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-200" data-project="amping">
+                <a href="portfolio/amping/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-200 transition-transform duration-500 hover:-translate-y-1" data-project="amping">
                     <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
-                            <img src="portfolio/amping/1.png" alt="Amparo Hospital" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                            <img src="portfolio/cover/amping.webp" alt="Amping Children's Hospital" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-2xl font-bold">Amparo Hospital</h3>
+                                <h3 class="text-2xl font-bold">Amping Children's Hospital</h3>
                                 <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2023</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
@@ -246,11 +262,12 @@
                 </a>
 
                 <!-- Project 3 -->
-                <a href="portfolio/marahuyo/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-300" data-project="marahuyo">
+                <a href="portfolio/marahuyo/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-300 transition-transform duration-500 hover:-translate-y-1" data-project="marahuyo">
                     <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
-                            <img src="portfolio/marahuyo/1.png" alt="Marahuyo Park" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                            <img src="portfolio/cover/marahuyo.webp" alt="Marahuyo Park" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
@@ -269,11 +286,12 @@
                 </a>
 
                 <!-- Project 4 -->
-                <a href="portfolio/marikina/1.jpg" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-400" data-project="marikina">
+                <a href="portfolio/marikina/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-400 transition-transform duration-500 hover:-translate-y-1" data-project="marikina">
                     <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
-                            <img src="portfolio/marikina/1.jpg" alt="Marikina Riverside" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                            <img src="portfolio/cover/marikina.webp" alt="Marikina Riverside" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
@@ -292,11 +310,12 @@
                 </a>
 
                 <!-- Project 5 -->
-                <a href="portfolio/subdivision/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-500" data-project="subdivision">
+                <a href="portfolio/subdivision/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-500 transition-transform duration-500 hover:-translate-y-1" data-project="subdivision">
                     <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
-                            <img src="portfolio/subdivision/PAGE%201.png" alt="Hinabi Heights Subdivision" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                            <img src="portfolio/cover/hinabi.webp" alt="Hinabi Heights Subdivision" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
@@ -315,15 +334,16 @@
                 </a>
 
                 <!-- Project 6 -->
-                <a href="portfolio/plaza/plaza.png" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-600" data-project="plaza">
+                <a href="portfolio/plaza/full_project.html" class="project-card hover-trigger relative w-full h-[60vh] md:h-[500px] group cursor-pointer gs-reveal delay-600 transition-transform duration-500 hover:-translate-y-1" data-project="plaza">
                     <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900">
-                            <img src="portfolio/plaza/plaza.png" alt="Plaza" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900 via-transparent to-transparent opacity-60"></div>
+                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                            <img src="portfolio/cover/plaza.webp" alt="Jagna De Plaza" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-2xl font-bold">Plaza</h3>
+                                <h3 class="text-2xl font-bold">Jagna De Plaza</h3>
                                 <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
@@ -341,10 +361,20 @@
 
         <!-- 02. Technical Specs (Skills) Section -->
         <section id="specs" class="min-h-screen p-8 md:p-16 lg:p-24 border-t border-studio-700">
-            <div class="max-w-5xl mx-auto">
-                <div class="mb-16 gs-reveal">
-                    <h2 class="font-bold text-3xl md:text-4xl">Technical Specifications</h2>
-                    <p class="font-mono text-sm text-studio-400 mt-2 uppercase tracking-widest">Software, drafting, and creative capabilities</p>
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-12 gs-reveal">
+                    <div class="font-mono text-accent text-sm tracking-widest mb-4 flex items-center gap-4">
+                        <span class="w-12 h-px bg-accent"></span> [TECHNICAL SPECIFICATIONS]
+                    </div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono font-bold text-xl md:text-3xl text-accent">02</span>
+                        <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            SPECS
+                        </h2>
+                    </div>
+                    <p class="font-mono text-studio-400 text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-6">
+                        Software schedule, drafting tools, and architectural technical capabilities.
+                    </p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -429,63 +459,274 @@
             </div>
         </section>
 
-        <!-- 03. Gallery Section -->
-        <section id="gallery" class="min-h-screen p-8 md:p-16 lg:p-24 border-t border-studio-700">
-            <div class="max-w-7xl mx-auto">
-                <div class="mb-16 gs-reveal">
-                    <h2 class="font-bold text-3xl md:text-4xl">Gallery</h2>
-                    <p class="font-mono text-sm text-studio-400 mt-2 uppercase tracking-widest">Selected manual drawings, interiors, and exteriors</p>
+        <!-- 03. Services Section -->
+        <section id="services" class="min-h-screen flex flex-col pt-24 pb-16 border-t border-studio-700">
+            <div class="px-8 md:px-16 mb-12 gs-reveal">
+                <div class="font-mono text-accent text-sm tracking-widest mb-4 flex items-center gap-4">
+                    <span class="w-12 h-px bg-accent"></span> [SERVICES & CAPABILITIES]
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="font-mono font-bold text-xl md:text-3xl text-accent">03</span>
+                    <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                        SERVICES
+                    </h2>
+                </div>
+                <p class="font-mono text-studio-400 text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-6">
+                    I specialize in delivering architectural designs, immersive 3D renderings, captivating traditional and digital art, and accurate technical drawings that effectively communicate and realize creative visions.
+                </p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 md:px-16">
+                
+                <!-- Card 01: 3D Modelling -->
+                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="3D Modelling">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                        <div class="p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">3D DESIGN</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">01</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">3D Modelling</h3>
+                                <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
+                                    High-quality 3D models for architectural design, product visualization, and creative projects—bringing concepts to life with precision and flair.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="3D Modelling">
+                                    See details &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 02: Rendering -->
+                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Rendering">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                        <div class="p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">VISUALIZATION</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">02</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Rendering</h3>
+                                <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
+                                    Photorealistic architectural and interior renderings that present your designs with depth, realism, and visual impact.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Rendering">
+                                    See details &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 03: Manual Drawings -->
+                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Manual Drawings">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                        <div class="p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">ILLUSTRATION</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">03</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Manual Drawings</h3>
+                                <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
+                                    Hand-crafted architectural and artistic drawings that convey concepts with authenticity, detail, and a personal touch.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Manual Drawings">
+                                    See details &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 04: Presentation Board Layout -->
+                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="Presentation Board Layout">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                        <div class="p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">LAYOUT</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">04</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Presentation Board Layout</h3>
+                                <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
+                                    Clean and professional layouts that clearly present design ideas, concepts, and technical details for impactful reviews.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Presentation Board Layout">
+                                    See details &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 05: Architectural Walkthrough -->
+                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Architectural Walkthrough">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                        <div class="p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">WALKTHROUGH</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">05</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Architectural Walkthrough</h3>
+                                <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
+                                    Immersive visual experiences that highlight spatial relationships, materials, and the overall design atmosphere.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Architectural Walkthrough">
+                                    See details &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 06: Personal Portfolio Website -->
+                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Personal Portfolio Website">
+                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                        <div class="p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">WEB DESIGN & DEVELOPMENT</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">06</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Personal Portfolio Website</h3>
+                                <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
+                                    Custom-coded portfolio sites for architecture students and pros—clean, mobile-friendly, and built from scratch.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Personal Portfolio Website">
+                                    See details &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 04. Gallery Section -->
+        <section id="gallery" class="min-h-screen p-8 md:p-16 lg:p-24 border-t border-studio-700">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-12 gs-reveal">
+                    <div class="font-mono text-accent text-sm tracking-widest mb-4 flex items-center gap-4">
+                        <span class="w-12 h-px bg-accent"></span> [VISUAL GALLERY]
+                    </div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono font-bold text-xl md:text-3xl text-accent">04</span>
+                        <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            GALLERY
+                        </h2>
+                    </div>
+                    <p class="font-mono text-studio-400 text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-6">
+                        Curated collection of manual technical drawings, interior visualisations, and exterior render studies.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="gallery-grid">
                     <div class="space-y-6">
                         <div class="gs-reveal">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/manual/m1.jpg" alt="Manual drawing 1" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/manual/m1.jpg" alt="Manual drawing 1" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="gs-reveal delay-100">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/manual/m2.jpg" alt="Manual drawing 2" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/manual/m2.jpg" alt="Manual drawing 2" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="space-y-6 md:pt-14">
                         <div class="gs-reveal delay-100">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/interior/i1.jpg" alt="Interior rendering 1" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/interior/i1.jpg" alt="Interior rendering 1" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="gs-reveal delay-200">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/interior/i2.jpg" alt="Interior rendering 2" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/interior/i2.jpg" alt="Interior rendering 2" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="space-y-6">
                         <div class="gs-reveal delay-200">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/exterior/e1.jpg" alt="Exterior rendering 1" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/exterior/e1.jpg" alt="Exterior rendering 1" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="gs-reveal delay-300">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/exterior/e2.jpg" alt="Exterior rendering 2" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/exterior/e2.jpg" alt="Exterior rendering 2" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="space-y-6 md:pt-14">
                         <div class="gs-reveal delay-300">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/manual/m3.jpg" alt="Manual drawing 3" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/manual/m3.jpg" alt="Manual drawing 3" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="gs-reveal delay-400">
-                            <div class="aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800">
-                                <img src="gallery/interior/i3.jpg" alt="Interior rendering 3" class="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                                <img src="gallery/interior/i3.jpg" alt="Interior rendering 3" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -493,13 +734,27 @@
             </div>
         </section>
 
-        <!-- 04. Contact Section -->
+        <!-- 05. Contact Section -->
         <section id="contact" class="min-h-[80vh] p-8 md:p-16 lg:p-24 border-t border-studio-700 flex flex-col justify-center">
-            <div class="max-w-3xl gs-reveal">
-                <p class="font-mono text-accent text-sm uppercase tracking-widest mb-6">Initialize Communication</p>
-                    <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-8">
-                    Open for architectural commissions, visuals, and collaborative design work.
-                </h2>
+            <div class="max-w-4xl gs-reveal">
+                <div class="mb-10">
+                    <div class="font-mono text-accent text-sm tracking-widest mb-4 flex items-center gap-4">
+                        <span class="w-12 h-px bg-accent"></span> [INITIALIZE COMMUNICATION]
+                    </div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono font-bold text-xl md:text-3xl text-accent">05</span>
+                        <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            CONTACT
+                        </h2>
+                    </div>
+                    <p class="font-mono text-studio-400 text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-6">
+                        Open for architectural commissions, 3D visualization, manual drawings, and collaborative creative projects.
+                    </p>
+                </div>
+                
+                <h3 class="text-2xl md:text-4xl font-bold leading-tight mb-8 text-white">
+                    Let's collaborate on your next architectural or visual project.
+                </h3>
                 
                 <div class="mt-12 space-y-6 font-mono gs-reveal delay-100">
                     <div class="flex items-center gap-6">
@@ -524,6 +779,123 @@
         </section>
 
     </main>
+
+    <!-- Service Detail Modal -->
+    <div id="service-modal" class="fixed inset-0 z-50 bg-studio-900/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="relative bg-studio-800 border border-studio-700 max-w-xl w-full p-6 sm:p-8 rounded-none md:rounded-lg shadow-2xl my-auto">
+            <!-- Crosshair decorations -->
+            <div class="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-accent"></div>
+            <div class="absolute -top-1 -right-1 w-3 h-3 border-t border-r border-accent"></div>
+            <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b border-l border-accent"></div>
+            <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b border-r border-accent"></div>
+
+            <button id="close-service-modal" class="absolute top-5 right-5 text-studio-400 hover:text-accent text-2xl transition-colors hover-trigger">
+                <i class="ph ph-x"></i>
+            </button>
+            <div class="font-mono text-xs text-accent uppercase tracking-widest mb-2" id="modal-service-category">3D DESIGN</div>
+            <h3 class="text-3xl font-bold text-studio-100 mb-4" id="modal-service-title">3D Modelling</h3>
+            <p class="font-sans text-studio-300 text-sm leading-relaxed mb-6" id="modal-service-desc"></p>
+            
+            <div class="border-t border-studio-700 bg-studio-900/60 p-4 mb-6 space-y-3 font-mono text-xs text-studio-400">
+                <div class="flex justify-between border-b border-studio-700/60 pb-2">
+                    <span class="text-studio-500 uppercase">Deliverables:</span>
+                    <span class="text-studio-200" id="modal-service-deliverables">3D CAD Files, OBJ/FBX, Source Files</span>
+                </div>
+                <div class="flex justify-between border-b border-studio-700/60 pb-2">
+                    <span class="text-studio-500 uppercase">Primary Tools:</span>
+                    <span class="text-studio-200" id="modal-service-tools">SketchUp Pro, Revit, AutoCAD</span>
+                </div>
+                <div class="flex justify-between pb-1">
+                    <span class="text-studio-500 uppercase">Best For:</span>
+                    <span class="text-studio-200" id="modal-service-audience">Architecture Students, Design Studios, Commissions</span>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <a id="modal-inquire-btn" href="#contact" class="flex-1 text-center bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs py-3 rounded-full transition-all hover-trigger uppercase tracking-widest">
+                    Inquire for this service &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Popup Box Modal -->
+    <div id="project-modal" class="fixed inset-0 z-[100] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-4 md:p-8 select-none overflow-y-auto">
+        <div class="relative bg-studio-800 border border-studio-700 max-w-5xl w-full p-5 md:p-8 rounded-xl shadow-2xl my-auto flex flex-col gap-5 max-h-[92vh] overflow-y-auto">
+            <!-- Crosshair decorations -->
+            <div class="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-accent"></div>
+            <div class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-accent"></div>
+            <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-accent"></div>
+            <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-accent"></div>
+
+            <!-- Header bar -->
+            <div class="flex items-start justify-between border-b border-studio-700/80 pb-4">
+                <div>
+                    <div class="flex items-center gap-2 font-mono text-xs text-accent uppercase tracking-widest mb-1">
+                        <span id="proj-modal-category">[PROJECT POPUP]</span> • <span id="proj-modal-year">2024</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-4xl font-extrabold text-studio-100 uppercase tracking-tight" id="proj-modal-title">
+                        Layag Airport
+                    </h3>
+                </div>
+                <button id="close-project-modal" class="bg-studio-900/80 hover:bg-studio-700 text-studio-300 hover:text-accent border border-studio-700 p-2.5 rounded-full transition-all hover-trigger">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+
+            <div id="proj-photo-section">
+                <div class="font-mono text-xs text-studio-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i class="ph ph-images text-accent"></i> Project Photos (<span id="proj-photo-count">4</span>)
+                </div>
+                <div id="proj-collage" class="flex flex-wrap gap-3"></div>
+            </div>
+            <p id="proj-modal-empty-state" class="hidden font-mono text-sm text-studio-400 text-center py-12">Project photos are not available yet.</p>
+
+            <!-- Description and Action Button -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-3 border-t border-studio-700/80">
+                <p id="proj-modal-desc" class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed max-w-2xl"></p>
+                <a id="proj-modal-full-link" href="" class="shrink-0 bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-5 py-3 rounded-full transition-all flex items-center gap-2 uppercase tracking-widest hover-trigger">
+                    <span>View Project Page</span> <i class="ph ph-arrow-up-right text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Lightbox Modal -->
+    <div id="gallery-lightbox" class="fixed inset-0 z-[100] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-4 md:p-8 select-none">
+        <!-- Crosshair corner decorations -->
+        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-accent"></div>
+        <div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-accent"></div>
+        <div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-accent"></div>
+        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-accent"></div>
+
+        <!-- Top bar controls -->
+        <div class="absolute top-6 left-6 right-6 flex justify-between items-center z-10 font-mono text-xs text-studio-400">
+            <div class="flex items-center gap-3">
+                <span class="text-accent uppercase tracking-widest">[GALLERY VIEW]</span>
+                <span id="lightbox-counter" class="bg-studio-800 text-studio-200 border border-studio-700 px-3 py-1 rounded-full font-bold">1 / 8</span>
+            </div>
+            <button id="close-lightbox-btn" class="hover-trigger bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 p-2.5 rounded-full transition-all flex items-center justify-center">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Prev button -->
+        <button id="prev-lightbox-btn" class="hover-trigger absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 rounded-full transition-all backdrop-blur-sm group">
+            <i class="ph ph-caret-left text-2xl md:text-3xl"></i>
+        </button>
+
+        <!-- Main Lightbox Image Container -->
+        <div class="relative max-w-5xl max-h-[82vh] w-full h-full flex flex-col items-center justify-center p-2">
+            <img id="lightbox-img" src="" alt="Gallery Preview" class="max-w-full max-h-[75vh] object-contain rounded-lg border border-studio-700/80 shadow-2xl transition-all duration-300">
+            <p id="lightbox-caption" class="font-mono text-xs md:text-sm text-studio-300 mt-4 tracking-wide text-center bg-studio-800/90 border border-studio-700 px-4 py-2 rounded-full"></p>
+        </div>
+
+        <!-- Next button -->
+        <button id="next-lightbox-btn" class="hover-trigger absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 rounded-full transition-all backdrop-blur-sm group">
+            <i class="ph ph-caret-right text-2xl md:text-3xl"></i>
+        </button>
+    </div>
 
     <!-- Scripts -->
     <script src="script.js"></script>

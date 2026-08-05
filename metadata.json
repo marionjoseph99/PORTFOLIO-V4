@@ -1,0 +1,8 @@
+{
+  "name": "Marjo Paguia Portfolio",
+  "description": "Architecture & Visual Arts Portfolio for Marjo Paguia",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
