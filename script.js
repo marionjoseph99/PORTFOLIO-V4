@@ -550,3 +550,122 @@ if (projectCards.length > 0) {
     });
 }
 
+// --- NEW: Services Milestones Counter Animation ---
+const milestonesGrid = document.getElementById('milestones-grid');
+const milestoneCounters = document.querySelectorAll('.milestone-counter');
+
+if (milestonesGrid && milestoneCounters.length > 0) {
+    const animateCounter = (el) => {
+        const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = 1800; // Animation duration in milliseconds
+        const startTime = performance.now();
+
+        const updateNumber = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Ease-out cubic for natural deceleration as it nears the target number
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentVal = Math.floor(easeOut * target);
+
+            el.textContent = `${currentVal}${progress === 1 ? suffix : ''}`;
+
+            if (progress < 1) {
+                requestAnimationFrame(updateNumber);
+            } else {
+                el.textContent = `${target}${suffix}`;
+            }
+        };
+
+        requestAnimationFrame(updateNumber);
+    };
+
+    const milestoneObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                milestoneCounters.forEach(counter => animateCounter(counter));
+                observer.unobserve(entry.target); // Runs only once per page load
+            }
+        });
+    }, {
+        threshold: 0.35 // Triggers when 35% of the milestones bar is visible
+    });
+
+    milestoneObserver.observe(milestonesGrid);
+}
+
+
+
+
+
+
+// --- NEW: Testimonials Auto-Scroll, Drag-to-Scroll & Mouse Wheel ---
+const testimonialsTrack = document.getElementById('testimonials-track');
+
+if (testimonialsTrack) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let isHovered = false;
+    let autoScrollSpeed = 0.6; // Adjust lower for slower, higher for faster
+    let animationFrameId;
+
+    // 1. Automatic Slow Scrolling
+    const startAutoScroll = () => {
+        const scroll = () => {
+            if (!isHovered && !isDown) {
+                testimonialsTrack.scrollLeft += autoScrollSpeed;
+                
+                // Optional: Loop back to start when reaching the end
+                if (testimonialsTrack.scrollLeft >= (testimonialsTrack.scrollWidth - testimonialsTrack.clientWidth - 1)) {
+                    testimonialsTrack.scrollLeft = 0;
+                }
+            }
+            animationFrameId = requestAnimationFrame(scroll);
+        };
+        animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    // Pause auto-scroll when hovering over the testimonials section
+    testimonialsTrack.addEventListener('mouseenter', () => { isHovered = true; });
+    testimonialsTrack.addEventListener('mouseleave', () => { 
+        isHovered = false; 
+        isDown = false;
+    });
+
+    // 2. Click-and-Drag (Grab to Scroll)
+    testimonialsTrack.addEventListener('mousedown', (e) => {
+        isDown = true;
+        testimonialsTrack.classList.add('cursor-grabbing');
+        testimonialsTrack.classList.remove('cursor-grab');
+        startX = e.pageX - testimonialsTrack.offsetLeft;
+        scrollLeft = testimonialsTrack.scrollLeft;
+    });
+
+    testimonialsTrack.addEventListener('mouseup', () => {
+        isDown = false;
+        testimonialsTrack.classList.remove('cursor-grabbing');
+        testimonialsTrack.classList.add('cursor-grab');
+    });
+
+    testimonialsTrack.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - testimonialsTrack.offsetLeft;
+        const walk = (x - startX) * 1.5; // Drag sensitivity multiplier
+        testimonialsTrack.scrollLeft = scrollLeft - walk;
+    });
+
+    // 3. Mouse Wheel Support (Converts vertical scroll to horizontal)
+    testimonialsTrack.addEventListener('wheel', (e) => {
+        // Prevent default page scroll if scrolling over the cards
+        if (Math.abs(e.deltaY) > 0) {
+            e.preventDefault();
+            testimonialsTrack.scrollLeft += e.deltaY;
+        }
+    }, { passive: false });
+
+    // Initialize auto-scroll
+    startAutoScroll();
+}
