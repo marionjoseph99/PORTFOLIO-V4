@@ -1173,7 +1173,7 @@ function setCvOrientation(orientation) {
 
     // Update button text hint
     if (cvDownloadBtnText) {
-        cvDownloadBtnText.textContent = orientation === 'landscape' ? 'Download A4 PNG (Landscape)' : 'Download A4 PNG';
+        cvDownloadBtnText.textContent = orientation === 'landscape' ? 'Download CV (Landscape)' : 'Download CV';
     }
 
     // Update body print orientation class
