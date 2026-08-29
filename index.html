@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marjo Paguia | Architecture & Visual Arts</title>
+    <title>Marjo Paguia Portfolio</title>
+    <meta name="description" content="Architecture & Visual Arts Portfolio for Marjo Paguia">
+    <meta property="og:title" content="Marjo Paguia Portfolio">
+    <meta property="og:description" content="Architecture & Visual Arts Portfolio for Marjo Paguia">
     
     <!-- Inline Theme Initializer to Guarantee Dark Mode by Default -->
     <script>
@@ -227,7 +230,7 @@
         
         <!-- 00. Home Section -->
         <section id="home" class="min-h-screen flex items-center p-5 sm:p-8 md:p-14 lg:p-20 relative">
-            <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+            <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 
                 <!-- Text Content -->
                 <div class="lg:col-span-7 order-2 lg:order-1 gs-reveal">
@@ -300,168 +303,170 @@
         </section>
 
         <!-- 01. Projects Section (Tiles) -->
-        <section id="projects" class="min-h-screen flex flex-col pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 border-t border-studio-700">
-            <div class="px-5 sm:px-8 md:px-14 mb-8 sm:mb-12 gs-reveal">
-                <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
-                    <span class="w-8 sm:w-12 h-px bg-accent"></span> [SELECTED WORKS]
+        <section id="projects" class="min-h-screen p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-8 sm:mb-12 gs-reveal">
+                    <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
+                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [SELECTED WORKS]
+                    </div>
+                    <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">01</span>
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            PROJECTS
+                        </h2>
+                    </div>
+                    <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
+                        Selected architecture, master planning, and spatial design works.
+                    </p>
                 </div>
-                <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">01</span>
-                    <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
-                        PROJECTS
-                    </h2>
+
+                <!-- Grid Container -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 sm:gap-6 md:gap-8" id="project-grid">
+                    
+                    <!-- Project 1 -->
+                    <a href="portfolio/airport/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-100 transition-transform duration-500 hover:-translate-y-1" data-project="airport">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/airport.webp" alt="Layag Airport" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
+                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
+                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Layag Airport</h3>
+                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                                </div>
+                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
+                                    <span>Typology: Architecture</span>
+                                    <span>Focus: Terminal Design</span>
+                                </div>
+                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
+                                    A conceptual airport proposal that balances movement, structure, and visual clarity.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 2 -->
+                    <a href="portfolio/amping/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-200 transition-transform duration-500 hover:-translate-y-1" data-project="amping">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/amping.webp" alt="Amping Children's Hospital" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
+                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
+                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Amping Children's Hospital</h3>
+                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2023</span>
+                                </div>
+                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
+                                    <span>Typology: Healthcare</span>
+                                    <span>Focus: Planning</span>
+                                </div>
+                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
+                                    A hospital concept centered on calm circulation, clarity, and efficient spatial organization.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 3 -->
+                    <a href="portfolio/marahuyo/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-300 transition-transform duration-500 hover:-translate-y-1" data-project="marahuyo">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/marahuyo.webp" alt="Marahuyo Park" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
+                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
+                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Marahuyo Park</h3>
+                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                                </div>
+                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
+                                    <span>Typology: Planning</span>
+                                    <span>Focus: Public Realm</span>
+                                </div>
+                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
+                                    A landscape and circulation study shaped for open gathering, pause, and movement.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 4 -->
+                    <a href="portfolio/marikina/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-400 transition-transform duration-500 hover:-translate-y-1" data-project="marikina">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/marikina.webp" alt="Marikina Riverside" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
+                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
+                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Marikina Riverside</h3>
+                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                                </div>
+                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
+                                    <span>Typology: Planning</span>
+                                    <span>Focus: Urban Renewal</span>
+                                </div>
+                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
+                                    A riverside proposal highlighting pedestrian flow, edge conditions, and site character.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 5 -->
+                    <a href="portfolio/subdivision/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-500 transition-transform duration-500 hover:-translate-y-1" data-project="subdivision">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/hinabi.webp" alt="Hinabi Heights Subdivision" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
+                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
+                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Hinabi Heights Subdivision</h3>
+                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                                </div>
+                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
+                                    <span>Typology: Residential</span>
+                                    <span>Focus: Site Planning</span>
+                                </div>
+                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
+                                    A subdivision concept organized around livability, hierarchy, and practical circulation.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 6 -->
+                    <a href="portfolio/plaza/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-600 transition-transform duration-500 hover:-translate-y-1" data-project="plaza">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
+                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/plaza.webp" alt="Jagna De Plaza" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
+                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
+                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Jagna De Plaza</h3>
+                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                                </div>
+                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
+                                    <span>Typology: Planning</span>
+                                    <span>Focus: Civic Space</span>
+                                </div>
+                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
+                                    A civic plaza study focused on public gathering, proportion, and open-air experience.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
-                    Selected architecture, master planning, and spatial design works.
-                </p>
-            </div>
-
-            <!-- Grid Container -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 sm:gap-6 md:gap-8 px-5 sm:px-8 md:px-14" id="project-grid">
-                
-                <!-- Project 1 -->
-                <a href="portfolio/airport/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-100 transition-transform duration-500 hover:-translate-y-1" data-project="airport">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                            <img src="portfolio/cover/airport.webp" alt="Layag Airport" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                            <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Layag Airport</h3>
-                                <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
-                            </div>
-                            <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                <span>Typology: Architecture</span>
-                                <span>Focus: Terminal Design</span>
-                            </div>
-                            <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                A conceptual airport proposal that balances movement, structure, and visual clarity.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Project 2 -->
-                <a href="portfolio/amping/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-200 transition-transform duration-500 hover:-translate-y-1" data-project="amping">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                            <img src="portfolio/cover/amping.webp" alt="Amping Children's Hospital" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                            <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Amping Children's Hospital</h3>
-                                <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2023</span>
-                            </div>
-                            <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                <span>Typology: Healthcare</span>
-                                <span>Focus: Planning</span>
-                            </div>
-                            <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                A hospital concept centered on calm circulation, clarity, and efficient spatial organization.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Project 3 -->
-                <a href="portfolio/marahuyo/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-300 transition-transform duration-500 hover:-translate-y-1" data-project="marahuyo">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                            <img src="portfolio/cover/marahuyo.webp" alt="Marahuyo Park" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                            <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Marahuyo Park</h3>
-                                <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
-                            </div>
-                            <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                <span>Typology: Planning</span>
-                                <span>Focus: Public Realm</span>
-                            </div>
-                            <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                A landscape and circulation study shaped for open gathering, pause, and movement.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Project 4 -->
-                <a href="portfolio/marikina/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-400 transition-transform duration-500 hover:-translate-y-1" data-project="marikina">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                            <img src="portfolio/cover/marikina.webp" alt="Marikina Riverside" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                            <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Marikina Riverside</h3>
-                                <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
-                            </div>
-                            <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                <span>Typology: Planning</span>
-                                <span>Focus: Urban Renewal</span>
-                            </div>
-                            <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                A riverside proposal highlighting pedestrian flow, edge conditions, and site character.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Project 5 -->
-                <a href="portfolio/subdivision/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-500 transition-transform duration-500 hover:-translate-y-1" data-project="subdivision">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                            <img src="portfolio/cover/hinabi.webp" alt="Hinabi Heights Subdivision" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                            <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Hinabi Heights Subdivision</h3>
-                                <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
-                            </div>
-                            <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                <span>Typology: Residential</span>
-                                <span>Focus: Site Planning</span>
-                            </div>
-                            <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                A subdivision concept organized around livability, hierarchy, and practical circulation.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Project 6 -->
-                <a href="portfolio/plaza/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-600 transition-transform duration-500 hover:-translate-y-1" data-project="plaza">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                        <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                            <img src="portfolio/cover/plaza.webp" alt="Jagna De Plaza" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                            <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Jagna De Plaza</h3>
-                                <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
-                            </div>
-                            <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                <span>Typology: Planning</span>
-                                <span>Focus: Civic Space</span>
-                            </div>
-                            <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                A civic plaza study focused on public gathering, proportion, and open-air experience.
-                            </p>
-                        </div>
-                    </div>
-                </a>
             </div>
         </section>
 
@@ -566,374 +571,375 @@
         </section>
 
         <!-- 03. Services Section -->
-        <section id="services" class="min-h-screen flex flex-col pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 border-t border-studio-700">
-            <div class="px-5 sm:px-8 md:px-14 mb-8 sm:mb-12 gs-reveal">
-                <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
-                    <span class="w-8 sm:w-12 h-px bg-accent"></span> [SERVICES & CAPABILITIES]
-                </div>
-                <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">03</span>
-                    <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
-                        SERVICES
-                    </h2>
-                </div>
-                <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
-                    I specialize in delivering architectural designs, immersive 3D renderings, captivating traditional and digital art, and accurate technical drawings that effectively communicate and realize creative visions.
-                </p>
-            </div>
-
-            <!-- Services Milestones Bar -->
-            <div id="milestones-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 md:gap-8 px-5 sm:px-8 md:px-14 mb-10 sm:mb-16 gs-reveal delay-100">
-                
-                <!-- Milestone 1: Years Freelancing -->
-                <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
-                    <!-- Reference screenshot dot indicator -->
-                    <div class="absolute -top-[5px] left-0 flex items-center justify-center">
-                        <span class="w-2.5 h-2.5 bg-accent relative z-10"></span>
-                        <span class="absolute w-6 h-6 border border-accent/40 animate-ping"></span>
+        <section id="services" class="min-h-screen p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-8 sm:mb-12 gs-reveal">
+                    <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
+                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [SERVICES & CAPABILITIES]
                     </div>
-                    <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
-                        <span class="milestone-counter" data-target="5" data-suffix="">0</span>
+                    <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">03</span>
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            SERVICES
+                        </h2>
                     </div>
-                    <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
-                        Years Freelancing
+                    <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
+                        I specialize in delivering architectural designs, immersive 3D renderings, captivating traditional and digital art, and accurate technical drawings that effectively communicate and realize creative visions.
                     </p>
                 </div>
 
-                <!-- Milestone 2: Commissioned Projects -->
-                <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
-                    <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
-                        <span class="milestone-counter" data-target="120" data-suffix="+">0</span>
+                <!-- Services Milestones Bar -->
+                <div id="milestones-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 md:gap-8 mb-10 sm:mb-16 gs-reveal delay-100">
+                    
+                    <!-- Milestone 1: Years Freelancing -->
+                    <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
+                        <!-- Reference screenshot dot indicator -->
+                        <div class="absolute -top-[5px] left-0 flex items-center justify-center">
+                            <span class="w-2.5 h-2.5 bg-accent relative z-10"></span>
+                            <span class="absolute w-6 h-6 border border-accent/40 animate-ping"></span>
+                        </div>
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
+                            <span class="milestone-counter" data-target="5" data-suffix="">0</span>
+                        </div>
+                        <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
+                            Years Freelancing
+                        </p>
                     </div>
-                    <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
-                        Commissioned Projects
+
+                    <!-- Milestone 2: Commissioned Projects -->
+                    <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
+                            <span class="milestone-counter" data-target="120" data-suffix="+">0</span>
+                        </div>
+                        <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
+                            Commissioned Projects
+                        </p>
+                    </div>
+
+                    <!-- Milestone 3: Awards -->
+                    <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
+                            <span class="milestone-counter" data-target="15" data-suffix="+">0</span>
+                        </div>
+                        <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
+                            Awards
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Services Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+                    
+                    <!-- Card 01: 3D Modelling -->
+                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="3D Modelling">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                                <div>
+                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
+                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">3D DESIGN</span>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">01</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">3D Modelling</h3>
+                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
+                                        High-quality 3D models for architectural design, product visualization, and creative projects—bringing concepts to life with precision and flair.
+                                    </p>
+                                </div>
+                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="3D Modelling">
+                                        See details &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 02: Rendering -->
+                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Rendering">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                                <div>
+                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
+                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">VISUALIZATION</span>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">02</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Rendering</h3>
+                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
+                                        Photorealistic architectural and interior renderings that present your designs with depth, realism, and visual impact.
+                                    </p>
+                                </div>
+                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Rendering">
+                                        See details &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 03: Manual Drawings -->
+                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Manual Drawings">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                                <div>
+                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
+                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">ILLUSTRATION</span>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">03</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Manual Drawings</h3>
+                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
+                                        Hand-crafted architectural and artistic drawings that convey concepts with authenticity, detail, and a personal touch.
+                                    </p>
+                                </div>
+                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Manual Drawings">
+                                        See details &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 04: Presentation Board Layout -->
+                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="Presentation Board Layout">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                                <div>
+                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
+                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">LAYOUT</span>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">04</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Presentation Board Layout</h3>
+                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
+                                        Clean and professional layouts that clearly present design ideas, concepts, and technical details for impactful reviews.
+                                    </p>
+                                </div>
+                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Presentation Board Layout">
+                                        See details &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 05: Architectural Walkthrough -->
+                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Architectural Walkthrough">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                                <div>
+                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
+                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">WALKTHROUGH</span>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">05</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Architectural Walkthrough</h3>
+                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
+                                        Immersive visual experiences that highlight spatial relationships, materials, and the overall design atmosphere.
+                                    </p>
+                                </div>
+                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Architectural Walkthrough">
+                                        See details &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 06: Personal Portfolio Website -->
+                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Personal Portfolio Website">
+                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
+                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
+                                <div>
+                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
+                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">WEB DESIGN & DEVELOPMENT</span>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">06</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Personal Portfolio Website</h3>
+                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
+                                        Custom-coded portfolio sites for architecture students and pros—clean, mobile-friendly, and built from scratch.
+                                    </p>
+                                </div>
+                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
+                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Personal Portfolio Website">
+                                        See details &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ========================================== -->
+                <!-- SUBSECTION: TESTIMONIALS & CLIENT REVIEWS  -->
+                <!-- ========================================== -->
+                <div class="mt-14 sm:mt-20 mb-6 sm:mb-8 gs-reveal">
+                    <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-2 sm:mb-3 flex items-center gap-3 sm:gap-4">
+                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [CLIENT VERIFICATION & LOGS]
+                    </div>
+                    <div class="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">//</span>
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            TESTIMONIALS
+                        </h3>
+                    </div>
+                    <p class="font-mono text-studio-400 text-xs sm:text-sm max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
+                        Verified feedback from architecture students and clients across major universities. Swipe or scroll horizontally to browse.
                     </p>
                 </div>
 
-                <!-- Milestone 3: Awards -->
-                <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
-                    <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
-                        <span class="milestone-counter" data-target="15" data-suffix="+">0</span>
-                    </div>
-                    <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
-                        Awards
-                    </p>
-                </div>
+                <!-- Horizontally Scrollable Testimonials Track -->
+                <div id="testimonials-track" class="flex overflow-x-auto gap-4 sm:gap-6 pb-6 sm:pb-8 no-scrollbar scroll-smooth gs-reveal delay-100 cursor-grab active:cursor-grabbing select-none">
+                    
+                    <!-- Review 01: Christian S. (TSU) -->
+                    <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
+                        <!-- Corner Crosshairs -->
+                        <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                                <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.01 // 3D MODEL]</span>
+                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                            </div>
+                            <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
+                                "Grabe, super linaw ng 3D model at ang bilis kausap! Saved my arki plate deadline. Very clean ng SketchUp file, will definitely commission again!"
+                            </p>
+                        </div>
 
+                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Christian%20S.%20TSU.png" alt="Christian S." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Christian S.</h4>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Tarlac State University</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 02: Edgar U. (FEU Manila) -->
+                    <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
+                        <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                                <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.02 // RENDERING]</span>
+                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                            </div>
+                            <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
+                                "Solid ng lighting at textures sa Lumion render! Our jury panel really appreciated the depth and atmosphere of the walkthrough video."
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Edgar%20U.%20FEU%20Manila.png" alt="Edgar U." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Edgar U.</h4>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Far Eastern University - Manila</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 03: Harvey M. (UP Manila) -->
+                    <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
+                        <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                                <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.03 // MANUAL ART]</span>
+                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                            </div>
+                            <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
+                                "Sobrang pulido ng linework at perspective sa manual architectural drawings. Very professional ka-transaction from start to final scan!"
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Harvey%20M.%20UP%20Manila.png" alt="Harvey M." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Harvey M.</h4>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">University of the Philippines Manila</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 04: Lhea G. (UST Manila) -->
+                    <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
+                        <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                                <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.04 // BOARD LAYOUT]</span>
+                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                            </div>
+                            <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
+                                "Ang ganda ng hierarchy at modular grid ng presentation boards ko! Grabe 'yung eye for detail sa layouting. Maraming salamat!"
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Lhea%20G.%20UST%20Manila.png" alt="Lhea G." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Lhea G.</h4>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">University of Santo Thomas - Manila</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 05: Mark T. (BatSU Main) -->
+                    <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
+                        <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                                <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.05 // CAD DRAFTING]</span>
+                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                            </div>
+                            <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
+                                "Highly recommended! Even with revisions, napaka-responsive at nakuha agad 'yung design intent ng CAD floor plans namin. Highly technical!"
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Mark%20T.%20BatSU%20Main.png" alt="Mark T." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Mark T.</h4>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Batangas State University - Main</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 06: Scarlet P. (PUP Manila) -->
+                    <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
+                        <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                                <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.06 // DEADLINE & QUALITY]</span>
+                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                            </div>
+                            <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
+                                "Legit lifesaver sa plates! Super neat ng CAD drafting and 3D output, tapos on-time palagi mag-send ng deliverables prior to submission. 10/10!"
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Scarlet%20P.%20PUP%20Manila.png" alt="Scarlet P." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Scarlet P.</h4>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Polythecnic University of the Philippines - Main</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-
-            <!-- Services Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8 px-5 sm:px-8 md:px-14">
-                
-                <!-- Card 01: 3D Modelling -->
-                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="3D Modelling">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                            <div>
-                                <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                    <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">3D DESIGN</span>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">01</span>
-                                </div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">3D Modelling</h3>
-                                <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                    High-quality 3D models for architectural design, product visualization, and creative projects—bringing concepts to life with precision and flair.
-                                </p>
-                            </div>
-                            <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="3D Modelling">
-                                    See details &rarr;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 02: Rendering -->
-                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Rendering">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                            <div>
-                                <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                    <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">VISUALIZATION</span>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">02</span>
-                                </div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Rendering</h3>
-                                <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                    Photorealistic architectural and interior renderings that present your designs with depth, realism, and visual impact.
-                                </p>
-                            </div>
-                            <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Rendering">
-                                    See details &rarr;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 03: Manual Drawings -->
-                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Manual Drawings">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                            <div>
-                                <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                    <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">ILLUSTRATION</span>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">03</span>
-                                </div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Manual Drawings</h3>
-                                <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                    Hand-crafted architectural and artistic drawings that convey concepts with authenticity, detail, and a personal touch.
-                                </p>
-                            </div>
-                            <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Manual Drawings">
-                                    See details &rarr;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 04: Presentation Board Layout -->
-                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="Presentation Board Layout">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                            <div>
-                                <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                    <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">LAYOUT</span>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">04</span>
-                                </div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Presentation Board Layout</h3>
-                                <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                    Clean and professional layouts that clearly present design ideas, concepts, and technical details for impactful reviews.
-                                </p>
-                            </div>
-                            <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Presentation Board Layout">
-                                    See details &rarr;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 05: Architectural Walkthrough -->
-                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Architectural Walkthrough">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                            <div>
-                                <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                    <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">WALKTHROUGH</span>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">05</span>
-                                </div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Architectural Walkthrough</h3>
-                                <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                    Immersive visual experiences that highlight spatial relationships, materials, and the overall design atmosphere.
-                                </p>
-                            </div>
-                            <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Architectural Walkthrough">
-                                    See details &rarr;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 06: Personal Portfolio Website -->
-                <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Personal Portfolio Website">
-                    <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                            <div>
-                                <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                    <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">WEB DESIGN & DEVELOPMENT</span>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">06</span>
-                                </div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Personal Portfolio Website</h3>
-                                <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                    Custom-coded portfolio sites for architecture students and pros—clean, mobile-friendly, and built from scratch.
-                                </p>
-                            </div>
-                            <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Personal Portfolio Website">
-                                    See details &rarr;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-
-            <!-- ========================================== -->
-            <!-- SUBSECTION: TESTIMONIALS & CLIENT REVIEWS  -->
-            <!-- ========================================== -->
-            <div class="px-5 sm:px-8 md:px-14 mt-14 sm:mt-20 mb-6 sm:mb-8 gs-reveal">
-                <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-2 sm:mb-3 flex items-center gap-3 sm:gap-4">
-                    <span class="w-8 sm:w-12 h-px bg-accent"></span> [CLIENT VERIFICATION & LOGS]
-                </div>
-                <div class="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
-                    <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">//</span>
-                    <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
-                        TESTIMONIALS
-                    </h3>
-                </div>
-                <p class="font-mono text-studio-400 text-xs sm:text-sm max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
-                    Verified feedback from architecture students and clients across major universities. Swipe or scroll horizontally to browse.
-                </p>
-            </div>
-
-            <!-- Horizontally Scrollable Testimonials Track -->
-            <div id="testimonials-track" class="flex overflow-x-auto gap-4 sm:gap-6 px-5 sm:px-8 md:px-14 pb-6 sm:pb-8 no-scrollbar scroll-smooth gs-reveal delay-100 cursor-grab active:cursor-grabbing select-none">
-                
-                <!-- Review 01: Christian S. (TSU) -->
-                <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
-                    <!-- Corner Crosshairs -->
-                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.01 // 3D MODEL]</span>
-                            <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
-                        </div>
-                        <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
-                            "Grabe, super linaw ng 3D model at ang bilis kausap! Saved my arki plate deadline. Very clean ng SketchUp file, will definitely commission again!"
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Christian%20S.%20TSU.png" alt="Christian S." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
-                        <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Christian S.</h4>
-                            <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Tarlac State University</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 02: Edgar U. (FEU Manila) -->
-                <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
-                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.02 // RENDERING]</span>
-                            <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
-                        </div>
-                        <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
-                            "Solid ng lighting at textures sa Lumion render! Our jury panel really appreciated the depth and atmosphere of the walkthrough video."
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Edgar%20U.%20FEU%20Manila.png" alt="Edgar U." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
-                        <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Edgar U.</h4>
-                            <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Far Eastern University - Manila</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 03: Harvey M. (UP Manila) -->
-                <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
-                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.03 // MANUAL ART]</span>
-                            <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
-                        </div>
-                        <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
-                            "Sobrang pulido ng linework at perspective sa manual architectural drawings. Very professional ka-transaction from start to final scan!"
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Harvey%20M.%20UP%20Manila.png" alt="Harvey M." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
-                        <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Harvey M.</h4>
-                            <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">University of the Philippines Manila</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 04: Lhea G. (UST Manila) -->
-                <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
-                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.04 // BOARD LAYOUT]</span>
-                            <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
-                        </div>
-                        <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
-                            "Ang ganda ng hierarchy at modular grid ng presentation boards ko! Grabe 'yung eye for detail sa layouting. Maraming salamat!"
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Lhea%20G.%20UST%20Manila.png" alt="Lhea G." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
-                        <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Lhea G.</h4>
-                            <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">University of Santo Thomas - Manila</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 05: Mark T. (BatSU Main) -->
-                <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
-                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.05 // CAD DRAFTING]</span>
-                            <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
-                        </div>
-                        <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
-                            "Highly recommended! Even with revisions, napaka-responsive at nakuha agad 'yung design intent ng CAD floor plans namin. Highly technical!"
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Mark%20T.%20BatSU%20Main.png" alt="Mark T." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
-                        <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Mark T.</h4>
-                            <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Batangas State University - Main</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 06: Scarlet P. (PUP Manila) -->
-                <div class="hover-trigger relative bg-studio-800 border border-studio-700 p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent transition-all duration-300 w-[82%] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
-                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.06 // DEADLINE & QUALITY]</span>
-                            <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
-                        </div>
-                        <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
-                            "Legit lifesaver sa plates! Super neat ng CAD drafting and 3D output, tapos on-time palagi mag-send ng deliverables prior to submission. 10/10!"
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Scarlet%20P.%20PUP%20Manila.png" alt="Scarlet P." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
-                        <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Scarlet P.</h4>
-                            <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Polythecnic University of the Philippines - Main</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        </section>
 
 
 
@@ -1348,51 +1354,53 @@
 
         <!-- 05. Contact Section -->
         <section id="contact" class="min-h-[75vh] p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700 flex flex-col justify-center">
-            <div class="max-w-4xl gs-reveal">
-                <div class="mb-6 sm:mb-10">
-                    <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
-                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [INITIALIZE COMMUNICATION]
+            <div class="max-w-7xl mx-auto w-full">
+                <div class="max-w-4xl gs-reveal">
+                    <div class="mb-6 sm:mb-10">
+                        <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
+                            <span class="w-8 sm:w-12 h-px bg-accent"></span> [INITIALIZE COMMUNICATION]
+                        </div>
+                        <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                            <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">05</span>
+                            <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                                CONTACT
+                            </h2>
+                        </div>
+                        <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
+                            Open for architectural commissions, 3D visualization, manual drawings, and collaborative creative projects.
+                        </p>
                     </div>
-                    <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">05</span>
-                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
-                            CONTACT
-                        </h2>
-                    </div>
-                    <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
-                        Open for architectural commissions, 3D visualization, manual drawings, and collaborative creative projects.
-                    </p>
-                </div>
-                
-                <h3 class="text-xl sm:text-2xl md:text-4xl font-bold leading-tight mb-6 sm:mb-8 text-studio-100">
-                    Let's collaborate on your next architectural or visual project.
-                </h3>
-                
-                <div class="mt-8 sm:mt-12 space-y-4 sm:space-y-6 font-mono gs-reveal delay-100 text-xs sm:text-base">
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-6">
-                        <span class="text-studio-500 uppercase text-[10px] sm:text-xs tracking-widest w-20 sm:w-24">Email</span>
-                        <a href="mailto:norioniomarjo@gmail.com" class="text-sm sm:text-lg text-studio-100 hover:text-accent border-b border-transparent hover:border-accent transition-all pb-0.5 hover-trigger break-all sm:break-normal">norioniomarjo@gmail.com</a>
-                    </div>
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-6">
-                        <span class="text-studio-500 uppercase text-[10px] sm:text-xs tracking-widest w-20 sm:w-24">Location</span>
-                        <span class="text-sm sm:text-lg text-studio-300">General Trias, Cavite, Philippines</span>
-                    </div>
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-6">
-                        <span class="text-studio-500 uppercase text-[10px] sm:text-xs tracking-widest w-20 sm:w-24">Socials</span>
-                        <div class="flex items-center gap-4 sm:gap-6 text-sm sm:text-lg">
-                            <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors hover-trigger">
-                                <i class="ph ph-linkedin-logo"></i> LinkedIn
-                            </a>
-                            <a href="https://www.instagram.com/13_1_18_jo/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors hover-trigger">
-                                <i class="ph ph-instagram-logo"></i> Instagram
-                            </a>
+                    
+                    <h3 class="text-xl sm:text-2xl md:text-4xl font-bold leading-tight mb-6 sm:mb-8 text-studio-100">
+                        Let's collaborate on your next architectural or visual project.
+                    </h3>
+                    
+                    <div class="mt-8 sm:mt-12 space-y-4 sm:space-y-6 font-mono gs-reveal delay-100 text-xs sm:text-base">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-6">
+                            <span class="text-studio-500 uppercase text-[10px] sm:text-xs tracking-widest w-20 sm:w-24">Email</span>
+                            <a href="mailto:norioniomarjo@gmail.com" class="text-sm sm:text-lg text-studio-100 hover:text-accent border-b border-transparent hover:border-accent transition-all pb-0.5 hover-trigger break-all sm:break-normal">norioniomarjo@gmail.com</a>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-6">
+                            <span class="text-studio-500 uppercase text-[10px] sm:text-xs tracking-widest w-20 sm:w-24">Location</span>
+                            <span class="text-sm sm:text-lg text-studio-300">General Trias, Cavite, Philippines</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-6">
+                            <span class="text-studio-500 uppercase text-[10px] sm:text-xs tracking-widest w-20 sm:w-24">Socials</span>
+                            <div class="flex items-center gap-4 sm:gap-6 text-sm sm:text-lg">
+                                <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors hover-trigger">
+                                    <i class="ph ph-linkedin-logo"></i> LinkedIn
+                                </a>
+                                <a href="https://www.instagram.com/13_1_18_jo/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors hover-trigger">
+                                    <i class="ph ph-instagram-logo"></i> Instagram
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="mt-14 sm:mt-20 pt-6 sm:pt-8 border-t border-studio-800 text-studio-500 font-mono text-[10px] sm:text-xs flex flex-col sm:flex-row gap-2 justify-between items-start sm:items-center gs-reveal delay-200">
-                    <p>&copy; <span id="year"></span> Marjo Paguia. All rights reserved.</p>
-                    <p>Designed with precision.</p>
+                    <div class="mt-14 sm:mt-20 pt-6 sm:pt-8 border-t border-studio-800 text-studio-500 font-mono text-[10px] sm:text-xs flex flex-col sm:flex-row gap-2 justify-between items-start sm:items-center gs-reveal delay-200">
+                        <p>&copy; <span id="year"></span> Marjo Paguia. All rights reserved.</p>
+                        <p>Designed with precision.</p>
+                    </div>
                 </div>
             </div>
         </section>
