@@ -436,111 +436,287 @@ html.light .scroll-meter-value {
     color: rgb(var(--studio-100));
 }
 
-/* Explicit Light Mode for CV */
+/* Explicit Light Mode for CV Modal */
 .print-cv-sheet.cv-theme-light {
-    --studio-900: 247 249 252;
-    --studio-800: 255 255 255;
-    --studio-700: 226 232 240;
-    --studio-600: 203 213 225;
-    --studio-500: 100 116 139;
-    --studio-400: 71 85 105;
-    --studio-300: 51 65 85;
-    --studio-200: 30 41 59;
-    --studio-100: 15 23 42;
-    --accent: 217 119 6;
-    --accent-hex: #d97706;
-    background-color: #ffffff;
-    color: #0f172a;
-    border-color: #e2e8f0;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+.print-cv-sheet.cv-theme-light h2,
+.print-cv-sheet.cv-theme-light .text-studio-100 {
+    color: #0f172a !important;
+}
+.print-cv-sheet.cv-theme-light p,
+.print-cv-sheet.cv-theme-light .text-studio-400 {
+    color: #475569 !important;
+}
+.print-cv-sheet.cv-theme-light .text-studio-300,
+.print-cv-sheet.cv-theme-light .text-studio-200 {
+    color: #334155 !important;
+}
+.print-cv-sheet.cv-theme-light .text-studio-500 {
+    color: #64748b !important;
+}
+.print-cv-sheet.cv-theme-light .text-accent {
+    color: #b45309 !important;
+}
+.print-cv-sheet.cv-theme-light .border-accent {
+    border-color: #b45309 !important;
+}
+.print-cv-sheet.cv-theme-light .border-studio-700 {
+    border-color: #e2e8f0 !important;
+}
+.print-cv-sheet.cv-theme-light .bg-studio-900,
+.print-cv-sheet.cv-theme-light .bg-studio-900\/70,
+.print-cv-sheet.cv-theme-light .bg-studio-900\/40 {
+    background-color: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+}
+.print-cv-sheet.cv-theme-light #cv-theme-selector {
+    background-color: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+}
+.print-cv-sheet.cv-theme-light .cv-theme-mode-btn.active {
+    background-color: #ffffff !important;
+    border-color: #b45309 !important;
+    color: #0f172a !important;
+}
+.print-cv-sheet.cv-theme-light .cv-theme-mode-btn:not(.active) {
+    color: #64748b !important;
+}
+.print-cv-sheet.cv-theme-light #close-cv-modal {
+    background-color: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #334155 !important;
+}
+.print-cv-sheet.cv-theme-light #close-cv-modal:hover {
+    color: #b45309 !important;
+    border-color: #b45309 !important;
 }
 
-/* Explicit Dark Mode for CV */
+/* Explicit Dark Mode for CV Modal */
 .print-cv-sheet.cv-theme-dark {
-    --studio-900: 10 10 10;
-    --studio-800: 20 20 20;
-    --studio-700: 38 38 38;
-    --studio-600: 64 64 64;
-    --studio-500: 115 115 115;
-    --studio-400: 163 163 163;
-    --studio-300: 212 212 212;
-    --studio-200: 229 229 229;
-    --studio-100: 245 245 245;
-    --accent: 250 204 21;
-    --accent-hex: #facc15;
-    background-color: #141414;
-    color: #f5f5f5;
-    border-color: #262626;
+    background-color: #121212 !important;
+    color: #f1f5f9 !important;
+    border-color: #27272a !important;
+}
+.print-cv-sheet.cv-theme-dark h2,
+.print-cv-sheet.cv-theme-dark .text-studio-100 {
+    color: #f8fafc !important;
+}
+.print-cv-sheet.cv-theme-dark p,
+.print-cv-sheet.cv-theme-dark .text-studio-400 {
+    color: #94a3b8 !important;
+}
+.print-cv-sheet.cv-theme-dark .text-studio-300,
+.print-cv-sheet.cv-theme-dark .text-studio-200 {
+    color: #cbd5e1 !important;
+}
+.print-cv-sheet.cv-theme-dark .text-studio-500 {
+    color: #64748b !important;
+}
+.print-cv-sheet.cv-theme-dark .text-accent {
+    color: #facc15 !important;
+}
+.print-cv-sheet.cv-theme-dark .border-accent {
+    border-color: #facc15 !important;
+}
+.print-cv-sheet.cv-theme-dark .border-studio-700 {
+    border-color: #27272a !important;
+}
+.print-cv-sheet.cv-theme-dark .bg-studio-900,
+.print-cv-sheet.cv-theme-dark .bg-studio-900\/70,
+.print-cv-sheet.cv-theme-dark .bg-studio-900\/40 {
+    background-color: #18181b !important;
+    border-color: #27272a !important;
+}
+.print-cv-sheet.cv-theme-dark #cv-theme-selector {
+    background-color: #09090b !important;
+    border-color: #27272a !important;
+}
+.print-cv-sheet.cv-theme-dark .cv-theme-mode-btn.active {
+    background-color: #27272a !important;
+    border-color: #facc15 !important;
+    color: #f8fafc !important;
+}
+.print-cv-sheet.cv-theme-dark .cv-theme-mode-btn:not(.active) {
+    color: #71717a !important;
+}
+.print-cv-sheet.cv-theme-dark #close-cv-modal {
+    background-color: #18181b !important;
+    border-color: #27272a !important;
+    color: #a1a1aa !important;
 }
 
-/* Print Sheet Styling for CV / Offline Portfolio */
+/* ==========================================================================
+   PRINT STYLING FOR STANDALONE 1-PAGE ARCHITECTURAL CV EXPORT
+   ========================================================================== */
 @media print {
-    body {
+    @page {
+        size: A4 portrait;
+        margin: 8mm 10mm;
+    }
+
+    html, body {
         background: #ffffff !important;
-        color: #000000 !important;
+        color: #0f172a !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        font-family: 'Space Mono', monospace, -apple-system, sans-serif !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
-    header, aside, #scroll-meter-hud, #sidebar, .cursor-dot, .cursor-outline, #project-filter-bar, .theme-toggle-btn, #inquiry-modal, #service-modal, #project-modal, #gallery-lightbox, #loader {
+
+    /* STRICTLY ELIMINATE ALL NON-CV LANDMARKS FROM PRINT RENDERING */
+    body > *:not(#cv-modal),
+    main,
+    #main-content,
+    #home,
+    #projects,
+    #technical,
+    #services,
+    #gallery,
+    #about,
+    #contact,
+    header,
+    aside,
+    footer,
+    nav,
+    #sidebar,
+    #scroll-meter-hud,
+    #canvas-container,
+    #loader,
+    #inquiry-modal,
+    #service-modal,
+    #project-modal,
+    #gallery-lightbox,
+    #inquiry-toast,
+    #corner-spec,
+    #canvas-blueprint,
+    #ambient-audio-toggle,
+    .cursor-dot,
+    .cursor-outline,
+    .hover-trigger,
+    #cv-theme-selector,
+    #cv-print-btn,
+    #close-cv-modal {
         display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        left: -99999px !important;
+        top: -99999px !important;
     }
+
+    /* FORCE CV MODAL TO RENDER AS A CLEAN STANDALONE PAGE */
     #cv-modal {
         position: static !important;
         display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
         background: transparent !important;
         padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
         backdrop-filter: none !important;
-    }
-    .print-cv-sheet {
         box-shadow: none !important;
+        inset: auto !important;
+        z-index: 999999 !important;
+    }
+
+    #cv-sheet-container {
+        position: static !important;
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
         max-width: 100% !important;
+        height: auto !important;
         max-height: none !important;
         overflow: visible !important;
-        padding: 24px !important;
-    }
-
-    /* Light paper print */
-    .print-cv-sheet.cv-theme-light,
-    .print-cv-sheet:not(.cv-theme-dark) {
+        margin: 0 !important;
+        padding: 6px 10px !important;
+        box-shadow: none !important;
         border: 1px solid #cbd5e1 !important;
-        background: #ffffff !important;
-        color: #0f172a !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .print-cv-sheet.cv-theme-light *,
-    .print-cv-sheet:not(.cv-theme-dark) * {
-        color: #0f172a !important;
-        border-color: #e2e8f0 !important;
-    }
-    .print-cv-sheet.cv-theme-light .text-accent,
-    .print-cv-sheet:not(.cv-theme-dark) .text-accent {
-        color: #b45309 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
     }
 
-    /* Dark Blueprint paper print */
-    .print-cv-sheet.cv-theme-dark {
-        border: 1px solid #383838 !important;
-        background: #141414 !important;
-        color: #f5f5f5 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .print-cv-sheet.cv-theme-dark * {
-        color: #f5f5f5 !important;
-        border-color: #383838 !important;
-        background-color: transparent !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .print-cv-sheet.cv-theme-dark .text-accent {
-        color: #facc15 !important;
-    }
+    /* Photo in print */
     .print-cv-sheet img {
         display: block !important;
         opacity: 1 !important;
         filter: none !important;
+        -webkit-filter: none !important;
+        max-height: 90px !important;
+        width: auto !important;
     }
 
-    #cv-theme-selector, #cv-print-btn, #close-cv-modal {
-        display: none !important;
+    /* LIGHT MODE PRINT */
+    .print-cv-sheet.cv-theme-light,
+    .print-cv-sheet.cv-theme-auto {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        border: 1.5px solid #0f172a !important;
+    }
+    .print-cv-sheet.cv-theme-light *,
+    .print-cv-sheet.cv-theme-auto * {
+        color: #0f172a !important;
+        border-color: #cbd5e1 !important;
+    }
+    .print-cv-sheet.cv-theme-light .text-accent,
+    .print-cv-sheet.cv-theme-auto .text-accent {
+        color: #b45309 !important;
+    }
+    .print-cv-sheet.cv-theme-light .border-accent,
+    .print-cv-sheet.cv-theme-auto .border-accent {
+        border-color: #b45309 !important;
+    }
+    .print-cv-sheet.cv-theme-light .bg-studio-900,
+    .print-cv-sheet.cv-theme-light .bg-studio-900\/70,
+    .print-cv-sheet.cv-theme-light .bg-studio-900\/40,
+    .print-cv-sheet.cv-theme-auto .bg-studio-900,
+    .print-cv-sheet.cv-theme-auto .bg-studio-900\/70,
+    .print-cv-sheet.cv-theme-auto .bg-studio-900\/40 {
+        background-color: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+    }
+
+    /* DARK MODE PRINT (Exact CAD Blueprint Sheet) */
+    .print-cv-sheet.cv-theme-dark {
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+        border: 1.5px solid #334155 !important;
+    }
+    .print-cv-sheet.cv-theme-dark * {
+        color: #f8fafc !important;
+        border-color: #334155 !important;
+    }
+    .print-cv-sheet.cv-theme-dark .text-studio-400 {
+        color: #94a3b8 !important;
+    }
+    .print-cv-sheet.cv-theme-dark .text-accent {
+        color: #facc15 !important;
+    }
+    .print-cv-sheet.cv-theme-dark .border-accent {
+        border-color: #facc15 !important;
+    }
+    .print-cv-sheet.cv-theme-dark .bg-studio-900,
+    .print-cv-sheet.cv-theme-dark .bg-studio-900\/70,
+    .print-cv-sheet.cv-theme-dark .bg-studio-900\/40 {
+        background-color: #1e293b !important;
+        border-color: #334155 !important;
     }
 }
 
