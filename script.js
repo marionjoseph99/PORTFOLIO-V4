@@ -337,7 +337,7 @@ const projModalEmptyState = document.getElementById('proj-modal-empty-state');
 const projCollage = document.getElementById('proj-collage');
 const projPhotoSection = document.getElementById('proj-photo-section');
 const projPhotoCount = document.getElementById('proj-photo-count');
-const projModalFullLink = document.getElementById('proj-modal-full-link');
+const projModalInspectBtn = document.getElementById('proj-modal-inspect-btn');
 const projModalPrevBtn = document.getElementById('proj-modal-prev-btn');
 const projModalNextBtn = document.getElementById('proj-modal-next-btn');
 const projModalIndexBadge = document.getElementById('proj-modal-index-badge');
@@ -350,7 +350,7 @@ let currentSelectedProjectKey = 'airport';
 const projectData = {
     "airport": {
         title: "Layag Airport",
-        subtitle: "Sangley Point Domestic Airport",
+        subtitle: "",
         location: "Sangley Point, Cavite City",
         siteArea: "147 Hectares",
         year: "2024",
@@ -359,7 +359,6 @@ const projectData = {
         toolsSpec: "AutoCAD • SketchUp Pro • Enscape • Photoshop",
         features: ["Aerodynamic Sail Canopies", "Departures / Arrivals Separation", "Passive Daylight Optimization", "High-Volume Concourse Flow"],
         desc: "A 147-hectare domestic airport proposal for Sangley Point, Cavite City that harmonizes passenger movement, structural sail canopies, and visual clarity. Inspired by traditional Filipino seafaring vessels ('Layag'), the aerodynamic roof profiles scoop indirect natural illumination into terminal departure halls while shading drop-off lanes. The interior layout enforces clear multi-level vertical circulation separating arrival passenger streams from departures check-in and gate boarding piers.",
-        pageUrl: "portfolio/airport/full_project.html",
         images: [
             { src: "portfolio/airport/1.webp", alt: "Layag Airport - Main Terminal Exterior & Runway Perspective", plateTitle: "PLATE 01: Main Terminal Exterior & Runway Perspective" },
             { src: "portfolio/airport/2.webp", alt: "Layag Airport - Roof Structural & Elevation Study", plateTitle: "PLATE 02: Roof Structural Geometry & Elevation Analysis" },
@@ -378,7 +377,6 @@ const projectData = {
         toolsSpec: "AutoCAD • Revit BIM • SketchUp Pro • Lumion 3D",
         features: ["Biophilic Healing Courtyards", "Child-Friendly Intuitive Wayfinding", "Strict Sterile vs Outpatient Zoning", "Direct Emergency Ambulance Triage"],
         desc: "A 5-hectare dedicated pediatric healthcare facility located on Panglao Island, Bohol, centered on gentle circulation, healing garden courtyards, and clinical efficiency. The spatial layout organizes outpatient clinics, sterile operating surgical suites, and emergency response zones with clear, intuitive color-coded wayfinding designed to reduce anxiety for young patients and their families.",
-        pageUrl: "portfolio/amping/full_project.html",
         images: [
             { src: "portfolio/amping/1.webp", alt: "Amping Children's Hospital - Main Facade Render", plateTitle: "PLATE 01: Main Facade & Shading Entrance Canopy" },
             { src: "portfolio/amping/2.webp", alt: "Amping Children's Hospital - Aerial Site Development Plan", plateTitle: "PLATE 02: Master Site Development & Healing Courtyard" },
@@ -400,7 +398,6 @@ const projectData = {
         toolsSpec: "AutoCAD • SketchUp Pro • Enscape • Photoshop",
         features: ["Elevated Boardwalk Network", "Native Riparian Bio-Buffers", "Modular Gathering Pavilions", "Coastal Flood-Adaptive Design"],
         desc: "A 1.5-hectare waterfront landscape architecture and master circulation study situated at the Calamba Baywalk in Calamba City, shaped for open community gathering, contemplation, and natural ecology. Features integrated elevated timber boardwalks, flood-resilient coastal edge buffers, native wetland riparian zones, and shaded community gathering pavilions providing panoramic water views.",
-        pageUrl: "portfolio/marahuyo/full_project.html",
         images: [
             { src: "portfolio/marahuyo/1.webp", alt: "Marahuyo Park - Waterfront Master Plan", plateTitle: "PLATE 01: Waterfront Master Plan & Ecological Zoning" },
             { src: "portfolio/marahuyo/2.webp", alt: "Marahuyo Park - Park Plan and Elevations", plateTitle: "PLATE 02: Park Master Plan, Elevations & Sectional Relief" },
@@ -418,7 +415,6 @@ const projectData = {
         toolsSpec: "AutoCAD • SketchUp Pro • Enscape • Illustrator",
         features: ["Multi-Tiered Flood Terraces", "Continuous Active Mobility Spine", "Amphitheater Water Steps", "Urban Micro-Park Nodes"],
         desc: "A 1-hectare riverfront master plan along the Marikina Riverside highlighting pedestrian mobility, flood-adaptive riverbank conditions, and civic identity. The master plan introduces multi-tiered promenade terraces that absorb seasonal river fluctuations while serving as vibrant civic promenades with active bike lanes, commercial food pods, and scenic overlook plazas during dry months.",
-        pageUrl: "portfolio/marikina/full_project.html",
         images: [
             { src: "portfolio/marikina/1.webp", alt: "Marikina Riverside - Riverfront Master Plan", plateTitle: "PLATE 01: Urban Riverfront Master Plan & Mobility Spine" },
             { src: "portfolio/marikina/2.webp", alt: "Marikina Riverside - Site Development Plan", plateTitle: "PLATE 02: Stepped Promenade Site Plan & Sections" },
@@ -437,7 +433,6 @@ const projectData = {
         toolsSpec: "AutoCAD Civil • SketchUp Pro • Enscape • Photoshop",
         features: ["Hierarchical Collector Road Grid", "Central Community Clubhouse & Parks", "Topographic Cut & Fill Adaptation", "Integrated Storm Runoff Retention"],
         desc: "A 3.5-hectare master-planned residential community in Manggahan, General Trias, Cavite, organized around neighborhood livability, road hierarchy, and environmental sustainability. Includes standardized residential lotting layouts, interconnected greenway corridors, community recreation hubs, swimming nodes, and engineered topographic cut-and-fill slope grading with sustainable storm retention routing.",
-        pageUrl: "portfolio/subdivision/full_project.html",
         images: [
             { src: "portfolio/subdivision/PAGE 1.webp", alt: "Hinabi Heights Subdivision - Master Planning Board", plateTitle: "PLATE 01: Master Subdivision Lotting & Road Infrastructure" },
             { src: "portfolio/subdivision/PAGE 2.webp", alt: "Hinabi Heights Subdivision - Residential Plans and Perspectives", plateTitle: "PLATE 02: Residential Streetscape & Housing Typology Models" },
@@ -456,7 +451,6 @@ const projectData = {
         toolsSpec: "AutoCAD • Hand Conceptual Sketches • Adobe Photoshop",
         features: ["Modular Tensile Canopy Architecture", "Civic Assembly & Event Concourse", "Pedestrian-First Urban Spine", "Heritage Market & Activity Zones"],
         desc: "A 5,200 sqm comprehensive civic plaza revitalization study in Población, Jagna, Bohol, focused on public gathering, civic pride, and shaded outdoor comfort. The proposal incorporates modular seating, architectural canopy structures, pedestrianized promenades, water monument anchor nodes, and dedicated zones for local heritage events and weekend markets.",
-        pageUrl: "portfolio/plaza/full_project.html",
         images: [
             { src: "portfolio/plaza/plaza.webp", alt: "Jagna De Plaza - Architectural Site Plan & Flow", plateTitle: "PLATE 01: Comprehensive Master Site Plan & Civic Concourse Study" }
         ]
@@ -520,8 +514,6 @@ function openProjectModal(projKey) {
             projModalFeatures.appendChild(pill);
         });
     }
-
-    if (projModalFullLink) projModalFullLink.setAttribute('href', data.pageUrl);
 
     currentProjImages = data.images || [];
 
@@ -622,6 +614,13 @@ if (projectModal) {
             closeProjectModal();
             if (typeof openInquiryModal === 'function') {
                 openInquiryModal(currentProj ? currentProj.title : 'Architectural Design');
+            }
+        });
+    }
+    if (projModalInspectBtn) {
+        projModalInspectBtn.addEventListener('click', () => {
+            if (currentProjImages && currentProjImages.length > 0 && typeof openLightboxWithItems === 'function') {
+                openLightboxWithItems(currentProjImages, 0);
             }
         });
     }
