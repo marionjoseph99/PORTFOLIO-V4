@@ -401,7 +401,7 @@ function openProjectModal(projKey) {
 
         currentProjImages.forEach((img, idx) => {
             const btn = document.createElement('button');
-            btn.className = `group relative ${collageTileWidth} flex-grow aspect-[4/3] overflow-hidden rounded-lg border border-studio-700 hover:border-accent transition-all hover-trigger`;
+            btn.className = `group relative ${collageTileWidth} flex-grow aspect-[4/3] overflow-hidden border border-studio-700 hover:border-accent transition-all hover-trigger cursor-pointer`;
             btn.setAttribute('aria-label', `Open ${img.alt}`);
             btn.innerHTML = `<img src="${img.src}" alt="${img.alt}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute inset-0 flex items-center justify-center bg-studio-900/0 group-hover:bg-studio-900/35 transition-colors"><i class="ph ph-magnifying-glass-plus text-2xl text-studio-100 opacity-0 group-hover:opacity-100 transition-opacity"></i></span>`;
             btn.addEventListener('click', () => {
@@ -438,8 +438,14 @@ if (projectModal) {
     });
 }
 
-// --- Gallery Lightbox Logic ---
-const galleryCards = document.querySelectorAll('.gallery-card');
+// --- Gallery Filtering, Pagination (See More) & Lightbox Logic ---
+const galleryFilterBtns = document.querySelectorAll('.gallery-filter-btn');
+const galleryItemsList = document.querySelectorAll('.gallery-item');
+const galleryEmptyState = document.getElementById('gallery-empty-state');
+const gallerySeeMoreContainer = document.getElementById('gallery-see-more-container');
+const gallerySeeMoreBtn = document.getElementById('gallery-see-more-btn');
+const gallerySeeMoreText = document.getElementById('gallery-see-more-text');
+const gallerySeeMoreIcon = document.getElementById('gallery-see-more-icon');
 const projectCards = document.querySelectorAll('.project-card');
 const galleryLightbox = document.getElementById('gallery-lightbox');
 const closeLightboxBtn = document.getElementById('close-lightbox-btn');
@@ -449,8 +455,137 @@ const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCaption = document.getElementById('lightbox-caption');
 const lightboxCounter = document.getElementById('lightbox-counter');
 
+const INITIAL_ALL_LIMIT = 10;
+let isGalleryExpanded = false;
 let galleryItems = [];
 let currentGalleryIndex = 0;
+let currentFilter = 'all';
+
+// Function to get all currently visible gallery items
+function getVisibleGalleryItems() {
+    const visibleCards = [];
+    galleryItemsList.forEach((item) => {
+        if (!item.classList.contains('gallery-item-hidden')) {
+            const img = item.querySelector('img');
+            const captionElem = item.querySelector('p');
+            if (img) {
+                visibleCards.push({
+                    element: item,
+                    src: img.getAttribute('src'),
+                    alt: img.getAttribute('alt') || captionElem?.textContent || 'Gallery Artwork'
+                });
+            }
+        }
+    });
+    return visibleCards;
+}
+
+// Function to filter gallery items and manage see more visibility
+function filterGallery(filterCategory, preserveExpandState = false) {
+    currentFilter = filterCategory;
+    if (!preserveExpandState && filterCategory !== 'all') {
+        isGalleryExpanded = false;
+    }
+
+    let matchingCount = 0;
+    let visibleCount = 0;
+
+    // Update filter buttons appearance
+    galleryFilterBtns.forEach((btn) => {
+        const btnFilter = btn.getAttribute('data-filter');
+        if (btnFilter === filterCategory) {
+            btn.classList.add('active');
+            btn.classList.remove('text-studio-400');
+            btn.classList.add('text-studio-100');
+        } else {
+            btn.classList.remove('active');
+            btn.classList.remove('text-studio-100');
+            btn.classList.add('text-studio-400');
+        }
+    });
+
+    // Show/hide gallery items
+    galleryItemsList.forEach((item) => {
+        const itemCategory = item.getAttribute('data-category');
+        const matchesCategory = (filterCategory === 'all' || itemCategory === filterCategory);
+
+        if (matchesCategory) {
+            matchingCount++;
+            const shouldShow = (filterCategory !== 'all') || isGalleryExpanded || (matchingCount <= INITIAL_ALL_LIMIT);
+
+            if (shouldShow) {
+                item.classList.remove('gallery-item-hidden');
+                item.classList.add('is-active');
+                item.classList.remove('gallery-item-fadeout');
+                item.classList.add('gallery-item-fadein');
+                visibleCount++;
+            } else {
+                item.classList.add('gallery-item-fadeout');
+                item.classList.remove('gallery-item-fadein');
+                item.classList.add('gallery-item-hidden');
+            }
+        } else {
+            item.classList.add('gallery-item-fadeout');
+            item.classList.remove('gallery-item-fadein');
+            item.classList.add('gallery-item-hidden');
+        }
+    });
+
+    // Handle See More button state
+    if (gallerySeeMoreContainer && gallerySeeMoreBtn && gallerySeeMoreText && gallerySeeMoreIcon) {
+        if (filterCategory === 'all' && matchingCount > INITIAL_ALL_LIMIT) {
+            gallerySeeMoreContainer.classList.remove('hidden');
+            if (isGalleryExpanded) {
+                gallerySeeMoreText.textContent = 'Show Less Works';
+                gallerySeeMoreIcon.className = 'ph ph-arrow-up text-base text-accent group-hover:-translate-y-1 transition-transform';
+            } else {
+                const remaining = matchingCount - INITIAL_ALL_LIMIT;
+                gallerySeeMoreText.textContent = `Load More Works (${remaining} Remaining)`;
+                gallerySeeMoreIcon.className = 'ph ph-arrow-down text-base text-accent group-hover:translate-y-1 transition-transform';
+            }
+        } else {
+            gallerySeeMoreContainer.classList.add('hidden');
+        }
+    }
+
+    if (galleryEmptyState) {
+        if (visibleCount === 0) {
+            galleryEmptyState.classList.remove('hidden');
+        } else {
+            galleryEmptyState.classList.add('hidden');
+        }
+    }
+}
+
+// Attach click listeners to filter buttons
+if (galleryFilterBtns.length > 0) {
+    galleryFilterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter') || 'all';
+            filterGallery(filter, false);
+        });
+    });
+}
+
+// Attach click listener to See More button
+if (gallerySeeMoreBtn) {
+    gallerySeeMoreBtn.addEventListener('click', () => {
+        if (isGalleryExpanded) {
+            isGalleryExpanded = false;
+            filterGallery('all', true);
+            const allWorksSection = document.getElementById('all-works');
+            if (allWorksSection) {
+                allWorksSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        } else {
+            isGalleryExpanded = true;
+            filterGallery('all', true);
+        }
+    });
+}
+
+// Initial gallery filtering setup
+filterGallery('all', false);
 
 if (galleryLightbox) {
     openLightboxWithItems = (items, startIndex = 0) => {
@@ -488,23 +623,19 @@ if (galleryLightbox) {
         }
     };
 
-    // Attach click listeners to gallery cards
-    if (galleryCards.length > 0) {
-        const defaultGalleryItems = [];
-        galleryCards.forEach((card, index) => {
-            const img = card.querySelector('img');
-            if (img) {
-                defaultGalleryItems.push({
-                    src: img.getAttribute('src'),
-                    alt: img.getAttribute('alt') || `Gallery Image ${index + 1}`
-                });
-
-                card.addEventListener('click', () => {
-                    openLightboxWithItems(defaultGalleryItems, index);
-                });
-            }
-        });
-    }
+    // Attach click listeners to gallery cards with filtered context
+    galleryItemsList.forEach((item) => {
+        const card = item.querySelector('.gallery-card');
+        if (card) {
+            card.addEventListener('click', () => {
+                const currentVisible = getVisibleGalleryItems();
+                const clickedIndex = currentVisible.findIndex(v => v.element === item);
+                if (clickedIndex !== -1) {
+                    openLightboxWithItems(currentVisible, clickedIndex);
+                }
+            });
+        }
+    });
 
     const showNext = () => {
         if (galleryItems.length <= 1) return;
@@ -668,4 +799,120 @@ if (testimonialsTrack) {
 
     // Initialize auto-scroll
     startAutoScroll();
+}
+
+// ==========================================================================
+// ARCHITECTURAL THEME MANAGER (DARK BLUEPRINT / DRAFTING LIGHT MODE)
+// ==========================================================================
+const THEME_STORAGE_KEY = 'mp_portfolio_theme';
+
+function initThemeManager() {
+    const desktopThemeBtn = document.getElementById('desktop-theme-btn');
+    const mobileThemeBtn = document.getElementById('mobile-theme-btn');
+    const menuThemeBtn = document.getElementById('menu-theme-btn');
+    const themeSidebarText = document.querySelector('.theme-sidebar-text');
+    const themeSidebarBadge = document.querySelector('.theme-sidebar-badge');
+    const themeMenuText = document.querySelector('.theme-menu-text');
+    const themeMenuBadge = document.querySelector('.theme-menu-badge');
+
+    const getStoredTheme = () => {
+        try {
+            return localStorage.getItem(THEME_STORAGE_KEY);
+        } catch (e) {
+            return null;
+        }
+    };
+
+    const prefersLight = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    const applyTheme = (theme, persist = true) => {
+        const isLight = theme === 'light';
+        if (isLight) {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+            document.body.classList.add('light-mode');
+        } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            document.body.classList.remove('light-mode');
+        }
+
+        if (persist) {
+            try {
+                localStorage.setItem(THEME_STORAGE_KEY, theme);
+            } catch (e) {}
+        }
+
+        // Update Desktop Sidebar button
+        if (themeSidebarText) {
+            themeSidebarText.textContent = isLight ? 'Mode: Light' : 'Mode: Dark';
+        }
+        if (themeSidebarBadge) {
+            themeSidebarBadge.textContent = isLight ? '[DRAFT]' : '[CAD]';
+        }
+
+        // Update Mobile Menu button
+        if (themeMenuText) {
+            themeMenuText.textContent = isLight ? 'Theme: Light Drafting' : 'Theme: Dark Blueprint';
+        }
+        if (themeMenuBadge) {
+            themeMenuBadge.textContent = isLight ? 'ACTIVE' : 'SWITCH';
+        }
+
+        // Update icons inside toggle buttons
+        document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+            const sunIcon = btn.querySelector('.ph-sun');
+            const moonIcon = btn.querySelector('.ph-moon');
+            if (sunIcon && moonIcon) {
+                if (isLight) {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                }
+            }
+        });
+    };
+
+    // Determine initial theme
+    const saved = getStoredTheme();
+    const initialTheme = saved ? saved : (prefersLight() ? 'light' : 'dark');
+    applyTheme(initialTheme, false);
+
+    // Toggle handler
+    const toggleTheme = () => {
+        const currentIsLight = document.documentElement.classList.contains('light');
+        const newTheme = currentIsLight ? 'dark' : 'light';
+        applyTheme(newTheme, true);
+    };
+
+    // Attach listeners
+    if (desktopThemeBtn) desktopThemeBtn.addEventListener('click', toggleTheme);
+    if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
+    if (menuThemeBtn) menuThemeBtn.addEventListener('click', toggleTheme);
+
+    // Listen to OS system color scheme changes if user hasn't manually overridden
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+            if (!getStoredTheme()) {
+                applyTheme(e.matches ? 'light' : 'dark', false);
+            }
+        });
+    }
+
+    // Keyboard shortcut (Alt + T or Ctrl + Shift + L)
+    window.addEventListener('keydown', (e) => {
+        if ((e.altKey && e.key.toLowerCase() === 't') || (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'l')) {
+            e.preventDefault();
+            toggleTheme();
+        }
+    });
+}
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThemeManager);
+} else {
+    initThemeManager();
 }

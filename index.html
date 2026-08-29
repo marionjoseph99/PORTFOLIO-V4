@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marjo Paguia | Architecture & Visual Arts</title>
     
+    <!-- Inline Theme Initializer to Prevent FOUT -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('mp_portfolio_theme');
+                const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
+                } else {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -20,6 +37,7 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -28,12 +46,17 @@
                     },
                     colors: {
                         studio: {
-                            900: '#0a0a0a',
-                            800: '#141414',
-                            700: '#262626',
-                            100: '#f5f5f5',
+                            900: 'rgb(var(--studio-900) / <alpha-value>)',
+                            800: 'rgb(var(--studio-800) / <alpha-value>)',
+                            700: 'rgb(var(--studio-700) / <alpha-value>)',
+                            600: 'rgb(var(--studio-600) / <alpha-value>)',
+                            500: 'rgb(var(--studio-500) / <alpha-value>)',
+                            400: 'rgb(var(--studio-400) / <alpha-value>)',
+                            300: 'rgb(var(--studio-300) / <alpha-value>)',
+                            200: 'rgb(var(--studio-200) / <alpha-value>)',
+                            100: 'rgb(var(--studio-100) / <alpha-value>)',
                         },
-                        accent: '#facc15', // Architectural safety/blueprint yellow
+                        accent: 'rgb(var(--accent) / <alpha-value>)',
                     }
                 }
             }
@@ -79,16 +102,23 @@
     <div class="cursor-outline hidden md:block"></div>
 
     <!-- Mobile Header (Visible only on small screens) -->
-    <header class="md:hidden flex justify-between items-center p-6 border-b border-studio-700 bg-studio-900 z-50">
-        <a href="#home" class="font-mono font-bold text-xl tracking-tighter">M.P.</a>
-        <button id="mobile-menu-btn" class="text-2xl text-studio-100 hover-trigger">
-            <i class="ph ph-list"></i>
-        </button>
+    <header class="md:hidden flex justify-between items-center px-6 py-4 border-b border-studio-700 bg-studio-900/90 backdrop-blur-md z-50">
+        <a href="#home" class="font-mono font-bold text-xl tracking-tighter text-studio-100">M.P.</a>
+        <div class="flex items-center gap-3">
+            <!-- Mobile Theme Toggle -->
+            <button id="mobile-theme-btn" class="theme-toggle-btn w-9 h-9 border border-studio-700 bg-studio-800 text-studio-300 hover:text-accent hover:border-accent flex items-center justify-center transition-all hover-trigger" aria-label="Toggle Light/Dark Theme" title="Toggle Light/Dark Theme">
+                <i class="ph ph-sun text-lg dark:block hidden text-accent"></i>
+                <i class="ph ph-moon text-lg dark:hidden block text-accent"></i>
+            </button>
+            <button id="mobile-menu-btn" class="text-2xl text-studio-100 hover-trigger" aria-label="Toggle Navigation Menu">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 bg-studio-900 z-40 hidden flex-col justify-center items-center gap-8 border-b border-studio-700 pb-10 pt-24 px-6 h-screen w-full">
-        <button id="close-menu-btn" class="absolute top-6 right-6 text-2xl hover-trigger">
+    <div id="mobile-menu" class="fixed inset-0 bg-studio-900/95 backdrop-blur-lg z-40 hidden flex-col justify-center items-center gap-7 border-b border-studio-700 pb-10 pt-20 px-6 h-screen w-full">
+        <button id="close-menu-btn" class="absolute top-6 right-6 text-2xl text-studio-300 hover:text-accent hover-trigger" aria-label="Close Menu">
             <i class="ph ph-x"></i>
         </button>
         <a href="#home" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">00. Home</a>
@@ -97,6 +127,25 @@
         <a href="#services" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">03. Services</a>
         <a href="#gallery" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">04. Gallery</a>
         <a href="#contact" class="font-mono text-2xl uppercase tracking-widest hover:text-accent mobile-link">05. Contact</a>
+        
+        <!-- Mobile Menu Theme Switch Row & Socials -->
+        <div class="mt-4 pt-6 border-t border-studio-700 w-full max-w-xs flex flex-col items-center gap-4">
+            <button id="menu-theme-btn" class="theme-toggle-btn flex items-center justify-between w-full px-5 py-3 border border-studio-700 bg-studio-800 text-studio-200 hover:border-accent hover:text-accent font-mono text-xs uppercase tracking-wider transition-all">
+                <span class="flex items-center gap-2">
+                    <i class="ph ph-sun text-base text-accent"></i>
+                    <span class="theme-menu-text">Theme: Dark Blueprint</span>
+                </span>
+                <span class="text-[10px] px-2 py-0.5 bg-studio-700 text-accent font-mono font-bold theme-menu-badge">SWITCH</span>
+            </button>
+            <div class="flex items-center justify-center gap-6 pt-2 font-mono text-xs text-studio-400">
+                <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors">
+                    <i class="ph ph-linkedin-logo text-base"></i> LinkedIn
+                </a>
+                <a href="https://www.instagram.com/13_1_18_jo/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors">
+                    <i class="ph ph-instagram-logo text-base"></i> Instagram
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- Desktop Sidebar (Fixed Left) -->
@@ -152,13 +201,24 @@
             </nav>
         </div>
 
-        <div class="space-y-6">
-                <a href="#contact" class="block w-full border border-studio-700 text-center py-3 font-mono text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-all duration-300 hover-trigger">
+        <div class="space-y-4">
+            <!-- Desktop Theme Toggle Switch -->
+            <button id="desktop-theme-btn" class="theme-toggle-btn w-full flex items-center justify-between px-4 py-2.5 border border-studio-700 bg-studio-800/80 hover:bg-studio-800 text-studio-300 hover:text-accent hover:border-accent rounded-none transition-all duration-300 font-mono text-xs uppercase tracking-widest hover-trigger group" title="Toggle Light / Dark Architectural Mode">
+                <span class="flex items-center gap-2.5">
+                    <i class="ph ph-sun text-base text-accent group-hover:rotate-45 transition-transform duration-300"></i>
+                    <span class="theme-sidebar-text">Mode: Dark</span>
+                </span>
+                <span class="text-[10px] px-1.5 py-0.5 bg-studio-700 text-studio-200 group-hover:bg-accent group-hover:text-studio-900 transition-colors font-bold theme-sidebar-badge">
+                    [CAD]
+                </span>
+            </button>
+
+            <a href="#contact" class="block w-full border border-studio-700 text-center py-3 font-mono text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-all duration-300 hover-trigger">
                 Contact Marjo <i class="ph ph-arrow-right inline-block ml-1"></i>
             </a>
             <div class="flex gap-4 text-xl text-studio-400">
-                <a href="#" class="hover:text-accent transition-colors hover-trigger"><i class="ph ph-linkedin-logo"></i></a>
-                <a href="#" class="hover:text-accent transition-colors hover-trigger"><i class="ph ph-instagram-logo"></i></a>
+                <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors hover-trigger" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+                <a href="https://www.instagram.com/13_1_18_jo/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors hover-trigger" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
             </div>
         </div>
     </aside>
@@ -220,7 +280,7 @@
                             </div>
                             <!-- Name Displayed Under Photo -->
                             <div class="text-left w-full mt-2">
-                                <h1 class="font-bold text-3xl tracking-tight text-white mb-1">Marjo Paguia</h1>
+                                <h1 class="font-bold text-3xl tracking-tight text-studio-100 mb-1">Marjo Paguia</h1>
                                 <p class="text-xs text-studio-400 tracking-widest uppercase">Architecture & Visual Arts Portfolio</p>
                             </div>
                         </div>
@@ -271,7 +331,7 @@
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold">Layag Airport</h3>
-                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">2024</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
                                 <span>Typology: Architecture</span>
@@ -295,7 +355,7 @@
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold">Amping Children's Hospital</h3>
-                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2023</span>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">2023</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
                                 <span>Typology: Healthcare</span>
@@ -319,7 +379,7 @@
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold">Marahuyo Park</h3>
-                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">2024</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
                                 <span>Typology: Planning</span>
@@ -343,7 +403,7 @@
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold">Marikina Riverside</h3>
-                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">2024</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
                                 <span>Typology: Planning</span>
@@ -367,7 +427,7 @@
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold">Hinabi Heights Subdivision</h3>
-                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">2024</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
                                 <span>Typology: Residential</span>
@@ -391,7 +451,7 @@
                         <div class="pt-6 pb-4 px-2">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold">Jagna De Plaza</h3>
-                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">2024</span>
+                                <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">2024</span>
                             </div>
                             <div class="flex gap-4 font-mono text-xs text-studio-400 uppercase tracking-widest">
                                 <span>Typology: Planning</span>
@@ -440,32 +500,32 @@
                             </div>
                             <!-- Rows -->
                             <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-4 text-white">Autodesk AutoCAD</div>
+                                <div class="col-span-4 text-studio-100">Autodesk AutoCAD</div>
                                 <div class="col-span-4 text-studio-400 text-xs">Drafting</div>
                                 <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
                             </div>
                             <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-4 text-white">Lumion</div>
+                                <div class="col-span-4 text-studio-100">Lumion</div>
                                 <div class="col-span-4 text-studio-400 text-xs">Rendering</div>
                                 <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
                             </div>
                             <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-4 text-white">Autodesk Revit</div>
+                                <div class="col-span-4 text-studio-100">Autodesk Revit</div>
                                 <div class="col-span-4 text-studio-400 text-xs">BIM</div>
                                 <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
                             </div>
                             <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-4 text-white">Adobe Photoshop</div>
+                                <div class="col-span-4 text-studio-100">Adobe Photoshop</div>
                                 <div class="col-span-4 text-studio-400 text-xs">Post-Production</div>
                                 <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
                             </div>
                             <div class="grid grid-cols-12 p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-4 text-white">SketchUp Pro</div>
+                                <div class="col-span-4 text-studio-100">SketchUp Pro</div>
                                 <div class="col-span-4 text-studio-400 text-xs">3D Modeling</div>
                                 <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
                             </div>
                             <div class="grid grid-cols-12 p-3 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-4 text-white">Adobe Illustrator / Premiere Pro</div>
+                                <div class="col-span-4 text-studio-100">Adobe Illustrator / Premiere Pro</div>
                                 <div class="col-span-4 text-studio-400 text-xs">Layout & Editing</div>
                                 <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
                             </div>
@@ -490,7 +550,7 @@
                             <h3 class="font-mono text-accent text-sm uppercase tracking-widest mb-6 border-b border-studio-700 pb-2">Academic Record</h3>
                             <div class="space-y-4">
                                 <div class="hover-trigger border-l-2 border-transparent hover:border-accent pl-4 transition-all">
-                                    <h4 class="font-bold text-lg text-white">B.S. Architecture</h4>
+                                    <h4 class="font-bold text-lg text-studio-100">B.S. Architecture</h4>
                                     <p class="font-mono text-sm text-studio-400">National University PH | 20XX — 20XX</p>
                                 </div>
                                 <ul class="font-mono text-xs text-studio-400 space-y-2 list-disc list-inside">
@@ -536,8 +596,8 @@
                 <div class="relative border-t border-studio-700 pt-6 group hover-trigger">
                     <!-- Reference screenshot dot indicator -->
                     <div class="absolute -top-[5px] left-0 flex items-center justify-center">
-                        <span class="w-2.5 h-2.5 rounded-full bg-accent relative z-10"></span>
-                        <span class="absolute w-6 h-6 rounded-full border border-accent/40 animate-ping"></span>
+                        <span class="w-2.5 h-2.5 bg-accent relative z-10"></span>
+                        <span class="absolute w-6 h-6 border border-accent/40 animate-ping"></span>
                     </div>
                     <div class="flex items-baseline gap-1 font-mono font-bold text-5xl sm:text-6xl text-accent mb-2">
                         <span class="milestone-counter" data-target="5" data-suffix="">0</span>
@@ -579,7 +639,7 @@
                             <div>
                                 <div class="flex justify-between items-start mb-3">
                                     <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">3D DESIGN</span>
-                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">01</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">01</span>
                                 </div>
                                 <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">3D Modelling</h3>
                                 <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
@@ -587,7 +647,7 @@
                                 </p>
                             </div>
                             <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="3D Modelling">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 transition-all duration-300 uppercase tracking-wider" data-service="3D Modelling">
                                     See details &rarr;
                                 </button>
                             </div>
@@ -602,7 +662,7 @@
                             <div>
                                 <div class="flex justify-between items-start mb-3">
                                     <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">VISUALIZATION</span>
-                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">02</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">02</span>
                                 </div>
                                 <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Rendering</h3>
                                 <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
@@ -610,7 +670,7 @@
                                 </p>
                             </div>
                             <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Rendering">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 transition-all duration-300 uppercase tracking-wider" data-service="Rendering">
                                     See details &rarr;
                                 </button>
                             </div>
@@ -625,7 +685,7 @@
                             <div>
                                 <div class="flex justify-between items-start mb-3">
                                     <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">ILLUSTRATION</span>
-                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">03</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">03</span>
                                 </div>
                                 <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Manual Drawings</h3>
                                 <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
@@ -633,7 +693,7 @@
                                 </p>
                             </div>
                             <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Manual Drawings">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 transition-all duration-300 uppercase tracking-wider" data-service="Manual Drawings">
                                     See details &rarr;
                                 </button>
                             </div>
@@ -648,7 +708,7 @@
                             <div>
                                 <div class="flex justify-between items-start mb-3">
                                     <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">LAYOUT</span>
-                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">04</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">04</span>
                                 </div>
                                 <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Presentation Board Layout</h3>
                                 <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
@@ -656,7 +716,7 @@
                                 </p>
                             </div>
                             <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Presentation Board Layout">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 transition-all duration-300 uppercase tracking-wider" data-service="Presentation Board Layout">
                                     See details &rarr;
                                 </button>
                             </div>
@@ -671,7 +731,7 @@
                             <div>
                                 <div class="flex justify-between items-start mb-3">
                                     <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">WALKTHROUGH</span>
-                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">05</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">05</span>
                                 </div>
                                 <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Architectural Walkthrough</h3>
                                 <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
@@ -679,7 +739,7 @@
                                 </p>
                             </div>
                             <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Architectural Walkthrough">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 transition-all duration-300 uppercase tracking-wider" data-service="Architectural Walkthrough">
                                     See details &rarr;
                                 </button>
                             </div>
@@ -694,7 +754,7 @@
                             <div>
                                 <div class="flex justify-between items-start mb-3">
                                     <span class="font-mono text-xs text-studio-400 uppercase tracking-widest">WEB DESIGN & DEVELOPMENT</span>
-                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1 rounded">06</span>
+                                    <span class="font-mono text-xs bg-studio-700 text-studio-100 px-2 py-1">06</span>
                                 </div>
                                 <h3 class="text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors">Personal Portfolio Website</h3>
                                 <p class="font-mono text-sm text-studio-300 leading-relaxed mb-6">
@@ -702,7 +762,7 @@
                                 </p>
                             </div>
                             <div class="pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 rounded transition-all duration-300 uppercase tracking-wider" data-service="Personal Portfolio Website">
+                                <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-4 py-2 transition-all duration-300 uppercase tracking-wider" data-service="Personal Portfolio Website">
                                     See details &rarr;
                                 </button>
                             </div>
@@ -752,9 +812,9 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Christian%20S.%20TSU.png" alt="Christian S." class="w-9 h-9 rounded-full border border-studio-600 object-cover bg-studio-900">
+                        <img src="testimonials/Christian%20S.%20TSU.png" alt="Christian S." class="w-9 h-9 border border-studio-600 object-cover bg-studio-900">
                         <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-accent transition-colors">Christian S.</h4>
+                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Christian S.</h4>
                             <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Tarlac State University</p>
                         </div>
                     </div>
@@ -776,9 +836,9 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Edgar%20U.%20FEU%20Manila.png" alt="Edgar U." class="w-9 h-9 rounded-full border border-studio-600 object-cover bg-studio-900">
+                        <img src="testimonials/Edgar%20U.%20FEU%20Manila.png" alt="Edgar U." class="w-9 h-9 border border-studio-600 object-cover bg-studio-900">
                         <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-accent transition-colors">Edgar U.</h4>
+                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Edgar U.</h4>
                             <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Far Eastern University - Manila</p>
                         </div>
                     </div>
@@ -800,9 +860,9 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Harvey%20M.%20UP%20Manila.png" alt="Harvey M." class="w-9 h-9 rounded-full border border-studio-600 object-cover bg-studio-900">
+                        <img src="testimonials/Harvey%20M.%20UP%20Manila.png" alt="Harvey M." class="w-9 h-9 border border-studio-600 object-cover bg-studio-900">
                         <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-accent transition-colors">Harvey M.</h4>
+                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Harvey M.</h4>
                             <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">University of the Philippines Manila</p>
                         </div>
                     </div>
@@ -824,9 +884,9 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Lhea%20G.%20UST%20Manila.png" alt="Lhea G." class="w-9 h-9 rounded-full border border-studio-600 object-cover bg-studio-900">
+                        <img src="testimonials/Lhea%20G.%20UST%20Manila.png" alt="Lhea G." class="w-9 h-9 border border-studio-600 object-cover bg-studio-900">
                         <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-accent transition-colors">Lhea G.</h4>
+                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Lhea G.</h4>
                             <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">University of Santo Thomas - Manila</p>
                         </div>
                     </div>
@@ -848,9 +908,9 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Mark%20T.%20BatSU%20Main.png" alt="Mark T." class="w-9 h-9 rounded-full border border-studio-600 object-cover bg-studio-900">
+                        <img src="testimonials/Mark%20T.%20BatSU%20Main.png" alt="Mark T." class="w-9 h-9 border border-studio-600 object-cover bg-studio-900">
                         <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-accent transition-colors">Mark T.</h4>
+                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Mark T.</h4>
                             <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Batangas State University - Main</p>
                         </div>
                     </div>
@@ -872,9 +932,9 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
-                        <img src="testimonials/Scarlet%20P.%20PUP%20Manila.png" alt="Scarlet P." class="w-9 h-9 rounded-full border border-studio-600 object-cover bg-studio-900">
+                        <img src="testimonials/Scarlet%20P.%20PUP%20Manila.png" alt="Scarlet P." class="w-9 h-9 border border-studio-600 object-cover bg-studio-900">
                         <div>
-                            <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-accent transition-colors">Scarlet P.</h4>
+                            <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Scarlet P.</h4>
                             <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Polythecnic University of the Philippines - Main</p>
                         </div>
                     </div>
@@ -897,7 +957,7 @@
         <!-- 04. Gallery Section -->
         <section id="gallery" class="min-h-screen p-8 md:p-16 lg:p-24 border-t border-studio-700">
             <div class="max-w-7xl mx-auto">
-                <div class="mb-12 gs-reveal">
+                <div class="mb-8 gs-reveal">
                     <div class="font-mono text-accent text-sm tracking-widest mb-4 flex items-center gap-4">
                         <span class="w-12 h-px bg-accent"></span> [VISUAL GALLERY]
                     </div>
@@ -908,102 +968,387 @@
                         </h2>
                     </div>
                     <p class="font-mono text-studio-400 text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-6">
-                        Curated collection of manual technical drawings, interior visualisations, and exterior render studies.
+                        Curated collection of manual technical drawings, interior perspectives, exterior perspectives, and digital paintings.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="gallery-grid">
-                    <div class="space-y-6">
-                        <div class="gs-reveal">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/manual/m1.jpg" alt="Manual drawing 1" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gs-reveal delay-100">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/manual/m2.jpg" alt="Manual drawing 2" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
+                <!-- Gallery Filter Controls -->
+                <div class="mb-10 flex flex-wrap items-center gap-2.5 sm:gap-3 font-mono text-xs gs-reveal delay-100" id="gallery-filter-controls">
+                    <button class="gallery-filter-btn hover-trigger active px-4 py-2 border border-studio-700 bg-studio-800 text-studio-100 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-filter="all">
+                        <span>All Works</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-300">28</span>
+                    </button>
+                    <button class="gallery-filter-btn hover-trigger px-4 py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-filter="manual">
+                        <span>Manual Drawings</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">9</span>
+                    </button>
+                    <button class="gallery-filter-btn hover-trigger px-4 py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-filter="interior">
+                        <span>Interior Perspectives</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">8</span>
+                    </button>
+                    <button class="gallery-filter-btn hover-trigger px-4 py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-filter="exterior">
+                        <span>Exterior Perspective</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">4</span>
+                    </button>
+                    <button class="gallery-filter-btn hover-trigger px-4 py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-filter="digital">
+                        <span>Digital Paintings</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">7</span>
+                    </button>
+                </div>
+
+                <!-- Gallery Grid (Asymmetrical Dynamic Masonry, Interleaved Variety of Sizes) -->
+                <div class="gallery-masonry-grid w-full" id="gallery-grid">
+                    
+                    <!-- 1. Digital Painting 1 (Wide Horizon) -->
+                    <div class="gallery-item gs-reveal" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA1.webp" alt="Digital Painting - Architectural Sci-Fi Concept I" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="space-y-6 md:pt-14">
-                        <div class="gs-reveal delay-100">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/interior/i1.jpg" alt="Interior rendering 1" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gs-reveal delay-200">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/interior/i2.jpg" alt="Interior rendering 2" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
+                    <!-- 2. Manual Drawing 1 (Tall Architectural Plate) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/m1.jpg" alt="Manual Drawing - Architectural Perspective Study 01" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="space-y-6">
-                        <div class="gs-reveal delay-200">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/exterior/e1.jpg" alt="Exterior rendering 1" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gs-reveal delay-300">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/exterior/e2.jpg" alt="Exterior rendering 2" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
+                    <!-- 3. Interior Perspective 1 (Portrait) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/i1.jpg" alt="Interior Perspective - Modern Living & Ambient Lighting" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="space-y-6 md:pt-14">
-                        <div class="gs-reveal delay-300">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/manual/m3.jpg" alt="Manual drawing 3" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gs-reveal delay-400">
-                            <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                                <img src="gallery/interior/i3.jpg" alt="Interior rendering 3" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                                    </span>
-                                </div>
+                    <!-- 4. Exterior Perspective 3 (Cinematic Dusk Horizon) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="exterior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/exterior/e3.jpg" alt="Exterior Perspective - Twilight Massing & Illumination" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
                             </div>
                         </div>
                     </div>
+
+                    <!-- 5. Manual Watercolor 3 (Tall Vertical) -->
+                    <div class="gallery-item gs-reveal" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/w3.jpg" alt="Manual Drawing - Watercolor Architectural Render III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. Digital Painting 4 (Medium Portrait) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA4.webp" alt="Digital Painting - Architectural Sci-Fi Concept IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Interior Perspective Light 1 (Tall Render) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/in1.jpg" alt="Interior Perspective - Spatial Light Render" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Exterior Perspective 1 (Landscape Facade) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="exterior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/exterior/e1.jpg" alt="Exterior Perspective - Contemporary Residential Facade" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 9. Manual Drawing 3 (Portrait Ink) -->
+                    <div class="gallery-item gs-reveal" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/m3.jpg" alt="Manual Drawing - Architectural Ink & Pen Study 03" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Digital Painting 2 (Cinematic Vista) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/2] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA2.webp" alt="Digital Painting - Environment Study II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 11. Interior Perspective 2 (Square Sanctuary) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-square overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/i2.jpg" alt="Interior Perspective - Minimalist Bedroom Sanctuary" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Manual Watercolor 1 (Landscape Format) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/w1.jpg" alt="Manual Drawing - Watercolor Architectural Render I" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 13. Exterior Perspective 4 (Urban Edge Proposal) -->
+                    <div class="gallery-item gs-reveal" data-category="exterior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/exterior/e4.jpg" alt="Exterior Perspective - Urban Edge Proposal" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 14. Digital Painting 6 (Fantasy Cityscape) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA6.webp" alt="Digital Painting - Architectural Fantasy Cityscape VI" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 15. Manual Drawing 2 (Tall Technical Draft) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/m2.jpg" alt="Manual Drawing - Technical Drafting Study 02" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 16. Interior Perspective Light 3 (Wide Open Studio) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/in3.jpg" alt="Interior Perspective - Open Concept Studio" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 17. Manual Watercolor 2 (Square Vignette) -->
+                    <div class="gallery-item gs-reveal" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/w2.jpg" alt="Manual Drawing - Watercolor Architectural Render II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 18. Interior Perspective 4 (Commercial Reception) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/i4.jpg" alt="Interior Perspective - Commercial Reception Area" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 19. Digital Painting 3 (Tall Canvas) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA3.webp" alt="Digital Painting - Atmospheric Canvas III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 20. Exterior Perspective 2 (Daylight Portrait) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="exterior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/exterior/e2.jpg" alt="Exterior Perspective - Daylight Massing & Fenestration" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 21. Manual Drawing 4 (Structural Drafting) -->
+                    <div class="gallery-item gs-reveal" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/m4.jpg" alt="Manual Drawing - Structural Drafting Study 04" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 22. Interior Perspective Light 2 (Atmospheric Mood) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-square overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/in2.jpg" alt="Interior Perspective - Materiality & Mood Study" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 23. Digital Painting 5 (Atmospheric Vista) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA5.webp" alt="Digital Painting - Environment Vista V" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 24. Manual Watercolor 4 (Atmospheric Color) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/w4.jpg" alt="Manual Drawing - Watercolor Architectural Render IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 25. Interior Perspective Light 4 (Wood Finishing) -->
+                    <div class="gallery-item gs-reveal" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/in4.jpg" alt="Interior Perspective - Acoustic Wood Finishing" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 26. Manual Drawing 5 (Perspective Shading) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/m5.jpg" alt="Manual Drawing - Architectural Perspective Shading 05" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 27. Digital Painting 7 (Composition Study) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA7.webp" alt="Digital Painting - Digital Art & Composition VII" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 28. Interior Perspective 3 (Dining & Lounge) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="interior">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/interior/i3.jpg" alt="Interior Perspective - Dining & Lounge Area" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Gallery See More Action Button -->
+                <div id="gallery-see-more-container" class="mt-12 text-center gs-reveal delay-100">
+                    <button id="gallery-see-more-btn" class="hover-trigger inline-flex items-center gap-3 px-8 py-4 bg-studio-800 hover:bg-studio-700 border border-studio-700 hover:border-accent text-studio-100 hover:text-accent font-mono text-xs uppercase tracking-widest transition-all duration-300 group cursor-pointer shadow-lg">
+                        <span id="gallery-see-more-text">Load More Works (18 Remaining)</span>
+                        <i id="gallery-see-more-icon" class="ph ph-arrow-down text-base text-accent group-hover:translate-y-1 transition-transform"></i>
+                    </button>
+                </div>
+
+                <!-- Gallery Empty State (Hidden by default) -->
+                <div id="gallery-empty-state" class="hidden text-center py-16 font-mono text-studio-400">
+                    <i class="ph ph-image-square text-4xl text-accent mb-2"></i>
+                    <p class="text-sm">No artwork found in this category.</p>
                 </div>
             </div>
         </section>
@@ -1026,7 +1371,7 @@
                     </p>
                 </div>
                 
-                <h3 class="text-2xl md:text-4xl font-bold leading-tight mb-8 text-white">
+                <h3 class="text-2xl md:text-4xl font-bold leading-tight mb-8 text-studio-100">
                     Let's collaborate on your next architectural or visual project.
                 </h3>
                 
@@ -1043,6 +1388,17 @@
                         <span class="text-studio-500 uppercase text-xs tracking-widest w-24">Location</span>
                         <span class="text-lg text-studio-300">General Trias, Cavite, Philippines</span>
                     </div>
+                    <div class="flex items-center gap-6">
+                        <span class="text-studio-500 uppercase text-xs tracking-widest w-24">Socials</span>
+                        <div class="flex items-center gap-6 text-lg">
+                            <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors hover-trigger">
+                                <i class="ph ph-linkedin-logo"></i> LinkedIn
+                            </a>
+                            <a href="https://www.instagram.com/13_1_18_jo/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors hover-trigger">
+                                <i class="ph ph-instagram-logo"></i> Instagram
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mt-20 pt-8 border-t border-studio-800 text-studio-500 font-mono text-xs flex justify-between items-center gs-reveal delay-200">
@@ -1056,7 +1412,7 @@
 
     <!-- Service Detail Modal -->
     <div id="service-modal" class="fixed inset-0 z-50 bg-studio-900/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
-        <div class="relative bg-studio-800 border border-studio-700 max-w-xl w-full p-6 sm:p-8 rounded-none md:rounded-lg shadow-2xl my-auto">
+        <div class="relative bg-studio-800 border border-studio-700 max-w-xl w-full p-6 sm:p-8 shadow-2xl my-auto">
             <!-- Crosshair decorations -->
             <div class="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-accent"></div>
             <div class="absolute -top-1 -right-1 w-3 h-3 border-t border-r border-accent"></div>
@@ -1086,7 +1442,7 @@
             </div>
 
             <div class="flex gap-4">
-                <a id="modal-inquire-btn" href="#contact" class="flex-1 text-center bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs py-3 rounded-full transition-all hover-trigger uppercase tracking-widest">
+                <a id="modal-inquire-btn" href="#contact" class="flex-1 text-center bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs py-3 transition-all hover-trigger uppercase tracking-widest">
                     Inquire for this service &rarr;
                 </a>
             </div>
@@ -1095,7 +1451,7 @@
 
     <!-- Project Popup Box Modal -->
     <div id="project-modal" class="fixed inset-0 z-[100] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-4 md:p-8 select-none overflow-y-auto">
-        <div class="relative bg-studio-800 border border-studio-700 max-w-5xl w-full p-5 md:p-8 rounded-xl shadow-2xl my-auto flex flex-col gap-5 max-h-[92vh] overflow-y-auto">
+        <div class="relative bg-studio-800 border border-studio-700 max-w-5xl w-full p-5 md:p-8 shadow-2xl my-auto flex flex-col gap-5 max-h-[92vh] overflow-y-auto">
             <!-- Crosshair decorations -->
             <div class="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-accent"></div>
             <div class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-accent"></div>
@@ -1112,7 +1468,7 @@
                         Layag Airport
                     </h3>
                 </div>
-                <button id="close-project-modal" class="bg-studio-900/80 hover:bg-studio-700 text-studio-300 hover:text-accent border border-studio-700 p-2.5 rounded-full transition-all hover-trigger">
+                <button id="close-project-modal" class="bg-studio-900/80 hover:bg-studio-700 text-studio-300 hover:text-accent border border-studio-700 p-2.5 transition-all hover-trigger">
                     <i class="ph ph-x text-xl"></i>
                 </button>
             </div>
@@ -1128,7 +1484,7 @@
             <!-- Description and Action Button -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-3 border-t border-studio-700/80">
                 <p id="proj-modal-desc" class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed max-w-2xl"></p>
-                <a id="proj-modal-full-link" href="" class="shrink-0 bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-5 py-3 rounded-full transition-all flex items-center gap-2 uppercase tracking-widest hover-trigger">
+                <a id="proj-modal-full-link" href="" class="shrink-0 bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-5 py-3 transition-all flex items-center gap-2 uppercase tracking-widest hover-trigger">
                     <span>View Project Page</span> <i class="ph ph-arrow-up-right text-sm"></i>
                 </a>
             </div>
@@ -1147,26 +1503,25 @@
         <div class="absolute top-6 left-6 right-6 flex justify-between items-center z-10 font-mono text-xs text-studio-400">
             <div class="flex items-center gap-3">
                 <span class="text-accent uppercase tracking-widest">[GALLERY VIEW]</span>
-                <span id="lightbox-counter" class="bg-studio-800 text-studio-200 border border-studio-700 px-3 py-1 rounded-full font-bold">1 / 8</span>
+                <span id="lightbox-counter" class="bg-studio-800 text-studio-200 border border-studio-700 px-3 py-1 font-bold">1 / 8</span>
             </div>
-            <button id="close-lightbox-btn" class="hover-trigger bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 p-2.5 rounded-full transition-all flex items-center justify-center">
+            <button id="close-lightbox-btn" class="hover-trigger bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 p-2.5 transition-all flex items-center justify-center">
                 <i class="ph ph-x text-xl"></i>
             </button>
         </div>
 
         <!-- Prev button -->
-        <button id="prev-lightbox-btn" class="hover-trigger absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 rounded-full transition-all backdrop-blur-sm group">
+        <button id="prev-lightbox-btn" class="hover-trigger absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm group">
             <i class="ph ph-caret-left text-2xl md:text-3xl"></i>
         </button>
 
         <!-- Main Lightbox Image Container -->
-        <div class="relative max-w-5xl max-h-[82vh] w-full h-full flex flex-col items-center justify-center p-2">
-            <img id="lightbox-img" src="" alt="Gallery Preview" class="max-w-full max-h-[75vh] object-contain rounded-lg border border-studio-700/80 shadow-2xl transition-all duration-300">
-            <p id="lightbox-caption" class="font-mono text-xs md:text-sm text-studio-300 mt-4 tracking-wide text-center bg-studio-800/90 border border-studio-700 px-4 py-2 rounded-full"></p>
+        <div class="relative max-w-5xl max-h-[85vh] w-full h-full flex flex-col items-center justify-center p-2">
+            <img id="lightbox-img" src="" alt="Gallery Preview" class="max-w-full max-h-[82vh] object-contain border border-studio-700/80 shadow-2xl transition-all duration-300">
         </div>
 
         <!-- Next button -->
-        <button id="next-lightbox-btn" class="hover-trigger absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 rounded-full transition-all backdrop-blur-sm group">
+        <button id="next-lightbox-btn" class="hover-trigger absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm group">
             <i class="ph ph-caret-right text-2xl md:text-3xl"></i>
         </button>
     </div>

@@ -4,23 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layag Airport | Portfolio</title>
+    <!-- Inline Theme Initializer -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('mp_portfolio_theme');
+                const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+                    document.documentElement.classList.add('light');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --studio-900: 14 14 14;
+            --studio-800: 24 24 24;
+            --studio-700: 42 42 42;
+            --studio-600: 64 64 64;
+            --studio-400: 163 163 163;
+            --studio-300: 212 212 212;
+            --studio-200: 229 229 229;
+            --studio-100: 245 245 245;
+            --accent: 250 204 21;
+        }
+        html.light {
+            --studio-900: 247 249 252;
+            --studio-800: 255 255 255;
+            --studio-700: 226 232 240;
+            --studio-600: 203 213 225;
+            --studio-400: 71 85 105;
+            --studio-300: 51 65 85;
+            --studio-200: 30 41 59;
+            --studio-100: 15 23 42;
+            --accent: 217 119 6;
+        }
+    </style>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         studio: {
-                            900: '#0e0e0e',
-                            800: '#181818',
-                            700: '#2a2a2a',
-                            600: '#404040',
-                            400: '#a3a3a3',
-                            300: '#d4d4d4',
-                            200: '#e5e5e5',
-                            100: '#f5f5f5',
+                            900: 'rgb(var(--studio-900) / <alpha-value>)',
+                            800: 'rgb(var(--studio-800) / <alpha-value>)',
+                            700: 'rgb(var(--studio-700) / <alpha-value>)',
+                            600: 'rgb(var(--studio-600) / <alpha-value>)',
+                            400: 'rgb(var(--studio-400) / <alpha-value>)',
+                            300: 'rgb(var(--studio-300) / <alpha-value>)',
+                            200: 'rgb(var(--studio-200) / <alpha-value>)',
+                            100: 'rgb(var(--studio-100) / <alpha-value>)',
                         },
-                        accent: '#d4ff32'
+                        accent: 'rgb(var(--accent) / <alpha-value>)'
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
@@ -41,8 +78,14 @@
             <a href="/#projects" class="font-mono text-xs md:text-sm text-studio-300 hover:text-accent flex items-center gap-2 border border-studio-700 hover:border-accent bg-studio-800 px-4 py-2 rounded-full transition-all group">
                 <i class="ph ph-arrow-left text-base group-hover:-translate-x-1 transition-transform"></i> Back to Portfolio
             </a>
-            <div class="font-mono text-xs text-accent uppercase tracking-widest hidden sm:block">
-                [PROJECT GALLERY]
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle-btn" class="flex items-center gap-2 font-mono text-xs text-studio-300 hover:text-accent border border-studio-700 hover:border-accent bg-studio-800 px-3.5 py-1.5 rounded-full transition-all" title="Toggle Light / Dark Mode">
+                    <i class="ph ph-sun text-sm text-accent"></i>
+                    <span id="theme-text">Mode: Dark</span>
+                </button>
+                <div class="font-mono text-xs text-accent uppercase tracking-widest hidden sm:block">
+                    [PROJECT GALLERY]
+                </div>
             </div>
         </div>
     </header>
@@ -203,6 +246,32 @@
                 if (e.key === 'ArrowRight') nextBtn.click();
                 if (e.key === 'ArrowLeft') prevBtn.click();
             }
+        });
+
+        // Theme toggle logic
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const themeText = document.getElementById('theme-text');
+        
+        function updateAirportThemeUI() {
+            const isLight = document.documentElement.classList.contains('light');
+            if (themeText) themeText.textContent = isLight ? 'Mode: Light' : 'Mode: Dark';
+            const icon = themeToggleBtn?.querySelector('i');
+            if (icon) {
+                icon.className = isLight ? 'ph ph-moon text-sm text-accent' : 'ph ph-sun text-sm text-accent';
+            }
+        }
+        updateAirportThemeUI();
+
+        themeToggleBtn?.addEventListener('click', () => {
+            const isLight = document.documentElement.classList.contains('light');
+            if (isLight) {
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('mp_portfolio_theme', 'dark');
+            } else {
+                document.documentElement.classList.add('light');
+                localStorage.setItem('mp_portfolio_theme', 'light');
+            }
+            updateAirportThemeUI();
         });
     </script>
 </body>

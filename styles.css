@@ -1,9 +1,83 @@
+/* ==========================================================================
+   THEME VARIABLES (DARK / LIGHT ARCHITECTURAL PALETTES)
+   ========================================================================== */
+:root {
+    /* Dark Blueprint Mode (Default) */
+    --studio-900: 10 10 10;        /* #0a0a0a */
+    --studio-800: 20 20 20;        /* #141414 */
+    --studio-700: 38 38 38;        /* #262626 */
+    --studio-600: 64 64 64;        /* #404040 */
+    --studio-500: 115 115 115;     /* #737373 */
+    --studio-400: 163 163 163;     /* #a3a3a3 */
+    --studio-300: 212 212 212;     /* #d4d4d4 */
+    --studio-200: 229 229 229;     /* #e5e5e5 */
+    --studio-100: 245 245 245;     /* #f5f5f5 */
+    --accent: 250 204 21;          /* #facc15 - Safety/Blueprint Yellow */
+    --accent-hex: #facc15;
+    --blueprint-grid: rgba(255, 255, 255, 0.032);
+    --cursor-color: #facc15;
+    --cursor-border: rgba(250, 204, 21, 0.5);
+    --cursor-hover-bg: rgba(250, 204, 21, 0.1);
+    --scrollbar-track: #0a0a0a;
+    --scrollbar-thumb: #262626;
+    --scrollbar-hover: #facc15;
+    --meter-bg: rgba(10, 10, 10, 0.75);
+    --meter-border: rgba(255, 255, 255, 0.1);
+    --meter-track-bg: rgba(0, 0, 0, 0.4);
+    --meter-text: #f5f5f5;
+    --meter-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+html.light,
+body.light-mode {
+    /* Drafting Table / Architectural Paper Light Mode */
+    --studio-900: 247 249 252;     /* #f7f9fc - Architectural drafting vellum */
+    --studio-800: 255 255 255;     /* #ffffff - Crisp presentation card */
+    --studio-700: 226 232 240;     /* #e2e8f0 - Technical CAD section border */
+    --studio-600: 203 213 225;     /* #cbd5e1 - Secondary CAD line */
+    --studio-500: 100 116 139;     /* #64748b - Annotation gray */
+    --studio-400: 71 85 105;       /* #475569 - Crisp technical subtext */
+    --studio-300: 51 65 85;        /* #334155 - Body copy */
+    --studio-200: 30 41 59;        /* #1e293b - Headings */
+    --studio-100: 15 23 42;        /* #0f172a - Deep black drafting ink */
+    --accent: 217 119 6;           /* #d97706 - Architectural Amber / Drafting Ochre */
+    --accent-hex: #d97706;
+    --blueprint-grid: rgba(15, 23, 42, 0.045);
+    --cursor-color: #d97706;
+    --cursor-border: rgba(217, 119, 6, 0.6);
+    --cursor-hover-bg: rgba(217, 119, 6, 0.12);
+    --scrollbar-track: #f1f5f9;
+    --scrollbar-thumb: #cbd5e1;
+    --scrollbar-hover: #d97706;
+    --meter-bg: rgba(255, 255, 255, 0.88);
+    --meter-border: rgba(15, 23, 42, 0.12);
+    --meter-track-bg: rgba(226, 232, 240, 0.85);
+    --meter-text: #0f172a;
+    --meter-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --card-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* Smooth Theme Transitions */
+body, aside, header, nav, section, div, button, input, textarea, a {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ==========================================================================
+   ARCHITECTURAL CAD SHARP AESTHETIC - ZERO ROUNDED CORNERS (STRICT)
+   ========================================================================== */
+*, *::before, *::after {
+    border-radius: 0 !important;
+}
+
 /* Blueprint Grid Background */
 .bg-blueprint {
-    background-color: #0a0a0a;
+    background-color: rgb(var(--studio-900));
     background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
     background-size: 50px 50px;
 }
 
@@ -22,14 +96,14 @@
     height: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #0a0a0a;
+    background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-    background: #262626;
-    border-radius: 4px;
+    background: var(--scrollbar-thumb);
+    border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #facc15;
+    background: var(--scrollbar-hover);
 }
 
 /* Project Card Hover Effects */
@@ -50,33 +124,34 @@
     opacity: 1;
 }
 
-/* --- NEW ANIMATION & CURSOR STYLES --- */
+/* --- ANIMATION & CURSOR STYLES (TECHNICAL SHARP DRAFTING CURSOR) --- */
 @media (hover: hover) and (pointer: fine) {
     body { cursor: none; }
     .cursor-dot {
-        width: 6px; height: 6px; background: #facc15;
+        width: 6px; height: 6px; background: var(--cursor-color);
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-        border-radius: 50%; z-index: 9999; pointer-events: none;
+        border-radius: 0 !important; z-index: 9999; pointer-events: none;
+        transition: background-color 0.2s ease;
     }
     .cursor-outline {
-        width: 32px; height: 32px; border: 1px solid rgba(250, 204, 21, 0.5);
+        width: 30px; height: 30px; border: 1px solid var(--cursor-border);
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-        border-radius: 0; z-index: 9998; pointer-events: none;
-        transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease, border-color 0.3s ease;
+        border-radius: 0 !important; z-index: 9998; pointer-events: none;
+        transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
     }
-    /* Class toggled via JS on hover */
+    /* Class toggled via JS on hover - expands as a technical precision square */
     .cursor-outline.cursor-hover {
-        width: 50px; height: 50px; 
-        background-color: rgba(250, 204, 21, 0.1); 
-        border-color: #facc15; 
-        border-radius: 50%;
+        width: 48px; height: 48px; 
+        background-color: var(--cursor-hover-bg); 
+        border-color: var(--cursor-color); 
+        border-radius: 0 !important;
     }
 }
 
 /* Scroll Reveal Animations */
 .gs-reveal {
     opacity: 0; visibility: hidden; transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .gs-reveal.is-active {
     opacity: 1; visibility: visible; transform: translateY(0);
@@ -100,14 +175,14 @@
 .prof-dot:nth-child(4) { animation-delay: 0.4s; }
 .prof-dot:nth-child(5) { animation-delay: 0.5s; }
 
-/* Scroll Meter */
+/* Scroll Meter (Sharp Architectural HUD) */
 .scroll-meter {
     padding: 0.65rem 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 999px;
-    background: rgba(10, 10, 10, 0.72);
+    border: 1px solid var(--meter-border);
+    border-radius: 0 !important;
+    background: var(--meter-bg);
     backdrop-filter: blur(14px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    box-shadow: var(--meter-shadow);
 }
 
 .scroll-meter-label,
@@ -115,40 +190,43 @@
     font-size: 0.65rem;
     line-height: 1;
     letter-spacing: 0.14em;
-    color: #f5f5f5;
+    color: var(--meter-text);
     min-width: 2.1rem;
     text-align: center;
 }
 
 .scroll-meter-label {
-    color: #facc15;
+    color: var(--accent-hex);
     opacity: 0.9;
 }
 
 .scroll-meter-value {
-    color: #facc15;
+    color: var(--accent-hex);
     text-shadow: 0 0 14px rgba(250, 204, 21, 0.35);
+}
+
+html.light .scroll-meter-value {
+    text-shadow: none;
+    font-weight: 700;
 }
 
 .scroll-meter-track {
     position: relative;
     width: 8rem;
     height: 0.95rem;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 999px;
+    border: 1px solid var(--meter-border);
+    border-radius: 0 !important;
     overflow: hidden;
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
-        rgba(0, 0, 0, 0.35);
+    background: var(--meter-track-bg);
 }
 
 .scroll-meter-fill {
     position: absolute;
     inset: 0 auto 0 0;
     width: 0;
-    border-radius: inherit;
-    background: linear-gradient(90deg, rgba(250, 204, 21, 0.18), rgba(250, 204, 21, 0.95));
-    box-shadow: 0 0 18px rgba(250, 204, 21, 0.3);
+    border-radius: 0 !important;
+    background: linear-gradient(90deg, rgba(var(--accent) / 0.25), rgba(var(--accent) / 0.95));
+    box-shadow: 0 0 18px rgba(var(--accent) / 0.3);
     transition: width 120ms linear;
 }
 
@@ -158,17 +236,104 @@
     left: 0;
     width: 0.55rem;
     height: 0.55rem;
-    border-radius: 999px;
-    background: #f5f5f5;
-    border: 2px solid #facc15;
-    box-shadow: 0 0 0 6px rgba(250, 204, 21, 0.08);
+    border-radius: 0 !important;
+    background: var(--meter-text);
+    border: 2px solid var(--accent-hex);
+    box-shadow: 0 0 0 4px rgba(var(--accent) / 0.1);
     transform: translate(-50%, -50%);
     transition: left 120ms linear;
 }
-/* --- NEW: Blueprint Loader Fade-Out State --- */
+
+/* --- Blueprint Loader Fade-Out State --- */
 .loader-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transform: scale(1.03);
 }
+
+/* Gallery Filtering & Card Transitions */
+.gallery-filter-btn {
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.gallery-filter-btn.active {
+    background-color: var(--accent-hex) !important;
+    color: #0a0a0a !important;
+    border-color: var(--accent-hex) !important;
+    box-shadow: 0 0 16px rgba(var(--accent) / 0.25);
+}
+.gallery-filter-btn.active .filter-count {
+    background-color: #0a0a0a !important;
+    color: var(--accent-hex) !important;
+}
+
+/* Dynamic Masonry Gallery Container */
+.gallery-masonry-grid {
+    column-count: 1;
+    column-gap: 1.5rem;
+}
+@media (min-width: 640px) {
+    .gallery-masonry-grid {
+        column-count: 2;
+    }
+}
+@media (min-width: 1024px) {
+    .gallery-masonry-grid {
+        column-count: 3;
+    }
+}
+@media (min-width: 1280px) {
+    .gallery-masonry-grid {
+        column-count: 4;
+    }
+}
+
+.gallery-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    width: 100%;
+    transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1), transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.gallery-item.gallery-item-hidden {
+    display: none !important;
+}
+.gallery-item.gallery-item-fadeout {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+}
+.gallery-item.gallery-item-fadein {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Theme Switcher Toggle Pill Styling (Sharp CAD Box) */
+.theme-switch-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid rgb(var(--studio-700));
+    background: rgb(var(--studio-800));
+    color: rgb(var(--studio-300));
+    border-radius: 0 !important;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.theme-switch-btn:hover {
+    border-color: rgb(var(--accent));
+    color: rgb(var(--accent));
+}
+
+/* Gallery See More Controls */
+#gallery-see-more-btn {
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+#gallery-see-more-btn:hover {
+    box-shadow: 0 0 20px rgba(var(--accent) / 0.15);
+}
+
