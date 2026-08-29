@@ -38,6 +38,9 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+    <!-- html2canvas for High-Resolution A4 PNG Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -251,8 +254,8 @@
                             <i class="ph ph-arrow-right group-hover:translate-x-2 transition-transform"></i>
                         </a>
                         <button id="open-cv-btn" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-2.5 border border-studio-600 hover:border-accent text-studio-200 hover:text-accent bg-studio-800/80 transition-all hover-trigger">
-                            <i class="ph ph-file-pdf text-accent text-base"></i>
-                            <span>Download CV / Summary</span>
+                            <i class="ph ph-download-simple text-accent text-base"></i>
+                            <span>Download CV (A4 PNG)</span>
                         </button>
                     </div>
                 </div>
@@ -353,149 +356,278 @@
                 <!-- Grid Container -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 sm:gap-6 md:gap-8" id="project-grid">
                     
-                    <!-- Project 1 -->
-                    <a href="portfolio/airport/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-100 transition-transform duration-500 hover:-translate-y-1" data-project="airport" data-typology="architecture">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                                <img src="portfolio/cover/airport.webp" alt="Layag Airport" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <!-- Project 1: Layag Airport -->
+                    <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 transition-transform duration-500 hover:-translate-y-1" data-project="airport" data-typology="architecture">
+                        <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
+                            <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/airport.webp" alt="Layag Airport" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/70 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="absolute top-2.5 right-2.5 font-mono text-[9px] sm:text-[10px] px-2 py-0.5 bg-studio-900/90 border border-studio-700 text-accent uppercase tracking-wider backdrop-blur-sm">
+                                    4 PHOTOS
+                                </span>
                             </div>
-                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Layag Airport</h3>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                            <div class="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-1">
+                                        <div>
+                                            <h3 class="text-lg sm:text-xl font-bold text-studio-100 group-hover:text-accent transition-colors">Layag Airport</h3>
+                                            <p class="font-mono text-[11px] text-accent font-medium">Sangley Point Domestic Airport</p>
+                                        </div>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5">2024</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] sm:text-[11px] text-studio-400 uppercase tracking-wider my-2 bg-studio-900/80 border border-studio-700/80 px-2.5 py-1">
+                                        <span class="flex items-center gap-1 text-studio-300">
+                                            <i class="ph ph-map-pin text-accent"></i> Sangley Point, Cavite City
+                                        </span>
+                                        <span>•</span>
+                                        <span class="text-accent font-bold">147 Hectares</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2.5 sm:gap-3 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest mb-2">
+                                        <span>Typology: Architecture</span>
+                                        <span>•</span>
+                                        <span>Focus: Terminal Design</span>
+                                    </div>
+                                    <!-- Always Visible Short Description -->
+                                    <p class="project-meta font-mono text-xs text-studio-300 leading-relaxed block border-l-2 border-studio-700 group-hover:border-accent pl-2.5 py-0.5 transition-colors">
+                                        A 147-hectare domestic airport proposal balancing passenger movement, structural sail canopies, and visual clarity.
+                                    </p>
                                 </div>
-                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                    <span>Typology: Architecture</span>
-                                    <span>Focus: Terminal Design</span>
+                                <div class="mt-4 pt-3 border-t border-studio-700/60 flex items-center justify-between font-mono text-[11px] text-studio-400">
+                                    <span class="flex items-center gap-1.5 text-accent font-bold group-hover:underline">
+                                        <i class="ph ph-arrows-out-simple"></i> Click for Full Overview
+                                    </span>
+                                    <span class="text-studio-500 text-[10px] uppercase">[SPEC #01]</span>
                                 </div>
-                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                    A conceptual airport proposal that balances movement, structure, and visual clarity.
-                                </p>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
-                    <!-- Project 2 -->
-                    <a href="portfolio/amping/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-200 transition-transform duration-500 hover:-translate-y-1" data-project="amping" data-typology="healthcare">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                                <img src="portfolio/cover/amping.webp" alt="Amping Children's Hospital" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <!-- Project 2: Amping Children's Hospital -->
+                    <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 transition-transform duration-500 hover:-translate-y-1" data-project="amping" data-typology="healthcare">
+                        <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
+                            <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/amping.webp" alt="Amping Children's Hospital" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/70 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="absolute top-2.5 right-2.5 font-mono text-[9px] sm:text-[10px] px-2 py-0.5 bg-studio-900/90 border border-studio-700 text-accent uppercase tracking-wider backdrop-blur-sm">
+                                    7 PHOTOS
+                                </span>
                             </div>
-                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Amping Children's Hospital</h3>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2023</span>
+                            <div class="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-1">
+                                        <h3 class="text-lg sm:text-xl font-bold text-studio-100 group-hover:text-accent transition-colors">Amping Children's Hospital</h3>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5">2023</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] sm:text-[11px] text-studio-400 uppercase tracking-wider my-2 bg-studio-900/80 border border-studio-700/80 px-2.5 py-1">
+                                        <span class="flex items-center gap-1 text-studio-300">
+                                            <i class="ph ph-map-pin text-accent"></i> Panglao Island, Bohol
+                                        </span>
+                                        <span>•</span>
+                                        <span class="text-accent font-bold">5 Hectares</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2.5 sm:gap-3 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest mb-2">
+                                        <span>Typology: Healthcare</span>
+                                        <span>•</span>
+                                        <span>Focus: Planning &amp; Flow</span>
+                                    </div>
+                                    <!-- Always Visible Short Description -->
+                                    <p class="project-meta font-mono text-xs text-studio-300 leading-relaxed block border-l-2 border-studio-700 group-hover:border-accent pl-2.5 py-0.5 transition-colors">
+                                        A 5-hectare pediatric healthcare facility centered on biophilic circulation, healing courtyards, and emergency triage.
+                                    </p>
                                 </div>
-                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                    <span>Typology: Healthcare</span>
-                                    <span>Focus: Planning</span>
+                                <div class="mt-4 pt-3 border-t border-studio-700/60 flex items-center justify-between font-mono text-[11px] text-studio-400">
+                                    <span class="flex items-center gap-1.5 text-accent font-bold group-hover:underline">
+                                        <i class="ph ph-arrows-out-simple"></i> Click for Full Overview
+                                    </span>
+                                    <span class="text-studio-500 text-[10px] uppercase">[SPEC #02]</span>
                                 </div>
-                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                    A hospital concept centered on calm circulation, clarity, and efficient spatial organization.
-                                </p>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
-                    <!-- Project 3 -->
-                    <a href="portfolio/marahuyo/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-300 transition-transform duration-500 hover:-translate-y-1" data-project="marahuyo" data-typology="planning">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                                <img src="portfolio/cover/marahuyo.webp" alt="Marahuyo Park" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <!-- Project 3: Marahuyo Park -->
+                    <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 transition-transform duration-500 hover:-translate-y-1" data-project="marahuyo" data-typology="planning">
+                        <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
+                            <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/marahuyo.webp" alt="Marahuyo Park" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/70 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="absolute top-2.5 right-2.5 font-mono text-[9px] sm:text-[10px] px-2 py-0.5 bg-studio-900/90 border border-studio-700 text-accent uppercase tracking-wider backdrop-blur-sm">
+                                    3 PHOTOS
+                                </span>
                             </div>
-                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Marahuyo Park</h3>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                            <div class="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-1">
+                                        <h3 class="text-lg sm:text-xl font-bold text-studio-100 group-hover:text-accent transition-colors">Marahuyo Park</h3>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5">2024</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] sm:text-[11px] text-studio-400 uppercase tracking-wider my-2 bg-studio-900/80 border border-studio-700/80 px-2.5 py-1">
+                                        <span class="flex items-center gap-1 text-studio-300">
+                                            <i class="ph ph-map-pin text-accent"></i> Calamba Baywalk, Calamba City
+                                        </span>
+                                        <span>•</span>
+                                        <span class="text-accent font-bold">1.5 Hectares</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2.5 sm:gap-3 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest mb-2">
+                                        <span>Typology: Planning</span>
+                                        <span>•</span>
+                                        <span>Focus: Public Realm</span>
+                                    </div>
+                                    <!-- Always Visible Short Description -->
+                                    <p class="project-meta font-mono text-xs text-studio-300 leading-relaxed block border-l-2 border-studio-700 group-hover:border-accent pl-2.5 py-0.5 transition-colors">
+                                        A 1.5-hectare baywalk park and promenade shaped for open community gathering, viewing decks, and native ecology.
+                                    </p>
                                 </div>
-                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                    <span>Typology: Planning</span>
-                                    <span>Focus: Public Realm</span>
+                                <div class="mt-4 pt-3 border-t border-studio-700/60 flex items-center justify-between font-mono text-[11px] text-studio-400">
+                                    <span class="flex items-center gap-1.5 text-accent font-bold group-hover:underline">
+                                        <i class="ph ph-arrows-out-simple"></i> Click for Full Overview
+                                    </span>
+                                    <span class="text-studio-500 text-[10px] uppercase">[SPEC #03]</span>
                                 </div>
-                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                    A landscape and circulation study shaped for open gathering, pause, and movement.
-                                </p>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
-                    <!-- Project 4 -->
-                    <a href="portfolio/marikina/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-400 transition-transform duration-500 hover:-translate-y-1" data-project="marikina" data-typology="planning">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                                <img src="portfolio/cover/marikina.webp" alt="Marikina Riverside" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <!-- Project 4: Marikina Riverside Park -->
+                    <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-400 transition-transform duration-500 hover:-translate-y-1" data-project="marikina" data-typology="planning">
+                        <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
+                            <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/marikina.webp" alt="Marikina Riverside Park" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/70 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="absolute top-2.5 right-2.5 font-mono text-[9px] sm:text-[10px] px-2 py-0.5 bg-studio-900/90 border border-studio-700 text-accent uppercase tracking-wider backdrop-blur-sm">
+                                    4 PHOTOS
+                                </span>
                             </div>
-                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Marikina Riverside</h3>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                            <div class="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-1">
+                                        <h3 class="text-lg sm:text-xl font-bold text-studio-100 group-hover:text-accent transition-colors">Marikina Riverside Park</h3>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5">2024</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] sm:text-[11px] text-studio-400 uppercase tracking-wider my-2 bg-studio-900/80 border border-studio-700/80 px-2.5 py-1">
+                                        <span class="flex items-center gap-1 text-studio-300">
+                                            <i class="ph ph-map-pin text-accent"></i> Marikina Riverside
+                                        </span>
+                                        <span>•</span>
+                                        <span class="text-accent font-bold">1 Hectare</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2.5 sm:gap-3 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest mb-2">
+                                        <span>Typology: Planning</span>
+                                        <span>•</span>
+                                        <span>Focus: Urban Renewal</span>
+                                    </div>
+                                    <!-- Always Visible Short Description -->
+                                    <p class="project-meta font-mono text-xs text-studio-300 leading-relaxed block border-l-2 border-studio-700 group-hover:border-accent pl-2.5 py-0.5 transition-colors">
+                                        A 1-hectare riverfront park plan highlighting pedestrian connectivity, stepped flood terraces, and active plazas.
+                                    </p>
                                 </div>
-                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                    <span>Typology: Planning</span>
-                                    <span>Focus: Urban Renewal</span>
+                                <div class="mt-4 pt-3 border-t border-studio-700/60 flex items-center justify-between font-mono text-[11px] text-studio-400">
+                                    <span class="flex items-center gap-1.5 text-accent font-bold group-hover:underline">
+                                        <i class="ph ph-arrows-out-simple"></i> Click for Full Overview
+                                    </span>
+                                    <span class="text-studio-500 text-[10px] uppercase">[SPEC #04]</span>
                                 </div>
-                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                    A riverside proposal highlighting pedestrian flow, edge conditions, and site character.
-                                </p>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
-                    <!-- Project 5 -->
-                    <a href="portfolio/subdivision/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-500 transition-transform duration-500 hover:-translate-y-1" data-project="subdivision" data-typology="residential">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                                <img src="portfolio/cover/hinabi.webp" alt="Hinabi Heights Subdivision" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <!-- Project 5: Hinabi Heights Subdivision -->
+                    <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-500 transition-transform duration-500 hover:-translate-y-1" data-project="subdivision" data-typology="residential">
+                        <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
+                            <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/hinabi.webp" alt="Hinabi Heights Subdivision" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/70 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="absolute top-2.5 right-2.5 font-mono text-[9px] sm:text-[10px] px-2 py-0.5 bg-studio-900/90 border border-studio-700 text-accent uppercase tracking-wider backdrop-blur-sm">
+                                    4 PHOTOS
+                                </span>
                             </div>
-                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Hinabi Heights Subdivision</h3>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                            <div class="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-1">
+                                        <h3 class="text-lg sm:text-xl font-bold text-studio-100 group-hover:text-accent transition-colors">Hinabi Heights Subdivision</h3>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5">2024</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] sm:text-[11px] text-studio-400 uppercase tracking-wider my-2 bg-studio-900/80 border border-studio-700/80 px-2.5 py-1">
+                                        <span class="flex items-center gap-1 text-studio-300">
+                                            <i class="ph ph-map-pin text-accent"></i> Manggahan, General Trias, Cavite
+                                        </span>
+                                        <span>•</span>
+                                        <span class="text-accent font-bold">3.5 Hectares</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2.5 sm:gap-3 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest mb-2">
+                                        <span>Typology: Residential</span>
+                                        <span>•</span>
+                                        <span>Focus: Site Planning</span>
+                                    </div>
+                                    <!-- Always Visible Short Description -->
+                                    <p class="project-meta font-mono text-xs text-studio-300 leading-relaxed block border-l-2 border-studio-700 group-hover:border-accent pl-2.5 py-0.5 transition-colors">
+                                        A 3.5-hectare master-planned residential community organized around neighborhood livability, road hierarchy, and green amenities.
+                                    </p>
                                 </div>
-                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                    <span>Typology: Residential</span>
-                                    <span>Focus: Site Planning</span>
+                                <div class="mt-4 pt-3 border-t border-studio-700/60 flex items-center justify-between font-mono text-[11px] text-studio-400">
+                                    <span class="flex items-center gap-1.5 text-accent font-bold group-hover:underline">
+                                        <i class="ph ph-arrows-out-simple"></i> Click for Full Overview
+                                    </span>
+                                    <span class="text-studio-500 text-[10px] uppercase">[SPEC #05]</span>
                                 </div>
-                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                    A subdivision concept organized around livability, hierarchy, and practical circulation.
-                                </p>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
-                    <!-- Project 6 -->
-                    <a href="portfolio/plaza/full_project.html" class="project-card hover-trigger relative w-full h-80 sm:h-96 md:h-[480px] group cursor-pointer gs-reveal delay-600 transition-transform duration-500 hover:-translate-y-1" data-project="plaza" data-typology="planning">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-2 flex flex-col">
-                            <div class="project-img-wrapper relative flex-1 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                                <img src="portfolio/cover/plaza.webp" alt="Jagna De Plaza" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent pointer-events-none"></div>
-                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <!-- Project 6: Jagna De Plaza -->
+                    <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-600 transition-transform duration-500 hover:-translate-y-1" data-project="plaza" data-typology="planning">
+                        <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
+                            <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
+                                <img src="portfolio/cover/plaza.webp" alt="Jagna De Plaza" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-studio-900/70 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="absolute top-2.5 right-2.5 font-mono text-[9px] sm:text-[10px] px-2 py-0.5 bg-studio-900/90 border border-studio-700 text-accent uppercase tracking-wider backdrop-blur-sm">
+                                    1 PHOTO
+                                </span>
                             </div>
-                            <div class="pt-4 sm:pt-6 pb-2 sm:pb-4 px-2">
-                                <div class="flex justify-between items-start mb-1.5 sm:mb-2">
-                                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold">Jagna De Plaza</h3>
-                                    <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">2024</span>
+                            <div class="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-1">
+                                        <h3 class="text-lg sm:text-xl font-bold text-studio-100 group-hover:text-accent transition-colors">Jagna De Plaza</h3>
+                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5">2024</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] sm:text-[11px] text-studio-400 uppercase tracking-wider my-2 bg-studio-900/80 border border-studio-700/80 px-2.5 py-1">
+                                        <span class="flex items-center gap-1 text-studio-300">
+                                            <i class="ph ph-map-pin text-accent"></i> Población, Jagna, Bohol
+                                        </span>
+                                        <span>•</span>
+                                        <span class="text-accent font-bold">5,200 sqm</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2.5 sm:gap-3 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest mb-2">
+                                        <span>Typology: Planning</span>
+                                        <span>•</span>
+                                        <span>Focus: Civic Space</span>
+                                    </div>
+                                    <!-- Always Visible Short Description -->
+                                    <p class="project-meta font-mono text-xs text-studio-300 leading-relaxed block border-l-2 border-studio-700 group-hover:border-accent pl-2.5 py-0.5 transition-colors">
+                                        A 5,200 sqm town plaza revitalization study focused on public gathering, geometric proportion, and architectural shading.
+                                    </p>
                                 </div>
-                                <div class="flex gap-3 sm:gap-4 font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">
-                                    <span>Typology: Planning</span>
-                                    <span>Focus: Civic Space</span>
+                                <div class="mt-4 pt-3 border-t border-studio-700/60 flex items-center justify-between font-mono text-[11px] text-studio-400">
+                                    <span class="flex items-center gap-1.5 text-accent font-bold group-hover:underline">
+                                        <i class="ph ph-arrows-out-simple"></i> Click for Full Overview
+                                    </span>
+                                    <span class="text-studio-500 text-[10px] uppercase">[SPEC #06]</span>
                                 </div>
-                                <p class="project-meta font-mono text-xs sm:text-sm text-studio-300 mt-3 sm:mt-4 hidden md:block">
-                                    A civic plaza study focused on public gathering, proportion, and open-air experience.
-                                </p>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
 
                 <!-- Empty State for Project Filters -->
@@ -608,16 +740,16 @@
                 <div class="mt-10 sm:mt-14 p-4 sm:p-6 border border-studio-700 bg-studio-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 gs-reveal">
                     <div>
                         <div class="flex items-center gap-2 text-studio-100 font-bold text-sm sm:text-base uppercase tracking-wider mb-1">
-                            <i class="ph ph-file-pdf text-accent text-lg sm:text-xl"></i>
+                            <i class="ph ph-file-image text-accent text-lg sm:text-xl"></i>
                             <span>Curriculum Vitae & Technical Schedule</span>
                         </div>
                         <p class="font-mono text-studio-400 text-xs sm:text-sm">
-                            Need a structured offline document? View and export the architectural resume and capability sheet.
+                            Need a structured offline document? View and export the architectural resume and capability sheet in high-res A4 PNG.
                         </p>
                     </div>
                     <button id="specs-cv-btn" class="shrink-0 bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-5 py-3 transition-all flex items-center gap-2 uppercase tracking-widest hover-trigger">
-                        <i class="ph ph-printer"></i>
-                        <span>View / Print CV</span>
+                        <i class="ph ph-download-simple font-bold text-base"></i>
+                        <span>Download CV (A4 PNG)</span>
                     </button>
                 </div>
             </div>
@@ -1506,10 +1638,10 @@
         </div>
     </div>
 
-    <!-- Project Popup Box Modal (With Next / Previous Navigation) -->
-    <div id="project-modal" class="fixed inset-0 z-[100] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-4 md:p-8 select-none overflow-y-auto">
-        <div class="relative bg-studio-800 border border-studio-700 max-w-5xl w-full p-5 md:p-8 shadow-2xl my-auto flex flex-col gap-5 max-h-[92vh] overflow-y-auto">
-            <!-- Crosshair decorations -->
+    <!-- Project Popup Box Modal (With Next / Previous Navigation & Full Architectural Specifications) -->
+    <div id="project-modal" class="fixed inset-0 z-[100] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 md:p-8 select-none overflow-y-auto">
+        <div class="relative bg-studio-800 border border-studio-700 max-w-5xl w-full p-5 sm:p-7 md:p-8 shadow-2xl my-auto flex flex-col gap-6 max-h-[92vh] overflow-y-auto">
+            <!-- Technical drafting corner crosshairs -->
             <div class="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-accent"></div>
             <div class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-accent"></div>
             <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-accent"></div>
@@ -1518,12 +1650,13 @@
             <!-- Header bar with Prev / Next Navigation -->
             <div class="flex flex-col sm:flex-row sm:items-start justify-between border-b border-studio-700/80 pb-4 gap-4">
                 <div>
-                    <div class="flex items-center gap-2 font-mono text-xs text-accent uppercase tracking-widest mb-1">
-                        <span id="proj-modal-category">[PROJECT POPUP]</span> • <span id="proj-modal-year">2024</span>
+                    <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-accent uppercase tracking-widest mb-1.5">
+                        <span id="proj-modal-category">ARCHITECTURE • TERMINAL DESIGN</span> • <span id="proj-modal-year">2024</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-studio-100 uppercase tracking-tight" id="proj-modal-title">
                         Layag Airport
                     </h3>
+                    <p id="proj-modal-subtitle" class="font-mono text-xs sm:text-sm text-accent font-medium mt-1">Sangley Point Domestic Airport</p>
                 </div>
                 
                 <div class="flex items-center gap-2 self-end sm:self-start">
@@ -1540,19 +1673,74 @@
                 </div>
             </div>
 
-            <div id="proj-photo-section">
-                <div class="font-mono text-xs text-studio-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <i class="ph ph-images text-accent"></i> Project Photos (<span id="proj-photo-count">4</span>)
+            <!-- Project Plates & Visual Renders Gallery Section -->
+            <div id="proj-photo-section" class="space-y-2.5">
+                <div class="flex items-center justify-between font-mono text-xs text-studio-400">
+                    <div class="flex items-center gap-2 uppercase tracking-wider text-studio-200">
+                        <i class="ph ph-images text-accent text-sm"></i>
+                        <span>Project Plates &amp; Renderings (<span id="proj-photo-count" class="text-accent font-bold">4</span>)</span>
+                    </div>
+                    <span class="text-[11px] text-studio-400 hidden sm:flex items-center gap-1">
+                        <i class="ph ph-magnifying-glass-plus text-accent"></i> Click any plate to inspect high-resolution
+                    </span>
                 </div>
                 <div id="proj-collage" class="flex flex-wrap gap-3"></div>
             </div>
             <p id="proj-modal-empty-state" class="hidden font-mono text-sm text-studio-400 text-center py-12">Project photos are not available yet.</p>
 
-            <!-- Description and Action Button -->
+            <!-- Architectural Concept & Specifications Breakdown -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-3 border-t border-studio-700/80">
+                <!-- Concept Narrative -->
+                <div class="lg:col-span-2 space-y-2.5">
+                    <h4 class="font-mono text-xs text-accent uppercase tracking-widest flex items-center gap-1.5">
+                        <i class="ph ph-compass-tool"></i> [DESIGN CONCEPT &amp; SPATIAL NARRATIVE]
+                    </h4>
+                    <p id="proj-modal-desc" class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed"></p>
+                </div>
+
+                <!-- Architectural Specifications -->
+                <div class="space-y-3 bg-studio-900/60 border border-studio-700 p-4">
+                    <h4 class="font-mono text-xs text-accent uppercase tracking-widest flex items-center gap-1.5">
+                        <i class="ph ph-sliders"></i> [PROJECT SPECIFICATIONS]
+                    </h4>
+                    <div class="space-y-2.5 text-xs font-mono">
+                        <div>
+                            <span class="text-studio-500 block text-[10px] uppercase">LOCATION:</span>
+                            <span id="proj-modal-location" class="text-studio-200 font-medium flex items-center gap-1">
+                                <i class="ph ph-map-pin text-accent"></i> <span>Sangley Point, Cavite City</span>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-studio-500 block text-[10px] uppercase">SITE AREA / FOOTPRINT:</span>
+                            <span id="proj-modal-area" class="text-accent font-bold">147 Hectares</span>
+                        </div>
+                        <div>
+                            <span class="text-studio-500 block text-[10px] uppercase">TYPOLOGY &amp; CONTEXT:</span>
+                            <span id="proj-modal-typology-spec" class="text-studio-200 font-medium">Civic &amp; Aviation Architecture</span>
+                        </div>
+                        <div>
+                            <span class="text-studio-500 block text-[10px] uppercase">TOOLS &amp; WORKFLOW:</span>
+                            <span id="proj-modal-tools-spec" class="text-studio-200 font-medium">AutoCAD • SketchUp Pro • Enscape • Photoshop</span>
+                        </div>
+                        <div>
+                            <span class="text-studio-500 block text-[10px] uppercase mb-1">KEY FEATURES:</span>
+                            <div id="proj-modal-features" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer with Action Buttons -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-3 border-t border-studio-700/80">
-                <p id="proj-modal-desc" class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed max-w-2xl"></p>
-                <div class="flex items-center gap-3 shrink-0 w-full sm:w-auto">
-                    <a id="proj-modal-full-link" href="" class="w-full sm:w-auto text-center bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-5 py-3 transition-all flex items-center justify-center gap-2 uppercase tracking-widest hover-trigger">
+                <div class="font-mono text-[11px] text-studio-400 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-accent inline-block"></span>
+                    <span>STUDIO ARCHITECTURAL SPEC SHEET</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                    <button id="proj-modal-inquire-btn" type="button" class="flex-1 sm:flex-initial text-center bg-studio-900 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 hover:border-accent font-mono font-bold text-xs px-4 py-3 transition-all flex items-center justify-center gap-2 uppercase tracking-widest hover-trigger">
+                        <i class="ph ph-chat-text text-sm"></i> <span>Commission Project</span>
+                    </button>
+                    <a id="proj-modal-full-link" href="" class="flex-1 sm:flex-initial text-center bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-5 py-3 transition-all flex items-center justify-center gap-2 uppercase tracking-widest hover-trigger">
                         <span>View Project Page</span> <i class="ph ph-arrow-up-right text-sm"></i>
                     </a>
                 </div>
@@ -1663,37 +1851,50 @@
 
     <!-- Architectural Curriculum Vitae & Summary Sheet Modal -->
     <div id="cv-modal" class="fixed inset-0 z-[110] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 overflow-y-auto select-none">
-        <div id="cv-sheet-container" class="relative bg-studio-800 border border-studio-700 max-w-4xl w-full p-5 sm:p-8 md:p-10 shadow-2xl my-auto max-h-[94vh] overflow-y-auto print-cv-sheet cv-theme-auto">
+        <div id="cv-sheet-container" class="relative bg-studio-800 border border-studio-700 max-w-4xl w-full p-5 sm:p-7 md:p-8 shadow-2xl my-auto max-h-[94vh] overflow-y-auto print-cv-sheet cv-theme-auto cv-orient-portrait transition-all duration-300">
             <!-- Crosshair decorations -->
             <div class="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-accent"></div>
             <div class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-accent"></div>
             <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-accent"></div>
             <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-accent"></div>
 
-            <!-- CV Header with Profile Photo & Controls -->
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center border-b border-studio-700 pb-5 mb-6 gap-5">
-                <div class="flex items-center gap-3.5 sm:gap-5">
-                    <!-- Student Photo in CV -->
-                    <div class="relative w-20 h-24 sm:w-24 sm:h-28 shrink-0 border border-studio-700 bg-studio-900 p-1 group">
-                        <div class="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-accent"></div>
-                        <div class="absolute -top-1 -right-1 w-2 h-2 border-t border-r border-accent"></div>
-                        <div class="absolute -bottom-1 -left-1 w-2 h-2 border-b border-l border-accent"></div>
-                        <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-accent"></div>
-                        <img src="profile%20pic%201.png" alt="Marjo Paguia - Architecture Student" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-300">
+            <!-- CV Header with Enlarged Profile Photo & Controls -->
+            <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center border-b border-studio-700 pb-5 mb-4 gap-4">
+                <div class="flex items-center gap-4 sm:gap-6">
+                    <!-- Enlarged Student Photo in CV -->
+                    <div class="relative w-28 h-36 sm:w-36 sm:h-44 md:w-40 md:h-48 shrink-0 border-2 border-studio-700 bg-studio-900 p-1.5 group shadow-lg">
+                        <div class="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-accent"></div>
+                        <div class="absolute -top-1 -right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-accent"></div>
+                        <div class="absolute -bottom-1 -left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-accent"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-accent"></div>
+                        <img src="profile%20pic%201.png" alt="Marjo Paguia - Architecture Student" class="w-full h-full object-cover grayscale opacity-95 group-hover:grayscale-0 transition-all duration-300">
                     </div>
 
                     <div>
-                        <div class="flex items-center gap-2 font-mono text-accent text-[10px] sm:text-xs uppercase tracking-widest">
-                            <i class="ph ph-identification-card"></i>
-                            <span>[ARCHITECTURAL CV &amp; TECHNICAL SPEC SHEET]</span>
+                        <div class="font-mono text-accent text-[10px] sm:text-xs uppercase tracking-widest">
+                            <span>ARCHITECTURAL CV &amp; TECHNICAL SPEC SHEET</span>
                         </div>
                         <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-studio-100 uppercase tracking-tight font-sans mt-0.5">Marjo Paguia</h2>
                         <p class="font-mono text-xs sm:text-sm text-studio-400 mt-0.5">Architecture Student • 3D Visualizer • Technical Drafter</p>
+                        <p class="font-mono text-[11px] text-studio-300 mt-1 max-w-xl hidden sm:block leading-relaxed">
+                            Focused on translating conceptual narratives into functional, high-precision built environments through 2D CAD drafting, BIM coordination, and 4K photorealistic visualization.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Theme Mode & Print Action Controls -->
-                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full lg:w-auto justify-between lg:justify-end border-t lg:border-t-0 border-studio-700/80 pt-3 lg:pt-0">
+                <!-- Theme Mode, Orientation & Print Action Controls -->
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full xl:w-auto justify-between xl:justify-end border-t xl:border-t-0 border-studio-700/80 pt-3 xl:pt-0">
+                    <!-- CV Orientation Switcher -->
+                    <div class="flex items-center border border-studio-700 bg-studio-900 p-1 font-mono text-[10px] sm:text-xs" id="cv-orient-selector">
+                        <span class="text-studio-500 px-1.5 uppercase hidden sm:inline text-[9px]">LAYOUT:</span>
+                        <button type="button" class="cv-orient-btn active px-2 sm:px-2.5 py-1 text-studio-100 bg-studio-700 transition-all hover-trigger flex items-center gap-1" data-cv-orient="portrait" title="A4 Portrait Sheet">
+                            <i class="ph ph-file-text text-accent"></i><span>PORTRAIT</span>
+                        </button>
+                        <button type="button" class="cv-orient-btn px-2 sm:px-2.5 py-1 text-studio-400 hover:text-studio-200 transition-all hover-trigger flex items-center gap-1" data-cv-orient="landscape" title="A4 Landscape Presentation Board">
+                            <i class="ph ph-presentation text-accent"></i><span>LANDSCAPE</span>
+                        </button>
+                    </div>
+
                     <!-- CV Theme Mode Switcher -->
                     <div class="flex items-center border border-studio-700 bg-studio-900 p-1 font-mono text-[10px] sm:text-xs" id="cv-theme-selector">
                         <span class="text-studio-500 px-1.5 uppercase hidden sm:inline text-[9px]">MODE:</span>
@@ -1709,9 +1910,13 @@
                     </div>
 
                     <div class="flex items-center gap-2">
-                        <button id="cv-print-btn" class="bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-3.5 sm:px-4 py-2 transition-all flex items-center gap-1.5 uppercase tracking-widest hover-trigger">
+                        <button id="cv-download-png-btn" class="bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-xs px-3.5 sm:px-4 py-2 transition-all flex items-center gap-1.5 uppercase tracking-widest hover-trigger">
+                            <i class="ph ph-download-simple text-base"></i>
+                            <span id="cv-download-btn-text">Download A4 PNG</span>
+                        </button>
+                        <button id="cv-print-btn" class="bg-studio-900 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 font-mono text-xs px-3 py-2 transition-all flex items-center gap-1.5 uppercase tracking-widest hover-trigger" title="Print Sheet">
                             <i class="ph ph-printer text-base"></i>
-                            <span>Print / PDF</span>
+                            <span class="hidden sm:inline">Print</span>
                         </button>
                         <button id="close-cv-modal" class="bg-studio-900/80 hover:bg-studio-700 text-studio-300 hover:text-accent border border-studio-700 p-2 transition-all hover-trigger" title="Close (Esc)">
                             <i class="ph ph-x text-lg"></i>
@@ -1721,147 +1926,280 @@
             </div>
 
             <!-- CV Body Grid -->
-            <div class="space-y-6 font-mono text-xs">
-                <!-- Contact & Bio Bar -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-studio-900/70 border border-studio-700 text-studio-300">
+            <div class="space-y-4 font-mono text-xs">
+                <!-- Contact & Professional Overview Bar -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 bg-studio-900/70 border border-studio-700 text-studio-300 text-[11px]">
                     <div>
-                        <span class="text-studio-500 uppercase text-[10px] block">Location:</span>
+                        <span class="text-studio-500 uppercase text-[9px] block">Location:</span>
                         <span>General Trias, Cavite, PH</span>
                     </div>
                     <div>
-                        <span class="text-studio-500 uppercase text-[10px] block">Email:</span>
+                        <span class="text-studio-500 uppercase text-[9px] block">Email:</span>
                         <span>norioniomarjo@gmail.com</span>
                     </div>
                     <div>
-                        <span class="text-studio-500 uppercase text-[10px] block">Specialization:</span>
-                        <span>Architectural Design & Vis</span>
+                        <span class="text-studio-500 uppercase text-[9px] block">Discipline:</span>
+                        <span>Architectural Design &amp; Vis</span>
+                    </div>
+                    <div>
+                        <span class="text-studio-500 uppercase text-[9px] block">Availability:</span>
+                        <span class="text-accent">Open for Commissions / Internships</span>
                     </div>
                 </div>
 
-                <!-- Academic Credentials -->
-                <div>
-                    <h4 class="font-bold text-sm text-accent uppercase tracking-widest mb-2 border-b border-studio-700 pb-1 flex items-center gap-2">
-                        <i class="ph ph-graduation-cap"></i> Academic Background
-                    </h4>
-                    <div class="space-y-3 pt-1">
+                <!-- Main Content Sections Layout Wrapper (Adaptive Portrait / Landscape) -->
+                <div id="cv-sections-wrapper" class="cv-sections-container">
+                    <!-- Column 1 (Portrait: Sequential Top / Landscape: Left Column) -->
+                    <div class="cv-column-1 space-y-4">
+                        <!-- Academic Credentials & Education -->
                         <div>
-                            <div class="flex justify-between text-studio-100 font-bold">
-                                <span>Bachelor of Science in Architecture</span>
-                                <span class="text-accent">20XX — Present</span>
+                            <h4 class="font-bold text-xs sm:text-sm text-accent uppercase tracking-widest mb-2 border-b border-studio-700 pb-1">
+                                Academic Background &amp; Education
+                            </h4>
+                            <div class="space-y-2 pt-0.5">
+                                <div class="p-2 border border-studio-700/60 bg-studio-900/30">
+                                    <div class="flex justify-between items-center text-studio-100 font-bold text-[11px] sm:text-xs">
+                                        <span>Bachelor of Science in Architecture</span>
+                                        <span class="text-accent text-[10px]">20XX — PRESENT</span>
+                                    </div>
+                                    <p class="text-studio-400 text-[10px] sm:text-[11px]">National University Philippines • Comprehensive architectural design studios, theory, and building technology</p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-[11px]">
+                                    <div class="p-2 border border-studio-700/40 bg-studio-900/20">
+                                        <div class="flex justify-between text-studio-200 font-bold">
+                                            <span>Architecture Studies</span>
+                                            <span class="text-studio-500 text-[9px]">PREVIOUS</span>
+                                        </div>
+                                        <p class="text-studio-400 text-[10px]">Eulogio "Amang" Rodriguez Institute of Science and Technology (EARIST)</p>
+                                    </div>
+                                    <div class="p-2 border border-studio-700/40 bg-studio-900/20">
+                                        <div class="flex justify-between text-studio-200 font-bold">
+                                            <span>Drafting &amp; Visual Arts Foundation</span>
+                                            <span class="text-studio-500 text-[9px]">SECONDARY</span>
+                                        </div>
+                                        <p class="text-studio-400 text-[10px]">Mandaluyong City High School / Felimon P. Javier Elementary</p>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-studio-400 text-[11px]">National University Philippines</p>
                         </div>
+
+                        <!-- Technical Software Schedule -->
                         <div>
-                            <div class="flex justify-between text-studio-200">
-                                <span>Architecture Studies</span>
-                                <span class="text-studio-500">Previous</span>
+                            <h4 class="font-bold text-xs sm:text-sm text-accent uppercase tracking-widest mb-2 border-b border-studio-700 pb-1">
+                                Software Proficiency Matrix
+                            </h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-0.5 text-[10px] sm:text-[11px]">
+                                <div class="p-2 border border-studio-700 bg-studio-900/40">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Autodesk AutoCAD</span>
+                                        <span class="text-accent text-[9px] font-bold">EXPERT</span>
+                                    </div>
+                                    <span class="text-studio-400 text-[10px]">2D Drafting &amp; Working Drawings</span>
+                                </div>
+                                <div class="p-2 border border-studio-700 bg-studio-900/40">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Lumion 3D</span>
+                                        <span class="text-accent text-[9px] font-bold">ADVANCED</span>
+                                    </div>
+                                    <span class="text-studio-400 text-[10px]">4K Photorealistic Rendering</span>
+                                </div>
+                                <div class="p-2 border border-studio-700 bg-studio-900/40">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Autodesk Revit</span>
+                                        <span class="text-accent text-[9px] font-bold">PROFICIENT</span>
+                                    </div>
+                                    <span class="text-studio-400 text-[10px]">BIM Modeling &amp; Coordination</span>
+                                </div>
+                                <div class="p-2 border border-studio-700 bg-studio-900/40">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">SketchUp Pro</span>
+                                        <span class="text-accent text-[9px] font-bold">ADVANCED</span>
+                                    </div>
+                                    <span class="text-studio-400 text-[10px]">3D Conceptual &amp; Spatial Massing</span>
+                                </div>
+                                <div class="p-2 border border-studio-700 bg-studio-900/40">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Adobe Photoshop</span>
+                                        <span class="text-accent text-[9px] font-bold">ADVANCED</span>
+                                    </div>
+                                    <span class="text-studio-400 text-[10px]">Post-Production &amp; Board Layout</span>
+                                </div>
+                                <div class="p-2 border border-studio-700 bg-studio-900/40">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Premiere &amp; Illustrator</span>
+                                        <span class="text-accent text-[9px] font-bold">PROFICIENT</span>
+                                    </div>
+                                    <span class="text-studio-400 text-[10px]">Video Walkthroughs &amp; Graphics</span>
+                                </div>
                             </div>
-                            <p class="text-studio-400 text-[11px]">Eulogio "Amang" Rodriguez Institute of Science and Technology (EARIST)</p>
                         </div>
+                    </div>
+
+                    <!-- Column 2 (Portrait: Sequential Bottom / Landscape: Right Column) -->
+                    <div class="cv-column-2 space-y-4">
+                        <!-- Core Architectural Competencies & Studio Practice -->
                         <div>
-                            <div class="flex justify-between text-studio-200">
-                                <span>Drafting & Visual Arts Foundation</span>
-                                <span class="text-studio-500">Secondary</span>
+                            <h4 class="font-bold text-xs sm:text-sm text-accent uppercase tracking-widest mb-2 border-b border-studio-700 pb-1">
+                                Core Competencies &amp; Studio Capabilities
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-[11px]">
+                                <div class="p-2.5 border border-studio-700 bg-studio-900/40">
+                                    <span class="text-studio-100 font-bold flex items-center gap-1.5 mb-1">
+                                        <i class="ph ph-cube text-accent"></i> 3D Visualization &amp; Raytracing
+                                    </span>
+                                    <p class="text-studio-400 text-[10px] leading-relaxed">
+                                        High-fidelity exterior and interior renderings, natural/artificial lighting studies, physical materiality, and environment staging using Lumion 3D and Photoshop.
+                                    </p>
+                                </div>
+                                <div class="p-2.5 border border-studio-700 bg-studio-900/40">
+                                    <span class="text-studio-100 font-bold flex items-center gap-1.5 mb-1">
+                                        <i class="ph ph-ruler text-accent"></i> Technical 2D Drafting &amp; Detailing
+                                    </span>
+                                    <p class="text-studio-400 text-[10px] leading-relaxed">
+                                        Production of precise floor plans, elevations, building sections, site development diagrams, and working drawings adhering to architectural drafting standards.
+                                    </p>
+                                </div>
+                                <div class="p-2.5 border border-studio-700 bg-studio-900/40">
+                                    <span class="text-studio-100 font-bold flex items-center gap-1.5 mb-1">
+                                        <i class="ph ph-buildings text-accent"></i> BIM &amp; Spatial Massing
+                                    </span>
+                                    <p class="text-studio-400 text-[10px] leading-relaxed">
+                                        Parametric building modeling and structural coordination in Autodesk Revit, along with rapid conceptual form-finding and spatial massing in SketchUp Pro.
+                                    </p>
+                                </div>
+                                <div class="p-2.5 border border-studio-700 bg-studio-900/40">
+                                    <span class="text-studio-100 font-bold flex items-center gap-1.5 mb-1">
+                                        <i class="ph ph-presentation-chart text-accent"></i> Presentation &amp; Graphic Packaging
+                                    </span>
+                                    <p class="text-studio-400 text-[10px] leading-relaxed">
+                                        Competition board layout, conceptual diagramming, color palette grading, and architectural walkthrough video editing via Adobe Creative Suite.
+                                    </p>
+                                </div>
                             </div>
-                            <p class="text-studio-400 text-[11px]">Mandaluyong City High School / Felimon P. Javier Elementary</p>
+                        </div>
+
+                        <!-- Selected Project Inventory -->
+                        <div>
+                            <h4 class="font-bold text-xs sm:text-sm text-accent uppercase tracking-widest mb-2 border-b border-studio-700 pb-1">
+                                Key Featured Architectural Projects
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5 text-[10px] sm:text-[11px]">
+                                <div class="border-l-2 border-accent pl-2.5 py-0.5 bg-studio-900/20">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Layag Airport (2024)</span>
+                                        <span class="text-studio-500 text-[9px]">CIVIC &amp; AVIATION</span>
+                                    </div>
+                                    <p class="text-studio-400 text-[10px]">Terminal concourse flow, sail canopy geometry, massing in SketchUp &amp; Lumion visualization.</p>
+                                </div>
+                                <div class="border-l-2 border-accent pl-2.5 py-0.5 bg-studio-900/20">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Amping Children's Hospital (2023)</span>
+                                        <span class="text-studio-500 text-[9px]">HEALTHCARE</span>
+                                    </div>
+                                    <p class="text-studio-400 text-[10px]">Pediatric spatial circulation, healing courtyard integration, emergency ward layouts in AutoCAD &amp; Revit.</p>
+                                </div>
+                                <div class="border-l-2 border-accent pl-2.5 py-0.5 bg-studio-900/20">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Marahuyo Waterfront Park (2024)</span>
+                                        <span class="text-studio-500 text-[9px]">PUBLIC REALM</span>
+                                    </div>
+                                    <p class="text-studio-400 text-[10px]">Coastal esplanade, pedestrian viewing decks, and dynamic civic landscape design.</p>
+                                </div>
+                                <div class="border-l-2 border-accent pl-2.5 py-0.5 bg-studio-900/20">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Marikina Riverside (2024)</span>
+                                        <span class="text-studio-500 text-[9px]">URBAN PLANNING</span>
+                                    </div>
+                                    <p class="text-studio-400 text-[10px]">Flood-resilient community promenade, mixed-use commercial nodes, and active riverfront connectivity.</p>
+                                </div>
+                                <div class="border-l-2 border-accent pl-2.5 py-0.5 bg-studio-900/20">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Hinabi Heights Subdivision (2024)</span>
+                                        <span class="text-studio-500 text-[9px]">RESIDENTIAL</span>
+                                    </div>
+                                    <p class="text-studio-400 text-[10px]">Master-planned residential parceling, circulation grid, and communal clubhouse amenities.</p>
+                                </div>
+                                <div class="border-l-2 border-accent pl-2.5 py-0.5 bg-studio-900/20">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-studio-100 font-bold">Jagna De Plaza (2024)</span>
+                                        <span class="text-studio-500 text-[9px]">CIVIC SPACE</span>
+                                    </div>
+                                    <p class="text-studio-400 text-[10px]">Open-air public gathering forum, shade structure proportions, hand-drafted and digital plate studies.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Technical Software Schedule -->
-                <div>
-                    <h4 class="font-bold text-sm text-accent uppercase tracking-widest mb-2 border-b border-studio-700 pb-1 flex items-center gap-2">
-                        <i class="ph ph-cpu"></i> Software Proficiency Matrix
-                    </h4>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
-                        <div class="p-2 border border-studio-700 bg-studio-900/40">
-                            <span class="text-studio-100 font-bold block">Autodesk AutoCAD</span>
-                            <span class="text-studio-400">2D Drafting & Working Drawings</span>
-                        </div>
-                        <div class="p-2 border border-studio-700 bg-studio-900/40">
-                            <span class="text-studio-100 font-bold block">Lumion 3D</span>
-                            <span class="text-studio-400">4K Photorealistic Rendering</span>
-                        </div>
-                        <div class="p-2 border border-studio-700 bg-studio-900/40">
-                            <span class="text-studio-100 font-bold block">Autodesk Revit</span>
-                            <span class="text-studio-400">BIM Modeling & Coordination</span>
-                        </div>
-                        <div class="p-2 border border-studio-700 bg-studio-900/40">
-                            <span class="text-studio-100 font-bold block">SketchUp Pro</span>
-                            <span class="text-studio-400">3D Conceptual & Spatial Massing</span>
-                        </div>
-                        <div class="p-2 border border-studio-700 bg-studio-900/40">
-                            <span class="text-studio-100 font-bold block">Adobe Photoshop</span>
-                            <span class="text-studio-400">Post-Production & Board Layout</span>
-                        </div>
-                        <div class="p-2 border border-studio-700 bg-studio-900/40">
-                            <span class="text-studio-100 font-bold block">Premiere & Illustrator</span>
-                            <span class="text-studio-400">Video Walkthroughs & Graphics</span>
-                        </div>
+                <!-- Professional Summary & Title Block Stamp -->
+                <div class="border border-studio-700 bg-studio-900/80 p-3 mt-3 text-[10px] sm:text-[11px] grid grid-cols-2 sm:grid-cols-4 gap-2 border-t-2 border-t-accent">
+                    <div>
+                        <span class="text-studio-500 block uppercase text-[8px]">PROJECT / DOCUMENT:</span>
+                        <span class="text-studio-100 font-bold">ARCHITECTURAL RESUME &amp; SPEC</span>
                     </div>
-                </div>
-
-                <!-- Selected Project Inventory -->
-                <div>
-                    <h4 class="font-bold text-sm text-accent uppercase tracking-widest mb-2 border-b border-studio-700 pb-1 flex items-center gap-2">
-                        <i class="ph ph-folder-notch-open"></i> Key Featured Works
-                    </h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
-                        <div class="border-l-2 border-accent pl-2">
-                            <span class="text-studio-100 font-bold">Layag Airport (2024)</span> — Terminal Concourse & Spatial Study
-                        </div>
-                        <div class="border-l-2 border-accent pl-2">
-                            <span class="text-studio-100 font-bold">Amping Children's Hospital (2023)</span> — Healthcare Spatial Planning
-                        </div>
-                        <div class="border-l-2 border-accent pl-2">
-                            <span class="text-studio-100 font-bold">Marahuyo Park (2024)</span> — Waterfront Public Realm Design
-                        </div>
-                        <div class="border-l-2 border-accent pl-2">
-                            <span class="text-studio-100 font-bold">Marikina Riverside (2024)</span> — Urban Renewal & Promenade
-                        </div>
-                        <div class="border-l-2 border-accent pl-2">
-                            <span class="text-studio-100 font-bold">Hinabi Heights (2024)</span> — Residential Subdivision Masterplan
-                        </div>
-                        <div class="border-l-2 border-accent pl-2">
-                            <span class="text-studio-100 font-bold">Jagna De Plaza (2024)</span> — Civic Plaza & Community Forum
-                        </div>
+                    <div>
+                        <span class="text-studio-500 block uppercase text-[8px]">SHEET ID:</span>
+                        <span id="cv-sheet-id-label" class="text-accent font-bold">ARCH-CV-01-P (A4 PORTRAIT)</span>
+                    </div>
+                    <div>
+                        <span class="text-studio-500 block uppercase text-[8px]">LANGUAGES:</span>
+                        <span class="text-studio-200">English (Fluent) • Filipino (Native)</span>
+                    </div>
+                    <div>
+                        <span class="text-studio-500 block uppercase text-[8px]">VERIFICATION:</span>
+                        <span class="text-studio-200">MARJO PAGUIA • CAVITE, PH</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Gallery Lightbox Modal -->
-    <div id="gallery-lightbox" class="fixed inset-0 z-[100] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-4 md:p-8 select-none">
-        <!-- Crosshair corner decorations -->
-        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-accent"></div>
-        <div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-accent"></div>
-        <div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-accent"></div>
-        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-accent"></div>
+    <!-- Enhanced Architectural Gallery Lightbox Modal -->
+    <div id="gallery-lightbox" class="fixed inset-0 z-[110] bg-studio-900/98 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 md:p-8 select-none">
+        <!-- Corner crosshairs -->
+        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-accent pointer-events-none"></div>
+        <div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-accent pointer-events-none"></div>
+        <div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-accent pointer-events-none"></div>
+        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-accent pointer-events-none"></div>
 
-        <!-- Top bar controls -->
-        <div class="absolute top-6 left-6 right-6 flex justify-between items-center z-10 font-mono text-xs text-studio-400">
-            <div class="flex items-center gap-3">
-                <span class="text-accent uppercase tracking-widest">[GALLERY VIEW]</span>
-                <span id="lightbox-counter" class="bg-studio-800 text-studio-200 border border-studio-700 px-3 py-1 font-bold">1 / 8</span>
+        <!-- Top bar HUD controls -->
+        <div class="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex justify-between items-center z-20 font-mono text-xs">
+            <div class="flex items-center gap-2 sm:gap-3 bg-studio-900/90 border border-studio-700/80 px-3 py-1.5 shadow-lg">
+                <span class="text-accent uppercase tracking-widest font-bold hidden sm:inline">[HIGH-RES INSPECTOR]</span>
+                <span id="lightbox-counter" class="bg-studio-800 text-accent border border-studio-700 px-2.5 py-0.5 font-bold text-[11px]">1 / 8</span>
             </div>
-            <button id="close-lightbox-btn" class="hover-trigger bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 p-2.5 transition-all flex items-center justify-center">
-                <i class="ph ph-x text-xl"></i>
-            </button>
+            <div class="flex items-center gap-2">
+                <button id="lightbox-zoom-btn" class="hover-trigger bg-studio-800/90 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 px-3 py-2 transition-all flex items-center gap-1.5 font-mono text-xs shadow-lg" title="Toggle Zoom Fit (Z)">
+                    <i class="ph ph-magnifying-glass-plus text-base"></i> <span class="hidden md:inline">ZOOM</span>
+                </button>
+                <button id="close-lightbox-btn" class="hover-trigger bg-studio-800/90 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 p-2.5 transition-all flex items-center justify-center shadow-lg" title="Close (Esc)">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Prev button -->
-        <button id="prev-lightbox-btn" class="hover-trigger absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm group">
+        <button id="prev-lightbox-btn" class="hover-trigger absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-studio-800/90 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm group shadow-xl" title="Previous Image (Left Arrow)">
             <i class="ph ph-caret-left text-2xl md:text-3xl"></i>
         </button>
 
         <!-- Main Lightbox Image Container -->
-        <div class="relative max-w-5xl max-h-[85vh] w-full h-full flex flex-col items-center justify-center p-2">
-            <img id="lightbox-img" src="" alt="Gallery Preview" class="max-w-full max-h-[82vh] object-contain border border-studio-700/80 shadow-2xl transition-all duration-300">
+        <div id="lightbox-viewport" class="relative max-w-6xl max-h-[80vh] w-full h-full flex flex-col items-center justify-center p-2 overflow-auto">
+            <img id="lightbox-img" src="" alt="Plate Inspection" class="max-w-full max-h-[75vh] object-contain border border-studio-700/80 shadow-2xl transition-all duration-300 cursor-zoom-in">
+        </div>
+
+        <!-- Bottom Plate Information HUD Bar -->
+        <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row items-center justify-between gap-2 z-20 pointer-events-none">
+            <div class="bg-studio-900/95 border border-studio-700 px-4 py-2 pointer-events-auto max-w-xl shadow-lg">
+                <p id="lightbox-caption" class="font-mono text-xs text-studio-200 tracking-wide text-left"></p>
+            </div>
+            <div class="font-mono text-[10px] text-studio-400 bg-studio-900/80 border border-studio-700 px-3 py-1.5 hidden md:block shadow-lg">
+                <span>Navigate: <kbd class="text-accent">&larr;</kbd> <kbd class="text-accent">&rarr;</kbd> &bull; Zoom: <kbd class="text-accent">Click</kbd> &bull; Exit: <kbd class="text-accent">ESC</kbd></span>
+            </div>
         </div>
 
         <!-- Next button -->
-        <button id="next-lightbox-btn" class="hover-trigger absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm group">
+        <button id="next-lightbox-btn" class="hover-trigger absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-studio-800/90 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm group shadow-xl" title="Next Image (Right Arrow)">
             <i class="ph ph-caret-right text-2xl md:text-3xl"></i>
         </button>
     </div>

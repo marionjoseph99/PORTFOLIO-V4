@@ -3,24 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amparo Hospital | Portfolio</title>
+    <title>Amping Children's Hospital | Architectural Project | Marjo Paguia</title>
+    <!-- Inline Theme Initializer -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('mp_portfolio_theme');
+                if (savedTheme === 'light') {
+                    document.documentElement.classList.add('light');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --studio-900: 14 14 14;
+            --studio-800: 24 24 24;
+            --studio-700: 42 42 42;
+            --studio-600: 64 64 64;
+            --studio-400: 163 163 163;
+            --studio-300: 212 212 212;
+            --studio-200: 229 229 229;
+            --studio-100: 245 245 245;
+            --accent: 250 204 21;
+        }
+        html.light {
+            --studio-900: 247 249 252;
+            --studio-800: 255 255 255;
+            --studio-700: 226 232 240;
+            --studio-600: 203 213 225;
+            --studio-400: 71 85 105;
+            --studio-300: 51 65 85;
+            --studio-200: 30 41 59;
+            --studio-100: 15 23 42;
+            --accent: 217 119 6;
+        }
+        .blueprint-grid {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(var(--studio-700) / 0.4) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(var(--studio-700) / 0.4) 1px, transparent 1px);
+        }
+        #p-lightbox-img.is-zoomed {
+            max-width: 160% !important;
+            max-height: none !important;
+            cursor: zoom-out !important;
+            transform: scale(1.35) translateZ(0);
+        }
+    </style>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         studio: {
-                            900: '#0e0e0e',
-                            800: '#181818',
-                            700: '#2a2a2a',
-                            600: '#404040',
-                            400: '#a3a3a3',
-                            300: '#d4d4d4',
-                            200: '#e5e5e5',
-                            100: '#f5f5f5',
+                            900: 'rgb(var(--studio-900) / <alpha-value>)',
+                            800: 'rgb(var(--studio-800) / <alpha-value>)',
+                            700: 'rgb(var(--studio-700) / <alpha-value>)',
+                            600: 'rgb(var(--studio-600) / <alpha-value>)',
+                            400: 'rgb(var(--studio-400) / <alpha-value>)',
+                            300: 'rgb(var(--studio-300) / <alpha-value>)',
+                            200: 'rgb(var(--studio-200) / <alpha-value>)',
+                            100: 'rgb(var(--studio-100) / <alpha-value>)',
                         },
-                        accent: '#d4ff32'
+                        accent: 'rgb(var(--accent) / <alpha-value>)'
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
@@ -35,168 +83,410 @@
 </head>
 <body class="bg-studio-900 text-studio-100 font-sans antialiased min-h-screen flex flex-col selection:bg-accent selection:text-studio-900">
 
-    <header class="sticky top-0 z-40 bg-studio-900/90 backdrop-blur-md border-b border-studio-700/80 py-4 px-6 md:px-12">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="/#projects" class="font-mono text-xs md:text-sm text-studio-300 hover:text-accent flex items-center gap-2 border border-studio-700 hover:border-accent bg-studio-800 px-4 py-2 rounded-none transition-all group">
-                <i class="ph ph-arrow-left text-base group-hover:-translate-x-1 transition-transform"></i> Back to Portfolio
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-studio-900/90 backdrop-blur-md border-b border-studio-700/80 py-3 px-4 sm:px-8 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <a href="/#projects" class="font-mono text-xs sm:text-sm text-studio-300 hover:text-accent flex items-center gap-2 border border-studio-700 hover:border-accent bg-studio-800 px-3.5 py-2 transition-all group">
+                <i class="ph ph-arrow-left text-base group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">Back to Portfolio</span>
+                <span class="sm:hidden">Back</span>
             </a>
-            <div class="font-mono text-xs text-accent uppercase tracking-widest hidden sm:block">
-                [PROJECT GALLERY]
+
+            <div class="flex items-center gap-3">
+                <button id="share-project-btn" class="flex items-center gap-1.5 font-mono text-xs text-studio-300 hover:text-accent border border-studio-700 hover:border-accent bg-studio-800 px-3 py-2 transition-all" title="Share Project Link">
+                    <i class="ph ph-share-network text-sm"></i>
+                    <span class="hidden md:inline">Share</span>
+                </button>
+                <button id="theme-toggle-btn" class="flex items-center justify-center gap-2 font-mono text-xs text-studio-300 hover:text-accent border border-studio-700 hover:border-accent bg-studio-800 px-3 py-2 transition-all" title="Toggle Light / Dark Mode">
+                    <i class="ph ph-sun text-sm text-accent"></i>
+                    <span id="theme-text" class="hidden sm:inline">Mode: Dark</span>
+                </button>
+                <div class="font-mono text-xs text-accent uppercase tracking-widest hidden lg:block bg-studio-800/80 border border-studio-700 px-3 py-1.5">
+                    SPEC // 02-HEALTHCARE
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-6 md:px-12 py-12">
-        <div class="mb-12 border-b border-studio-700/80 pb-8">
-            <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-accent uppercase tracking-widest mb-3">
-                <span>Healthcare</span> • <span>Spatial Planning</span> • <span>2023</span>
+    <!-- Main Project Specification & Gallery -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 md:px-12 py-8 sm:py-12 space-y-12">
+        
+        <!-- Project Blueprint Hero Header -->
+        <section class="relative bg-studio-800/80 border border-studio-700 p-6 sm:p-8 md:p-10 blueprint-grid overflow-hidden">
+            <!-- Corner crosshairs -->
+            <div class="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-accent"></div>
+            <div class="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-accent"></div>
+            <div class="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-accent"></div>
+            <div class="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-accent"></div>
+
+            <div class="relative z-10">
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-xs text-accent uppercase tracking-widest mb-3">
+                    <span class="bg-studio-900/90 border border-studio-700 px-2.5 py-1">HEALTHCARE</span>
+                    <span>&bull;</span>
+                    <span class="bg-studio-900/90 border border-studio-700 px-2.5 py-1">SPATIAL PLANNING</span>
+                    <span>&bull;</span>
+                    <span class="text-studio-400">YEAR 2023</span>
+                </div>
+                
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-studio-100 mb-2">
+                    Amping Children's Hospital
+                </h1>
+                <p class="font-mono text-base sm:text-lg text-accent font-semibold mb-6 flex flex-wrap items-center gap-2">
+                    <span>Specialized Pediatric Healthcare Facility</span>
+                    <span class="text-studio-500">&bull;</span>
+                    <span class="text-studio-300 font-normal text-sm flex items-center gap-1">
+                        <i class="ph ph-map-pin text-accent"></i> Panglao Island, Bohol
+                    </span>
+                    <span class="text-studio-500">&bull;</span>
+                    <span class="text-studio-300 font-normal text-sm">5 Hectares</span>
+                </p>
+
+                <!-- Architectural Narrative & Specifications 2-Column Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6 border-t border-studio-700/80">
+                    <!-- Concept & Spatial Narrative -->
+                    <div class="lg:col-span-2 space-y-4">
+                        <h2 class="font-mono text-xs text-accent uppercase tracking-widest flex items-center gap-2">
+                            <i class="ph ph-compass-tool text-sm"></i> [DESIGN CONCEPT &amp; SPATIAL STRATEGY]
+                        </h2>
+                        <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                            <em>'Amping'</em> (Cebuano for <em>'take care'</em>) is a 5-hectare specialized pediatric medical facility located on Panglao Island, Bohol, designed to alleviate clinical anxiety for young patients and their families. Centered on clear wayfinding, natural island light, and biophilic therapeutic courtyards, the architecture breaks away from clinical intimidation.
+                        </p>
+                        <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                            The master plan features a dual-spine circulation system across the 5-hectare campus: public corridors surround landscaped green pocket gardens, while sterile medical corridors link surgery, ICU, and emergency triage with zero crossover contamination.
+                        </p>
+                    </div>
+
+                    <!-- Technical Specifications HUD -->
+                    <div class="bg-studio-900/90 border border-studio-700 p-5 space-y-4 font-mono text-xs">
+                        <h3 class="text-accent uppercase tracking-widest flex items-center gap-2 border-b border-studio-700 pb-2">
+                            <i class="ph ph-sliders text-sm"></i> [PROJECT SPECS]
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-studio-500 block text-[10px] uppercase">LOCATION:</span>
+                                <span class="text-studio-200 font-bold flex items-center gap-1">
+                                    <i class="ph ph-map-pin text-accent"></i> Panglao Island, Bohol
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-studio-500 block text-[10px] uppercase">SITE FOOTPRINT:</span>
+                                <span class="text-accent font-bold">5 Hectares</span>
+                            </div>
+                            <div>
+                                <span class="text-studio-500 block text-[10px] uppercase">TYPOLOGY:</span>
+                                <span class="text-studio-200 font-bold">Specialized Pediatric Healthcare Facility</span>
+                            </div>
+                            <div>
+                                <span class="text-studio-500 block text-[10px] uppercase">SOFTWARE STACK:</span>
+                                <span class="text-studio-200">AutoCAD &bull; Revit BIM &bull; SketchUp Pro &bull; Lumion 3D</span>
+                            </div>
+                            <div>
+                                <span class="text-studio-500 block text-[10px] uppercase mb-1.5">KEY ARCHITECTURAL FEATURES:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="bg-studio-800 border border-studio-700 text-studio-200 px-2 py-0.5 text-[10px]">Biophilic Courtyards</span>
+                                    <span class="bg-studio-800 border border-studio-700 text-studio-200 px-2 py-0.5 text-[10px]">Child-Friendly Wayfinding</span>
+                                    <span class="bg-studio-800 border border-studio-700 text-studio-200 px-2 py-0.5 text-[10px]">Sterile vs Public Zoning</span>
+                                    <span class="bg-studio-800 border border-studio-700 text-studio-200 px-2 py-0.5 text-[10px]">Direct Ambulance Triage</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-studio-100 mb-4">
-                Amparo Hospital
-            </h1>
-            <p class="font-mono text-studio-300 text-sm sm:text-base max-w-3xl leading-relaxed">
-                A hospital concept centered on calm circulation, clarity, and efficient spatial organization. Click any image below to open full-screen mode and cycle through all 8 project diagrams and renderings.
-            </p>
+        </section>
+
+        <!-- Visual Plates Gallery Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-studio-700/80 pb-4">
+            <div>
+                <h2 class="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-studio-100 flex items-center gap-2">
+                    <i class="ph ph-images text-accent"></i> Architectural Plates &amp; Clinical Diagrams
+                </h2>
+                <p class="font-mono text-xs text-studio-400 mt-1">7 Technical Plates &amp; Renderings Available &bull; Click any plate to inspect in high-resolution</p>
+            </div>
+            <div class="flex items-center gap-2 font-mono text-xs text-studio-400">
+                <span class="bg-studio-800 border border-studio-700 px-3 py-1.5 text-accent font-bold">TOTAL: 7 PLATES</span>
+            </div>
         </div>
 
+        <!-- Project Images Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="project-gallery-grid">
             
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="1.webp" data-caption="Amparo Hospital - Main Architectural Facade">
+            <!-- Plate 1 -->
+            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="1.webp" data-caption="Amping Children's Hospital" data-title="PLATE 01: Main Facade &amp; Shading Entrance Canopy" data-desc="Welcoming curvilinear entrance portal engineered with acoustic buffering and pediatric drop-off protection.">
+                <div class="absolute top-3 left-3 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[10px] px-2.5 py-1 font-bold uppercase tracking-wider shadow-lg">
+                    PLATE 01
+                </div>
                 <img src="1.webp" alt="Main Facade" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+                <div class="absolute inset-0 bg-studio-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                    <div class="flex justify-end">
+                        <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                            <i class="ph ph-magnifying-glass-plus text-sm"></i> Inspect Plate
+                        </span>
+                    </div>
+                    <div class="bg-studio-900/95 border border-studio-700 p-3">
+                        <p class="font-mono text-xs font-bold text-studio-100">Main Facade &amp; Entrance Canopy</p>
+                        <p class="font-mono text-[11px] text-studio-400 mt-0.5">Pediatric entrance and solar shading canopy</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="2.webp" data-caption="Amparo Hospital - Aerial Site View & Approach">
-                <img src="2.webp" alt="Aerial View" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+            <!-- Plate 2 -->
+            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="2.webp" data-caption="Amping Children's Hospital" data-title="PLATE 02: Aerial Site View &amp; Biophilic Healing Courtyard" data-desc="Macro perspective showing the central healing garden, rooftop recovery terraces, and ambulance access loop.">
+                <div class="absolute top-3 left-3 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[10px] px-2.5 py-1 font-bold uppercase tracking-wider shadow-lg">
+                    PLATE 02
+                </div>
+                <img src="2.webp" alt="Aerial Site View" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                <div class="absolute inset-0 bg-studio-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                    <div class="flex justify-end">
+                        <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                            <i class="ph ph-magnifying-glass-plus text-sm"></i> Inspect Plate
+                        </span>
+                    </div>
+                    <div class="bg-studio-900/95 border border-studio-700 p-3">
+                        <p class="font-mono text-xs font-bold text-studio-100">Aerial Site View &amp; Healing Courtyard</p>
+                        <p class="font-mono text-[11px] text-studio-400 mt-0.5">Biophilic gardens and vehicular triage loop</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="3.webp" data-caption="Amparo Hospital - Floor Plan & Circulation Layout">
-                <img src="3.webp" alt="Floor Plan" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+            <!-- Plate 3 -->
+            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="3.webp" data-caption="Amping Children's Hospital" data-title="PLATE 03: Clinical Flow &amp; Outpatient Ward Layout" data-desc="Floor plan demonstrating radial nurse observation hubs, daylight corridors, and child-safe ward modules.">
+                <div class="absolute top-3 left-3 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[10px] px-2.5 py-1 font-bold uppercase tracking-wider shadow-lg">
+                    PLATE 03
+                </div>
+                <img src="3.webp" alt="Floor Plan & Circulation" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                <div class="absolute inset-0 bg-studio-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                    <div class="flex justify-end">
+                        <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                            <i class="ph ph-magnifying-glass-plus text-sm"></i> Inspect Plate
+                        </span>
+                    </div>
+                    <div class="bg-studio-900/95 border border-studio-700 p-3">
+                        <p class="font-mono text-xs font-bold text-studio-100">Clinical Flow &amp; Outpatient Ward Layout</p>
+                        <p class="font-mono text-[11px] text-studio-400 mt-0.5">Zoned consultation suites and nurse hubs</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="4.webp" data-caption="Amparo Hospital - Interior Ward & Emergency Bay">
-                <img src="4.webp" alt="Interior Ward" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+            <!-- Plate 4 -->
+            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="4.webp" data-caption="Amping Children's Hospital" data-title="PLATE 04: Pediatric Emergency Ward &amp; Triage Interior" data-desc="Interior perspective with warm illumination, acoustic dampening timber slats, and soothing color themes.">
+                <div class="absolute top-3 left-3 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[10px] px-2.5 py-1 font-bold uppercase tracking-wider shadow-lg">
+                    PLATE 04
+                </div>
+                <img src="4.webp" alt="Pediatric Ward Interior" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                <div class="absolute inset-0 bg-studio-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                    <div class="flex justify-end">
+                        <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                            <i class="ph ph-magnifying-glass-plus text-sm"></i> Inspect Plate
+                        </span>
+                    </div>
+                    <div class="bg-studio-900/95 border border-studio-700 p-3">
+                        <p class="font-mono text-xs font-bold text-studio-100">Pediatric Emergency Ward Interior</p>
+                        <p class="font-mono text-[11px] text-studio-400 mt-0.5">Warm biophilic timber accents and stress reduction</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="5.webp" data-caption="Amparo Hospital - Spatial Flow Diagram">
-                <img src="5.webp" alt="Flow Diagram" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+            <!-- Plate 5 -->
+            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="5.webp" data-caption="Amping Children's Hospital" data-title="PLATE 05: Infection Barrier &amp; Functional Flow Matrix" data-desc="Technical adjacency diagram outlining sterile corridors, clean supplies flow, and contaminated return separation.">
+                <div class="absolute top-3 left-3 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[10px] px-2.5 py-1 font-bold uppercase tracking-wider shadow-lg">
+                    PLATE 05
+                </div>
+                <img src="5.webp" alt="Flow & Adjacency Diagram" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                <div class="absolute inset-0 bg-studio-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                    <div class="flex justify-end">
+                        <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                            <i class="ph ph-magnifying-glass-plus text-sm"></i> Inspect Plate
+                        </span>
+                    </div>
+                    <div class="bg-studio-900/95 border border-studio-700 p-3">
+                        <p class="font-mono text-xs font-bold text-studio-100">Infection Barrier &amp; Flow Matrix</p>
+                        <p class="font-mono text-[11px] text-studio-400 mt-0.5">Sterile vs contaminated circulation layout</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="7.webp" data-caption="Amparo Hospital - Elevation Study">
-                <img src="7.webp" alt="Elevation Study" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+            <!-- Plate 6 -->
+            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="7.webp" data-caption="Amping Children's Hospital" data-title="PLATE 06: Solar Louver Elevation &amp; Thermal Buffer Study" data-desc="Architectural elevation detailing passive horizontal and vertical brise-soleil shielding patient rooms from solar heat.">
+                <div class="absolute top-3 left-3 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[10px] px-2.5 py-1 font-bold uppercase tracking-wider shadow-lg">
+                    PLATE 06
+                </div>
+                <img src="7.webp" alt="Elevation & Louver Study" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                <div class="absolute inset-0 bg-studio-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                    <div class="flex justify-end">
+                        <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                            <i class="ph ph-magnifying-glass-plus text-sm"></i> Inspect Plate
+                        </span>
+                    </div>
+                    <div class="bg-studio-900/95 border border-studio-700 p-3">
+                        <p class="font-mono text-xs font-bold text-studio-100">Solar Louver Elevation Study</p>
+                        <p class="font-mono text-[11px] text-studio-400 mt-0.5">Passive thermal shielding &amp; natural ventilation</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="8.webp" data-caption="Amparo Hospital - Master Site Plan">
-                <img src="8.webp" alt="Master Site Plan" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+            <!-- Plate 7 -->
+            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="8.webp" data-caption="Amping Children's Hospital" data-title="PLATE 07: Master Logistics &amp; Site Plan" data-desc="Comprehensive master plan showing logistics loading docks, surface parking, buffer setbacks, and future expansion wings.">
+                <div class="absolute top-3 left-3 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[10px] px-2.5 py-1 font-bold uppercase tracking-wider shadow-lg">
+                    PLATE 07
                 </div>
-            </div>
-
-            <div class="project-img-card cursor-pointer group relative aspect-[4/3] overflow-hidden rounded-xl border border-studio-700 bg-studio-800 hover:border-accent transition-all duration-300" data-src="8.webp" data-caption="Amparo Hospital - High-Res Perspective Rendering">
-                <img src="8.webp" alt="High Res Perspective" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-magnifying-glass-plus text-sm"></i> Expand
-                    </span>
+                <img src="8.webp" alt="Comprehensive Master Site Plan" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                <div class="absolute inset-0 bg-studio-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                    <div class="flex justify-end">
+                        <span class="font-mono text-xs bg-accent text-studio-900 px-3 py-1.5 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                            <i class="ph ph-magnifying-glass-plus text-sm"></i> Inspect Plate
+                        </span>
+                    </div>
+                    <div class="bg-studio-900/95 border border-studio-700 p-3">
+                        <p class="font-mono text-xs font-bold text-studio-100">Master Logistics &amp; Site Plan</p>
+                        <p class="font-mono text-[11px] text-studio-400 mt-0.5">Service docks, parking grid, and site setbacks</p>
+                    </div>
                 </div>
             </div>
 
         </div>
+
+        <!-- Next / Previous Project Navigation -->
+        <section class="border-t border-studio-700/80 pt-8 pb-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href="../airport/full_project.html" class="group border border-studio-700 hover:border-accent bg-studio-800/60 p-4 transition-all flex items-center gap-3">
+                    <i class="ph ph-arrow-left text-xl text-accent group-hover:-translate-x-1 transition-transform"></i>
+                    <div>
+                        <span class="font-mono text-[10px] text-studio-400 uppercase tracking-widest block">PREVIOUS PROJECT</span>
+                        <span class="font-bold text-studio-100 group-hover:text-accent transition-colors">Layag Airport (Architecture)</span>
+                    </div>
+                </a>
+                <a href="../marahuyo/full_project.html" class="group border border-studio-700 hover:border-accent bg-studio-800/60 p-4 transition-all flex items-center justify-between gap-3 text-right">
+                    <div>
+                        <span class="font-mono text-[10px] text-studio-400 uppercase tracking-widest block">NEXT PROJECT</span>
+                        <span class="font-bold text-studio-100 group-hover:text-accent transition-colors">Marahuyo Park (Planning)</span>
+                    </div>
+                    <i class="ph ph-arrow-right text-xl text-accent group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </section>
     </main>
 
-    <div id="project-lightbox" class="fixed inset-0 z-[100] bg-studio-900/95 backdrop-blur-md hidden items-center justify-center p-4 md:p-8 select-none">
-        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-accent"></div>
-        <div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-accent"></div>
-        <div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-accent"></div>
-        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-accent"></div>
+    <!-- Footer -->
+    <footer class="border-t border-studio-700/80 bg-studio-900 py-6 px-6 text-center font-mono text-xs text-studio-400">
+        <p>MARJO PAGUIA &bull; ARCHITECTURAL DESIGN PORTFOLIO &bull; ALL RIGHTS RESERVED</p>
+    </footer>
 
-        <div class="absolute top-6 left-6 right-6 flex justify-between items-center z-10 font-mono text-xs text-studio-400">
-            <div class="flex items-center gap-3">
-                <span class="text-accent uppercase tracking-widest">[AMPARO HOSPITAL]</span>
-                <span id="p-lightbox-counter" class="bg-studio-800 text-studio-200 border border-studio-700 px-3 py-1 rounded-full font-bold">1 / 8</span>
+    <!-- High-Res Lightbox Modal -->
+    <div id="project-lightbox" class="fixed inset-0 z-[100] bg-studio-900/98 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 md:p-8 select-none">
+        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-accent pointer-events-none"></div>
+        <div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-accent pointer-events-none"></div>
+        <div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-accent pointer-events-none"></div>
+        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-accent pointer-events-none"></div>
+
+        <!-- Top HUD Controls -->
+        <div class="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex justify-between items-center z-20 font-mono text-xs">
+            <div class="flex items-center gap-2 sm:gap-3 bg-studio-900/90 border border-studio-700 px-3 py-1.5 shadow-lg">
+                <span class="text-accent uppercase tracking-widest font-bold hidden sm:inline">[AMPARO HOSPITAL INSPECTOR]</span>
+                <span id="p-lightbox-counter" class="bg-studio-800 text-accent border border-studio-700 px-2.5 py-0.5 font-bold text-[11px]">01 / 07</span>
             </div>
-            <button id="p-close-lightbox-btn" class="bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 p-2.5 rounded-full transition-all">
-                <i class="ph ph-x text-xl"></i>
-            </button>
+            <div class="flex items-center gap-2">
+                <button id="p-zoom-btn" class="bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 px-3 py-2 transition-all flex items-center gap-1.5 shadow-lg" title="Toggle Zoom (Z)">
+                    <i class="ph ph-magnifying-glass-plus text-base"></i> <span class="hidden md:inline">ZOOM</span>
+                </button>
+                <button id="p-close-lightbox-btn" class="bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 p-2.5 transition-all shadow-lg" title="Close (Esc)">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
         </div>
 
-        <button id="p-prev-lightbox-btn" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 rounded-full transition-all backdrop-blur-sm">
+        <!-- Navigation buttons -->
+        <button id="p-prev-lightbox-btn" class="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-studio-800/90 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm shadow-xl" title="Previous Plate (Left Arrow)">
             <i class="ph ph-caret-left text-2xl md:text-3xl"></i>
         </button>
 
-        <div class="relative max-w-5xl max-h-[82vh] w-full h-full flex flex-col items-center justify-center p-2">
-            <img id="p-lightbox-img" src="" alt="Project Preview" class="max-w-full max-h-[75vh] object-contain rounded-lg border border-studio-700/80 shadow-2xl transition-all duration-300">
-            <p id="p-lightbox-caption" class="font-mono text-xs md:text-sm text-studio-300 mt-4 tracking-wide text-center bg-studio-800/90 border border-studio-700 px-4 py-2 rounded-full"></p>
+        <div id="p-lightbox-viewport" class="relative max-w-6xl max-h-[80vh] w-full h-full flex flex-col items-center justify-center p-2 overflow-auto">
+            <img id="p-lightbox-img" src="" alt="Project Plate" class="max-w-full max-h-[75vh] object-contain border border-studio-700/80 shadow-2xl transition-all duration-300 cursor-zoom-in">
         </div>
 
-        <button id="p-next-lightbox-btn" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-studio-800/80 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 rounded-full transition-all backdrop-blur-sm">
+        <!-- Bottom Plate Information HUD -->
+        <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row items-center justify-between gap-2 z-20 pointer-events-none">
+            <div class="bg-studio-900/95 border border-studio-700 px-4 py-2 pointer-events-auto max-w-2xl shadow-lg">
+                <p id="p-lightbox-caption" class="font-mono text-xs text-studio-200 tracking-wide text-left"></p>
+                <p id="p-lightbox-desc" class="font-mono text-[11px] text-studio-400 mt-1 text-left hidden sm:block"></p>
+            </div>
+            <div class="font-mono text-[10px] text-studio-400 bg-studio-900/90 border border-studio-700 px-3 py-1.5 hidden md:block shadow-lg">
+                <span>Navigate: <kbd class="text-accent">&larr;</kbd> <kbd class="text-accent">&rarr;</kbd> &bull; Zoom: <kbd class="text-accent">Click</kbd> &bull; Exit: <kbd class="text-accent">ESC</kbd></span>
+            </div>
+        </div>
+
+        <button id="p-next-lightbox-btn" class="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-studio-800/90 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent p-3 md:p-4 transition-all backdrop-blur-sm shadow-xl" title="Next Plate (Right Arrow)">
             <i class="ph ph-caret-right text-2xl md:text-3xl"></i>
         </button>
     </div>
 
+    <!-- Page Lightbox & Theme Script -->
     <script>
         const cards = document.querySelectorAll('.project-img-card');
         const lightbox = document.getElementById('project-lightbox');
         const closeBtn = document.getElementById('p-close-lightbox-btn');
         const prevBtn = document.getElementById('p-prev-lightbox-btn');
         const nextBtn = document.getElementById('p-next-lightbox-btn');
+        const zoomBtn = document.getElementById('p-zoom-btn');
+        const viewport = document.getElementById('p-lightbox-viewport');
         const imgEl = document.getElementById('p-lightbox-img');
         const captionEl = document.getElementById('p-lightbox-caption');
+        const descEl = document.getElementById('p-lightbox-desc');
         const counterEl = document.getElementById('p-lightbox-counter');
+        const shareBtn = document.getElementById('share-project-btn');
 
         const items = Array.from(cards).map(card => ({
             src: card.getAttribute('data-src'),
-            caption: card.getAttribute('data-caption')
+            title: card.getAttribute('data-title'),
+            caption: card.getAttribute('data-caption'),
+            desc: card.getAttribute('data-desc') || ''
         }));
 
         let currentIndex = 0;
+        let isZoomed = false;
+
+        function toggleZoom() {
+            if (!imgEl) return;
+            isZoomed = !isZoomed;
+            imgEl.classList.toggle('is-zoomed', isZoomed);
+            if (zoomBtn) {
+                zoomBtn.innerHTML = isZoomed
+                    ? '<i class="ph ph-magnifying-glass-minus text-base"></i> <span class="hidden md:inline">FIT</span>'
+                    : '<i class="ph ph-magnifying-glass-plus text-base"></i> <span class="hidden md:inline">ZOOM</span>';
+            }
+        }
+
+        function resetZoom() {
+            isZoomed = false;
+            if (imgEl) imgEl.classList.remove('is-zoomed');
+            if (zoomBtn) {
+                zoomBtn.innerHTML = '<i class="ph ph-magnifying-glass-plus text-base"></i> <span class="hidden md:inline">ZOOM</span>';
+            }
+        }
 
         function updateContent() {
             if (!items[currentIndex]) return;
+            resetZoom();
             imgEl.style.opacity = '0';
             setTimeout(() => {
                 imgEl.src = items[currentIndex].src;
-                imgEl.alt = items[currentIndex].caption;
+                imgEl.alt = items[currentIndex].title || items[currentIndex].caption;
                 imgEl.style.opacity = '1';
-            }, 100);
-            captionEl.textContent = items[currentIndex].caption;
-            counterEl.textContent = `${currentIndex + 1} / ${items.length}`;
+            }, 80);
+            if (captionEl) {
+                captionEl.innerHTML = `<span class="text-accent font-bold">${items[currentIndex].title || items[currentIndex].caption}</span>`;
+            }
+            if (descEl) {
+                descEl.textContent = items[currentIndex].desc;
+            }
+            if (counterEl) {
+                counterEl.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+            }
         }
 
         function openLightbox(index) {
             currentIndex = index;
+            resetZoom();
             updateContent();
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
@@ -204,6 +494,7 @@
         }
 
         function closeLightbox() {
+            resetZoom();
             lightbox.classList.add('hidden');
             lightbox.classList.remove('flex');
             document.body.style.overflow = 'auto';
@@ -213,18 +504,20 @@
             card.addEventListener('click', () => openLightbox(idx));
         });
 
-        closeBtn.addEventListener('click', closeLightbox);
-        nextBtn.addEventListener('click', () => {
+        closeBtn?.addEventListener('click', closeLightbox);
+        nextBtn?.addEventListener('click', () => {
             currentIndex = (currentIndex + 1) % items.length;
             updateContent();
         });
-        prevBtn.addEventListener('click', () => {
+        prevBtn?.addEventListener('click', () => {
             currentIndex = (currentIndex - 1 + items.length) % items.length;
             updateContent();
         });
+        zoomBtn?.addEventListener('click', toggleZoom);
+        imgEl?.addEventListener('click', toggleZoom);
 
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
+        lightbox?.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target === viewport) closeLightbox();
         });
 
         window.addEventListener('keydown', (e) => {
@@ -232,7 +525,46 @@
                 if (e.key === 'Escape') closeLightbox();
                 if (e.key === 'ArrowRight') nextBtn.click();
                 if (e.key === 'ArrowLeft') prevBtn.click();
+                if (e.key.toLowerCase() === 'z') toggleZoom();
             }
+        });
+
+        // Share button logic
+        shareBtn?.addEventListener('click', async () => {
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(window.location.href);
+                const originalText = shareBtn.innerHTML;
+                shareBtn.innerHTML = '<i class="ph ph-check text-sm text-accent"></i> <span class="hidden md:inline text-accent">Copied!</span>';
+                setTimeout(() => {
+                    shareBtn.innerHTML = originalText;
+                }, 2000);
+            }
+        });
+
+        // Theme toggle logic
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const themeText = document.getElementById('theme-text');
+        
+        function updateHospitalThemeUI() {
+            const isLight = document.documentElement.classList.contains('light');
+            if (themeText) themeText.textContent = isLight ? 'Mode: Light' : 'Mode: Dark';
+            const icon = themeToggleBtn?.querySelector('i');
+            if (icon) {
+                icon.className = isLight ? 'ph ph-moon text-sm text-accent' : 'ph ph-sun text-sm text-accent';
+            }
+        }
+        updateHospitalThemeUI();
+
+        themeToggleBtn?.addEventListener('click', () => {
+            const isLight = document.documentElement.classList.contains('light');
+            if (isLight) {
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('mp_portfolio_theme', 'dark');
+            } else {
+                document.documentElement.classList.add('light');
+                localStorage.setItem('mp_portfolio_theme', 'light');
+            }
+            updateHospitalThemeUI();
         });
     </script>
 </body>

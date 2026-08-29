@@ -115,22 +115,45 @@ body, aside, header, nav, section, div, button, input, textarea, a {
     background: var(--scrollbar-hover);
 }
 
-/* Project Card Hover Effects */
+/* Project Card Effects & Modal Acceleration */
 .project-img-wrapper img {
     transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
 }
 .project-card:hover .project-img-wrapper img {
     transform: scale(1.05);
     opacity: 0.8;
 }
 .project-meta {
-    transform: translateY(10px);
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-.project-card:hover .project-meta {
-    transform: translateY(0);
+    transform: none;
     opacity: 1;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Modal and Lightbox GPU Acceleration & Fast Rendering */
+#project-modal, #gallery-lightbox, #service-modal, #inquiry-modal, #cv-modal {
+    will-change: opacity, transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+#lightbox-img {
+    will-change: opacity, transform;
+    transform: translateZ(0);
+    image-rendering: -webkit-optimize-contrast;
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.2s ease;
+}
+
+#lightbox-img.is-zoomed {
+    max-width: 160% !important;
+    max-height: none !important;
+    cursor: zoom-out !important;
+    transform: scale(1.35) translateZ(0);
+}
+
+.modal-thumb-img {
+    transition: opacity 0.2s ease, transform 0.3s ease;
 }
 
 /* --- ANIMATION & CURSOR STYLES (TECHNICAL SHARP DRAFTING CURSOR) --- */
@@ -463,12 +486,20 @@ html.light .scroll-meter-value {
 .print-cv-sheet.cv-theme-light .border-accent {
     border-color: #b45309 !important;
 }
-.print-cv-sheet.cv-theme-light .border-studio-700 {
+.print-cv-sheet.cv-theme-light .border-studio-700,
+.print-cv-sheet.cv-theme-light .border-studio-700\/60,
+.print-cv-sheet.cv-theme-light .border-studio-700\/40 {
     border-color: #e2e8f0 !important;
 }
+.print-cv-sheet.cv-theme-light .border-t-accent {
+    border-top-color: #b45309 !important;
+}
 .print-cv-sheet.cv-theme-light .bg-studio-900,
+.print-cv-sheet.cv-theme-light .bg-studio-900\/80,
 .print-cv-sheet.cv-theme-light .bg-studio-900\/70,
-.print-cv-sheet.cv-theme-light .bg-studio-900\/40 {
+.print-cv-sheet.cv-theme-light .bg-studio-900\/40,
+.print-cv-sheet.cv-theme-light .bg-studio-900\/30,
+.print-cv-sheet.cv-theme-light .bg-studio-900\/20 {
     background-color: #f8fafc !important;
     border-color: #e2e8f0 !important;
 }
@@ -530,22 +561,66 @@ html.light .scroll-meter-value {
     background-color: #18181b !important;
     border-color: #27272a !important;
 }
-.print-cv-sheet.cv-theme-dark #cv-theme-selector {
+.print-cv-sheet.cv-theme-dark #cv-theme-selector,
+.print-cv-sheet.cv-theme-dark #cv-orient-selector {
     background-color: #09090b !important;
     border-color: #27272a !important;
 }
-.print-cv-sheet.cv-theme-dark .cv-theme-mode-btn.active {
+.print-cv-sheet.cv-theme-dark .cv-theme-mode-btn.active,
+.print-cv-sheet.cv-theme-dark .cv-orient-btn.active {
     background-color: #27272a !important;
     border-color: #facc15 !important;
     color: #f8fafc !important;
 }
-.print-cv-sheet.cv-theme-dark .cv-theme-mode-btn:not(.active) {
+.print-cv-sheet.cv-theme-dark .cv-theme-mode-btn:not(.active),
+.print-cv-sheet.cv-theme-dark .cv-orient-btn:not(.active) {
     color: #71717a !important;
 }
 .print-cv-sheet.cv-theme-dark #close-cv-modal {
     background-color: #18181b !important;
     border-color: #27272a !important;
     color: #a1a1aa !important;
+}
+
+/* Light Mode Orientation Switcher support */
+.print-cv-sheet.cv-theme-light #cv-orient-selector {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+.print-cv-sheet.cv-theme-light .cv-orient-btn.active {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+}
+.print-cv-sheet.cv-theme-light .cv-orient-btn:not(.active) {
+    color: #64748b !important;
+}
+
+/* ==========================================================================
+   CV ORIENTATION LAYOUT RULES (PORTRAIT VS LANDSCAPE)
+   ========================================================================== */
+#cv-sheet-container.cv-orient-portrait {
+    max-width: 56rem; /* 896px */
+}
+#cv-sheet-container.cv-orient-portrait .cv-sections-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#cv-sheet-container.cv-orient-landscape {
+    max-width: 76rem; /* 1216px */
+    width: 100%;
+}
+#cv-sheet-container.cv-orient-landscape .cv-sections-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    align-items: start;
+}
+@media (max-width: 900px) {
+    #cv-sheet-container.cv-orient-landscape .cv-sections-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ==========================================================================
