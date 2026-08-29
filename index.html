@@ -902,184 +902,351 @@
                     </button>
                 </div>
 
-                <!-- Services Milestones Bar -->
-                <div id="milestones-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 md:gap-8 mb-10 sm:mb-16 gs-reveal delay-100">
+                <!-- Services Milestones Bar (Architectural Metric HUD Cards) -->
+                <div id="milestones-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16 gs-reveal delay-100">
                     
                     <!-- Milestone 1: Years Freelancing -->
-                    <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
-                        <!-- Reference screenshot dot indicator -->
-                        <div class="absolute -top-[5px] left-0 flex items-center justify-center">
-                            <span class="w-2.5 h-2.5 bg-accent relative z-10"></span>
-                            <span class="absolute w-6 h-6 border border-accent/40 animate-ping"></span>
+                    <div class="milestone-hud-card group hover-trigger">
+                        <div class="flex items-center justify-between mb-3 border-b border-studio-700/60 pb-2">
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-widest flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 bg-accent"></span> M-01 // TENURE
+                            </span>
+                            <i class="ph ph-calendar-check text-studio-400 group-hover:text-accent transition-colors"></i>
                         </div>
-                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5">
                             <span class="milestone-counter" data-target="5" data-suffix="">0</span>
+                            <span class="text-xl sm:text-2xl text-studio-400 font-normal">YRS</span>
                         </div>
-                        <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
+                        <p class="font-mono text-studio-300 text-xs sm:text-sm font-semibold uppercase tracking-wider">
                             Years Freelancing
+                        </p>
+                        <p class="font-mono text-studio-500 text-[10px] sm:text-[11px] mt-0.5">
+                            Active Architectural Practice &amp; Visual Commissions
                         </p>
                     </div>
 
                     <!-- Milestone 2: Commissioned Projects -->
-                    <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
-                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
+                    <div class="milestone-hud-card group hover-trigger">
+                        <div class="flex items-center justify-between mb-3 border-b border-studio-700/60 pb-2">
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-widest flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 bg-accent"></span> M-02 // DELIVERIES
+                            </span>
+                            <i class="ph ph-buildings text-studio-400 group-hover:text-accent transition-colors"></i>
+                        </div>
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5">
                             <span class="milestone-counter" data-target="120" data-suffix="+">0</span>
                         </div>
-                        <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
+                        <p class="font-mono text-studio-300 text-xs sm:text-sm font-semibold uppercase tracking-wider">
                             Commissioned Projects
+                        </p>
+                        <p class="font-mono text-studio-500 text-[10px] sm:text-[11px] mt-0.5">
+                            Plates, 3D Renders, Working Sets &amp; Layouts
                         </p>
                     </div>
 
                     <!-- Milestone 3: Awards -->
-                    <div class="relative border-t border-studio-700 pt-4 sm:pt-6 group hover-trigger">
-                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5 sm:mb-2">
+                    <div class="milestone-hud-card group hover-trigger">
+                        <div class="flex items-center justify-between mb-3 border-b border-studio-700/60 pb-2">
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-widest flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 bg-accent"></span> M-03 // RECOGNITION
+                            </span>
+                            <i class="ph ph-trophy text-studio-400 group-hover:text-accent transition-colors"></i>
+                        </div>
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5">
                             <span class="milestone-counter" data-target="15" data-suffix="+">0</span>
                         </div>
-                        <p class="font-mono text-studio-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">
-                            Awards
+                        <p class="font-mono text-studio-300 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                            Awards &amp; Merits
+                        </p>
+                        <p class="font-mono text-studio-500 text-[10px] sm:text-[11px] mt-0.5">
+                            Academic &amp; Regional Design Honors
                         </p>
                     </div>
 
                 </div>
 
-                <!-- Services Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+                <!-- Services Grid (Blueprint Architectural Spec Cards) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
                     
                     <!-- Card 01: 3D Modelling -->
-                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="3D Modelling">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                                <div>
-                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">3D DESIGN</span>
-                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">01</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">3D Modelling</h3>
-                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                        High-quality 3D models for architectural design, product visualization, and creative projects—bringing concepts to life with precision and flair.
-                                    </p>
-                                </div>
-                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="3D Modelling">
-                                        See details &rarr;
-                                    </button>
-                                </div>
+                    <div class="service-card service-architectural-card hover-trigger p-5 sm:p-6 group cursor-pointer gs-reveal delay-100" data-service="3D Modelling">
+                        <div class="service-corner-decor tl"></div>
+                        <div class="service-corner-decor br"></div>
+                        
+                        <!-- Top Bar / Discipline Meta -->
+                        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-studio-700/70">
+                            <div class="service-icon-box">
+                                <i class="ph ph-cube"></i>
                             </div>
+                            <div class="text-right">
+                                <span class="font-mono text-[10px] text-accent font-bold uppercase tracking-widest block">01 // 3D DESIGN</span>
+                                <span class="font-mono text-[9px] text-studio-400">PRECISION GEOMETRY</span>
+                            </div>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="mb-4 flex-1">
+                            <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors flex items-center justify-between">
+                                <span>3D Modelling</span>
+                                <i class="ph ph-arrow-up-right text-base text-studio-500 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                            </h3>
+                            <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                                High-quality 3D models for architectural design, massing studies, and complex built forms—bringing conceptual spatial ideas to life with millimeter precision.
+                            </p>
+                        </div>
+
+                        <!-- Deliverables Tags -->
+                        <div class="mb-5 pt-3 border-t border-studio-700/50">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="service-pill-tag">SketchUp Pro</span>
+                                <span class="service-pill-tag">Revit BIM</span>
+                                <span class="service-pill-tag">AutoCAD 3D</span>
+                                <span class="service-pill-tag">OBJ / FBX</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-3 border-t border-studio-700/60 flex items-center justify-between">
+                            <span class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Specifications</span>
+                            <button class="see-more-btn font-mono font-bold text-[10px] sm:text-xs px-3.5 py-1.5 bg-studio-700/80 group-hover:bg-accent text-studio-200 group-hover:text-studio-900 border border-studio-600/60 group-hover:border-accent transition-all uppercase tracking-wider flex items-center gap-1.5" data-service="3D Modelling">
+                                <span>View Scope</span>
+                                <i class="ph ph-caret-right text-xs"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- Card 02: Rendering -->
-                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Rendering">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                                <div>
-                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">VISUALIZATION</span>
-                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">02</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Rendering</h3>
-                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                        Photorealistic architectural and interior renderings that present your designs with depth, realism, and visual impact.
-                                    </p>
-                                </div>
-                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Rendering">
-                                        See details &rarr;
-                                    </button>
-                                </div>
+                    <div class="service-card service-architectural-card hover-trigger p-5 sm:p-6 group cursor-pointer gs-reveal delay-200" data-service="Rendering">
+                        <div class="service-corner-decor tl"></div>
+                        <div class="service-corner-decor br"></div>
+                        
+                        <!-- Top Bar / Discipline Meta -->
+                        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-studio-700/70">
+                            <div class="service-icon-box">
+                                <i class="ph ph-sun-dim"></i>
                             </div>
+                            <div class="text-right">
+                                <span class="font-mono text-[10px] text-accent font-bold uppercase tracking-widest block">02 // VISUALIZATION</span>
+                                <span class="font-mono text-[9px] text-studio-400">LIGHT &amp; MATERIALITY</span>
+                            </div>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="mb-4 flex-1">
+                            <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors flex items-center justify-between">
+                                <span>Rendering</span>
+                                <i class="ph ph-arrow-up-right text-base text-studio-500 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                            </h3>
+                            <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                                Photorealistic architectural, exterior, and interior visualizations configured with authentic natural lighting, realistic materiality, and atmospheric depth.
+                            </p>
+                        </div>
+
+                        <!-- Deliverables Tags -->
+                        <div class="mb-5 pt-3 border-t border-studio-700/50">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="service-pill-tag">Lumion Pro</span>
+                                <span class="service-pill-tag">Photoshop Post-Prod</span>
+                                <span class="service-pill-tag">4K Ultra-HD</span>
+                                <span class="service-pill-tag">Day &amp; Night Scenes</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-3 border-t border-studio-700/60 flex items-center justify-between">
+                            <span class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Specifications</span>
+                            <button class="see-more-btn font-mono font-bold text-[10px] sm:text-xs px-3.5 py-1.5 bg-studio-700/80 group-hover:bg-accent text-studio-200 group-hover:text-studio-900 border border-studio-600/60 group-hover:border-accent transition-all uppercase tracking-wider flex items-center gap-1.5" data-service="Rendering">
+                                <span>View Scope</span>
+                                <i class="ph ph-caret-right text-xs"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- Card 03: Manual Drawings -->
-                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Manual Drawings">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                                <div>
-                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">ILLUSTRATION</span>
-                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">03</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Manual Drawings</h3>
-                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                        Hand-crafted architectural and artistic drawings that convey concepts with authenticity, detail, and a personal touch.
-                                    </p>
-                                </div>
-                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Manual Drawings">
-                                        See details &rarr;
-                                    </button>
-                                </div>
+                    <div class="service-card service-architectural-card hover-trigger p-5 sm:p-6 group cursor-pointer gs-reveal delay-300" data-service="Manual Drawings">
+                        <div class="service-corner-decor tl"></div>
+                        <div class="service-corner-decor br"></div>
+                        
+                        <!-- Top Bar / Discipline Meta -->
+                        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-studio-700/70">
+                            <div class="service-icon-box">
+                                <i class="ph ph-pen-nib"></i>
                             </div>
+                            <div class="text-right">
+                                <span class="font-mono text-[10px] text-accent font-bold uppercase tracking-widest block">03 // ILLUSTRATION</span>
+                                <span class="font-mono text-[9px] text-studio-400">HAND-CRAFTED ART</span>
+                            </div>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="mb-4 flex-1">
+                            <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors flex items-center justify-between">
+                                <span>Manual Drawings</span>
+                                <i class="ph ph-arrow-up-right text-base text-studio-500 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                            </h3>
+                            <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                                Hand-drawn architectural plates, fine technical pen illustrations, and expressive watercolor sketches celebrating the tactile heritage of architectural craft.
+                            </p>
+                        </div>
+
+                        <!-- Deliverables Tags -->
+                        <div class="mb-5 pt-3 border-t border-studio-700/50">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="service-pill-tag">Technical Pens</span>
+                                <span class="service-pill-tag">Ink &amp; Stippling</span>
+                                <span class="service-pill-tag">Watercolor Medium</span>
+                                <span class="service-pill-tag">Hi-Res Scans</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-3 border-t border-studio-700/60 flex items-center justify-between">
+                            <span class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Specifications</span>
+                            <button class="see-more-btn font-mono font-bold text-[10px] sm:text-xs px-3.5 py-1.5 bg-studio-700/80 group-hover:bg-accent text-studio-200 group-hover:text-studio-900 border border-studio-600/60 group-hover:border-accent transition-all uppercase tracking-wider flex items-center gap-1.5" data-service="Manual Drawings">
+                                <span>View Scope</span>
+                                <i class="ph ph-caret-right text-xs"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- Card 04: Presentation Board Layout -->
-                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 flex flex-col" data-service="Presentation Board Layout">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                                <div>
-                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">LAYOUT</span>
-                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">04</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Presentation Board Layout</h3>
-                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                        Clean and professional layouts that clearly present design ideas, concepts, and technical details for impactful reviews.
-                                    </p>
-                                </div>
-                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Presentation Board Layout">
-                                        See details &rarr;
-                                    </button>
-                                </div>
+                    <div class="service-card service-architectural-card hover-trigger p-5 sm:p-6 group cursor-pointer gs-reveal delay-100" data-service="Presentation Board Layout">
+                        <div class="service-corner-decor tl"></div>
+                        <div class="service-corner-decor br"></div>
+                        
+                        <!-- Top Bar / Discipline Meta -->
+                        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-studio-700/70">
+                            <div class="service-icon-box">
+                                <i class="ph ph-layout"></i>
                             </div>
+                            <div class="text-right">
+                                <span class="font-mono text-[10px] text-accent font-bold uppercase tracking-widest block">04 // BOARD LAYOUT</span>
+                                <span class="font-mono text-[9px] text-studio-400">JURY &amp; COMPETITION</span>
+                            </div>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="mb-4 flex-1">
+                            <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors flex items-center justify-between">
+                                <span>Presentation Layout</span>
+                                <i class="ph ph-arrow-up-right text-base text-studio-500 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                            </h3>
+                            <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                                Professional architectural presentation boards structured with clean visual hierarchy, diagrammatic narrative flow, and high-impact jury formatting.
+                            </p>
+                        </div>
+
+                        <!-- Deliverables Tags -->
+                        <div class="mb-5 pt-3 border-t border-studio-700/50">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="service-pill-tag">A1 / A0 Sizing</span>
+                                <span class="service-pill-tag">Photoshop &amp; Illustrator</span>
+                                <span class="service-pill-tag">Grid Systems</span>
+                                <span class="service-pill-tag">Print-Ready PDF</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-3 border-t border-studio-700/60 flex items-center justify-between">
+                            <span class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Specifications</span>
+                            <button class="see-more-btn font-mono font-bold text-[10px] sm:text-xs px-3.5 py-1.5 bg-studio-700/80 group-hover:bg-accent text-studio-200 group-hover:text-studio-900 border border-studio-600/60 group-hover:border-accent transition-all uppercase tracking-wider flex items-center gap-1.5" data-service="Presentation Board Layout">
+                                <span>View Scope</span>
+                                <i class="ph ph-caret-right text-xs"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- Card 05: Architectural Walkthrough -->
-                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-200 flex flex-col" data-service="Architectural Walkthrough">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                                <div>
-                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">WALKTHROUGH</span>
-                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">05</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Architectural Walkthrough</h3>
-                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                        Immersive visual experiences that highlight spatial relationships, materials, and the overall design atmosphere.
-                                    </p>
-                                </div>
-                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Architectural Walkthrough">
-                                        See details &rarr;
-                                    </button>
-                                </div>
+                    <div class="service-card service-architectural-card hover-trigger p-5 sm:p-6 group cursor-pointer gs-reveal delay-200" data-service="Architectural Walkthrough">
+                        <div class="service-corner-decor tl"></div>
+                        <div class="service-corner-decor br"></div>
+                        
+                        <!-- Top Bar / Discipline Meta -->
+                        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-studio-700/70">
+                            <div class="service-icon-box">
+                                <i class="ph ph-film-slate"></i>
                             </div>
+                            <div class="text-right">
+                                <span class="font-mono text-[10px] text-accent font-bold uppercase tracking-widest block">05 // ANIMATION</span>
+                                <span class="font-mono text-[9px] text-studio-400">SPATIAL CINEMATICS</span>
+                            </div>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="mb-4 flex-1">
+                            <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors flex items-center justify-between">
+                                <span>3D Walkthrough</span>
+                                <i class="ph ph-arrow-up-right text-base text-studio-500 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                            </h3>
+                            <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                                Cinematic walkthrough animations that illustrate circulation paths, light penetration, acoustic feel, and real-time spatial experiences of the proposed design.
+                            </p>
+                        </div>
+
+                        <!-- Deliverables Tags -->
+                        <div class="mb-5 pt-3 border-t border-studio-700/50">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="service-pill-tag">Lumion Cinematic</span>
+                                <span class="service-pill-tag">4K 60FPS Render</span>
+                                <span class="service-pill-tag">Premiere Pro Edit</span>
+                                <span class="service-pill-tag">Camera Choreography</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-3 border-t border-studio-700/60 flex items-center justify-between">
+                            <span class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Specifications</span>
+                            <button class="see-more-btn font-mono font-bold text-[10px] sm:text-xs px-3.5 py-1.5 bg-studio-700/80 group-hover:bg-accent text-studio-200 group-hover:text-studio-900 border border-studio-600/60 group-hover:border-accent transition-all uppercase tracking-wider flex items-center gap-1.5" data-service="Architectural Walkthrough">
+                                <span>View Scope</span>
+                                <i class="ph ph-caret-right text-xs"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- Card 06: Personal Portfolio Website -->
-                    <div class="service-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-300 flex flex-col" data-service="Personal Portfolio Website">
-                        <div class="w-full h-full bg-studio-800 border border-studio-700 p-1.5 sm:p-2 flex flex-col group-hover:border-accent transition-all duration-300">
-                            <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-studio-900/40">
-                                <div>
-                                    <div class="flex justify-between items-start mb-2 sm:mb-3">
-                                        <span class="font-mono text-[10px] sm:text-xs text-studio-400 uppercase tracking-widest">WEB DESIGN & DEVELOPMENT</span>
-                                        <span class="font-mono text-[10px] sm:text-xs bg-studio-700 text-studio-100 px-2 py-0.5 sm:py-1">06</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">Personal Portfolio Website</h3>
-                                    <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed mb-4 sm:mb-6">
-                                        Custom-coded portfolio sites for architecture students and pros—clean, mobile-friendly, and built from scratch.
-                                    </p>
-                                </div>
-                                <div class="pt-3 sm:pt-4 border-t border-studio-700/60 flex justify-between items-center">
-                                    <button class="see-more-btn bg-accent hover:bg-studio-100 text-studio-900 font-mono font-bold text-[10px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 uppercase tracking-wider" data-service="Personal Portfolio Website">
-                                        See details &rarr;
-                                    </button>
-                                </div>
+                    <div class="service-card service-architectural-card hover-trigger p-5 sm:p-6 group cursor-pointer gs-reveal delay-300" data-service="Personal Portfolio Website">
+                        <div class="service-corner-decor tl"></div>
+                        <div class="service-corner-decor br"></div>
+                        
+                        <!-- Top Bar / Discipline Meta -->
+                        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-studio-700/70">
+                            <div class="service-icon-box">
+                                <i class="ph ph-code"></i>
                             </div>
+                            <div class="text-right">
+                                <span class="font-mono text-[10px] text-accent font-bold uppercase tracking-widest block">06 // WEB ARCHITECTURE</span>
+                                <span class="font-mono text-[9px] text-studio-400">PORTFOLIO DEV</span>
+                            </div>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="mb-4 flex-1">
+                            <h3 class="text-xl sm:text-2xl font-bold text-studio-100 mb-2 group-hover:text-accent transition-colors flex items-center justify-between">
+                                <span>Portfolio Websites</span>
+                                <i class="ph ph-arrow-up-right text-base text-studio-500 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                            </h3>
+                            <p class="font-mono text-xs sm:text-sm text-studio-300 leading-relaxed">
+                                Bespoke, technical websites designed specifically for architects and designers—responsive, typography-driven, and built to present creative work flawlessly.
+                            </p>
+                        </div>
+
+                        <!-- Deliverables Tags -->
+                        <div class="mb-5 pt-3 border-t border-studio-700/50">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="service-pill-tag">Custom UI / Tailwind</span>
+                                <span class="service-pill-tag">Full-Stack Hosting</span>
+                                <span class="service-pill-tag">Interactive Modals</span>
+                                <span class="service-pill-tag">Mobile Responsive</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-3 border-t border-studio-700/60 flex items-center justify-between">
+                            <span class="font-mono text-[10px] text-studio-400 uppercase tracking-wider">Specifications</span>
+                            <button class="see-more-btn font-mono font-bold text-[10px] sm:text-xs px-3.5 py-1.5 bg-studio-700/80 group-hover:bg-accent text-studio-200 group-hover:text-studio-900 border border-studio-600/60 group-hover:border-accent transition-all uppercase tracking-wider flex items-center gap-1.5" data-service="Personal Portfolio Website">
+                                <span>View Scope</span>
+                                <i class="ph ph-caret-right text-xs"></i>
+                            </button>
                         </div>
                     </div>
 

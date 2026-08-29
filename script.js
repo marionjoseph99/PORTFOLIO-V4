@@ -274,23 +274,35 @@ const modalInquireBtn = document.getElementById('modal-inquire-btn');
 
 let currentSelectedService = "3D Modelling";
 
-document.querySelectorAll('.see-more-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const key = btn.getAttribute('data-service');
-        const data = serviceData[key];
-        if (data && serviceModal) {
-            currentSelectedService = key;
-            if (modalCategory) modalCategory.textContent = data.category;
-            if (modalTitle) modalTitle.textContent = data.title;
-            if (modalDesc) modalDesc.textContent = data.desc;
-            if (modalDeliverables) modalDeliverables.textContent = data.deliverables;
-            if (modalTools) modalTools.textContent = data.tools;
-            if (modalAudience) modalAudience.textContent = data.audience;
+function openServiceModalByKey(key) {
+    const data = serviceData[key];
+    if (data && serviceModal) {
+        currentSelectedService = key;
+        if (modalCategory) modalCategory.textContent = data.category;
+        if (modalTitle) modalTitle.textContent = data.title;
+        if (modalDesc) modalDesc.textContent = data.desc;
+        if (modalDeliverables) modalDeliverables.textContent = data.deliverables;
+        if (modalTools) modalTools.textContent = data.tools;
+        if (modalAudience) modalAudience.textContent = data.audience;
 
-            serviceModal.classList.remove('hidden');
-            serviceModal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-        }
+        serviceModal.classList.remove('hidden');
+        serviceModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+document.querySelectorAll('.see-more-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const key = btn.getAttribute('data-service');
+        if (key) openServiceModalByKey(key);
+    });
+});
+
+document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const key = card.getAttribute('data-service');
+        if (key) openServiceModalByKey(key);
     });
 });
 
