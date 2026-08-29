@@ -261,19 +261,45 @@ html.light .scroll-meter-value {
     transform: scale(1.03);
 }
 
-/* Gallery Filtering & Card Transitions */
-.gallery-filter-btn {
+/* Gallery & Project Filtering & Card Transitions */
+.gallery-filter-btn,
+.project-filter-btn {
     transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.gallery-filter-btn.active {
+.gallery-filter-btn.active,
+.project-filter-btn.active {
     background-color: var(--accent-hex) !important;
     color: #0a0a0a !important;
     border-color: var(--accent-hex) !important;
     box-shadow: 0 0 16px rgba(var(--accent) / 0.25);
 }
-.gallery-filter-btn.active .filter-count {
+.gallery-filter-btn.active .filter-count,
+.project-filter-btn.active .proj-filter-count {
     background-color: #0a0a0a !important;
     color: var(--accent-hex) !important;
+}
+
+/* Print styles for Architectural CV / Teaser Sheet */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    aside, #distanceRuler, .cursor-dot, .cursor-outline, #loader, #project-filter-bar, #testimonials-track {
+        display: none !important;
+    }
+    #main-content {
+        height: auto !important;
+        overflow: visible !important;
+    }
+    .print-cv-sheet {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+    }
 }
 
 /* Dynamic Masonry Gallery Container */
@@ -382,4 +408,140 @@ html.light .scroll-meter-value {
 #gallery-see-more-btn:hover {
     box-shadow: 0 0 20px rgba(var(--accent) / 0.15);
 }
+
+/* Project Typology Filter Buttons */
+.project-filter-btn {
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.project-filter-btn.active {
+    background-color: rgb(var(--studio-700));
+    border-color: rgb(var(--accent));
+    color: rgb(var(--studio-100));
+}
+.project-filter-btn.active .proj-filter-count {
+    background-color: rgb(var(--accent));
+    color: rgb(var(--studio-900));
+}
+
+/* ==========================================================================
+   CV / SUMMARY SHEET THEME MODES (LIGHT, DARK, AUTO)
+   ========================================================================== */
+.cv-theme-mode-btn {
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.cv-theme-mode-btn.active {
+    background-color: rgb(var(--studio-700));
+    border-color: rgb(var(--accent));
+    color: rgb(var(--studio-100));
+}
+
+/* Explicit Light Mode for CV */
+.print-cv-sheet.cv-theme-light {
+    --studio-900: 247 249 252;
+    --studio-800: 255 255 255;
+    --studio-700: 226 232 240;
+    --studio-600: 203 213 225;
+    --studio-500: 100 116 139;
+    --studio-400: 71 85 105;
+    --studio-300: 51 65 85;
+    --studio-200: 30 41 59;
+    --studio-100: 15 23 42;
+    --accent: 217 119 6;
+    --accent-hex: #d97706;
+    background-color: #ffffff;
+    color: #0f172a;
+    border-color: #e2e8f0;
+}
+
+/* Explicit Dark Mode for CV */
+.print-cv-sheet.cv-theme-dark {
+    --studio-900: 10 10 10;
+    --studio-800: 20 20 20;
+    --studio-700: 38 38 38;
+    --studio-600: 64 64 64;
+    --studio-500: 115 115 115;
+    --studio-400: 163 163 163;
+    --studio-300: 212 212 212;
+    --studio-200: 229 229 229;
+    --studio-100: 245 245 245;
+    --accent: 250 204 21;
+    --accent-hex: #facc15;
+    background-color: #141414;
+    color: #f5f5f5;
+    border-color: #262626;
+}
+
+/* Print Sheet Styling for CV / Offline Portfolio */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    header, aside, #scroll-meter-hud, #sidebar, .cursor-dot, .cursor-outline, #project-filter-bar, .theme-toggle-btn, #inquiry-modal, #service-modal, #project-modal, #gallery-lightbox, #loader {
+        display: none !important;
+    }
+    #cv-modal {
+        position: static !important;
+        display: block !important;
+        background: transparent !important;
+        padding: 0 !important;
+        backdrop-filter: none !important;
+    }
+    .print-cv-sheet {
+        box-shadow: none !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 24px !important;
+    }
+
+    /* Light paper print */
+    .print-cv-sheet.cv-theme-light,
+    .print-cv-sheet:not(.cv-theme-dark) {
+        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .print-cv-sheet.cv-theme-light *,
+    .print-cv-sheet:not(.cv-theme-dark) * {
+        color: #0f172a !important;
+        border-color: #e2e8f0 !important;
+    }
+    .print-cv-sheet.cv-theme-light .text-accent,
+    .print-cv-sheet:not(.cv-theme-dark) .text-accent {
+        color: #b45309 !important;
+    }
+
+    /* Dark Blueprint paper print */
+    .print-cv-sheet.cv-theme-dark {
+        border: 1px solid #383838 !important;
+        background: #141414 !important;
+        color: #f5f5f5 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .print-cv-sheet.cv-theme-dark * {
+        color: #f5f5f5 !important;
+        border-color: #383838 !important;
+        background-color: transparent !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .print-cv-sheet.cv-theme-dark .text-accent {
+        color: #facc15 !important;
+    }
+    .print-cv-sheet img {
+        display: block !important;
+        opacity: 1 !important;
+        filter: none !important;
+    }
+
+    #cv-theme-selector, #cv-print-btn, #close-cv-modal {
+        display: none !important;
+    }
+}
+
 

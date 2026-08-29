@@ -240,45 +240,54 @@ const modalTools = document.getElementById('modal-service-tools');
 const modalAudience = document.getElementById('modal-service-audience');
 const modalInquireBtn = document.getElementById('modal-inquire-btn');
 
+let currentSelectedService = "3D Modelling";
+
 document.querySelectorAll('.see-more-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const key = btn.getAttribute('data-service');
         const data = serviceData[key];
         if (data && serviceModal) {
+            currentSelectedService = key;
             if (modalCategory) modalCategory.textContent = data.category;
             if (modalTitle) modalTitle.textContent = data.title;
             if (modalDesc) modalDesc.textContent = data.desc;
             if (modalDeliverables) modalDeliverables.textContent = data.deliverables;
             if (modalTools) modalTools.textContent = data.tools;
             if (modalAudience) modalAudience.textContent = data.audience;
-            if (modalInquireBtn) modalInquireBtn.setAttribute('href', '#contact');
 
             serviceModal.classList.remove('hidden');
             serviceModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
         }
     });
 });
 
 if (closeServiceModal && serviceModal) {
-    const hideModal = () => {
+    const hideServiceModal = () => {
         serviceModal.classList.add('hidden');
         serviceModal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
     };
 
-    closeServiceModal.addEventListener('click', hideModal);
+    closeServiceModal.addEventListener('click', hideServiceModal);
 
     serviceModal.addEventListener('click', (e) => {
         if (e.target === serviceModal) {
-            hideModal();
+            hideServiceModal();
         }
     });
 
     if (modalInquireBtn) {
-        modalInquireBtn.addEventListener('click', hideModal);
+        modalInquireBtn.addEventListener('click', () => {
+            hideServiceModal();
+            if (typeof openInquiryModal === 'function') {
+                openInquiryModal(currentSelectedService);
+            }
+        });
     }
 }
 
-// --- Project Popup Modal Window Logic ---
+// --- Project Popup Modal Window Logic & Typology Filtering ---
 const projectModal = document.getElementById('project-modal');
 const closeProjectModalBtn = document.getElementById('close-project-modal');
 const projModalTitle = document.getElementById('proj-modal-title');
@@ -290,6 +299,9 @@ const projCollage = document.getElementById('proj-collage');
 const projPhotoSection = document.getElementById('proj-photo-section');
 const projPhotoCount = document.getElementById('proj-photo-count');
 const projModalFullLink = document.getElementById('proj-modal-full-link');
+const projModalPrevBtn = document.getElementById('proj-modal-prev-btn');
+const projModalNextBtn = document.getElementById('proj-modal-next-btn');
+const projModalIndexBadge = document.getElementById('proj-modal-index-badge');
 
 let currentProjImages = [];
 let openLightboxWithItems;
@@ -310,19 +322,19 @@ const projectData = {
         ]
     },
     "amping": {
-        title: "Amparo Hospital",
+        title: "Amping Children's Hospital",
         year: "2023",
         category: "HEALTHCARE • SPATIAL PLANNING",
         desc: "A hospital concept centered on calm circulation, clarity, and efficient spatial organization, including site plans, flow diagrams, and emergency ward layouts.",
         pageUrl: "portfolio/amping/full_project.html",
         images: [
-            { src: "portfolio/amping/1.webp", alt: "Amparo Hospital - Main Facade Render" },
-            { src: "portfolio/amping/2.webp", alt: "Amparo Hospital - Aerial Site View" },
-            { src: "portfolio/amping/3.webp", alt: "Amparo Hospital - Floor Plan & Circulation Layout" },
-            { src: "portfolio/amping/4.webp", alt: "Amparo Hospital - Interior Emergency Ward" },
-            { src: "portfolio/amping/5.webp", alt: "Amparo Hospital - Spatial Flow Diagram" },
-            { src: "portfolio/amping/7.webp", alt: "Amparo Hospital - Elevation Study" },
-            { src: "portfolio/amping/8.webp", alt: "Amparo Hospital - Master Site Plan" }
+            { src: "portfolio/amping/1.webp", alt: "Amping Children's Hospital - Main Facade Render" },
+            { src: "portfolio/amping/2.webp", alt: "Amping Children's Hospital - Aerial Site View" },
+            { src: "portfolio/amping/3.webp", alt: "Amping Children's Hospital - Floor Plan & Circulation Layout" },
+            { src: "portfolio/amping/4.webp", alt: "Amping Children's Hospital - Interior Emergency Ward" },
+            { src: "portfolio/amping/5.webp", alt: "Amping Children's Hospital - Spatial Flow Diagram" },
+            { src: "portfolio/amping/7.webp", alt: "Amping Children's Hospital - Elevation Study" },
+            { src: "portfolio/amping/8.webp", alt: "Amping Children's Hospital - Master Site Plan" }
         ]
     },
     "marahuyo": {
@@ -364,20 +376,38 @@ const projectData = {
         ]
     },
     "plaza": {
-        title: "Civic Plaza",
+        title: "Jagna De Plaza",
         year: "2024",
         category: "PLANNING • CIVIC SPACE",
         desc: "A civic plaza study focused on public gathering, proportion, and open-air experience featuring site plans and conceptual hand sketches.",
         pageUrl: "portfolio/plaza/full_project.html",
         images: [
-            { src: "portfolio/plaza/plaza.webp", alt: "Civic Plaza - Architectural Site Plan & Flow" }
+            { src: "portfolio/plaza/plaza.webp", alt: "Jagna De Plaza - Architectural Site Plan & Flow" }
         ]
     }
 };
 
+const projectKeyList = ["airport", "amping", "marahuyo", "marikina", "subdivision", "plaza"];
+let currentProjectIndex = 0;
+
+function updateProjectModalByIndex(index) {
+    if (index < 0) index = projectKeyList.length - 1;
+    if (index >= projectKeyList.length) index = 0;
+    currentProjectIndex = index;
+    const projKey = projectKeyList[currentProjectIndex];
+    openProjectModal(projKey);
+}
+
 function openProjectModal(projKey) {
     const data = projectData[projKey];
     if (!data || !projectModal) return;
+
+    currentProjectIndex = projectKeyList.indexOf(projKey);
+    if (currentProjectIndex === -1) currentProjectIndex = 0;
+
+    if (projModalIndexBadge) {
+        projModalIndexBadge.textContent = `${String(currentProjectIndex + 1).padStart(2, '0')} / ${String(projectKeyList.length).padStart(2, '0')}`;
+    }
 
     if (projModalTitle) projModalTitle.textContent = data.title;
     if (projModalCategory) projModalCategory.textContent = data.category;
@@ -425,6 +455,16 @@ function closeProjectModal() {
 
 if (projectModal) {
     if (closeProjectModalBtn) closeProjectModalBtn.addEventListener('click', closeProjectModal);
+    if (projModalPrevBtn) {
+        projModalPrevBtn.addEventListener('click', () => {
+            updateProjectModalByIndex(currentProjectIndex - 1);
+        });
+    }
+    if (projModalNextBtn) {
+        projModalNextBtn.addEventListener('click', () => {
+            updateProjectModalByIndex(currentProjectIndex + 1);
+        });
+    }
 
     projectModal.addEventListener('click', (e) => {
         if (e.target === projectModal) {
@@ -434,7 +474,11 @@ if (projectModal) {
 
     window.addEventListener('keydown', (e) => {
         const lightboxIsOpen = galleryLightbox && !galleryLightbox.classList.contains('hidden');
-        if (!projectModal.classList.contains('hidden') && !lightboxIsOpen && e.key === 'Escape') closeProjectModal();
+        if (!projectModal.classList.contains('hidden') && !lightboxIsOpen) {
+            if (e.key === 'Escape') closeProjectModal();
+            if (e.key === 'ArrowLeft') updateProjectModalByIndex(currentProjectIndex - 1);
+            if (e.key === 'ArrowRight') updateProjectModalByIndex(currentProjectIndex + 1);
+        }
     });
 }
 
@@ -677,6 +721,270 @@ if (projectCards.length > 0) {
                 e.preventDefault();
                 openProjectModal(projKey);
             });
+        }
+    });
+}
+
+// --- Typology Filtering for Projects Section ---
+const projectFilterBtns = document.querySelectorAll('.project-filter-btn');
+const projectEmptyState = document.getElementById('project-empty-state');
+
+function filterProjects(typology) {
+    let visibleCount = 0;
+
+    projectFilterBtns.forEach(btn => {
+        const btnTypology = btn.getAttribute('data-typology');
+        if (btnTypology === typology) {
+            btn.classList.add('active', 'text-studio-100');
+            btn.classList.remove('text-studio-400');
+            const countBadge = btn.querySelector('.proj-filter-count');
+            if (countBadge) {
+                countBadge.classList.add('text-studio-200');
+                countBadge.classList.remove('text-studio-400');
+            }
+        } else {
+            btn.classList.remove('active', 'text-studio-100');
+            btn.classList.add('text-studio-400');
+            const countBadge = btn.querySelector('.proj-filter-count');
+            if (countBadge) {
+                countBadge.classList.remove('text-studio-200');
+                countBadge.classList.add('text-studio-400');
+            }
+        }
+    });
+
+    projectCards.forEach(card => {
+        const cardTypology = card.getAttribute('data-typology');
+        const matches = (typology === 'all' || cardTypology === typology);
+
+        if (matches) {
+            card.classList.remove('hidden');
+            card.classList.add('flex');
+            visibleCount++;
+        } else {
+            card.classList.add('hidden');
+            card.classList.remove('flex');
+        }
+    });
+
+    if (projectEmptyState) {
+        if (visibleCount === 0) {
+            projectEmptyState.classList.remove('hidden');
+        } else {
+            projectEmptyState.classList.add('hidden');
+        }
+    }
+}
+
+if (projectFilterBtns.length > 0) {
+    projectFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const typ = btn.getAttribute('data-typology') || 'all';
+            filterProjects(typ);
+        });
+    });
+}
+
+// --- Interactive Commission Inquiry Modal Logic ---
+const inquiryModal = document.getElementById('inquiry-modal');
+const closeInquiryModalBtn = document.getElementById('close-inquiry-modal');
+const openInquiryDirectBtn = document.getElementById('open-inquiry-direct-btn');
+const inquiryForm = document.getElementById('inquiry-form');
+const inqClientName = document.getElementById('inq-client-name');
+const inqClientContact = document.getElementById('inq-client-contact');
+const inqServiceType = document.getElementById('inq-service-type');
+const inqTypology = document.getElementById('inq-typology');
+const inqTimeline = document.getElementById('inq-timeline');
+const inqNotes = document.getElementById('inq-notes');
+const inqCopyBtn = document.getElementById('inq-copy-btn');
+const inquiryToast = document.getElementById('inquiry-toast');
+const inquiryToastMsg = document.getElementById('inquiry-toast-msg');
+
+let toastTimer = null;
+
+function showInquiryToast(msg) {
+    if (!inquiryToast || !inquiryToastMsg) return;
+    inquiryToastMsg.textContent = msg;
+    inquiryToast.classList.remove('hidden');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        inquiryToast.classList.add('hidden');
+    }, 4000);
+}
+
+function getFormattedInquiryBrief() {
+    const name = inqClientName ? inqClientName.value.trim() || 'Client' : 'Client';
+    const contact = inqClientContact ? inqClientContact.value.trim() || 'Not specified' : 'Not specified';
+    const service = inqServiceType ? inqServiceType.value : 'Architectural Commission';
+    const typology = inqTypology ? inqTypology.value : 'General';
+    const timeline = inqTimeline ? inqTimeline.value : 'Standard';
+    const notes = inqNotes ? inqNotes.value.trim() : '';
+
+    return `[COMMISSION INQUIRY BRIEF]
+------------------------------------
+• Client/Studio: ${name}
+• Contact/Handle: ${contact}
+• Requested Scope: ${service}
+• Project Typology: ${typology}
+• Target Timeline: ${timeline}
+• Scope Notes & Links:
+${notes ? notes : '(No additional notes provided)'}
+------------------------------------
+Recipient: Marjo Paguia <norioniomarjo@gmail.com>`;
+}
+
+function openInquiryModal(preselectedService) {
+    if (!inquiryModal) return;
+    if (preselectedService && inqServiceType) {
+        // Try to match option
+        const options = Array.from(inqServiceType.options);
+        const match = options.find(opt => opt.value.toLowerCase().includes(preselectedService.toLowerCase()) || preselectedService.toLowerCase().includes(opt.value.toLowerCase()));
+        if (match) {
+            inqServiceType.value = match.value;
+        }
+    }
+    inquiryModal.classList.remove('hidden');
+    inquiryModal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeInquiryModal() {
+    if (!inquiryModal) return;
+    inquiryModal.classList.add('hidden');
+    inquiryModal.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+}
+
+if (inquiryModal) {
+    if (closeInquiryModalBtn) closeInquiryModalBtn.addEventListener('click', closeInquiryModal);
+    if (openInquiryDirectBtn) {
+        openInquiryDirectBtn.addEventListener('click', () => openInquiryModal('Full Comprehensive Package'));
+    }
+
+    inquiryModal.addEventListener('click', (e) => {
+        if (e.target === inquiryModal) closeInquiryModal();
+    });
+
+    if (inquiryForm) {
+        inquiryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const service = inqServiceType ? inqServiceType.value : 'Commission';
+            const name = inqClientName ? inqClientName.value.trim() : 'Client';
+            const subject = encodeURIComponent(`[Commission Brief] ${service} - ${name}`);
+            const body = encodeURIComponent(getFormattedInquiryBrief());
+            
+            showInquiryToast('[BRIEF PREPARED — LAUNCHING EMAIL CLIENT]');
+            
+            setTimeout(() => {
+                window.location.href = `mailto:norioniomarjo@gmail.com?subject=${subject}&body=${body}`;
+            }, 600);
+        });
+    }
+
+    if (inqCopyBtn) {
+        inqCopyBtn.addEventListener('click', () => {
+            const brief = getFormattedInquiryBrief();
+            navigator.clipboard.writeText(brief).then(() => {
+                showInquiryToast('[BRIEF COPIED TO CLIPBOARD — PASTE DIRECTLY IN DMs / EMAIL]');
+            }).catch(() => {
+                showInquiryToast('[COPY FAILED — PLEASE MANUALLY SELECT TEXT]');
+            });
+        });
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (!inquiryModal.classList.contains('hidden') && e.key === 'Escape') {
+            closeInquiryModal();
+        }
+    });
+}
+
+// --- Architectural CV & Resume Sheet Modal Logic ---
+const cvModal = document.getElementById('cv-modal');
+const cvSheetContainer = document.getElementById('cv-sheet-container');
+const closeCvModalBtn = document.getElementById('close-cv-modal');
+const openCvBtn = document.getElementById('open-cv-btn');
+const specsCvBtn = document.getElementById('specs-cv-btn');
+const cvPrintBtn = document.getElementById('cv-print-btn');
+const cvThemeModeBtns = document.querySelectorAll('.cv-theme-mode-btn');
+
+let currentCvThemeMode = 'auto'; // 'auto', 'light', 'dark'
+
+function setCvThemeMode(mode) {
+    currentCvThemeMode = mode;
+
+    // Update active button state
+    cvThemeModeBtns.forEach(btn => {
+        const btnMode = btn.getAttribute('data-cv-mode');
+        if (btnMode === mode) {
+            btn.classList.add('active', 'text-studio-100', 'bg-studio-700');
+            btn.classList.remove('text-studio-400');
+            const icon = btn.querySelector('i');
+            if (icon && !icon.classList.contains('text-accent')) {
+                icon.classList.add('text-accent');
+            }
+        } else {
+            btn.classList.remove('active', 'text-studio-100', 'bg-studio-700');
+            btn.classList.add('text-studio-400');
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.classList.remove('text-accent');
+            }
+        }
+    });
+
+    // Apply class to CV sheet container
+    if (cvSheetContainer) {
+        cvSheetContainer.classList.remove('cv-theme-auto', 'cv-theme-light', 'cv-theme-dark');
+        if (mode === 'light') {
+            cvSheetContainer.classList.add('cv-theme-light');
+        } else if (mode === 'dark') {
+            cvSheetContainer.classList.add('cv-theme-dark');
+        } else {
+            cvSheetContainer.classList.add('cv-theme-auto');
+        }
+    }
+}
+
+function openCvModal() {
+    if (!cvModal) return;
+    cvModal.classList.remove('hidden');
+    cvModal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCvModal() {
+    if (!cvModal) return;
+    cvModal.classList.add('hidden');
+    cvModal.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+}
+
+if (cvModal) {
+    if (openCvBtn) openCvBtn.addEventListener('click', openCvModal);
+    if (specsCvBtn) specsCvBtn.addEventListener('click', openCvModal);
+    if (closeCvModalBtn) closeCvModalBtn.addEventListener('click', closeCvModal);
+    
+    cvThemeModeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const mode = btn.getAttribute('data-cv-mode') || 'auto';
+            setCvThemeMode(mode);
+        });
+    });
+
+    if (cvPrintBtn) {
+        cvPrintBtn.addEventListener('click', () => {
+            window.print();
+        });
+    }
+
+    cvModal.addEventListener('click', (e) => {
+        if (e.target === cvModal) closeCvModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (!cvModal.classList.contains('hidden') && e.key === 'Escape') {
+            closeCvModal();
         }
     });
 }
