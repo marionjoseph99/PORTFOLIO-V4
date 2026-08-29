@@ -207,11 +207,11 @@ body, aside, header, nav, section, div, button, input, textarea, a {
 .prof-dot:nth-child(4) { animation-delay: 0.4s; }
 .prof-dot:nth-child(5) { animation-delay: 0.5s; }
 
-/* Scroll Meter (Sharp Architectural HUD) */
+/* Scroll Meter (Rounded Architectural HUD) */
 .scroll-meter {
-    padding: 0.65rem 0.8rem;
+    padding: 0.5rem 0.85rem;
     border: 1px solid var(--meter-border);
-    border-radius: 0 !important;
+    border-radius: 9999px !important;
     background: var(--meter-bg);
     backdrop-filter: blur(14px);
     box-shadow: var(--meter-shadow);
@@ -247,7 +247,7 @@ html.light .scroll-meter-value {
     width: 8rem;
     height: 0.95rem;
     border: 1px solid var(--meter-border);
-    border-radius: 0 !important;
+    border-radius: 9999px !important;
     overflow: hidden;
     background: var(--meter-track-bg);
 }
@@ -256,7 +256,7 @@ html.light .scroll-meter-value {
     position: absolute;
     inset: 0 auto 0 0;
     width: 0;
-    border-radius: 0 !important;
+    border-radius: 9999px !important;
     background: linear-gradient(90deg, rgba(var(--accent) / 0.25), rgba(var(--accent) / 0.95));
     box-shadow: 0 0 18px rgba(var(--accent) / 0.3);
     transition: width 120ms linear;
@@ -268,7 +268,7 @@ html.light .scroll-meter-value {
     left: 0;
     width: 0.55rem;
     height: 0.55rem;
-    border-radius: 0 !important;
+    border-radius: 9999px !important;
     background: var(--meter-text);
     border: 2px solid var(--accent-hex);
     box-shadow: 0 0 0 4px rgba(var(--accent) / 0.1);

@@ -655,81 +655,195 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                <div class="space-y-8 sm:space-y-10">
                     
-                    <!-- Left Column: Software Schedule -->
-                    <div class="gs-reveal delay-100">
-                        <h3 class="font-mono text-accent text-xs sm:text-sm uppercase tracking-widest mb-4 sm:mb-6 border-b border-studio-700 pb-2">Software Schedule</h3>
+                    <!-- Top Grid: Software Schedule & Creative Disciplines (50/50 Balanced Split) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         
-                        <!-- Table structure for skills -->
-                        <div class="flex flex-col border border-studio-700 bg-studio-800/50 text-xs sm:text-sm font-mono hover-trigger">
-                            <!-- Header -->
-                            <div class="grid grid-cols-12 bg-studio-700 text-studio-300 p-2.5 sm:p-3 uppercase text-[10px] sm:text-xs tracking-wider">
-                                <div class="col-span-5 sm:col-span-4">Program</div>
-                                <div class="col-span-3 sm:col-span-4">Category</div>
-                                <div class="col-span-4">Proficiency</div>
-                            </div>
-                            <!-- Rows -->
-                            <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-5 sm:col-span-4 text-studio-100">Autodesk AutoCAD</div>
-                                <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Drafting</div>
-                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
-                            </div>
-                            <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-5 sm:col-span-4 text-studio-100">Lumion</div>
-                                <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Rendering</div>
-                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
-                            </div>
-                            <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-5 sm:col-span-4 text-studio-100">Autodesk Revit</div>
-                                <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">BIM</div>
-                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
-                            </div>
-                            <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-5 sm:col-span-4 text-studio-100">Adobe Photoshop</div>
-                                <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Post-Prod</div>
-                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
-                            </div>
-                            <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-5 sm:col-span-4 text-studio-100">SketchUp Pro</div>
-                                <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">3D Modeling</div>
-                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
-                            </div>
-                            <div class="grid grid-cols-12 p-2.5 sm:p-3 hover:bg-studio-800 transition-colors items-center">
-                                <div class="col-span-5 sm:col-span-4 text-studio-100">Illustrator / Premiere</div>
-                                <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Layout/Edit</div>
-                                <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
+                        <!-- Left Column: Software Schedule -->
+                        <div class="gs-reveal delay-100 flex flex-col">
+                            <h3 class="font-mono text-accent text-xs sm:text-sm uppercase tracking-widest mb-3 sm:mb-4 border-b border-studio-700 pb-2 flex items-center justify-between">
+                                <span>Software Schedule</span>
+                                <span class="text-[10px] text-studio-400 font-normal">CAD / BIM / RENDERING</span>
+                            </h3>
+                            
+                            <!-- Table structure for skills -->
+                            <div class="flex flex-col border border-studio-700 bg-studio-800/50 text-xs sm:text-sm font-mono hover-trigger flex-1 justify-between">
+                                <!-- Header -->
+                                <div class="grid grid-cols-12 bg-studio-700 text-studio-300 p-2.5 sm:p-3 uppercase text-[10px] sm:text-xs tracking-wider border-b border-studio-600">
+                                    <div class="col-span-5 sm:col-span-4 font-semibold">Program</div>
+                                    <div class="col-span-3 sm:col-span-4 font-semibold">Category</div>
+                                    <div class="col-span-4 font-semibold">Proficiency</div>
+                                </div>
+                                <!-- Rows -->
+                                <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700/70 hover:bg-studio-800 transition-colors items-center">
+                                    <div class="col-span-5 sm:col-span-4 text-studio-100 font-medium">Autodesk AutoCAD</div>
+                                    <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Drafting</div>
+                                    <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                                </div>
+                                <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700/70 hover:bg-studio-800 transition-colors items-center">
+                                    <div class="col-span-5 sm:col-span-4 text-studio-100 font-medium">Lumion</div>
+                                    <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Rendering</div>
+                                    <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                                </div>
+                                <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700/70 hover:bg-studio-800 transition-colors items-center">
+                                    <div class="col-span-5 sm:col-span-4 text-studio-100 font-medium">Autodesk Revit</div>
+                                    <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">BIM</div>
+                                    <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
+                                </div>
+                                <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700/70 hover:bg-studio-800 transition-colors items-center">
+                                    <div class="col-span-5 sm:col-span-4 text-studio-100 font-medium">Adobe Photoshop</div>
+                                    <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Post-Prod</div>
+                                    <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                                </div>
+                                <div class="grid grid-cols-12 p-2.5 sm:p-3 border-b border-studio-700/70 hover:bg-studio-800 transition-colors items-center">
+                                    <div class="col-span-5 sm:col-span-4 text-studio-100 font-medium">SketchUp Pro</div>
+                                    <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">3D Modeling</div>
+                                    <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div></div>
+                                </div>
+                                <div class="grid grid-cols-12 p-2.5 sm:p-3 hover:bg-studio-800 transition-colors items-center">
+                                    <div class="col-span-5 sm:col-span-4 text-studio-100 font-medium">Illustrator / Premiere</div>
+                                    <div class="col-span-3 sm:col-span-4 text-studio-400 text-[10px] sm:text-xs">Layout/Edit</div>
+                                    <div class="col-span-4 flex gap-1"><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-accent prof-dot"></div><div class="w-2 h-2 bg-studio-600 prof-dot"></div></div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Right Column: Creative Disciplines & Technical Competencies -->
+                        <div class="gs-reveal delay-200 flex flex-col">
+                            <h3 class="font-mono text-accent text-xs sm:text-sm uppercase tracking-widest mb-3 sm:mb-4 border-b border-studio-700 pb-2 flex items-center justify-between">
+                                <span>Creative Disciplines</span>
+                                <span class="text-[10px] text-studio-400 font-normal">CORE CAPABILITIES</span>
+                            </h3>
+                            
+                            <div class="border border-studio-700 bg-studio-800/50 p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-4 hover-trigger">
+                                <div>
+                                    <div class="font-mono text-[11px] uppercase tracking-wider text-studio-300 mb-2 flex items-center gap-2">
+                                        <i class="ph ph-cube text-accent"></i>
+                                        <span>3D Visualization & Modeling</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2 font-mono text-[10px] sm:text-xs">
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">3D Visualization</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Lumion Rendering</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Walkthrough Animations</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Volumetric Massing</span>
+                                    </div>
+                                </div>
+
+                                <div class="border-t border-studio-700/60 pt-3">
+                                    <div class="font-mono text-[11px] uppercase tracking-wider text-studio-300 mb-2 flex items-center gap-2">
+                                        <i class="ph ph-ruler text-accent"></i>
+                                        <span>Drafting & Documentation</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2 font-mono text-[10px] sm:text-xs">
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Technical Drafting</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">AutoCAD 2D/3D</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Working Drawings</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Board Layout</span>
+                                    </div>
+                                </div>
+
+                                <div class="border-t border-studio-700/60 pt-3">
+                                    <div class="font-mono text-[11px] uppercase tracking-wider text-studio-300 mb-2 flex items-center gap-2">
+                                        <i class="ph ph-paint-brush text-accent"></i>
+                                        <span>Traditional & Digital Art</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2 font-mono text-[10px] sm:text-xs">
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Manual Drawings</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Visual Arts</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Pen & Ink Plates</span>
+                                        <span class="px-2.5 py-1.5 border border-studio-600/80 bg-studio-900/40 text-studio-200 hover:border-accent hover:text-accent transition-colors">Digital Paintings</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- Right Column: Fabrication & Education -->
-                    <div class="space-y-8 sm:space-y-12 gs-reveal delay-200">
-                        <div>
-                            <h3 class="font-mono text-accent text-xs sm:text-sm uppercase tracking-widest mb-4 sm:mb-6 border-b border-studio-700 pb-2">Creative Disciplines</h3>
-                            <div class="flex flex-wrap gap-2 sm:gap-3 font-mono text-[10px] sm:text-xs">
-                                <span class="px-2.5 sm:px-3 py-1.5 sm:py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Technical Drafting</span>
-                                <span class="px-2.5 sm:px-3 py-1.5 sm:py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">3D Visualization</span>
-                                <span class="px-2.5 sm:px-3 py-1.5 sm:py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Manual Drawings</span>
-                                <span class="px-2.5 sm:px-3 py-1.5 sm:py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Visual Arts</span>
-                                <span class="px-2.5 sm:px-3 py-1.5 sm:py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Board Layout</span>
-                                <span class="px-2.5 sm:px-3 py-1.5 sm:py-2 border border-studio-600 text-studio-300 hover-trigger hover:border-accent hover:text-accent transition-colors">Walkthroughs</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 class="font-mono text-accent text-xs sm:text-sm uppercase tracking-widest mb-4 sm:mb-6 border-b border-studio-700 pb-2">Academic Record</h3>
-                            <div class="space-y-3 sm:space-y-4">
-                                <div class="hover-trigger border-l-2 border-transparent hover:border-accent pl-3 sm:pl-4 transition-all">
-                                    <h4 class="font-bold text-base sm:text-lg text-studio-100">B.S. Architecture</h4>
-                                    <p class="font-mono text-xs sm:text-sm text-studio-400">National University PH | 20XX — 20XX</p>
+                    <!-- Bottom Grid: Educational Attainment (3 Equal-Width Columns, Zero Dead Spots) -->
+                    <div class="gs-reveal delay-300">
+                        <h3 class="font-mono text-accent text-xs sm:text-sm uppercase tracking-widest mb-3 sm:mb-4 border-b border-studio-700 pb-2 flex items-center justify-between">
+                            <span>Educational Attainment</span>
+                            <span class="text-[10px] text-studio-400 font-normal">ACADEMIC TIMELINE</span>
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                            
+                            <!-- 1. National University -->
+                            <div class="p-4 sm:p-5 border border-studio-700 bg-studio-800/40 hover:border-accent/80 transition-all hover-trigger group flex flex-col justify-between h-full">
+                                <div>
+                                    <div class="flex items-center justify-between gap-2 mb-2">
+                                        <span class="font-mono text-[10px] text-accent font-semibold px-2 py-0.5 bg-accent/10 border border-accent/30">AUG 2024 – JAN 2027</span>
+                                        <span class="font-mono text-[10px] text-studio-400">TERTIARY</span>
+                                    </div>
+                                    <h4 class="font-bold text-base text-studio-100 group-hover:text-accent transition-colors mb-1">
+                                        National University (PH)
+                                    </h4>
+                                    <p class="font-mono text-xs text-studio-300 font-medium leading-relaxed mb-3">
+                                        Bachelor of Science in Architecture, City/Urban, Community and Regional Planning
+                                    </p>
                                 </div>
-                                <ul class="font-mono text-[10px] sm:text-xs text-studio-400 space-y-1.5 sm:space-y-2 list-disc list-inside">
-                                    <li>Currently focused on architectural design and visualization</li>
-                                    <li>Previous studies at Eulogio "Amang" Rodriguez Institute of Science and Technology</li>
-                                    <li>Foundation in drafting and visual arts from Mandaluyong City High School and Felimon P. Javier Elementary School</li>
-                                </ul>
+                                <div class="pt-3 border-t border-studio-700/60 mt-auto">
+                                    <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider mb-2">Focus Areas &amp; Skills</p>
+                                    <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-studio-300">
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">3D Modeling</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Photoshop</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Urban Planning</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Revit BIM</span>
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- 2. EARIST Manila -->
+                            <div class="p-4 sm:p-5 border border-studio-700 bg-studio-800/40 hover:border-accent/80 transition-all hover-trigger group flex flex-col justify-between h-full">
+                                <div>
+                                    <div class="flex items-center justify-between gap-2 mb-2">
+                                        <span class="font-mono text-[10px] text-studio-300 font-medium px-2 py-0.5 bg-studio-700/60 border border-studio-600/50">OCT 2020 – JUL 2024</span>
+                                        <span class="font-mono text-[10px] text-studio-400">TERTIARY</span>
+                                    </div>
+                                    <h4 class="font-bold text-base text-studio-100 group-hover:text-accent transition-colors mb-1">
+                                        EARIST Manila
+                                    </h4>
+                                    <p class="font-mono text-xs text-studio-300 font-medium leading-relaxed mb-3">
+                                        Eulogio "Amang" Rodriguez Institute of Science and Technology • B.S. Architecture
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-studio-700/60 mt-auto">
+                                    <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider mb-2">Focus Areas &amp; Skills</p>
+                                    <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-studio-300">
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">AutoCAD 2D/3D</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Lumion</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Photoshop</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Design Studios</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Mandaluyong High School -->
+                            <div class="p-4 sm:p-5 border border-studio-700 bg-studio-800/40 hover:border-accent/80 transition-all hover-trigger group flex flex-col justify-between h-full">
+                                <div>
+                                    <div class="flex items-center justify-between gap-2 mb-2">
+                                        <span class="font-mono text-[10px] text-studio-300 font-medium px-2 py-0.5 bg-studio-700/60 border border-studio-600/50">2017 – 2019</span>
+                                        <span class="font-mono text-[10px] text-studio-400">SECONDARY</span>
+                                    </div>
+                                    <h4 class="font-bold text-base text-studio-100 group-hover:text-accent transition-colors mb-1">
+                                        Mandaluyong High School
+                                    </h4>
+                                    <p class="font-mono text-xs text-studio-300 font-medium leading-relaxed mb-3">
+                                        SHS Diploma, TVL – ICT with Specialization in Technical Drafting
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-studio-700/60 mt-auto">
+                                    <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider mb-2">Focus Areas &amp; Skills</p>
+                                    <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-studio-300">
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">AutoCAD</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">CAD Systems</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Technical Drafting</span>
+                                        <span class="px-2 py-0.5 bg-studio-700/70 border border-studio-600/50">Working Drawings</span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -1958,25 +2072,28 @@
                             <div class="space-y-2 pt-0.5">
                                 <div class="p-2 border border-studio-700/60 bg-studio-900/30">
                                     <div class="flex justify-between items-center text-studio-100 font-bold text-[11px] sm:text-xs">
-                                        <span>Bachelor of Science in Architecture</span>
-                                        <span class="text-accent text-[10px]">20XX — PRESENT</span>
+                                        <span>National University (PH)</span>
+                                        <span class="text-accent text-[10px]">AUG 2024 — JAN 2027</span>
                                     </div>
-                                    <p class="text-studio-400 text-[10px] sm:text-[11px]">National University Philippines • Comprehensive architectural design studios, theory, and building technology</p>
+                                    <p class="text-studio-200 text-[10px] sm:text-[11px] font-medium">B.S. Architecture • City/Urban, Community &amp; Regional Planning</p>
+                                    <p class="text-studio-400 text-[9px] sm:text-[10px]">3D Modeling, Photoshop, Urban Design Studios, BIM Workflow</p>
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-[11px]">
                                     <div class="p-2 border border-studio-700/40 bg-studio-900/20">
                                         <div class="flex justify-between text-studio-200 font-bold">
-                                            <span>Architecture Studies</span>
-                                            <span class="text-studio-500 text-[9px]">PREVIOUS</span>
+                                            <span>EARIST Manila</span>
+                                            <span class="text-studio-500 text-[9px]">2020 — 2024</span>
                                         </div>
-                                        <p class="text-studio-400 text-[10px]">Eulogio "Amang" Rodriguez Institute of Science and Technology (EARIST)</p>
+                                        <p class="text-studio-300 text-[10px] font-medium">B.S. Architecture</p>
+                                        <p class="text-studio-400 text-[9px]">AutoCAD 2D/3D, Lumion, Design Studios</p>
                                     </div>
                                     <div class="p-2 border border-studio-700/40 bg-studio-900/20">
                                         <div class="flex justify-between text-studio-200 font-bold">
-                                            <span>Drafting &amp; Visual Arts Foundation</span>
-                                            <span class="text-studio-500 text-[9px]">SECONDARY</span>
+                                            <span>Mandaluyong High School</span>
+                                            <span class="text-studio-500 text-[9px]">2017 — 2019</span>
                                         </div>
-                                        <p class="text-studio-400 text-[10px]">Mandaluyong City High School / Felimon P. Javier Elementary</p>
+                                        <p class="text-studio-300 text-[10px] font-medium">SHS Diploma • TVL - ICT Technical Drafting</p>
+                                        <p class="text-studio-400 text-[9px]">AutoCAD 2D/3D, Floor Plans, Sections &amp; Working Drawings</p>
                                     </div>
                                 </div>
                             </div>
