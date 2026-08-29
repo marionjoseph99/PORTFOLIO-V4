@@ -802,7 +802,7 @@ if (testimonialsTrack) {
 }
 
 // ==========================================================================
-// ARCHITECTURAL THEME MANAGER (DARK BLUEPRINT / DRAFTING LIGHT MODE)
+// ARCHITECTURAL THEME MANAGER (DARK BLUEPRINT DEFAULT / DRAFTING LIGHT MODE)
 // ==========================================================================
 const THEME_STORAGE_KEY = 'mp_portfolio_theme';
 
@@ -823,8 +823,6 @@ function initThemeManager() {
         }
     };
 
-    const prefersLight = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-
     const applyTheme = (theme, persist = true) => {
         const isLight = theme === 'light';
         if (isLight) {
@@ -843,41 +841,37 @@ function initThemeManager() {
             } catch (e) {}
         }
 
-        // Update Desktop Sidebar button
+        // Update Desktop Sidebar button text & badge (fixed width labels)
         if (themeSidebarText) {
-            themeSidebarText.textContent = isLight ? 'Mode: Light' : 'Mode: Dark';
+            themeSidebarText.textContent = isLight ? 'Light Mode' : 'Dark Mode';
         }
         if (themeSidebarBadge) {
-            themeSidebarBadge.textContent = isLight ? '[DRAFT]' : '[CAD]';
+            themeSidebarBadge.textContent = isLight ? 'DRAFT' : 'CAD';
         }
 
-        // Update Mobile Menu button
+        // Update Mobile Menu button text & badge
         if (themeMenuText) {
-            themeMenuText.textContent = isLight ? 'Theme: Light Drafting' : 'Theme: Dark Blueprint';
+            themeMenuText.textContent = isLight ? 'Light Drafting' : 'Dark Blueprint';
         }
         if (themeMenuBadge) {
-            themeMenuBadge.textContent = isLight ? 'ACTIVE' : 'SWITCH';
+            themeMenuBadge.textContent = isLight ? 'DRAFT' : 'CAD';
         }
 
-        // Update icons inside toggle buttons
-        document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
-            const sunIcon = btn.querySelector('.ph-sun');
-            const moonIcon = btn.querySelector('.ph-moon');
-            if (sunIcon && moonIcon) {
-                if (isLight) {
-                    sunIcon.classList.add('hidden');
-                    moonIcon.classList.remove('hidden');
-                } else {
-                    sunIcon.classList.remove('hidden');
-                    moonIcon.classList.add('hidden');
-                }
+        // Update icons inside all toggle buttons smoothly without layout shifts
+        document.querySelectorAll('.theme-toggle-btn .theme-icon').forEach(icon => {
+            if (isLight) {
+                icon.classList.remove('ph-moon');
+                icon.classList.add('ph-sun');
+            } else {
+                icon.classList.remove('ph-sun');
+                icon.classList.add('ph-moon');
             }
         });
     };
 
-    // Determine initial theme
+    // Determine initial theme: Strictly dark mode by default unless user saved 'light'
     const saved = getStoredTheme();
-    const initialTheme = saved ? saved : (prefersLight() ? 'light' : 'dark');
+    const initialTheme = saved === 'light' ? 'light' : 'dark';
     applyTheme(initialTheme, false);
 
     // Toggle handler
@@ -891,15 +885,6 @@ function initThemeManager() {
     if (desktopThemeBtn) desktopThemeBtn.addEventListener('click', toggleTheme);
     if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
     if (menuThemeBtn) menuThemeBtn.addEventListener('click', toggleTheme);
-
-    // Listen to OS system color scheme changes if user hasn't manually overridden
-    if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-            if (!getStoredTheme()) {
-                applyTheme(e.matches ? 'light' : 'dark', false);
-            }
-        });
-    }
 
     // Keyboard shortcut (Alt + T or Ctrl + Shift + L)
     window.addEventListener('keydown', (e) => {

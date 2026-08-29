@@ -29,6 +29,15 @@
     --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
+/* ==========================================================================
+   RESPONSIVE BASE TYPOGRAPHY SCALING
+   ========================================================================== */
+@media (max-width: 640px) {
+    html {
+        font-size: 15px;
+    }
+}
+
 html.light,
 body.light-mode {
     /* Drafting Table / Architectural Paper Light Mode */
@@ -270,30 +279,49 @@ html.light .scroll-meter-value {
 /* Dynamic Masonry Gallery Container */
 .gallery-masonry-grid {
     column-count: 1;
-    column-gap: 1.5rem;
+    column-gap: 1rem;
 }
-@media (min-width: 640px) {
+@media (min-width: 500px) {
     .gallery-masonry-grid {
         column-count: 2;
+        column-gap: 1rem;
+    }
+}
+@media (min-width: 768px) {
+    .gallery-masonry-grid {
+        column-count: 2;
+        column-gap: 1.25rem;
     }
 }
 @media (min-width: 1024px) {
     .gallery-masonry-grid {
         column-count: 3;
+        column-gap: 1.5rem;
     }
 }
 @media (min-width: 1280px) {
     .gallery-masonry-grid {
         column-count: 4;
+        column-gap: 1.5rem;
     }
 }
 
 .gallery-item {
     break-inside: avoid;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     display: inline-block;
     width: 100%;
     transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1), transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@media (min-width: 768px) {
+    .gallery-item {
+        margin-bottom: 1.25rem;
+    }
+}
+@media (min-width: 1024px) {
+    .gallery-item {
+        margin-bottom: 1.5rem;
+    }
 }
 .gallery-item.gallery-item-hidden {
     display: none !important;
@@ -307,26 +335,44 @@ html.light .scroll-meter-value {
     transform: scale(1) translateY(0);
 }
 
-/* Theme Switcher Toggle Pill Styling (Sharp CAD Box) */
-.theme-switch-btn {
+/* Theme Switcher Toggle Styling (Strict Fixed Height & No Wrapping) */
+.theme-toggle-btn {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
     font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    padding: 0.4rem 0.75rem;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
     border: 1px solid rgb(var(--studio-700));
     background: rgb(var(--studio-800));
     color: rgb(var(--studio-300));
     border-radius: 0 !important;
     cursor: pointer;
-    transition: all 0.25s ease;
+    user-select: none;
+    -webkit-user-select: none;
 }
-.theme-switch-btn:hover {
+.theme-toggle-btn:hover {
     border-color: rgb(var(--accent));
     color: rgb(var(--accent));
+}
+.theme-toggle-btn .theme-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 1.25rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    background-color: rgb(var(--studio-700));
+    color: rgb(var(--studio-200));
+    border-radius: 0 !important;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 /* Gallery See More Controls */

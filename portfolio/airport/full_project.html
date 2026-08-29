@@ -9,8 +9,7 @@
         (function() {
             try {
                 const savedTheme = localStorage.getItem('mp_portfolio_theme');
-                const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-                if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+                if (savedTheme === 'light') {
                     document.documentElement.classList.add('light');
                 }
             } catch (e) {}
@@ -75,11 +74,11 @@
     <!-- Navigation Header -->
     <header class="sticky top-0 z-40 bg-studio-900/90 backdrop-blur-md border-b border-studio-700/80 py-4 px-6 md:px-12">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="/#projects" class="font-mono text-xs md:text-sm text-studio-300 hover:text-accent flex items-center gap-2 border border-studio-700 hover:border-accent bg-studio-800 px-4 py-2 rounded-full transition-all group">
+            <a href="/#projects" class="font-mono text-xs md:text-sm text-studio-300 hover:text-accent flex items-center gap-2 border border-studio-700 hover:border-accent bg-studio-800 px-4 py-2 rounded-none transition-all group">
                 <i class="ph ph-arrow-left text-base group-hover:-translate-x-1 transition-transform"></i> Back to Portfolio
             </a>
             <div class="flex items-center gap-4">
-                <button id="theme-toggle-btn" class="flex items-center gap-2 font-mono text-xs text-studio-300 hover:text-accent border border-studio-700 hover:border-accent bg-studio-800 px-3.5 py-1.5 rounded-full transition-all" title="Toggle Light / Dark Mode">
+                <button id="theme-toggle-btn" class="w-32 flex items-center justify-center gap-2 font-mono text-xs text-studio-300 hover:text-accent border border-studio-700 hover:border-accent bg-studio-800 px-3 py-1.5 rounded-none transition-all" title="Toggle Light / Dark Mode">
                     <i class="ph ph-sun text-sm text-accent"></i>
                     <span id="theme-text">Mode: Dark</span>
                 </button>
