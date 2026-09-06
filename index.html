@@ -2124,7 +2124,7 @@
                 <div id="model-viewport-card" class="border border-studio-700 bg-studio-900 relative overflow-hidden shadow-2xl transition-all duration-300 gs-reveal">
                     
                     <!-- HUD Top Bar -->
-                    <div class="px-4 py-2.5 bg-studio-950/95 border-b border-studio-700 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-studio-400 z-10 relative">
+                    <div class="model-hud-bar px-4 py-2.5 bg-studio-900/95 border-b border-studio-700 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-studio-400 z-10 relative">
                         <div class="flex items-center gap-2.5">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
                             <span class="text-accent font-bold tracking-wider">VIEWPORT 3D</span>
@@ -2139,7 +2139,7 @@
                     </div>
 
                     <!-- Viewport Canvas Area -->
-                    <div id="model-canvas-wrapper" class="relative w-full h-[480px] sm:h-[580px] md:h-[660px] bg-studio-950 flex items-center justify-center overflow-hidden">
+                    <div id="model-canvas-wrapper" class="relative w-full h-[480px] sm:h-[580px] md:h-[660px] bg-studio-900 flex items-center justify-center overflow-hidden">
                         
                         <!-- Crosshair Corner CAD Accents -->
                         <div class="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-accent/60 pointer-events-none z-10"></div>
@@ -2148,7 +2148,7 @@
                         <div class="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-accent/60 pointer-events-none z-10"></div>
 
                         <!-- Technical Grid Overlay (subtle background) -->
-                        <div class="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:24px_24px] opacity-25 pointer-events-none"></div>
+                        <div class="model-canvas-grid absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:24px_24px] opacity-25 pointer-events-none"></div>
 
                         <!-- model-viewer Element -->
                         <model-viewer
@@ -2174,7 +2174,7 @@
                             class="w-full h-full cursor-grab active:cursor-grabbing">
 
                             <!-- Custom CAD Blueprint Poster / Preloader Slot -->
-                            <div slot="poster" id="model-loader-poster" class="absolute inset-0 bg-studio-950 flex flex-col items-center justify-center p-6 font-mono text-center z-20">
+                            <div slot="poster" id="model-loader-poster" class="absolute inset-0 bg-studio-900 flex flex-col items-center justify-center p-6 font-mono text-center z-20">
                                 <div class="w-14 h-14 border border-accent/40 bg-studio-900 flex items-center justify-center mb-4 relative">
                                     <i class="ph ph-cube text-2xl text-accent animate-spin" style="animation-duration: 4s;"></i>
                                     <div class="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-accent"></div>
@@ -2197,7 +2197,7 @@
                         </model-viewer>
 
                         <!-- Floating Camera Presets Bar (Top Left) -->
-                        <div class="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-1.5 font-mono text-[10px] sm:text-xs bg-studio-950/90 backdrop-blur-md p-1.5 border border-studio-700 shadow-xl max-w-[calc(100%-2rem)]">
+                        <div class="model-floating-bar absolute top-4 left-4 z-20 flex flex-wrap items-center gap-1.5 font-mono text-[10px] sm:text-xs bg-studio-900/90 backdrop-blur-md p-1.5 border border-studio-700 shadow-xl max-w-[calc(100%-2rem)]">
                             <span class="text-studio-400 px-1.5 hidden sm:inline text-[9px] uppercase tracking-wider">PRESET:</span>
                             <button class="model-camera-btn active px-2.5 py-1 bg-accent text-studio-900 font-bold uppercase transition-all hover-trigger" data-orbit="45deg 65deg auto" data-fov="35deg">
                                 3D Isometric
@@ -2214,7 +2214,7 @@
                         </div>
 
                         <!-- Floating Viewport Action Tools (Top Right) -->
-                        <div class="absolute top-4 right-4 z-20 flex items-center gap-1.5 font-mono text-xs bg-studio-950/90 backdrop-blur-md p-1.5 border border-studio-700 shadow-xl">
+                        <div class="model-floating-bar absolute top-4 right-4 z-20 flex items-center gap-1.5 font-mono text-xs bg-studio-900/90 backdrop-blur-md p-1.5 border border-studio-700 shadow-xl">
                             <!-- Turntable Toggle -->
                             <button id="model-rotate-toggle" class="hover-trigger flex items-center gap-1.5 px-2.5 py-1 bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 transition-all text-[10px] sm:text-xs" title="Toggle Auto-Rotation">
                                 <i id="model-rotate-icon" class="ph ph-arrows-clockwise text-sm text-accent"></i>
@@ -2238,7 +2238,7 @@
 
                         <!-- Floating Interaction Helper Legend (Bottom Center) -->
                         <div class="absolute bottom-4 inset-x-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 z-20 pointer-events-none">
-                            <div class="bg-studio-950/85 backdrop-blur-md border border-studio-700/80 px-4 py-1.5 text-center font-mono text-[10px] sm:text-[11px] text-studio-300 flex items-center justify-center gap-3 sm:gap-4 shadow-lg">
+                            <div class="model-legend-bar bg-studio-900/85 backdrop-blur-md border border-studio-700/80 px-4 py-1.5 text-center font-mono text-[10px] sm:text-[11px] text-studio-300 flex items-center justify-center gap-3 sm:gap-4 shadow-lg">
                                 <span class="flex items-center gap-1.5 text-accent">
                                     <i class="ph ph-cursor-click"></i> <span class="hidden sm:inline">Left-Click</span> Drag: Orbit 360°
                                 </span>
@@ -2256,7 +2256,7 @@
                     </div>
 
                     <!-- Bottom Technical Metadata Bento Row -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 border-t border-studio-700 divide-y md:divide-y-0 divide-x-0 md:divide-x divide-studio-700 bg-studio-950/80 font-mono">
+                    <div class="model-bento-row grid grid-cols-2 md:grid-cols-4 border-t border-studio-700 divide-y md:divide-y-0 divide-x-0 md:divide-x divide-studio-700 bg-studio-900/80 font-mono">
                         <div class="p-3.5 sm:p-4">
                             <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">01. Typology</div>
                             <div id="meta-spec-typology" class="text-xs sm:text-sm font-bold text-studio-100">Wellness &amp; Therapy Center</div>

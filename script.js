@@ -1735,6 +1735,13 @@ function initThemeManager() {
             document.body.classList.remove('light-mode');
         }
 
+        // Synchronize 3D Model Viewport Card theme state (both standard and fullscreen)
+        const viewportCard = document.getElementById('model-viewport-card');
+        if (viewportCard) {
+            viewportCard.classList.toggle('light', isLight);
+            viewportCard.classList.toggle('dark', !isLight);
+        }
+
         if (persist) {
             try {
                 localStorage.setItem(THEME_STORAGE_KEY, theme);
@@ -1825,6 +1832,13 @@ function initModelViewerControls() {
     const viewportCard = document.getElementById('model-viewport-card');
     const cameraBtns = document.querySelectorAll('.model-camera-btn');
     const modelSelectBtns = document.querySelectorAll('.model-select-btn');
+
+    // Synchronize initial theme state on 3D viewport card
+    if (viewportCard) {
+        const isCurrentLight = document.documentElement.classList.contains('light') || document.body.classList.contains('light-mode');
+        viewportCard.classList.toggle('light', isCurrentLight);
+        viewportCard.classList.toggle('dark', !isCurrentLight);
+    }
 
     // Dynamic HUD & Specs Elements
     const hudTitle = document.getElementById('model-hud-title');
@@ -2103,6 +2117,10 @@ function initModelViewerControls() {
             if (fullscreenIcon) {
                 fullscreenIcon.className = isFull ? 'ph ph-corners-in text-accent' : 'ph ph-corners-out';
             }
+            // Ensure theme classes on viewportCard match current website theme
+            const isCurrentLight = document.documentElement.classList.contains('light') || document.body.classList.contains('light-mode');
+            viewportCard.classList.toggle('light', isCurrentLight);
+            viewportCard.classList.toggle('dark', !isCurrentLight);
         };
 
         fullscreenBtn.addEventListener('click', () => {
