@@ -2052,6 +2052,13 @@ function initModelViewerControls() {
         modelSelectBtns.forEach(btn => {
             const isMatch = btn.getAttribute('data-model-id') === modelId;
             btn.classList.toggle('active', isMatch);
+            if (isMatch) {
+                btn.classList.add('text-studio-100');
+                btn.classList.remove('text-studio-400');
+            } else {
+                btn.classList.remove('text-studio-100');
+                btn.classList.add('text-studio-400');
+            }
         });
 
         // Show Preloader

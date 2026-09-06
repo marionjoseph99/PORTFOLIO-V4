@@ -287,12 +287,14 @@ html.light .scroll-meter-value {
 /* Gallery & Project & 3D Viz Filtering & Card Transitions */
 .gallery-filter-btn,
 .project-filter-btn,
-.viz-filter-btn {
+.viz-filter-btn,
+.model-select-btn {
     transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .gallery-filter-btn.active,
 .project-filter-btn.active,
-.viz-filter-btn.active {
+.viz-filter-btn.active,
+.model-select-btn.active {
     background-color: var(--accent-hex) !important;
     color: #0a0a0a !important;
     border-color: var(--accent-hex) !important;
@@ -300,7 +302,8 @@ html.light .scroll-meter-value {
 }
 .gallery-filter-btn.active .filter-count,
 .project-filter-btn.active .proj-filter-count,
-.viz-filter-btn.active .filter-count {
+.viz-filter-btn.active .filter-count,
+.model-select-btn.active .model-filter-count {
     background-color: #0a0a0a !important;
     color: var(--accent-hex) !important;
 }
@@ -1188,44 +1191,14 @@ body.light-mode .model-bento-row .text-studio-400,
 }
 
 /* ==========================================================================
-   3D MODEL SELECTOR (Integrated HUD Bar - Refined Architectural Styling)
+   3D MODEL SELECTOR (Transferred Above Viewport - Matching 01 Projects Filter Buttons)
    ========================================================================== */
 .model-select-btn {
-    height: 26px;
-    padding: 0 9px;
-    font-size: 10.5px;
-    font-family: var(--font-mono, monospace);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    border: 1px solid rgba(var(--studio-700), 0.8);
-    background-color: rgba(var(--studio-800), 0.85);
-    color: rgb(var(--studio-300));
-    transition: all 0.15s ease-in-out;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
     cursor: pointer;
-    box-shadow: none !important;
 }
 
-/* Dark Mode Hover */
-.model-select-btn:not(.active):hover {
-    background-color: rgb(var(--studio-800)) !important;
-    border-color: rgba(var(--accent), 0.7) !important;
-    color: rgb(var(--accent)) !important;
-}
-
-/* Dark Mode Active */
-.model-select-btn.active {
-    background-color: rgb(var(--accent)) !important;
-    border-color: rgb(var(--accent)) !important;
-    color: rgb(var(--studio-900)) !important;
-    font-weight: 700 !important;
-}
-
-/* Light Mode Overrides for Model Selector */
+/* Light Mode Overrides for Model Selector (matches project-filter-btn) */
 html.light .model-select-btn:not(.active),
 body.light-mode .model-select-btn:not(.active) {
     background-color: #ffffff !important;
@@ -1236,16 +1209,16 @@ body.light-mode .model-select-btn:not(.active) {
 html.light .model-select-btn:not(.active):hover,
 body.light-mode .model-select-btn:not(.active):hover {
     background-color: #f8fafc !important;
-    border-color: #d97706 !important;
-    color: #d97706 !important;
+    border-color: var(--accent-hex) !important;
+    color: #0f172a !important;
 }
 
 html.light .model-select-btn.active,
 body.light-mode .model-select-btn.active {
-    background-color: #d97706 !important;
-    border-color: #d97706 !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
+    background-color: var(--accent-hex) !important;
+    border-color: var(--accent-hex) !important;
+    color: #0a0a0a !important;
+    box-shadow: 0 0 16px rgba(var(--accent) / 0.25) !important;
 }
 
 .model-camera-btn {
@@ -1300,6 +1273,17 @@ body.light-mode .model-select-btn.active {
 .nav-link.active .nav-text {
     color: rgb(var(--studio-100)) !important;
     font-weight: 700 !important;
+}
+
+/* Desktop Sidebar Width & Framing */
+aside#desktop-sidebar {
+    width: 14rem;
+}
+
+@media (min-width: 1024px) {
+    aside#desktop-sidebar {
+        width: 16rem;
+    }
 }
 
 /* Light Mode Overrides for Desktop Sidebar */
