@@ -140,8 +140,9 @@
         <a href="#projects" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">01. Projects</a>
         <a href="#specs" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">02. Specs</a>
         <a href="#services" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">03. Services</a>
-        <a href="#gallery" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">04. Gallery</a>
-        <a href="#contact" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">05. Contact</a>
+        <a href="#visualization" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">04. 3D Viz</a>
+        <a href="#gallery" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">05. Extra Gallery</a>
+        <a href="#contact" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">06. Contact</a>
         
         <!-- Mobile Menu Theme Switch Row & Socials -->
         <div class="mt-4 pt-6 border-t border-studio-700 w-full max-w-xs flex flex-col items-center gap-4">
@@ -194,7 +195,7 @@
             </div>
 
             <!-- Navigation Links -->
-            <nav class="flex flex-col gap-6 font-mono text-sm tracking-widest mt-24">
+            <nav class="flex flex-col gap-5 font-mono text-sm tracking-widest mt-20">
                 <a href="#home" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
                     <span class="text-xs opacity-50">00</span> Home
                 </a>
@@ -207,11 +208,14 @@
                 <a href="#services" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
                     <span class="text-xs opacity-50">03</span> Services
                 </a>
+                <a href="#visualization" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">04</span> 3D Viz
+                </a>
                 <a href="#gallery" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">04</span> Gallery
+                    <span class="text-xs opacity-50">05</span> Extra Gallery
                 </a>
                 <a href="#contact" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">05</span> Contact
+                    <span class="text-xs opacity-50">06</span> Contact
                 </a>
             </nav>
         </div>
@@ -1434,21 +1438,654 @@
 
         </section>
 
-        <!-- 04. Gallery Section -->
+        <!-- 04. 3D Visualization Section (Interior & Exterior Rendering) -->
+        <section id="visualization" class="min-h-screen p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700">
+            <div class="max-w-7xl mx-auto">
+                <!-- Section Header -->
+                <div class="mb-8 sm:mb-12 gs-reveal">
+                    <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
+                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [ARCHITECTURAL RENDERING]
+                    </div>
+                    <div class="flex flex-wrap items-baseline gap-3 sm:gap-5 mb-4">
+                        <span class="font-mono font-bold text-2xl sm:text-4xl md:text-5xl text-accent">04</span>
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            3D VISUALIZATION
+                        </h2>
+                    </div>
+                    <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed border-l-2 border-accent pl-4 sm:pl-6">
+                        Curated collection of interior and exterior architectural renders, highlighting 3D modeling, material texturing, and realistic spatial perspectives.
+                    </p>
+                </div>
+
+                <!-- 3D Visualization Filter Controls -->
+                <div class="mb-6 sm:mb-10 flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[11px] sm:text-xs gs-reveal delay-100" id="viz-filter-controls">
+                    <button class="viz-filter-btn hover-trigger active px-4 py-2 border border-studio-700 bg-studio-800 text-studio-100 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-viz-filter="all">
+                        <span>All Renders</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-300">23</span>
+                    </button>
+                    <button class="viz-filter-btn hover-trigger px-4 py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-viz-filter="exterior">
+                        <span>Exterior</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">7</span>
+                    </button>
+                    <button class="viz-filter-btn hover-trigger px-4 py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all" data-viz-filter="interior">
+                        <span>Interior</span>
+                        <span class="filter-count text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">16</span>
+                    </button>
+                </div>
+
+                <!-- 3D Visualization Grid (Dynamic Masonry) -->
+                <div class="viz-grid w-full gs-reveal" id="viz-grid">
+                    
+                    <!-- 1. Exterior 1 - Twilight Massing -->
+                    <div class="viz-item" data-viz-cat="exterior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">EXTERIOR 01</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/exterior/e3.jpg" alt="Exterior Rendering - Twilight Massing &amp; Illumination" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Twilight Exterior Massing</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Exterior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Interior 1 - Modern Living -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 01</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/i1.jpg" alt="Interior Rendering - Modern Living Room" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Modern Living Room</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Exterior 2 - Contemporary Facade -->
+                    <div class="viz-item" data-viz-cat="exterior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">EXTERIOR 02</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/exterior/e1.jpg" alt="Exterior Rendering - Contemporary Residential Facade" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Contemporary Residential Facade</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Exterior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Interior 2 - Spatial Volume -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 02</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in1.jpg" alt="Interior Rendering - Sunlight Living Area" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Sunlight Living Area</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Interior 3 - Bedroom Suite -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 03</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/i2.jpg" alt="Interior Rendering - Bedroom Suite" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Bedroom Suite</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. Exterior 3 - Residential Massing -->
+                    <div class="viz-item" data-viz-cat="exterior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">EXTERIOR 03</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/exterior/e2.jpg" alt="Exterior Rendering - Residential Massing" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Residential Massing</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Exterior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Interior 4 - Studio Loft -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 04</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in3.jpg" alt="Interior Rendering - Open Concept Studio Loft" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Open Concept Studio Loft</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Interior 5 - Lobby Reception -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 05</span>
+                                <span class="text-studio-300">REVIT + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/i4.jpg" alt="Interior Rendering - Commercial Lobby Reception" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Commercial Lobby Reception</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 9. Exterior 4 - Urban Commercial -->
+                    <div class="viz-item" data-viz-cat="exterior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">EXTERIOR 04</span>
+                                <span class="text-studio-300">REVIT + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/exterior/e4.jpg" alt="Exterior Rendering - Urban Commercial Building" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Urban Commercial Building</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Exterior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Interior 6 - Materiality -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 06</span>
+                                <span class="text-studio-300">LUMION + PHOTOSHOP</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in2.jpg" alt="Interior Rendering - Materiality &amp; Textural Detail" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Materiality &amp; Detail</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 11. Interior 7 - Dining & Lounge -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 07</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/i3.jpg" alt="Interior Rendering - Dining &amp; Lounge Area" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Dining &amp; Lounge Area</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Interior 8 - Wood Finishing -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 08</span>
+                                <span class="text-studio-300">REVIT + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in4.jpg" alt="Interior Rendering - Wood Finishing &amp; Paneling" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Wood Finishing &amp; Paneling</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 13. Interior 9 - Contemporary Living -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 09</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in5.jpg" alt="Interior Rendering - Contemporary Living Space" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Contemporary Living Space</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 14. Interior 10 - Kitchen & Dining -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 10</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in6.jpg" alt="Interior Rendering - Kitchen &amp; Dining Area" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Kitchen &amp; Dining Area</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 15. Interior 11 - Interior Suite -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 11</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in7.jpg" alt="Interior Rendering - Architectural Interior Suite" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Architectural Interior Suite</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 16. Interior 12 - Open Suite -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 12</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in8.jpg" alt="Interior Rendering - Open Living Suite" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Open Living Suite</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 17. Interior 13 - Minimalist Lounge -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 13</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in9.jpg" alt="Interior Rendering - Minimalist Lounge" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Minimalist Lounge</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 18. Interior 14 - Bedroom Study -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 14</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/in10.jpg" alt="Interior Rendering - Private Bedroom Study" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Private Bedroom Study</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 19. Exterior 5 - Medical Clinic Canopy & Entrance -->
+                    <div class="viz-item" data-viz-cat="exterior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">EXTERIOR 05</span>
+                                <span class="text-studio-300">REVIT + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/exterior/CLINIC EXTERIOR 1.png" alt="Exterior Rendering - Medical Center Canopy &amp; Entrance" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Medical Center Canopy &amp; Entrance</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Exterior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 20. Exterior 6 - Modern Clinic Facade Perspective -->
+                    <div class="viz-item" data-viz-cat="exterior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">EXTERIOR 06</span>
+                                <span class="text-studio-300">REVIT + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/exterior/CLINIC EXTERIOR 2.png" alt="Exterior Rendering - Modern Clinic Facade Perspective" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Modern Clinic Facade Perspective</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Exterior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 21. Exterior 7 - Clinic Landscape & Approach -->
+                    <div class="viz-item" data-viz-cat="exterior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">EXTERIOR 07</span>
+                                <span class="text-studio-300">REVIT + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/exterior/CLINIC EXTERIOR 3.png" alt="Exterior Rendering - Clinic Landscape &amp; Approach" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Clinic Landscape &amp; Approach</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Exterior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 22. Interior 15 - Executive Architectural Studio -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 15</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/DA INTERIOR.png" alt="Interior Rendering - Executive Architectural Studio" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Executive Architectural Studio</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 23. Interior 16 - Contemporary Workspace & Lounge -->
+                    <div class="viz-item" data-viz-cat="interior">
+                        <div class="viz-card hover-trigger cursor-pointer border border-studio-700 bg-studio-800 relative group overflow-hidden transition-all duration-300 hover:border-accent">
+                            <div class="px-3 py-1.5 bg-studio-900/90 border-b border-studio-700 flex items-center justify-between font-mono text-[10px] text-studio-400">
+                                <span class="text-accent font-bold">INTERIOR 16</span>
+                                <span class="text-studio-300">SKETCHUP + LUMION</span>
+                            </div>
+                            <div class="aspect-square overflow-hidden relative">
+                                <img src="gallery/interior/DA INTERIOR 4.png" alt="Interior Rendering - Contemporary Workspace &amp; Lounge" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                    <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                        <i class="ph ph-magnifying-glass-plus text-base"></i> Inspect Render
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-studio-800/90 border-t border-studio-700 font-mono">
+                                <div class="text-xs font-bold text-studio-100 group-hover:text-accent transition-colors">Contemporary Workspace &amp; Lounge</div>
+                                <div class="text-[10px] text-studio-400 mt-1 flex items-center justify-between">
+                                    <span>Interior Architectural Render</span>
+                                    <span class="text-accent/80">4K View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 3D Visualization See More Controls -->
+                <div id="viz-see-more-container" class="text-center mt-10 sm:mt-14">
+                    <button id="viz-see-more-btn" class="hover-trigger inline-flex items-center gap-3 px-8 py-4 bg-studio-800 hover:bg-studio-700 border border-studio-700 hover:border-accent text-studio-100 hover:text-accent font-mono text-xs uppercase tracking-widest transition-all duration-300 group cursor-pointer shadow-lg">
+                        <span id="viz-see-more-text">Load More Renders (15 Remaining)</span>
+                        <i id="viz-see-more-icon" class="ph ph-arrow-down text-base text-accent group-hover:translate-y-1 transition-transform"></i>
+                    </button>
+                </div>
+
+                <!-- 3D Visualization Empty State (Hidden by default) -->
+                <div id="viz-empty-state" class="hidden text-center py-16 font-mono text-studio-400">
+                    <i class="ph ph-cube-focus text-4xl text-accent mb-2"></i>
+                    <p class="text-sm">No renders found in this category.</p>
+                </div>
+            </div>
+        </section>
+        <!-- 05. Extra Gallery Section (Outside Architecture) -->
         <section id="gallery" class="min-h-screen p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-6 sm:mb-8 gs-reveal">
                     <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
-                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [VISUAL GALLERY]
+                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [CREATIVE DISCIPLINE // BEYOND ARCHITECTURE]
                     </div>
-                    <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">04</span>
+                    <div class="flex flex-wrap items-baseline gap-3 sm:gap-4 mb-3 sm:mb-4">
+                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">05</span>
                         <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
-                            GALLERY
+                            EXTRA GALLERY
                         </h2>
+                        <span class="text-xs sm:text-sm font-mono text-studio-400 uppercase tracking-widest">
+                            [Outside Architecture]
+                        </span>
                     </div>
                     <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
-                        Curated collection of manual technical drawings, interior perspectives, exterior perspectives, and digital paintings.
+                        Curated collection of manual technical drawings, architectural watercolor plates, and conceptual digital landscape paintings created outside commercial architectural 3D visualization.
                     </p>
                 </div>
 
@@ -1456,18 +2093,14 @@
                 <div class="mb-6 sm:mb-10 flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[11px] sm:text-xs gs-reveal delay-100" id="gallery-filter-controls">
                     <button class="gallery-filter-btn hover-trigger active px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800 text-studio-100 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="all">
                         <span>All Works</span>
-                        <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-300">28</span>
+                        <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-300">16</span>
                     </button>
                     <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="manual">
-                        <span>Manual Drawings</span>
-                        <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">9</span>
+                        <span>Manual Ink Drafting</span>
+                        <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">5</span>
                     </button>
-                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="interior">
-                        <span>Interior Perspectives</span>
-                        <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">8</span>
-                    </button>
-                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="exterior">
-                        <span>Exterior Perspective</span>
+                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="watercolor">
+                        <span>Watercolor Studies</span>
                         <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">4</span>
                     </button>
                     <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="digital">
@@ -1494,7 +2127,7 @@
                     <!-- 2. Manual Drawing 1 (Tall Architectural Plate) -->
                     <div class="gallery-item gs-reveal delay-100" data-category="manual">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/m1.jpg" alt="Manual Drawing - Architectural Perspective Study 01" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <img src="gallery/manual/m1.jpg" alt="Manual Ink Drafting - Perspective Plate 01" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1503,10 +2136,10 @@
                         </div>
                     </div>
 
-                    <!-- 3. Interior Perspective 1 (Portrait) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="interior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/i1.jpg" alt="Interior Perspective - Modern Living & Ambient Lighting" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <!-- 3. Watercolor 1 (Landscape Wash) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="watercolor">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/w1.jpg" alt="Watercolor Study - Architectural Wash Plate I" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1515,10 +2148,10 @@
                         </div>
                     </div>
 
-                    <!-- 4. Exterior Perspective 3 (Cinematic Dusk Horizon) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="exterior">
+                    <!-- 4. Digital Painting 2 (Cinematic) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/exterior/e3.jpg" alt="Exterior Perspective - Twilight Massing & Illumination" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <img src="gallery/digital paintings/DA2.webp" alt="Digital Painting - Conceptual Environment II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1527,10 +2160,10 @@
                         </div>
                     </div>
 
-                    <!-- 5. Manual Watercolor 3 (Tall Vertical) -->
+                    <!-- 5. Manual Drawing 2 (Portrait) -->
                     <div class="gallery-item gs-reveal" data-category="manual">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/w3.jpg" alt="Manual Drawing - Watercolor Architectural Render III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <img src="gallery/manual/m2.jpg" alt="Manual Ink Drafting - Isometric Geometric Study 02" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1539,70 +2172,10 @@
                         </div>
                     </div>
 
-                    <!-- 6. Digital Painting 4 (Medium Portrait) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="digital">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/digital paintings/DA4.webp" alt="Digital Painting - Architectural Sci-Fi Concept IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 7. Interior Perspective Light 1 (Tall Render) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="interior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/in1.jpg" alt="Interior Perspective - Spatial Light Render" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 8. Exterior Perspective 1 (Landscape Facade) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="exterior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/exterior/e1.jpg" alt="Exterior Perspective - Contemporary Residential Facade" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 9. Manual Drawing 3 (Portrait Ink) -->
-                    <div class="gallery-item gs-reveal" data-category="manual">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/m3.jpg" alt="Manual Drawing - Architectural Ink & Pen Study 03" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 10. Digital Painting 2 (Cinematic Vista) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="digital">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/2] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/digital paintings/DA2.webp" alt="Digital Painting - Environment Study II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 11. Interior Perspective 2 (Square Sanctuary) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="interior">
+                    <!-- 6. Watercolor 2 (Square Detail) -->
+                    <div class="gallery-item gs-reveal delay-100" data-category="watercolor">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-square overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/i2.jpg" alt="Interior Perspective - Minimalist Bedroom Sanctuary" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <img src="gallery/manual/w2.jpg" alt="Watercolor Study - Color Field Vignette II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1611,10 +2184,10 @@
                         </div>
                     </div>
 
-                    <!-- 12. Manual Watercolor 1 (Landscape Format) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="manual">
+                    <!-- 7. Digital Painting 3 (Atmospheric) -->
+                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/w1.jpg" alt="Manual Drawing - Watercolor Architectural Render I" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <img src="gallery/digital paintings/DA3.webp" alt="Digital Painting - Atmosphere Matte Painting III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1623,10 +2196,10 @@
                         </div>
                     </div>
 
-                    <!-- 13. Exterior Perspective 4 (Urban Edge Proposal) -->
-                    <div class="gallery-item gs-reveal" data-category="exterior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/exterior/e4.jpg" alt="Exterior Perspective - Urban Edge Proposal" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <!-- 8. Manual Drawing 3 (Landscape Plate) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="manual">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/m3.jpg" alt="Manual Ink Drafting - Elevation Technical Plate 03" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1635,10 +2208,22 @@
                         </div>
                     </div>
 
-                    <!-- 14. Digital Painting 6 (Fantasy Cityscape) -->
+                    <!-- 9. Watercolor 3 (Tall Vertical) -->
+                    <div class="gallery-item gs-reveal" data-category="watercolor">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/w3.jpg" alt="Watercolor Study - Architectural Render III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Digital Painting 4 (Megastructure) -->
                     <div class="gallery-item gs-reveal delay-100" data-category="digital">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/digital paintings/DA6.webp" alt="Digital Painting - Architectural Fantasy Cityscape VI" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA4.webp" alt="Digital Painting - Megastructure Horizon IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1647,70 +2232,10 @@
                         </div>
                     </div>
 
-                    <!-- 15. Manual Drawing 2 (Tall Technical Draft) -->
+                    <!-- 11. Manual Drawing 4 (Technical Section) -->
                     <div class="gallery-item gs-reveal delay-200" data-category="manual">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/m2.jpg" alt="Manual Drawing - Technical Drafting Study 02" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 16. Interior Perspective Light 3 (Wide Open Studio) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="interior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/in3.jpg" alt="Interior Perspective - Open Concept Studio" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 17. Manual Watercolor 2 (Square Vignette) -->
-                    <div class="gallery-item gs-reveal" data-category="manual">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/w2.jpg" alt="Manual Drawing - Watercolor Architectural Render II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 18. Interior Perspective 4 (Commercial Reception) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="interior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/i4.jpg" alt="Interior Perspective - Commercial Reception Area" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 19. Digital Painting 3 (Tall Canvas) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/digital paintings/DA3.webp" alt="Digital Painting - Atmospheric Canvas III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 20. Exterior Perspective 2 (Daylight Portrait) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="exterior">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/exterior/e2.jpg" alt="Exterior Perspective - Daylight Massing & Fenestration" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <img src="gallery/manual/m4.jpg" alt="Manual Ink Drafting - Section Drawing 04" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1719,34 +2244,10 @@
                         </div>
                     </div>
 
-                    <!-- 21. Manual Drawing 4 (Structural Drafting) -->
-                    <div class="gallery-item gs-reveal" data-category="manual">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/m4.jpg" alt="Manual Drawing - Structural Drafting Study 04" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 22. Interior Perspective Light 2 (Atmospheric Mood) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="interior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-square overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/in2.jpg" alt="Interior Perspective - Materiality & Mood Study" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 23. Digital Painting 5 (Atmospheric Vista) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
+                    <!-- 12. Digital Painting 5 (Sky Study) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/digital paintings/DA5.webp" alt="Digital Painting - Environment Vista V" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                            <img src="gallery/digital paintings/DA5.webp" alt="Digital Painting - Atmospheric Sky Study V" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1755,10 +2256,10 @@
                         </div>
                     </div>
 
-                    <!-- 24. Manual Watercolor 4 (Atmospheric Color) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="manual">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/w4.jpg" alt="Manual Drawing - Watercolor Architectural Render IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <!-- 13. Watercolor 4 (Landscape Panorama) -->
+                    <div class="gallery-item gs-reveal" data-category="watercolor">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/w4.jpg" alt="Watercolor Study - Architectural Landscape Plate IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1767,22 +2268,10 @@
                         </div>
                     </div>
 
-                    <!-- 25. Interior Perspective Light 4 (Wood Finishing) -->
-                    <div class="gallery-item gs-reveal" data-category="interior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/in4.jpg" alt="Interior Perspective - Acoustic Wood Finishing" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                            <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                                    <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 26. Manual Drawing 5 (Perspective Shading) -->
+                    <!-- 14. Manual Drawing 5 (Detailed Perspective) -->
                     <div class="gallery-item gs-reveal delay-100" data-category="manual">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/manual/m5.jpg" alt="Manual Drawing - Architectural Perspective Shading 05" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-square overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/manual/m5.jpg" alt="Manual Ink Drafting - Axonometric Study 05" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1791,10 +2280,10 @@
                         </div>
                     </div>
 
-                    <!-- 27. Digital Painting 7 (Composition Study) -->
+                    <!-- 15. Digital Painting 6 (Futuristic Citadel) -->
                     <div class="gallery-item gs-reveal delay-200" data-category="digital">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[5/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/digital paintings/DA7.webp" alt="Digital Painting - Digital Art & Composition VII" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA6.webp" alt="Digital Painting - Futuristic Citadel Concept VI" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1803,10 +2292,10 @@
                         </div>
                     </div>
 
-                    <!-- 28. Interior Perspective 3 (Dining & Lounge) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="interior">
-                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
-                            <img src="gallery/interior/i3.jpg" alt="Interior Perspective - Dining & Lounge Area" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <!-- 16. Digital Painting 7 (Ethereal Landscape) -->
+                    <div class="gallery-item gs-reveal delay-300" data-category="digital">
+                        <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
+                            <img src="gallery/digital paintings/DA7.webp" alt="Digital Painting - Ethereal Sci-Fi Environment VII" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                 <span class="font-mono text-xs bg-accent text-studio-900 px-3.5 py-2 font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
                                     <i class="ph ph-magnifying-glass-plus text-base"></i> Expand
@@ -1820,11 +2309,10 @@
                 <!-- Gallery See More Action Button -->
                 <div id="gallery-see-more-container" class="mt-12 text-center gs-reveal delay-100">
                     <button id="gallery-see-more-btn" class="hover-trigger inline-flex items-center gap-3 px-8 py-4 bg-studio-800 hover:bg-studio-700 border border-studio-700 hover:border-accent text-studio-100 hover:text-accent font-mono text-xs uppercase tracking-widest transition-all duration-300 group cursor-pointer shadow-lg">
-                        <span id="gallery-see-more-text">Load More Works (18 Remaining)</span>
+                        <span id="gallery-see-more-text">Load More Works (8 Remaining)</span>
                         <i id="gallery-see-more-icon" class="ph ph-arrow-down text-base text-accent group-hover:translate-y-1 transition-transform"></i>
                     </button>
                 </div>
-
                 <!-- Gallery Empty State (Hidden by default) -->
                 <div id="gallery-empty-state" class="hidden text-center py-16 font-mono text-studio-400">
                     <i class="ph ph-image-square text-4xl text-accent mb-2"></i>
@@ -1833,7 +2321,7 @@
             </div>
         </section>
 
-        <!-- 05. Contact Section -->
+        <!-- 06. Contact Section -->
         <section id="contact" class="min-h-[75vh] p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700 flex flex-col justify-center">
             <div class="max-w-7xl mx-auto w-full">
                 <div class="max-w-4xl gs-reveal">
@@ -1842,13 +2330,13 @@
                             <span class="w-8 sm:w-12 h-px bg-accent"></span> [INITIALIZE COMMUNICATION]
                         </div>
                         <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                            <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">05</span>
+                            <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">06</span>
                             <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
                                 CONTACT
                             </h2>
                         </div>
                         <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
-                            Open for architectural commissions, 3D visualization, manual drawings, and collaborative creative projects.
+                            Open for 3D architectural visualization technician roles, freelance 3D modeling &amp; photorealistic rendering commissions, manual drafting, and collaborative design projects.
                         </p>
                     </div>
                     

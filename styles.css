@@ -284,22 +284,79 @@ html.light .scroll-meter-value {
     transform: scale(1.03);
 }
 
-/* Gallery & Project Filtering & Card Transitions */
+/* Gallery & Project & 3D Viz Filtering & Card Transitions */
 .gallery-filter-btn,
-.project-filter-btn {
+.project-filter-btn,
+.viz-filter-btn {
     transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .gallery-filter-btn.active,
-.project-filter-btn.active {
+.project-filter-btn.active,
+.viz-filter-btn.active {
     background-color: var(--accent-hex) !important;
     color: #0a0a0a !important;
     border-color: var(--accent-hex) !important;
     box-shadow: 0 0 16px rgba(var(--accent) / 0.25);
 }
 .gallery-filter-btn.active .filter-count,
-.project-filter-btn.active .proj-filter-count {
+.project-filter-btn.active .proj-filter-count,
+.viz-filter-btn.active .filter-count {
     background-color: #0a0a0a !important;
     color: var(--accent-hex) !important;
+}
+
+/* 3D Visualization Grid & Items */
+.viz-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+}
+@media (min-width: 640px) {
+    .viz-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+    }
+}
+@media (min-width: 1024px) {
+    .viz-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.5rem;
+    }
+}
+@media (min-width: 1280px) {
+    .viz-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1.5rem;
+    }
+}
+.viz-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.viz-item.viz-item-hidden,
+.viz-item.hidden {
+    display: none !important;
+}
+.viz-item.viz-item-fadeout {
+    opacity: 0;
+    transform: scale(0.96);
+}
+.viz-item.viz-item-fadein {
+    opacity: 1;
+    transform: scale(1);
+}
+.viz-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.viz-card:hover {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
 }
 
 /* --- Architectural Services Cards & Milestones HUD Enhancement --- */
@@ -524,11 +581,13 @@ html.light .scroll-meter-value {
     white-space: nowrap;
 }
 
-/* Gallery See More Controls */
-#gallery-see-more-btn {
+/* Gallery & 3D Visualization See More Controls */
+#gallery-see-more-btn,
+#viz-see-more-btn {
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
-#gallery-see-more-btn:hover {
+#gallery-see-more-btn:hover,
+#viz-see-more-btn:hover {
     box-shadow: 0 0 20px rgba(var(--accent) / 0.15);
 }
 
@@ -754,6 +813,7 @@ html.light .scroll-meter-value {
     #projects,
     #technical,
     #services,
+    #visualization,
     #gallery,
     #about,
     #contact,

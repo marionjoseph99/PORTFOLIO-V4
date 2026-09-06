@@ -695,7 +695,7 @@ const resetLightboxZoom = () => {
     }
 };
 
-const INITIAL_ALL_LIMIT = 10;
+const INITIAL_ALL_LIMIT = 8;
 let isGalleryExpanded = false;
 let galleryItems = [];
 let currentGalleryIndex = 0;
@@ -927,6 +927,186 @@ if (galleryLightbox) {
             if (e.key === 'ArrowRight') showNext();
             if (e.key === 'ArrowLeft') showPrev();
             if (e.key.toLowerCase() === 'z') toggleLightboxZoom();
+        }
+    });
+}
+
+// --- 3D Visualization Filtering, See More & Lightbox Logic ---
+const vizFilterBtns = document.querySelectorAll('.viz-filter-btn');
+const vizItemsList = document.querySelectorAll('.viz-item');
+const vizEmptyState = document.getElementById('viz-empty-state');
+const vizSeeMoreContainer = document.getElementById('viz-see-more-container');
+const vizSeeMoreBtn = document.getElementById('viz-see-more-btn');
+const vizSeeMoreText = document.getElementById('viz-see-more-text');
+const vizSeeMoreIcon = document.getElementById('viz-see-more-icon');
+
+const VIZ_LIMITS = {
+    all: 8,       // 2 full rows on desktop
+    exterior: 4,  // 1 full row on desktop (4 shown, 3 remaining)
+    interior: 8   // 2 full rows on desktop (8 shown, 8 remaining)
+};
+
+let currentVizFilter = 'all';
+const vizExpandedState = {
+    all: false,
+    exterior: false,
+    interior: false
+};
+
+function getVisibleVizItems() {
+    const visibleCards = [];
+    vizItemsList.forEach((item) => {
+        if (!item.classList.contains('viz-item-hidden') && !item.classList.contains('hidden') && item.style.display !== 'none') {
+            const img = item.querySelector('img');
+            const titleElem = item.querySelector('.font-bold.text-studio-100');
+            const codeElem = item.querySelector('.text-accent.font-bold');
+            const altText = img?.getAttribute('alt') || '3D Architectural Visualization';
+            const plateTitle = codeElem && titleElem
+                ? `${codeElem.textContent.trim()}: ${titleElem.textContent.trim()}`
+                : altText;
+
+            if (img) {
+                visibleCards.push({
+                    element: item,
+                    src: img.getAttribute('src'),
+                    alt: altText,
+                    plateTitle: plateTitle
+                });
+            }
+        }
+    });
+    return visibleCards;
+}
+
+function filterViz(filterCategory) {
+    currentVizFilter = filterCategory;
+    let visibleCount = 0;
+    let matchingTotal = 0;
+
+    vizFilterBtns.forEach((btn) => {
+        const btnFilter = btn.getAttribute('data-viz-filter');
+        const countBadge = btn.querySelector('.filter-count');
+        if (btnFilter === filterCategory) {
+            btn.classList.add('active', 'text-studio-100', 'bg-studio-800');
+            btn.classList.remove('text-studio-400', 'bg-studio-800/80');
+            if (countBadge) {
+                countBadge.classList.add('text-studio-200');
+                countBadge.classList.remove('text-studio-400');
+            }
+        } else {
+            btn.classList.remove('active', 'text-studio-100', 'bg-studio-800');
+            btn.classList.add('text-studio-400', 'bg-studio-800/80');
+            if (countBadge) {
+                countBadge.classList.remove('text-studio-200');
+                countBadge.classList.add('text-studio-400');
+            }
+        }
+    });
+
+    const isExpanded = vizExpandedState[filterCategory] || false;
+    const initialLimit = VIZ_LIMITS[filterCategory] || 8;
+
+    vizItemsList.forEach((item) => {
+        const itemCategories = (item.getAttribute('data-viz-cat') || '').split(',').map(s => s.trim());
+        const matches = (filterCategory === 'all' || itemCategories.includes(filterCategory));
+
+        if (matches) {
+            matchingTotal++;
+            const shouldShow = isExpanded || (matchingTotal <= initialLimit);
+
+            if (shouldShow) {
+                item.classList.remove('viz-item-hidden', 'hidden');
+                item.classList.add('is-active', 'viz-item-fadein');
+                item.classList.remove('viz-item-fadeout');
+                item.style.display = '';
+                visibleCount++;
+            } else {
+                item.classList.add('viz-item-fadeout', 'viz-item-hidden', 'hidden');
+                item.classList.remove('viz-item-fadein', 'is-active');
+                item.style.display = 'none';
+            }
+        } else {
+            item.classList.add('viz-item-fadeout', 'viz-item-hidden', 'hidden');
+            item.classList.remove('viz-item-fadein', 'is-active');
+            item.style.display = 'none';
+        }
+    });
+
+    // Handle See More button state
+    if (vizSeeMoreContainer && vizSeeMoreBtn && vizSeeMoreText && vizSeeMoreIcon) {
+        if (matchingTotal > initialLimit) {
+            vizSeeMoreContainer.classList.remove('hidden');
+            const categoryLabel = filterCategory === 'exterior' ? 'Exterior ' : filterCategory === 'interior' ? 'Interior ' : '';
+            if (isExpanded) {
+                vizSeeMoreText.textContent = `Show Less ${categoryLabel}Renders`;
+                vizSeeMoreIcon.className = 'ph ph-arrow-up text-base text-accent group-hover:-translate-y-1 transition-transform';
+            } else {
+                const remaining = matchingTotal - initialLimit;
+                vizSeeMoreText.textContent = `Load More ${categoryLabel}Renders (${remaining} Remaining)`;
+                vizSeeMoreIcon.className = 'ph ph-arrow-down text-base text-accent group-hover:translate-y-1 transition-transform';
+            }
+        } else {
+            vizSeeMoreContainer.classList.add('hidden');
+        }
+    }
+
+    if (vizEmptyState) {
+        if (visibleCount === 0) {
+            vizEmptyState.classList.remove('hidden');
+        } else {
+            vizEmptyState.classList.add('hidden');
+        }
+    }
+}
+
+if (vizFilterBtns.length > 0) {
+    vizFilterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-viz-filter') || 'all';
+            filterViz(filter);
+        });
+    });
+}
+
+if (vizSeeMoreBtn) {
+    vizSeeMoreBtn.addEventListener('click', () => {
+        const isCurrentlyExpanded = vizExpandedState[currentVizFilter] || false;
+        if (isCurrentlyExpanded) {
+            vizExpandedState[currentVizFilter] = false;
+            filterViz(currentVizFilter);
+            const vizSection = document.getElementById('visualizations');
+            if (vizSection) {
+                vizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        } else {
+            vizExpandedState[currentVizFilter] = true;
+            filterViz(currentVizFilter);
+        }
+    });
+}
+
+// Initial 3D visualization filtering setup
+filterViz('all');
+
+if (vizItemsList.length > 0) {
+    vizItemsList.forEach((item) => {
+        const card = item.querySelector('.viz-card');
+        if (card) {
+            card.addEventListener('pointerenter', () => {
+                const img = item.querySelector('img');
+                if (img) {
+                    const src = img.getAttribute('src');
+                    if (src) preloadImages([src]);
+                }
+            }, { passive: true });
+
+            card.addEventListener('click', () => {
+                const visible = getVisibleVizItems();
+                const clickedIndex = visible.findIndex(v => v.element === item);
+                if (clickedIndex !== -1 && typeof openLightboxWithItems === 'function') {
+                    openLightboxWithItems(visible, clickedIndex);
+                }
+            });
         }
     });
 }
