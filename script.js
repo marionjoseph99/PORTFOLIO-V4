@@ -965,9 +965,7 @@ function getVisibleVizItems() {
             const titleElem = item.querySelector('.font-bold.text-studio-100');
             const codeElem = item.querySelector('.text-accent.font-bold');
             const altText = img?.getAttribute('alt') || '3D Architectural Visualization';
-            const plateTitle = codeElem && titleElem
-                ? `${codeElem.textContent.trim()}: ${titleElem.textContent.trim()}`
-                : altText;
+            const plateTitle = codeElem ? codeElem.textContent.trim() : altText;
 
             if (img) {
                 visibleCards.push({
