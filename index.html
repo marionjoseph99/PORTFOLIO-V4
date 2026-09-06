@@ -155,7 +155,7 @@
                     <i class="theme-icon ph ph-moon text-base text-accent"></i>
                     <span class="theme-menu-text">Dark Blueprint</span>
                 </span>
-                <span class="theme-badge theme-menu-badge">CAD</span>
+                <span class="theme-badge theme-menu-badge px-2 py-0.5 text-[10px] font-mono border border-studio-700 bg-studio-900 text-studio-300">DARK</span>
             </button>
             <div class="flex items-center justify-center gap-6 pt-2 font-mono text-xs text-studio-400">
                 <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="hover:text-accent flex items-center gap-1.5 transition-colors">
@@ -169,82 +169,165 @@
     </div>
 
     <!-- Desktop Sidebar (Fixed Left) -->
-    <aside class="hidden md:flex w-72 h-screen border-r border-studio-700 bg-studio-900/80 backdrop-blur-md flex-col justify-between p-10 z-50 shrink-0 gs-reveal is-active">
-        <div>
-            <!-- Hidden by default, fades in on scroll -->
-            <div id="sidebar-profile" class="flex flex-col gap-4 mb-16 opacity-0 translate-y-[-20px] pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] absolute top-10 left-10 w-full pr-10">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-none overflow-hidden border border-studio-700 relative group">
-                        <!-- Crosshair accents -->
-                        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+    <aside id="desktop-sidebar" class="hidden md:flex w-72 lg:w-80 h-screen border-r border-studio-700 bg-studio-900/90 backdrop-blur-md flex-col justify-between p-6 lg:p-7 z-50 shrink-0 select-none overflow-y-auto overflow-x-hidden gs-reveal is-active">
+        <div class="w-full flex flex-col">
+            <!-- Architectural Studio Masthead & Identity -->
+            <div id="sidebar-profile" class="w-full flex flex-col transition-all duration-300">
+                <div class="flex items-center gap-3.5">
+                    <!-- Photo Frame with Technical Crosshair Corners -->
+                    <div class="w-12 h-12 shrink-0 rounded-none overflow-hidden border border-studio-700 bg-studio-800 relative group cursor-pointer shadow-xs">
+                        <!-- Corner Crosshairs -->
+                        <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-accent z-10 transition-colors"></div>
+                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-accent z-10 transition-colors"></div>
                         
                         <!-- Default Photo (Side View) -->
-                        <img src="profile%20pic.png" alt="Marjo Paguia" 
-                            class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-0 transition-all duration-500">
+                        <img src="profile%20pic.png" alt="Marjo Paguia Portrait" 
+                            class="w-full h-full object-cover grayscale opacity-85 group-hover:opacity-0 transition-all duration-500">
                         
                         <!-- Hover Photo (Facing Front) -->
-                        <img src="profile%20pic%201.png" alt="Marjo Paguia Front" 
+                        <img src="profile%20pic%201.png" alt="Marjo Paguia Front View" 
                             class="absolute inset-0 w-full h-full object-cover grayscale opacity-0 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
                     </div>
-                    <a href="#home" class="block group hover-trigger">
-                        <h1 class="font-bold text-2xl tracking-tight group-hover:text-accent transition-colors">Marjo Paguia</h1>
-                        <p class="font-mono text-[10px] text-studio-400 mt-1 tracking-widest uppercase">Architecture Student / Visual Artist</p>
+
+                    <!-- Name & Discipline -->
+                    <a href="#home" class="block group hover-trigger min-w-0 flex-1">
+                        <div class="flex items-center gap-1.5">
+                            <h1 class="font-bold text-lg tracking-tight text-studio-100 group-hover:text-accent transition-colors truncate">Marjo Paguia</h1>
+                        </div>
+                        <p class="font-mono text-[10px] text-studio-400 uppercase tracking-wider truncate mt-0.5">Architecture & Visual Arts</p>
                     </a>
                 </div>
-                <!-- Blueprint division line -->
-                <div class="w-full border-t border-studio-700 border-dashed opacity-50 block mr-10 relative">
-                    <div class="absolute -top-1 right-10 w-2 h-2 bg-accent opacity-0 transition-opacity" id="sidebar-indicator"></div>
+
+                <!-- Live Status Indicator -->
+                <div class="flex items-center justify-between gap-2 mt-3 px-2 py-1 border border-studio-700/60 bg-studio-800/40 text-[9.5px] font-mono">
+                    <div class="flex items-center gap-1.5 truncate">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+                        <span class="text-studio-300 uppercase tracking-wider truncate">Open for Commissions</span>
+                    </div>
+                    <span class="text-studio-500 shrink-0">PH</span>
+                </div>
+
+                <!-- Architectural Scale / Sub-header Divider -->
+                <div class="w-full border-t border-studio-700/80 my-3.5 pt-2 flex items-center font-mono text-[9px] text-studio-500 uppercase tracking-widest">
+                    <span class="flex items-center gap-1.5">
+                        <i class="ph ph-compass text-accent text-xs"></i>
+                        <span>INDEX // SECTIONS</span>
+                    </span>
                 </div>
             </div>
 
-            <!-- Navigation Links -->
-            <nav class="flex flex-col gap-5 font-mono text-sm tracking-widest mt-20">
-                <a href="#home" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">00</span> Home
+            <!-- Precision Navigation Menu -->
+            <nav class="flex flex-col gap-1 w-full mt-1" id="sidebar-nav">
+                <!-- 00. Home -->
+                <a href="#home" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="home">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">00</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">Home</span>
+                    </div>
                 </a>
-                <a href="#projects" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">01</span> Projects
+
+                <!-- 01. Projects -->
+                <a href="#projects" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="projects">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">01</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">Projects</span>
+                    </div>
                 </a>
-                <a href="#visualization" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">02</span> 3D Renders
+
+                <!-- 02. 3D Renders -->
+                <a href="#visualization" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="visualization">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">02</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">3D Renders</span>
+                    </div>
                 </a>
-                <a href="#model-3d" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">03</span> 3D Models
+
+                <!-- 03. 3D Models -->
+                <a href="#model-3d" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="model-3d">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">03</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">3D Models</span>
+                    </div>
                 </a>
-                <a href="#specs" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">04</span> Skills
+
+                <!-- 04. Skills -->
+                <a href="#specs" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="specs">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">04</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">Skills</span>
+                    </div>
                 </a>
-                <a href="#gallery" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">05</span> Extra Gallery
+
+                <!-- 05. Extra Gallery -->
+                <a href="#gallery" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="gallery">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">05</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">Extra Gallery</span>
+                    </div>
                 </a>
-                <a href="#services" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">06</span> Services
+
+                <!-- 06. Services -->
+                <a href="#services" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="services">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">06</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">Services</span>
+                    </div>
                 </a>
-                <a href="#contact" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">07</span> Contact
+
+                <!-- 07. Contact -->
+                <a href="#contact" class="nav-link hover-trigger group relative flex items-center px-3 py-2 border border-transparent transition-all duration-200 text-studio-400 hover:text-studio-100 hover:bg-studio-800/60 hover:border-studio-700/60" data-section="contact">
+                    <div class="flex items-center gap-3">
+                        <span class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-accent transition-all duration-200 group-hover:h-3"></span>
+                        <span class="nav-num font-mono text-[11px] text-studio-500 group-hover:text-accent font-bold tracking-wider">07</span>
+                        <span class="nav-text font-sans text-xs tracking-wider uppercase font-semibold">Contact</span>
+                    </div>
                 </a>
             </nav>
         </div>
 
-        <div class="space-y-4">
-            <!-- Desktop Theme Toggle Switch (Strict Fixed Dimensions) -->
-            <button id="desktop-theme-btn" class="theme-toggle-btn w-full h-10 px-3.5 border border-studio-700 bg-studio-800/80 hover:bg-studio-800 text-studio-300 hover:text-accent hover:border-accent rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider hover-trigger group flex items-center justify-between" title="Toggle Light / Dark Architectural Mode">
+        <!-- Bottom Controls & Action Utilities -->
+        <div class="pt-4 mt-auto border-t border-studio-700/80 space-y-2.5">
+            <!-- Desktop Theme Toggle Switch -->
+            <button id="desktop-theme-btn" class="theme-toggle-btn w-full h-10 px-3.5 border border-studio-700 bg-studio-800/80 hover:bg-studio-800 text-studio-300 hover:text-accent hover:border-accent rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider hover-trigger group flex items-center justify-between" title="Toggle Light / Dark Architectural Palette">
                 <span class="flex items-center gap-2.5">
                     <i class="theme-icon ph ph-moon text-base text-accent group-hover:rotate-45 transition-transform duration-300"></i>
-                    <span class="theme-sidebar-text">Dark Mode</span>
+                    <span class="theme-sidebar-text text-xs">Dark Mode</span>
                 </span>
-                <span class="theme-badge theme-sidebar-badge group-hover:bg-accent group-hover:text-studio-900 transition-colors">
-                    CAD
+                <span class="theme-badge theme-sidebar-badge px-2 py-0.5 text-[10px] font-mono border border-studio-700 bg-studio-900 text-studio-300 group-hover:border-accent group-hover:text-accent transition-colors">
+                    DARK
                 </span>
             </button>
 
-            <a href="#contact" class="block w-full border border-studio-700 text-center py-3 font-mono text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-all duration-300 hover-trigger">
-                Contact Marjo <i class="ph ph-arrow-right inline-block ml-1"></i>
+            <!-- Primary Contact CTA -->
+            <a href="#contact" class="w-full h-10 px-3.5 border border-studio-700 hover:border-accent bg-studio-800/50 hover:bg-accent text-studio-200 hover:text-studio-900 font-mono text-xs font-bold uppercase tracking-widest transition-all duration-200 hover-trigger flex items-center justify-center gap-2 group">
+                <span>Contact Marjo</span>
+                <i class="ph ph-arrow-up-right text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
             </a>
-            <div class="flex gap-4 text-xl text-studio-400">
-                <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors hover-trigger" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
-                <a href="https://www.instagram.com/13_1_18_jo/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors hover-trigger" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+
+            <!-- Social Links & Quick CV Modal Trigger -->
+            <div class="flex items-center justify-between pt-1">
+                <div class="flex items-center gap-2 text-studio-400">
+                    <a href="https://www.linkedin.com/in/marjo-paguia-6b5839144/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 flex items-center justify-center border border-studio-700 bg-studio-800/60 hover:bg-studio-800 hover:border-accent hover:text-accent transition-all hover-trigger" aria-label="LinkedIn Profile" title="LinkedIn">
+                        <i class="ph ph-linkedin-logo text-base"></i>
+                    </a>
+                    <a href="https://www.instagram.com/13_1_18_jo/?hl=en" target="_blank" rel="noopener noreferrer" class="w-8 h-8 flex items-center justify-center border border-studio-700 bg-studio-800/60 hover:bg-studio-800 hover:border-accent hover:text-accent transition-all hover-trigger" aria-label="Instagram Profile" title="Instagram">
+                        <i class="ph ph-instagram-logo text-base"></i>
+                    </a>
+                    <a href="mailto:noroniomarjo@gmail.com" class="w-8 h-8 flex items-center justify-center border border-studio-700 bg-studio-800/60 hover:bg-studio-800 hover:border-accent hover:text-accent transition-all hover-trigger" aria-label="Direct Email" title="Email: noroniomarjo@gmail.com">
+                        <i class="ph ph-envelope-simple text-base"></i>
+                    </a>
+                </div>
+                <button id="sidebar-cv-btn" class="h-8 px-2.5 flex items-center gap-1.5 border border-studio-700 bg-studio-800/60 hover:bg-studio-800 hover:border-accent text-studio-400 hover:text-accent font-mono text-[10px] uppercase tracking-wider transition-all hover-trigger" title="View & Download Curriculum Vitae">
+                    <i class="ph ph-file-text text-sm"></i>
+                    <span>CV</span>
+                </button>
             </div>
         </div>
     </aside>

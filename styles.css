@@ -1227,5 +1227,84 @@ body.light-mode .model-select-btn.active .model-badge {
     border-color: rgba(var(--accent) / 0.8);
 }
 
+/* ==========================================================================
+   DESKTOP SIDEBAR & PRECISION NAVIGATION STYLING
+   ========================================================================== */
+.sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--studio-700), 0.6) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+    background: rgba(var(--studio-700), 0.6);
+}
+
+.nav-link {
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-link:hover .nav-indicator {
+    height: 14px;
+    background-color: rgb(var(--accent));
+}
+
+.nav-link.active {
+    background-color: rgb(var(--studio-800) / 0.85);
+    border-color: rgb(var(--studio-700));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.nav-link.active .nav-indicator {
+    height: 18px !important;
+    width: 3px !important;
+    background-color: rgb(var(--accent)) !important;
+}
+
+.nav-link.active .nav-num {
+    color: rgb(var(--accent)) !important;
+}
+
+.nav-link.active .nav-text {
+    color: rgb(var(--studio-100)) !important;
+    font-weight: 700 !important;
+}
+
+/* Light Mode Overrides for Desktop Sidebar */
+html.light #desktop-sidebar,
+body.light-mode #desktop-sidebar {
+    background-color: rgba(247, 249, 252, 0.96) !important;
+    border-color: #e2e8f0 !important;
+}
+
+html.light .nav-link:not(.active):hover,
+body.light-mode .nav-link:not(.active):hover {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+html.light .nav-link.active,
+body.light-mode .nav-link.active {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light .nav-link.active .nav-text,
+body.light-mode .nav-link.active .nav-text {
+    color: #0f172a !important;
+}
+
+html.light .nav-link.active .nav-num,
+body.light-mode .nav-link.active .nav-num {
+    color: #d97706 !important;
+}
+
+
 
 

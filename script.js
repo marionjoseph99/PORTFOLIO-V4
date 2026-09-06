@@ -179,23 +179,23 @@ if(mainContent && sections && navLinks) {
             });
 
             navLinks.forEach(link => {
-                link.classList.remove('text-accent');
-                link.classList.add('text-studio-400');
-                if (current && link.getAttribute('href').includes(current)) {
+                const isMatch = Boolean(current && link.getAttribute('href') && link.getAttribute('href').includes(current));
+                link.classList.toggle('active', isMatch);
+                if (isMatch) {
                     link.classList.remove('text-studio-400');
                     link.classList.add('text-accent');
+                } else {
+                    link.classList.remove('text-accent');
+                    link.classList.add('text-studio-400');
                 }
             });
 
-            // Show/hide profile picture in sidebar based on scroll position
+            // Update sidebar indicator subtly on scroll without hiding profile
             if (sidebarProfile) {
-                // Once we scroll past ~400px (past the home section photo), fade in the small profile
-                if (mainContent.scrollTop > 400) {
-                    sidebarProfile.classList.remove('opacity-0', 'translate-x-[-20px]', 'pointer-events-none');
-                    sidebarProfile.classList.add('opacity-100', 'translate-x-0');
+                if (mainContent.scrollTop > 100) {
+                    sidebarProfile.classList.add('scrolled-masthead');
                 } else {
-                    sidebarProfile.classList.add('opacity-0', 'translate-x-[-20px]', 'pointer-events-none');
-                    sidebarProfile.classList.remove('opacity-100', 'translate-x-0');
+                    sidebarProfile.classList.remove('scrolled-masthead');
                 }
             }
 
@@ -1564,6 +1564,8 @@ function closeCvModal() {
 }
 
 if (cvModal) {
+    const sidebarCvBtn = document.getElementById('sidebar-cv-btn');
+    if (sidebarCvBtn) sidebarCvBtn.addEventListener('click', openCvModal);
     if (openCvBtn) openCvBtn.addEventListener('click', openCvModal);
     if (specsCvBtn) specsCvBtn.addEventListener('click', openCvModal);
     if (closeCvModalBtn) closeCvModalBtn.addEventListener('click', closeCvModal);
@@ -1775,15 +1777,15 @@ function initThemeManager() {
             themeSidebarText.textContent = isLight ? 'Light Mode' : 'Dark Mode';
         }
         if (themeSidebarBadge) {
-            themeSidebarBadge.textContent = isLight ? 'DRAFT' : 'CAD';
+            themeSidebarBadge.textContent = isLight ? 'LIGHT' : 'DARK';
         }
 
         // Update Mobile Menu button text & badge
         if (themeMenuText) {
-            themeMenuText.textContent = isLight ? 'Light Drafting' : 'Dark Blueprint';
+            themeMenuText.textContent = isLight ? 'Light Palette' : 'Dark Blueprint';
         }
         if (themeMenuBadge) {
-            themeMenuBadge.textContent = isLight ? 'DRAFT' : 'CAD';
+            themeMenuBadge.textContent = isLight ? 'LIGHT' : 'DARK';
         }
 
         // Update icons inside all toggle buttons smoothly without layout shifts
