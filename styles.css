@@ -1187,24 +1187,57 @@ body.light-mode .model-bento-row .text-studio-400,
     color: #64748b !important;
 }
 
-/* Model Selector Buttons in Light Mode */
+/* ==========================================================================
+   3D MODEL SELECTOR (Integrated HUD Bar - Refined Architectural Styling)
+   ========================================================================== */
+.model-select-btn {
+    height: 26px;
+    padding: 0 9px;
+    font-size: 10.5px;
+    font-family: var(--font-mono, monospace);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border: 1px solid rgba(var(--studio-700), 0.8);
+    background-color: rgba(var(--studio-800), 0.85);
+    color: rgb(var(--studio-300));
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    box-shadow: none !important;
+}
+
+/* Dark Mode Hover */
+.model-select-btn:not(.active):hover {
+    background-color: rgb(var(--studio-800)) !important;
+    border-color: rgba(var(--accent), 0.7) !important;
+    color: rgb(var(--accent)) !important;
+}
+
+/* Dark Mode Active */
+.model-select-btn.active {
+    background-color: rgb(var(--accent)) !important;
+    border-color: rgb(var(--accent)) !important;
+    color: rgb(var(--studio-900)) !important;
+    font-weight: 700 !important;
+}
+
+/* Light Mode Overrides for Model Selector */
 html.light .model-select-btn:not(.active),
 body.light-mode .model-select-btn:not(.active) {
     background-color: #ffffff !important;
-    border-color: #cbd5e1 !important;
-    color: #334155 !important;
+    border-color: #e2e8f0 !important;
+    color: #475569 !important;
 }
 
 html.light .model-select-btn:not(.active):hover,
 body.light-mode .model-select-btn:not(.active):hover {
+    background-color: #f8fafc !important;
     border-color: #d97706 !important;
     color: #d97706 !important;
-}
-
-html.light .model-select-btn:not(.active) .model-badge,
-body.light-mode .model-select-btn:not(.active) .model-badge {
-    background-color: #f1f5f9 !important;
-    color: #475569 !important;
 }
 
 html.light .model-select-btn.active,
@@ -1212,12 +1245,7 @@ body.light-mode .model-select-btn.active {
     background-color: #d97706 !important;
     border-color: #d97706 !important;
     color: #ffffff !important;
-}
-
-html.light .model-select-btn.active .model-badge,
-body.light-mode .model-select-btn.active .model-badge {
-    background-color: rgba(0, 0, 0, 0.2) !important;
-    color: #ffffff !important;
+    font-weight: 700 !important;
 }
 
 .model-camera-btn {

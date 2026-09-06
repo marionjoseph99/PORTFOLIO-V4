@@ -372,10 +372,14 @@ const projectData = {
         features: ["Aerodynamic Sail Canopies", "Departures / Arrivals Separation", "Passive Daylight Optimization", "High-Volume Concourse Flow"],
         desc: "A 147-hectare domestic airport proposal for Sangley Point, Cavite City that harmonizes passenger movement, structural sail canopies, and visual clarity. Inspired by traditional Filipino seafaring vessels ('Layag'), the aerodynamic roof profiles scoop indirect natural illumination into terminal departure halls while shading drop-off lanes. The interior layout enforces clear multi-level vertical circulation separating arrival passenger streams from departures check-in and gate boarding piers.",
         images: [
-            { src: "portfolio/airport/1.webp", alt: "Layag Airport - Main Terminal Exterior & Runway Perspective", plateTitle: "PLATE 01: Main Terminal Exterior & Runway Perspective" },
-            { src: "portfolio/airport/2.webp", alt: "Layag Airport - Roof Structural & Elevation Study", plateTitle: "PLATE 02: Roof Structural Geometry & Elevation Analysis" },
-            { src: "portfolio/airport/3.webp", alt: "Layag Airport - Terminal Approach & Circulation Concourse", plateTitle: "PLATE 03: Terminal Approach & Passenger Concourse" },
-            { src: "portfolio/airport/4.webp", alt: "Layag Airport - Passenger Departure Lounge Interior", plateTitle: "PLATE 04: Departure Lounge Interior & Gate Access" }
+            { src: "gallery/exterior/Airport Exterior.png", alt: "Layag Airport - Main Terminal Runway & Apron Perspective", plateTitle: "PLATE 01: Runway & Apron Perspective (Exterior)" },
+            { src: "gallery/exterior/Airport Exterior 1.png", alt: "Layag Airport - Main Terminal Facade & Approach", plateTitle: "PLATE 02: Main Terminal Facade (Exterior)" },
+            { src: "gallery/exterior/Airport Exterior2.jpg", alt: "Layag Airport - Sail Roof Canopy & Structural Framing", plateTitle: "PLATE 03: Roof Canopy & Structure (Exterior)" },
+            { src: "gallery/exterior/Airport Exterior 3.jpg", alt: "Layag Airport - Passenger Concourse & Drop-off Approach", plateTitle: "PLATE 04: Concourse & Drop-off Approach (Exterior)" },
+            { src: "portfolio/airport/1.webp", alt: "Layag Airport - Master Elevation Plate", plateTitle: "PLATE 05: Master Elevation & Section" },
+            { src: "portfolio/airport/2.webp", alt: "Layag Airport - Roof Structural Geometry Study", plateTitle: "PLATE 06: Structural Geometry & Sail Analysis" },
+            { src: "portfolio/airport/3.webp", alt: "Layag Airport - Terminal Concourse Circulation", plateTitle: "PLATE 07: Concourse Spatial Distribution" },
+            { src: "portfolio/airport/4.webp", alt: "Layag Airport - Passenger Departure Lounge Interior", plateTitle: "PLATE 08: Departure Lounge Interior & Gate Access" }
         ]
     },
     "amping": {
@@ -941,9 +945,9 @@ const vizSeeMoreText = document.getElementById('viz-see-more-text');
 const vizSeeMoreIcon = document.getElementById('viz-see-more-icon');
 
 const VIZ_LIMITS = {
-    all: 8,       // 2 full rows on desktop
-    exterior: 4,  // 1 full row on desktop (4 shown, 3 remaining)
-    interior: 8   // 2 full rows on desktop (8 shown, 8 remaining)
+    all: 12,      // 3 full rows on desktop
+    exterior: 12, // Show all exterior renders including all Layag Airport exterior plates
+    interior: 12  // 3 full rows on desktop
 };
 
 let currentVizFilter = 'all';
@@ -1939,6 +1943,26 @@ function initModelViewerControls() {
             target: 'auto auto auto',
             fov: '35deg'
         },
+        'domestic-airport': {
+            src: '3D%20Models/Domestic%20Airport.glb',
+            alt: 'Domestic Airport Terminal Architectural 3D Model',
+            title: 'DOMESTIC AIRPORT TERMINAL',
+            filename: 'DOMESTIC_AIRPORT.GLB',
+            size: '15.8 MB',
+            shaders: '82 SHADERS',
+            typology: 'Regional Aviation & Passenger Terminal',
+            typologyDesc: 'Domestic Air Terminal & Apron Facility',
+            pipeline: 'SketchUp & Blender',
+            pipelineDesc: 'Passenger Terminal Concourse & Airside Planning',
+            materials: 'White Stucco & Curtain Glazing',
+            materialsDesc: 'Oak Cladding, In-Situ Concrete, Granite Stack, Aluminium',
+            asset: '82 Materials / PBR',
+            assetDesc: 'Real-time glTF 2.0 Binary Format',
+            desc: 'Real-time interactive architectural viewport for the Domestic Airport. Freely orbit 360°, zoom, and inspect the passenger terminal concourse, white stucco facade envelope, aluminium accents, glass curtain walls, and airside pavement directly in your browser.',
+            orbit: '45deg 65deg auto',
+            target: 'auto auto auto',
+            fov: '35deg'
+        },
         'duplex': {
             src: '3D%20Models/Duplex.glb',
             alt: 'Duplex Residential Architectural 3D Model',
@@ -2027,22 +2051,7 @@ function initModelViewerControls() {
         // Update Button Styles
         modelSelectBtns.forEach(btn => {
             const isMatch = btn.getAttribute('data-model-id') === modelId;
-            const badge = btn.querySelector('.model-badge');
-            if (isMatch) {
-                btn.classList.add('active', 'bg-accent', 'text-studio-900', 'border-accent');
-                btn.classList.remove('bg-studio-800', 'text-studio-300', 'border-studio-700');
-                if (badge) {
-                    badge.classList.remove('bg-studio-900', 'text-studio-400');
-                    badge.classList.add('bg-studio-900/20', 'text-studio-900');
-                }
-            } else {
-                btn.classList.remove('active', 'bg-accent', 'text-studio-900', 'border-accent');
-                btn.classList.add('bg-studio-800', 'text-studio-300', 'border-studio-700');
-                if (badge) {
-                    badge.classList.remove('bg-studio-900/20', 'text-studio-900');
-                    badge.classList.add('bg-studio-900', 'text-studio-400');
-                }
-            }
+            btn.classList.toggle('active', isMatch);
         });
 
         // Show Preloader

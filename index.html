@@ -1494,53 +1494,36 @@
                     </p>
                 </div>
 
-                <!-- 3D Model Selector Buttons -->
-                <div class="mb-6 flex flex-wrap items-center gap-2.5 sm:gap-3 font-mono text-xs gs-reveal" id="model-selector-bar">
-                    <span class="text-studio-400 text-xs uppercase tracking-wider flex items-center gap-1.5 mr-1">
-                        <i class="ph ph-cube text-accent"></i> SELECT 3D MODEL:
-                    </span>
-                    <button class="model-select-btn active hover-trigger px-4 py-2.5 border border-accent bg-accent text-studio-900 font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-lg group" data-model-id="wellness">
-                        <i class="ph ph-buildings text-base"></i>
-                        <span>Wellness Center</span>
-                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900/20 text-studio-900 font-mono">16 MB</span>
-                    </button>
-                    <button class="model-select-btn hover-trigger px-4 py-2.5 border border-studio-700 bg-studio-800 text-studio-300 hover:text-accent hover:border-accent font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer group" data-model-id="event-place">
-                        <i class="ph ph-sparkle text-base"></i>
-                        <span>Event Place</span>
-                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400 font-mono">12.2 MB</span>
-                    </button>
-                    <button class="model-select-btn hover-trigger px-4 py-2.5 border border-studio-700 bg-studio-800 text-studio-300 hover:text-accent hover:border-accent font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer group" data-model-id="airport">
-                        <i class="ph ph-airplane-tilt text-base"></i>
-                        <span>Airport</span>
-                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400 font-mono">17.9 MB</span>
-                    </button>
-                    <button class="model-select-btn hover-trigger px-4 py-2.5 border border-studio-700 bg-studio-800 text-studio-300 hover:text-accent hover:border-accent font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer group" data-model-id="duplex">
-                        <i class="ph ph-house-line text-base"></i>
-                        <span>Duplex</span>
-                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400 font-mono">17.4 MB</span>
-                    </button>
-                    <button class="model-select-btn hover-trigger px-4 py-2.5 border border-studio-700 bg-studio-800 text-studio-300 hover:text-accent hover:border-accent font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer group" data-model-id="rowhouse">
-                        <i class="ph ph-squares-four text-base"></i>
-                        <span>Rowhouse</span>
-                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400 font-mono">16.1 MB</span>
-                    </button>
-                </div>
-
                 <!-- 3D Interactive Viewport Container -->
                 <div id="model-viewport-card" class="border border-studio-700 bg-studio-900 relative overflow-hidden shadow-2xl transition-all duration-300 gs-reveal">
                     
-                    <!-- HUD Top Bar -->
-                    <div class="model-hud-bar px-4 py-2.5 bg-studio-900/95 border-b border-studio-700 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-studio-400 z-10 relative">
-                        <div class="flex items-center gap-2.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
-                            <span class="text-accent font-bold tracking-wider">VIEWPORT 3D</span>
-                            <span class="text-studio-600 hidden sm:inline">|</span>
-                            <span id="model-hud-title" class="text-studio-300 font-bold hidden sm:inline">WELLNESS CENTER COMPLEX</span>
+                    <!-- HUD Top Bar with Integrated Model Switcher -->
+                    <div class="model-hud-bar px-3 sm:px-4 py-2 bg-studio-900/95 border-b border-studio-700 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-studio-400 z-10 relative">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block shrink-0"></span>
+                            <span class="text-accent font-bold tracking-wider uppercase text-[11px] sm:text-xs shrink-0">MODELS:</span>
+                            <span class="text-studio-600 hidden lg:inline">|</span>
+                            <span id="model-hud-title" class="text-studio-300 font-bold hidden xl:inline text-[11px] tracking-wide">WELLNESS CENTER COMPLEX</span>
                         </div>
-                        <div class="flex items-center gap-2 text-[10px] sm:text-xs">
-                            <span class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-accent font-semibold">GLB 2.0</span>
-                            <span id="model-hud-size" class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-300">16 MB</span>
-                            <span id="model-hud-shaders" class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-400 hidden sm:inline">84 SHADERS</span>
+                        <div class="flex flex-wrap items-center gap-1 sm:gap-1.5" id="model-selector-bar">
+                            <button class="model-select-btn active hover-trigger" data-model-id="wellness">
+                                Wellness Center
+                            </button>
+                            <button class="model-select-btn hover-trigger" data-model-id="event-place">
+                                Event Place
+                            </button>
+                            <button class="model-select-btn hover-trigger" data-model-id="airport">
+                                Airport
+                            </button>
+                            <button class="model-select-btn hover-trigger" data-model-id="domestic-airport">
+                                Domestic Airport
+                            </button>
+                            <button class="model-select-btn hover-trigger" data-model-id="duplex">
+                                Duplex
+                            </button>
+                            <button class="model-select-btn hover-trigger" data-model-id="rowhouse">
+                                Rowhouse
+                            </button>
                         </div>
                     </div>
 
