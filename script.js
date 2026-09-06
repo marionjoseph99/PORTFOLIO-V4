@@ -1807,8 +1807,10 @@ function initModelViewerControls() {
     const modelViewer = document.getElementById('wellness-model-viewer');
     if (!modelViewer) return;
 
+    // Elements
     const progressBar = document.getElementById('model-progress-bar');
     const progressPercent = document.getElementById('model-progress-percent');
+    const progressFilename = document.getElementById('model-progress-filename');
     const loadStatus = document.getElementById('model-load-status');
     const loaderPoster = document.getElementById('model-loader-poster');
     const rotateToggle = document.getElementById('model-rotate-toggle');
@@ -1822,6 +1824,86 @@ function initModelViewerControls() {
     const fullscreenIcon = document.getElementById('model-fullscreen-icon');
     const viewportCard = document.getElementById('model-viewport-card');
     const cameraBtns = document.querySelectorAll('.model-camera-btn');
+    const modelSelectBtns = document.querySelectorAll('.model-select-btn');
+
+    // Dynamic HUD & Specs Elements
+    const hudTitle = document.getElementById('model-hud-title');
+    const hudSize = document.getElementById('model-hud-size');
+    const hudShaders = document.getElementById('model-hud-shaders');
+    const sectionDesc = document.getElementById('model-section-desc');
+    const specTypology = document.getElementById('meta-spec-typology');
+    const specTypologyDesc = document.getElementById('meta-spec-typology-desc');
+    const specPipeline = document.getElementById('meta-spec-pipeline');
+    const specPipelineDesc = document.getElementById('meta-spec-pipeline-desc');
+    const specMaterials = document.getElementById('meta-spec-materials');
+    const specMaterialsDesc = document.getElementById('meta-spec-materials-desc');
+    const specAsset = document.getElementById('meta-spec-asset');
+    const specAssetDesc = document.getElementById('meta-spec-asset-desc');
+
+    const MODELS_DATA = {
+        'wellness': {
+            src: '3D%20Models/Wellness%20Center.glb',
+            alt: 'Wellness Center Architectural 3D Model',
+            title: 'WELLNESS CENTER COMPLEX',
+            filename: 'WELLNESS_CENTER.GLB',
+            size: '16 MB',
+            shaders: '84 SHADERS',
+            typology: 'Wellness & Therapy Center',
+            typologyDesc: 'Healthcare Community Complex',
+            pipeline: 'SketchUp & Blender',
+            pipelineDesc: 'Parametric Massing & Detailing',
+            materials: 'Red Cedar & Standing Seam',
+            materialsDesc: 'Zinc Sheeting, Low-E Glazing',
+            asset: '84 Materials / PBR',
+            assetDesc: 'Real-time glTF 2.0 Binary Format',
+            desc: 'Real-time interactive architectural viewport for the Wellness Center. Freely orbit 360°, zoom, and inspect architectural massing, cedar cladding, standing seam roofing, and structural canopies directly in your browser.',
+            orbit: '45deg 65deg auto',
+            target: 'auto auto auto',
+            fov: '35deg'
+        },
+        'event-place': {
+            src: '3D%20Models/event%20place.glb',
+            alt: 'Event Place Architectural 3D Model',
+            title: 'EVENT PLACE // CONTEMPORARY PAVILION',
+            filename: 'EVENT_PLACE.GLB',
+            size: '12.2 MB',
+            shaders: '37 SHADERS',
+            typology: 'Contemporary Event Pavilion',
+            typologyDesc: 'Banquet Hall & Social Gathering Venue',
+            pipeline: 'SketchUp & Blender',
+            pipelineDesc: 'Spatial Geometry & Ceiling Design',
+            materials: 'Polished Concrete & Oak',
+            materialsDesc: 'Western Red Cedar, Terrazzo, Glazing',
+            asset: '37 Materials / PBR',
+            assetDesc: 'Real-time glTF 2.0 Binary Format',
+            desc: 'Real-time interactive architectural viewport for the Event Place. Freely orbit 360°, zoom, and inspect the spacious banquet hall, polished concrete floorings, decorative ceiling stacks, and timber accents directly in your browser.',
+            orbit: '45deg 65deg auto',
+            target: 'auto auto auto',
+            fov: '38deg'
+        },
+        'airport': {
+            src: '3D%20Models/Airport.glb',
+            alt: 'Airport Terminal & Concourse Architectural 3D Model',
+            title: 'INTERNATIONAL AIRPORT COMPLEX',
+            filename: 'AIRPORT.GLB',
+            size: '14.5 MB',
+            shaders: '118 SHADERS',
+            typology: 'Aviation Infrastructure & Terminal',
+            typologyDesc: 'International Air Terminal & Passenger Concourse',
+            pipeline: 'SketchUp & Blender',
+            pipelineDesc: 'Large-Scale BIM & Curvilinear Roof Framing',
+            materials: 'Curtain Glazing & Metal Panels',
+            materialsDesc: 'Structural Steel, Aerodrome Pavement, Low-E Glass',
+            asset: '118 Materials / PBR',
+            assetDesc: 'Real-time glTF 2.0 Binary Format',
+            desc: 'Real-time interactive architectural viewport for the International Airport. Freely orbit 360°, zoom, and inspect terminal roof cantilevers, passenger concourses, structural trusses, and curtain wall glazing systems directly in your browser.',
+            orbit: '45deg 65deg auto',
+            target: 'auto auto auto',
+            fov: '35deg'
+        }
+    };
+
+    let currentModelId = 'wellness';
 
     // 1. Loading Progress Handler
     modelViewer.addEventListener('progress', (event) => {
@@ -1830,10 +1912,11 @@ function initModelViewerControls() {
         if (progressBar) progressBar.style.width = `${percent}%`;
         if (progressPercent) progressPercent.textContent = `${percent}%`;
         if (loadStatus) {
+            const currentData = MODELS_DATA[currentModelId] || MODELS_DATA['wellness'];
             if (percent < 40) {
-                loadStatus.textContent = 'STREAMING 3D ARCHITECTURAL ASSET...';
+                loadStatus.textContent = `STREAMING ${currentData.filename}...`;
             } else if (percent < 85) {
-                loadStatus.textContent = 'COMPILING 84 PBR MATERIALS...';
+                loadStatus.textContent = `COMPILING ${currentData.shaders}...`;
             } else if (percent < 100) {
                 loadStatus.textContent = 'FINALIZING BIM GEOMETRY...';
             } else {
@@ -1854,6 +1937,86 @@ function initModelViewerControls() {
                 }, 500);
             }
         }, 350);
+    });
+
+    // Function to switch active model
+    function switchModel(modelId) {
+        const data = MODELS_DATA[modelId];
+        if (!data || (modelId === currentModelId && modelViewer.src.includes(data.src))) return;
+
+        currentModelId = modelId;
+
+        // Update Button Styles
+        modelSelectBtns.forEach(btn => {
+            const isMatch = btn.getAttribute('data-model-id') === modelId;
+            const badge = btn.querySelector('.model-badge');
+            if (isMatch) {
+                btn.classList.add('active', 'bg-accent', 'text-studio-900', 'border-accent');
+                btn.classList.remove('bg-studio-800', 'text-studio-300', 'border-studio-700');
+                if (badge) {
+                    badge.classList.remove('bg-studio-900', 'text-studio-400');
+                    badge.classList.add('bg-studio-900/20', 'text-studio-900');
+                }
+            } else {
+                btn.classList.remove('active', 'bg-accent', 'text-studio-900', 'border-accent');
+                btn.classList.add('bg-studio-800', 'text-studio-300', 'border-studio-700');
+                if (badge) {
+                    badge.classList.remove('bg-studio-900/20', 'text-studio-900');
+                    badge.classList.add('bg-studio-900', 'text-studio-400');
+                }
+            }
+        });
+
+        // Show Preloader
+        if (loaderPoster) {
+            loaderPoster.style.display = 'flex';
+            loaderPoster.classList.remove('opacity-0', 'pointer-events-none');
+        }
+        if (progressBar) progressBar.style.width = '0%';
+        if (progressPercent) progressPercent.textContent = '0%';
+        if (progressFilename) progressFilename.textContent = data.filename;
+        if (loadStatus) loadStatus.textContent = `INITIALIZING ${data.filename}...`;
+
+        // Update HUD & Specs
+        if (hudTitle) hudTitle.textContent = data.title;
+        if (hudSize) hudSize.textContent = data.size;
+        if (hudShaders) hudShaders.textContent = data.shaders;
+        if (sectionDesc) sectionDesc.textContent = data.desc;
+
+        if (specTypology) specTypology.textContent = data.typology;
+        if (specTypologyDesc) specTypologyDesc.textContent = data.typologyDesc;
+        if (specPipeline) specPipeline.textContent = data.pipeline;
+        if (specPipelineDesc) specPipelineDesc.textContent = data.pipelineDesc;
+        if (specMaterials) specMaterials.textContent = data.materials;
+        if (specMaterialsDesc) specMaterialsDesc.textContent = data.materialsDesc;
+        if (specAsset) specAsset.textContent = data.asset;
+        if (specAssetDesc) specAssetDesc.textContent = data.assetDesc;
+
+        // Reset Camera Presets to Isometric
+        cameraBtns.forEach((b, idx) => {
+            if (idx === 0) {
+                b.classList.add('bg-accent', 'text-studio-900');
+                b.classList.remove('bg-studio-800', 'text-studio-300');
+            } else {
+                b.classList.remove('bg-accent', 'text-studio-900');
+                b.classList.add('bg-studio-800', 'text-studio-300');
+            }
+        });
+
+        // Update model-viewer
+        modelViewer.src = data.src;
+        modelViewer.alt = data.alt;
+        modelViewer.cameraOrbit = data.orbit;
+        modelViewer.cameraTarget = data.target;
+        modelViewer.fieldOfView = data.fov;
+    }
+
+    // Attach Model Selector Button Listeners
+    modelSelectBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modelId = btn.getAttribute('data-model-id');
+            if (modelId) switchModel(modelId);
+        });
     });
 
     // 2. Camera Preset Controls
@@ -1896,9 +2059,10 @@ function initModelViewerControls() {
     // 4. Reset Camera Viewport
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-            modelViewer.cameraOrbit = '45deg 65deg auto';
-            modelViewer.cameraTarget = 'auto auto auto';
-            modelViewer.fieldOfView = '35deg';
+            const currentData = MODELS_DATA[currentModelId] || MODELS_DATA['wellness'];
+            modelViewer.cameraOrbit = currentData.orbit;
+            modelViewer.cameraTarget = currentData.target;
+            modelViewer.fieldOfView = currentData.fov;
 
             // Reset active preset button to 3D Isometric
             cameraBtns.forEach((b, idx) => {
@@ -1961,7 +2125,6 @@ function initModelViewerControls() {
         document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
     }
 }
-
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initModelViewerControls);

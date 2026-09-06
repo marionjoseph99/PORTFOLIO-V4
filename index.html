@@ -2093,9 +2093,31 @@
                             [Interactive GLB]
                         </span>
                     </div>
-                    <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed border-l-2 border-accent pl-4 sm:pl-6">
+                    <p id="model-section-desc" class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed border-l-2 border-accent pl-4 sm:pl-6">
                         Real-time interactive architectural viewport for the Wellness Center. Freely orbit 360°, zoom, and inspect architectural massing, cedar cladding, standing seam roofing, and structural canopies directly in your browser.
                     </p>
+                </div>
+
+                <!-- 3D Model Selector Buttons -->
+                <div class="mb-6 flex flex-wrap items-center gap-2.5 sm:gap-3 font-mono text-xs gs-reveal" id="model-selector-bar">
+                    <span class="text-studio-400 text-xs uppercase tracking-wider flex items-center gap-1.5 mr-1">
+                        <i class="ph ph-cube text-accent"></i> SELECT 3D MODEL:
+                    </span>
+                    <button class="model-select-btn active hover-trigger px-4 py-2.5 border border-accent bg-accent text-studio-900 font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-lg group" data-model-id="wellness">
+                        <i class="ph ph-buildings text-base"></i>
+                        <span>Wellness Center</span>
+                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900/20 text-studio-900 font-mono">16 MB</span>
+                    </button>
+                    <button class="model-select-btn hover-trigger px-4 py-2.5 border border-studio-700 bg-studio-800 text-studio-300 hover:text-accent hover:border-accent font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer group" data-model-id="event-place">
+                        <i class="ph ph-sparkle text-base"></i>
+                        <span>Event Place</span>
+                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400 font-mono">12.2 MB</span>
+                    </button>
+                    <button class="model-select-btn hover-trigger px-4 py-2.5 border border-studio-700 bg-studio-800 text-studio-300 hover:text-accent hover:border-accent font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer group" data-model-id="airport">
+                        <i class="ph ph-airplane-tilt text-base"></i>
+                        <span>Airport</span>
+                        <span class="model-badge text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400 font-mono">14.5 MB</span>
+                    </button>
                 </div>
 
                 <!-- 3D Interactive Viewport Container -->
@@ -2107,12 +2129,12 @@
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
                             <span class="text-accent font-bold tracking-wider">VIEWPORT 3D</span>
                             <span class="text-studio-600 hidden sm:inline">|</span>
-                            <span class="text-studio-300 font-bold hidden sm:inline">WELLNESS CENTER COMPLEX</span>
+                            <span id="model-hud-title" class="text-studio-300 font-bold hidden sm:inline">WELLNESS CENTER COMPLEX</span>
                         </div>
                         <div class="flex items-center gap-2 text-[10px] sm:text-xs">
                             <span class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-accent font-semibold">GLB 2.0</span>
-                            <span class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-300">16 MB</span>
-                            <span class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-400 hidden sm:inline">84 SHADERS</span>
+                            <span id="model-hud-size" class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-300">16 MB</span>
+                            <span id="model-hud-shaders" class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-400 hidden sm:inline">84 SHADERS</span>
                         </div>
                     </div>
 
@@ -2168,7 +2190,7 @@
                                     <div id="model-progress-bar" class="h-full bg-accent w-0 transition-all duration-200 ease-out"></div>
                                 </div>
                                 <div class="flex justify-between w-56 sm:w-72 text-[10px] text-studio-400">
-                                    <span>WELLNESS_CENTER.GLB</span>
+                                    <span id="model-progress-filename">WELLNESS_CENTER.GLB</span>
                                     <span id="model-progress-percent" class="text-accent font-bold">0%</span>
                                 </div>
                             </div>
@@ -2237,23 +2259,23 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 border-t border-studio-700 divide-y md:divide-y-0 divide-x-0 md:divide-x divide-studio-700 bg-studio-950/80 font-mono">
                         <div class="p-3.5 sm:p-4">
                             <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">01. Typology</div>
-                            <div class="text-xs sm:text-sm font-bold text-studio-100">Wellness &amp; Therapy Center</div>
-                            <div class="text-[10px] text-studio-400 mt-0.5">Healthcare Community Complex</div>
+                            <div id="meta-spec-typology" class="text-xs sm:text-sm font-bold text-studio-100">Wellness &amp; Therapy Center</div>
+                            <div id="meta-spec-typology-desc" class="text-[10px] text-studio-400 mt-0.5">Healthcare Community Complex</div>
                         </div>
                         <div class="p-3.5 sm:p-4">
                             <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">02. Modeling Pipeline</div>
-                            <div class="text-xs sm:text-sm font-bold text-studio-100">SketchUp &amp; Blender</div>
-                            <div class="text-[10px] text-studio-400 mt-0.5">Parametric Massing &amp; Detailing</div>
+                            <div id="meta-spec-pipeline" class="text-xs sm:text-sm font-bold text-studio-100">SketchUp &amp; Blender</div>
+                            <div id="meta-spec-pipeline-desc" class="text-[10px] text-studio-400 mt-0.5">Parametric Massing &amp; Detailing</div>
                         </div>
                         <div class="p-3.5 sm:p-4 border-t md:border-t-0">
                             <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">03. Material Palette</div>
-                            <div class="text-xs sm:text-sm font-bold text-studio-100">Red Cedar &amp; Standing Seam</div>
-                            <div class="text-[10px] text-studio-400 mt-0.5">Zinc Sheeting, Low-E Glazing</div>
+                            <div id="meta-spec-materials" class="text-xs sm:text-sm font-bold text-studio-100">Red Cedar &amp; Standing Seam</div>
+                            <div id="meta-spec-materials-desc" class="text-[10px] text-studio-400 mt-0.5">Zinc Sheeting, Low-E Glazing</div>
                         </div>
                         <div class="p-3.5 sm:p-4 border-t md:border-t-0">
                             <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">04. Asset Specs</div>
-                            <div class="text-xs sm:text-sm font-bold text-studio-100">84 Materials / PBR</div>
-                            <div class="text-[10px] text-studio-400 mt-0.5">Real-time glTF 2.0 Binary Format</div>
+                            <div id="meta-spec-asset" class="text-xs sm:text-sm font-bold text-studio-100">84 Materials / PBR</div>
+                            <div id="meta-spec-asset-desc" class="text-[10px] text-studio-400 mt-0.5">Real-time glTF 2.0 Binary Format</div>
                         </div>
                     </div>
 
