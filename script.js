@@ -1801,3 +1801,170 @@ if (document.readyState === 'loading') {
 } else {
     initThemeManager();
 }
+
+// --- 05. Interactive 3D Model Viewport Logic ---
+function initModelViewerControls() {
+    const modelViewer = document.getElementById('wellness-model-viewer');
+    if (!modelViewer) return;
+
+    const progressBar = document.getElementById('model-progress-bar');
+    const progressPercent = document.getElementById('model-progress-percent');
+    const loadStatus = document.getElementById('model-load-status');
+    const loaderPoster = document.getElementById('model-loader-poster');
+    const rotateToggle = document.getElementById('model-rotate-toggle');
+    const rotateIcon = document.getElementById('model-rotate-icon');
+    const rotateText = document.getElementById('model-rotate-text');
+    const resetBtn = document.getElementById('model-reset-btn');
+    const lightBtn = document.getElementById('model-light-btn');
+    const lightIcon = document.getElementById('model-light-icon');
+    const lightText = document.getElementById('model-light-text');
+    const fullscreenBtn = document.getElementById('model-fullscreen-btn');
+    const fullscreenIcon = document.getElementById('model-fullscreen-icon');
+    const viewportCard = document.getElementById('model-viewport-card');
+    const cameraBtns = document.querySelectorAll('.model-camera-btn');
+
+    // 1. Loading Progress Handler
+    modelViewer.addEventListener('progress', (event) => {
+        const progress = Math.min(Math.max(event.detail.totalProgress || 0, 0), 1);
+        const percent = Math.round(progress * 100);
+        if (progressBar) progressBar.style.width = `${percent}%`;
+        if (progressPercent) progressPercent.textContent = `${percent}%`;
+        if (loadStatus) {
+            if (percent < 40) {
+                loadStatus.textContent = 'STREAMING 3D ARCHITECTURAL ASSET...';
+            } else if (percent < 85) {
+                loadStatus.textContent = 'COMPILING 84 PBR MATERIALS...';
+            } else if (percent < 100) {
+                loadStatus.textContent = 'FINALIZING BIM GEOMETRY...';
+            } else {
+                loadStatus.textContent = 'READY FOR 3D INSPECTION';
+            }
+        }
+    });
+
+    modelViewer.addEventListener('load', () => {
+        if (progressBar) progressBar.style.width = '100%';
+        if (progressPercent) progressPercent.textContent = '100%';
+        if (loadStatus) loadStatus.textContent = 'VIEWPORT ONLINE';
+        setTimeout(() => {
+            if (loaderPoster) {
+                loaderPoster.classList.add('opacity-0', 'pointer-events-none', 'transition-opacity', 'duration-500');
+                setTimeout(() => {
+                    loaderPoster.style.display = 'none';
+                }, 500);
+            }
+        }, 350);
+    });
+
+    // 2. Camera Preset Controls
+    cameraBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const orbit = btn.getAttribute('data-orbit');
+            const fov = btn.getAttribute('data-fov');
+            if (orbit) modelViewer.cameraOrbit = orbit;
+            if (fov) modelViewer.fieldOfView = fov;
+
+            cameraBtns.forEach(b => {
+                b.classList.remove('bg-accent', 'text-studio-900');
+                b.classList.add('bg-studio-800', 'text-studio-300');
+            });
+            btn.classList.add('bg-accent', 'text-studio-900');
+            btn.classList.remove('bg-studio-800', 'text-studio-300');
+        });
+    });
+
+    // 3. Auto-Rotate Turntable Toggle
+    let isRotating = true;
+    if (rotateToggle) {
+        rotateToggle.addEventListener('click', () => {
+            isRotating = !isRotating;
+            modelViewer.autoRotate = isRotating;
+            if (isRotating) {
+                if (rotateIcon) rotateIcon.className = 'ph ph-arrows-clockwise text-sm text-accent';
+                if (rotateText) rotateText.textContent = 'Rotation: On';
+                rotateToggle.classList.remove('border-studio-700');
+                rotateToggle.classList.add('border-accent');
+            } else {
+                if (rotateIcon) rotateIcon.className = 'ph ph-pause text-sm text-studio-400';
+                if (rotateText) rotateText.textContent = 'Rotation: Paused';
+                rotateToggle.classList.add('border-studio-700');
+                rotateToggle.classList.remove('border-accent');
+            }
+        });
+    }
+
+    // 4. Reset Camera Viewport
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            modelViewer.cameraOrbit = '45deg 65deg auto';
+            modelViewer.cameraTarget = 'auto auto auto';
+            modelViewer.fieldOfView = '35deg';
+
+            // Reset active preset button to 3D Isometric
+            cameraBtns.forEach((b, idx) => {
+                if (idx === 0) {
+                    b.classList.add('bg-accent', 'text-studio-900');
+                    b.classList.remove('bg-studio-800', 'text-studio-300');
+                } else {
+                    b.classList.remove('bg-accent', 'text-studio-900');
+                    b.classList.add('bg-studio-800', 'text-studio-300');
+                }
+            });
+        });
+    }
+
+    // 5. Lighting Mode Toggle (Studio vs Neutral Daylight)
+    let isStudioLight = true;
+    if (lightBtn) {
+        lightBtn.addEventListener('click', () => {
+            isStudioLight = !isStudioLight;
+            if (isStudioLight) {
+                modelViewer.exposure = 1.0;
+                modelViewer.shadowIntensity = 1.4;
+                if (lightIcon) lightIcon.className = 'ph ph-sun text-sm text-accent';
+                if (lightText) lightText.textContent = 'Studio';
+            } else {
+                modelViewer.exposure = 1.35;
+                modelViewer.shadowIntensity = 0.8;
+                if (lightIcon) lightIcon.className = 'ph ph-sun-dim text-sm text-studio-300';
+                if (lightText) lightText.textContent = 'Daylight';
+            }
+        });
+    }
+
+    // 6. Fullscreen Viewport Mode
+    if (fullscreenBtn && viewportCard) {
+        const updateFullscreenUI = () => {
+            const isFull = document.fullscreenElement === viewportCard || document.webkitFullscreenElement === viewportCard;
+            if (fullscreenIcon) {
+                fullscreenIcon.className = isFull ? 'ph ph-corners-in text-accent' : 'ph ph-corners-out';
+            }
+        };
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (viewportCard.requestFullscreen) {
+                    viewportCard.requestFullscreen().catch(() => {});
+                } else if (viewportCard.webkitRequestFullscreen) {
+                    viewportCard.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+        });
+
+        document.addEventListener('fullscreenchange', updateFullscreenUI);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+    }
+}
+
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initModelViewerControls);
+} else {
+    initModelViewerControls();
+}

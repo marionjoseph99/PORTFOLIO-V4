@@ -50,6 +50,9 @@
 
     <!-- html2canvas for High-Resolution A4 PNG Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Google model-viewer for Real-Time 3D GLB Rendering -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
 
     <script>
         tailwind.config = {
@@ -141,8 +144,9 @@
         <a href="#specs" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">02. Specs</a>
         <a href="#services" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">03. Services</a>
         <a href="#visualization" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">04. 3D Viz</a>
-        <a href="#gallery" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">05. Extra Gallery</a>
-        <a href="#contact" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">06. Contact</a>
+        <a href="#model-3d" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">05. 3D Model</a>
+        <a href="#gallery" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">06. Extra Gallery</a>
+        <a href="#contact" class="font-mono text-xl sm:text-2xl uppercase tracking-widest hover:text-accent mobile-link">07. Contact</a>
         
         <!-- Mobile Menu Theme Switch Row & Socials -->
         <div class="mt-4 pt-6 border-t border-studio-700 w-full max-w-xs flex flex-col items-center gap-4">
@@ -211,11 +215,14 @@
                 <a href="#visualization" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
                     <span class="text-xs opacity-50">04</span> 3D Viz
                 </a>
+                <a href="#model-3d" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
+                    <span class="text-xs opacity-50">05</span> 3D Model
+                </a>
                 <a href="#gallery" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">05</span> Extra Gallery
+                    <span class="text-xs opacity-50">06</span> Extra Gallery
                 </a>
                 <a href="#contact" class="nav-link hover-trigger flex items-center gap-4 text-studio-400 hover:text-accent transition-colors">
-                    <span class="text-xs opacity-50">06</span> Contact
+                    <span class="text-xs opacity-50">07</span> Contact
                 </a>
             </nav>
         </div>
@@ -2068,7 +2075,193 @@
                 </div>
             </div>
         </section>
-        <!-- 05. Extra Gallery Section (Outside Architecture) -->
+
+        <!-- 05. 3D Model Showcase Section (Interactive GLB) -->
+        <section id="model-3d" class="min-h-screen p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700">
+            <div class="max-w-7xl mx-auto">
+                <!-- Section Header -->
+                <div class="mb-8 sm:mb-12 gs-reveal">
+                    <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
+                        <span class="w-8 sm:w-12 h-px bg-accent"></span> [BIM &amp; 3D GEOMETRY // REAL-TIME VIEWPORT]
+                    </div>
+                    <div class="flex flex-wrap items-baseline gap-3 sm:gap-5 mb-4">
+                        <span class="font-mono font-bold text-2xl sm:text-4xl md:text-5xl text-accent">05</span>
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
+                            3D MODEL SHOWCASE
+                        </h2>
+                        <span class="text-xs sm:text-sm font-mono text-studio-400 uppercase tracking-widest">
+                            [Interactive GLB]
+                        </span>
+                    </div>
+                    <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed border-l-2 border-accent pl-4 sm:pl-6">
+                        Real-time interactive architectural viewport for the Wellness Center. Freely orbit 360°, zoom, and inspect architectural massing, cedar cladding, standing seam roofing, and structural canopies directly in your browser.
+                    </p>
+                </div>
+
+                <!-- 3D Interactive Viewport Container -->
+                <div id="model-viewport-card" class="border border-studio-700 bg-studio-900 relative overflow-hidden shadow-2xl transition-all duration-300 gs-reveal">
+                    
+                    <!-- HUD Top Bar -->
+                    <div class="px-4 py-2.5 bg-studio-950/95 border-b border-studio-700 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-studio-400 z-10 relative">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
+                            <span class="text-accent font-bold tracking-wider">VIEWPORT 3D</span>
+                            <span class="text-studio-600 hidden sm:inline">|</span>
+                            <span class="text-studio-300 font-bold hidden sm:inline">WELLNESS CENTER COMPLEX</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] sm:text-xs">
+                            <span class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-accent font-semibold">GLB 2.0</span>
+                            <span class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-300">16 MB</span>
+                            <span class="px-2 py-0.5 bg-studio-800 border border-studio-700 text-studio-400 hidden sm:inline">84 SHADERS</span>
+                        </div>
+                    </div>
+
+                    <!-- Viewport Canvas Area -->
+                    <div id="model-canvas-wrapper" class="relative w-full h-[480px] sm:h-[580px] md:h-[660px] bg-studio-950 flex items-center justify-center overflow-hidden">
+                        
+                        <!-- Crosshair Corner CAD Accents -->
+                        <div class="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-accent/60 pointer-events-none z-10"></div>
+                        <div class="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-accent/60 pointer-events-none z-10"></div>
+                        <div class="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-accent/60 pointer-events-none z-10"></div>
+                        <div class="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-accent/60 pointer-events-none z-10"></div>
+
+                        <!-- Technical Grid Overlay (subtle background) -->
+                        <div class="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:24px_24px] opacity-25 pointer-events-none"></div>
+
+                        <!-- model-viewer Element -->
+                        <model-viewer
+                            id="wellness-model-viewer"
+                            src="3D%20Models/Wellness%20Center.glb"
+                            alt="Wellness Center Architectural 3D Model"
+                            camera-controls
+                            touch-action="pan-y"
+                            auto-rotate
+                            auto-rotate-delay="2500"
+                            rotation-per-second="14deg"
+                            camera-orbit="45deg 65deg auto"
+                            camera-target="auto auto auto"
+                            field-of-view="35deg"
+                            min-camera-orbit="auto auto 5%"
+                            max-camera-orbit="auto auto 300%"
+                            shadow-intensity="1.4"
+                            shadow-softness="0.7"
+                            exposure="1.0"
+                            environment-image="neutral"
+                            interaction-prompt="auto"
+                            interaction-prompt-threshold="1500"
+                            class="w-full h-full cursor-grab active:cursor-grabbing">
+
+                            <!-- Custom CAD Blueprint Poster / Preloader Slot -->
+                            <div slot="poster" id="model-loader-poster" class="absolute inset-0 bg-studio-950 flex flex-col items-center justify-center p-6 font-mono text-center z-20">
+                                <div class="w-14 h-14 border border-accent/40 bg-studio-900 flex items-center justify-center mb-4 relative">
+                                    <i class="ph ph-cube text-2xl text-accent animate-spin" style="animation-duration: 4s;"></i>
+                                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-accent"></div>
+                                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-accent"></div>
+                                </div>
+                                <div class="text-xs sm:text-sm font-bold text-studio-100 uppercase tracking-widest mb-1">
+                                    STREAMING 3D ARCHITECTURAL ASSET
+                                </div>
+                                <div class="text-[11px] text-accent tracking-wider mb-4" id="model-load-status">
+                                    INITIALIZING GEOMETRY &amp; MATERIALS...
+                                </div>
+                                <div class="w-56 sm:w-72 bg-studio-900 border border-studio-700 h-2 p-0.5 overflow-hidden mb-2">
+                                    <div id="model-progress-bar" class="h-full bg-accent w-0 transition-all duration-200 ease-out"></div>
+                                </div>
+                                <div class="flex justify-between w-56 sm:w-72 text-[10px] text-studio-400">
+                                    <span>WELLNESS_CENTER.GLB</span>
+                                    <span id="model-progress-percent" class="text-accent font-bold">0%</span>
+                                </div>
+                            </div>
+                        </model-viewer>
+
+                        <!-- Floating Camera Presets Bar (Top Left) -->
+                        <div class="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-1.5 font-mono text-[10px] sm:text-xs bg-studio-950/90 backdrop-blur-md p-1.5 border border-studio-700 shadow-xl max-w-[calc(100%-2rem)]">
+                            <span class="text-studio-400 px-1.5 hidden sm:inline text-[9px] uppercase tracking-wider">PRESET:</span>
+                            <button class="model-camera-btn active px-2.5 py-1 bg-accent text-studio-900 font-bold uppercase transition-all hover-trigger" data-orbit="45deg 65deg auto" data-fov="35deg">
+                                3D Isometric
+                            </button>
+                            <button class="model-camera-btn px-2.5 py-1 bg-studio-800 text-studio-300 hover:text-accent font-bold uppercase transition-all hover-trigger" data-orbit="0deg 82deg auto" data-fov="32deg">
+                                Front Facade
+                            </button>
+                            <button class="model-camera-btn px-2.5 py-1 bg-studio-800 text-studio-300 hover:text-accent font-bold uppercase transition-all hover-trigger" data-orbit="90deg 82deg auto" data-fov="32deg">
+                                Side Elevation
+                            </button>
+                            <button class="model-camera-btn px-2.5 py-1 bg-studio-800 text-studio-300 hover:text-accent font-bold uppercase transition-all hover-trigger hidden xs:inline-block" data-orbit="0deg 12deg auto" data-fov="40deg">
+                                Roof Plan
+                            </button>
+                        </div>
+
+                        <!-- Floating Viewport Action Tools (Top Right) -->
+                        <div class="absolute top-4 right-4 z-20 flex items-center gap-1.5 font-mono text-xs bg-studio-950/90 backdrop-blur-md p-1.5 border border-studio-700 shadow-xl">
+                            <!-- Turntable Toggle -->
+                            <button id="model-rotate-toggle" class="hover-trigger flex items-center gap-1.5 px-2.5 py-1 bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 transition-all text-[10px] sm:text-xs" title="Toggle Auto-Rotation">
+                                <i id="model-rotate-icon" class="ph ph-arrows-clockwise text-sm text-accent"></i>
+                                <span id="model-rotate-text" class="hidden md:inline">Rotation: On</span>
+                            </button>
+                            <!-- Reset Camera -->
+                            <button id="model-reset-btn" class="hover-trigger p-1.5 sm:px-2.5 sm:py-1 bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 transition-all text-[10px] sm:text-xs flex items-center gap-1" title="Reset Camera View">
+                                <i class="ph ph-arrows-out-line-horizontal text-sm"></i>
+                                <span class="hidden md:inline">Reset</span>
+                            </button>
+                            <!-- Lighting Mode Toggle -->
+                            <button id="model-light-btn" class="hover-trigger p-1.5 sm:px-2.5 sm:py-1 bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 transition-all text-[10px] sm:text-xs flex items-center gap-1" title="Toggle Studio / Daylight Lighting">
+                                <i id="model-light-icon" class="ph ph-sun text-sm text-accent"></i>
+                                <span id="model-light-text" class="hidden md:inline">Studio</span>
+                            </button>
+                            <!-- Fullscreen Viewport -->
+                            <button id="model-fullscreen-btn" class="hover-trigger p-1.5 sm:px-2 sm:py-1 bg-studio-800 hover:bg-studio-700 text-studio-200 hover:text-accent border border-studio-700 transition-all text-sm" title="Toggle Fullscreen Viewport">
+                                <i id="model-fullscreen-icon" class="ph ph-corners-out"></i>
+                            </button>
+                        </div>
+
+                        <!-- Floating Interaction Helper Legend (Bottom Center) -->
+                        <div class="absolute bottom-4 inset-x-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 z-20 pointer-events-none">
+                            <div class="bg-studio-950/85 backdrop-blur-md border border-studio-700/80 px-4 py-1.5 text-center font-mono text-[10px] sm:text-[11px] text-studio-300 flex items-center justify-center gap-3 sm:gap-4 shadow-lg">
+                                <span class="flex items-center gap-1.5 text-accent">
+                                    <i class="ph ph-cursor-click"></i> <span class="hidden sm:inline">Left-Click</span> Drag: Orbit 360°
+                                </span>
+                                <span class="text-studio-600">•</span>
+                                <span class="flex items-center gap-1.5">
+                                    <i class="ph ph-arrows-out-cardinal text-accent"></i> Right-Click: Pan
+                                </span>
+                                <span class="text-studio-600 hidden sm:inline">•</span>
+                                <span class="hidden sm:flex items-center gap-1.5">
+                                    <i class="ph ph-magnifying-glass text-accent"></i> Scroll: Zoom
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Technical Metadata Bento Row -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 border-t border-studio-700 divide-y md:divide-y-0 divide-x-0 md:divide-x divide-studio-700 bg-studio-950/80 font-mono">
+                        <div class="p-3.5 sm:p-4">
+                            <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">01. Typology</div>
+                            <div class="text-xs sm:text-sm font-bold text-studio-100">Wellness &amp; Therapy Center</div>
+                            <div class="text-[10px] text-studio-400 mt-0.5">Healthcare Community Complex</div>
+                        </div>
+                        <div class="p-3.5 sm:p-4">
+                            <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">02. Modeling Pipeline</div>
+                            <div class="text-xs sm:text-sm font-bold text-studio-100">SketchUp &amp; Blender</div>
+                            <div class="text-[10px] text-studio-400 mt-0.5">Parametric Massing &amp; Detailing</div>
+                        </div>
+                        <div class="p-3.5 sm:p-4 border-t md:border-t-0">
+                            <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">03. Material Palette</div>
+                            <div class="text-xs sm:text-sm font-bold text-studio-100">Red Cedar &amp; Standing Seam</div>
+                            <div class="text-[10px] text-studio-400 mt-0.5">Zinc Sheeting, Low-E Glazing</div>
+                        </div>
+                        <div class="p-3.5 sm:p-4 border-t md:border-t-0">
+                            <div class="text-[9px] sm:text-[10px] text-accent uppercase tracking-wider mb-1">04. Asset Specs</div>
+                            <div class="text-xs sm:text-sm font-bold text-studio-100">84 Materials / PBR</div>
+                            <div class="text-[10px] text-studio-400 mt-0.5">Real-time glTF 2.0 Binary Format</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 06. Extra Gallery Section (Outside Architecture) -->
         <section id="gallery" class="min-h-screen p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-6 sm:mb-8 gs-reveal">
@@ -2076,7 +2269,7 @@
                         <span class="w-8 sm:w-12 h-px bg-accent"></span> [CREATIVE DISCIPLINE // BEYOND ARCHITECTURE]
                     </div>
                     <div class="flex flex-wrap items-baseline gap-3 sm:gap-4 mb-3 sm:mb-4">
-                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">05</span>
+                        <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">06</span>
                         <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
                             EXTRA GALLERY
                         </h2>
@@ -2321,7 +2514,7 @@
             </div>
         </section>
 
-        <!-- 06. Contact Section -->
+        <!-- 07. Contact Section -->
         <section id="contact" class="min-h-[75vh] p-5 sm:p-8 md:p-14 lg:p-20 border-t border-studio-700 flex flex-col justify-center">
             <div class="max-w-7xl mx-auto w-full">
                 <div class="max-w-4xl gs-reveal">
@@ -2330,7 +2523,7 @@
                             <span class="w-8 sm:w-12 h-px bg-accent"></span> [INITIALIZE COMMUNICATION]
                         </div>
                         <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                            <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">06</span>
+                            <span class="font-mono font-bold text-lg sm:text-2xl md:text-3xl text-accent">07</span>
                             <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-studio-100 uppercase font-sans">
                                 CONTACT
                             </h2>
