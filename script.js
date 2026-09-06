@@ -1074,7 +1074,7 @@ if (vizSeeMoreBtn) {
         if (isCurrentlyExpanded) {
             vizExpandedState[currentVizFilter] = false;
             filterViz(currentVizFilter);
-            const vizSection = document.getElementById('visualizations');
+            const vizSection = document.getElementById('visualization') || document.getElementById('visualizations');
             if (vizSection) {
                 vizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
@@ -1084,6 +1084,28 @@ if (vizSeeMoreBtn) {
         }
     });
 }
+
+function updateVizFilterCounts() {
+    if (!vizItemsList || vizItemsList.length === 0) return;
+    const totalAll = vizItemsList.length;
+    let totalExt = 0;
+    let totalInt = 0;
+    vizItemsList.forEach(item => {
+        const cat = item.getAttribute('data-viz-cat') || '';
+        if (cat.includes('exterior')) totalExt++;
+        if (cat.includes('interior')) totalInt++;
+    });
+    vizFilterBtns.forEach(btn => {
+        const f = btn.getAttribute('data-viz-filter');
+        const badge = btn.querySelector('.filter-count');
+        if (badge) {
+            if (f === 'all') badge.textContent = totalAll;
+            else if (f === 'exterior') badge.textContent = totalExt;
+            else if (f === 'interior') badge.textContent = totalInt;
+        }
+    });
+}
+updateVizFilterCounts();
 
 // Initial 3D visualization filtering setup
 filterViz('all');
@@ -1900,7 +1922,7 @@ function initModelViewerControls() {
             alt: 'Airport Terminal & Concourse Architectural 3D Model',
             title: 'INTERNATIONAL AIRPORT COMPLEX',
             filename: 'AIRPORT.GLB',
-            size: '14.5 MB',
+            size: '17.9 MB',
             shaders: '118 SHADERS',
             typology: 'Aviation Infrastructure & Terminal',
             typologyDesc: 'International Air Terminal & Passenger Concourse',
@@ -1911,6 +1933,46 @@ function initModelViewerControls() {
             asset: '118 Materials / PBR',
             assetDesc: 'Real-time glTF 2.0 Binary Format',
             desc: 'Real-time interactive architectural viewport for the International Airport. Freely orbit 360°, zoom, and inspect terminal roof cantilevers, passenger concourses, structural trusses, and curtain wall glazing systems directly in your browser.',
+            orbit: '45deg 65deg auto',
+            target: 'auto auto auto',
+            fov: '35deg'
+        },
+        'duplex': {
+            src: '3D%20Models/Duplex.glb',
+            alt: 'Duplex Residential Architectural 3D Model',
+            title: 'CONTEMPORARY DUPLEX RESIDENCE',
+            filename: 'DUPLEX.GLB',
+            size: '17.4 MB',
+            shaders: '29 SHADERS',
+            typology: 'Residential Twin-Unit Duplex',
+            typologyDesc: 'Two-Family Contemporary Residence',
+            pipeline: 'SketchUp & Blender',
+            pipelineDesc: 'Twin-Unit Massing & Spatial Planning',
+            materials: 'Western Red Cedar & Marble',
+            materialsDesc: 'Zinc Cladding, Carrera Marble, Dark Metal',
+            asset: '29 Materials / PBR',
+            assetDesc: 'Real-time glTF 2.0 Binary Format',
+            desc: 'Real-time interactive architectural viewport for the Contemporary Duplex. Freely orbit 360°, zoom, and inspect twin-unit spatial layouts, cedar vertical siding, standing seam metal accents, and Carrera marble detailing directly in your browser.',
+            orbit: '45deg 65deg auto',
+            target: 'auto auto auto',
+            fov: '35deg'
+        },
+        'rowhouse': {
+            src: '3D%20Models/Rowhouse.glb',
+            alt: 'Sustainable Solar Rowhouse Architectural 3D Model',
+            title: 'SOLAR SUSTAINABLE ROWHOUSE',
+            filename: 'ROWHOUSE.GLB',
+            size: '16.1 MB',
+            shaders: '17 SHADERS',
+            typology: 'Sustainable Urban Rowhouse',
+            typologyDesc: 'High-Density Solar Townhouse Unit',
+            pipeline: 'SketchUp & Blender',
+            pipelineDesc: 'Modular High-Density Unit & PV Array',
+            materials: 'Standing Seam Red & PV Panels',
+            materialsDesc: 'Monocrystalline Solar, Polished Concrete, Timber',
+            asset: '17 Materials / PBR',
+            assetDesc: 'Real-time glTF 2.0 Binary Format',
+            desc: 'Real-time interactive architectural viewport for the Solar Sustainable Rowhouse. Freely orbit 360°, zoom, and inspect the rooftop photovoltaic solar panel array, standing seam red metal roof, timber finishes, and modular envelope directly in your browser.',
             orbit: '45deg 65deg auto',
             target: 'auto auto auto',
             fov: '35deg'
@@ -2009,10 +2071,10 @@ function initModelViewerControls() {
         // Reset Camera Presets to Isometric
         cameraBtns.forEach((b, idx) => {
             if (idx === 0) {
-                b.classList.add('bg-accent', 'text-studio-900');
+                b.classList.add('active', 'bg-accent', 'text-studio-900');
                 b.classList.remove('bg-studio-800', 'text-studio-300');
             } else {
-                b.classList.remove('bg-accent', 'text-studio-900');
+                b.classList.remove('active', 'bg-accent', 'text-studio-900');
                 b.classList.add('bg-studio-800', 'text-studio-300');
             }
         });
@@ -2042,10 +2104,10 @@ function initModelViewerControls() {
             if (fov) modelViewer.fieldOfView = fov;
 
             cameraBtns.forEach(b => {
-                b.classList.remove('bg-accent', 'text-studio-900');
+                b.classList.remove('active', 'bg-accent', 'text-studio-900');
                 b.classList.add('bg-studio-800', 'text-studio-300');
             });
-            btn.classList.add('bg-accent', 'text-studio-900');
+            btn.classList.add('active', 'bg-accent', 'text-studio-900');
             btn.classList.remove('bg-studio-800', 'text-studio-300');
         });
     });
@@ -2081,10 +2143,10 @@ function initModelViewerControls() {
             // Reset active preset button to 3D Isometric
             cameraBtns.forEach((b, idx) => {
                 if (idx === 0) {
-                    b.classList.add('bg-accent', 'text-studio-900');
+                    b.classList.add('active', 'bg-accent', 'text-studio-900');
                     b.classList.remove('bg-studio-800', 'text-studio-300');
                 } else {
-                    b.classList.remove('bg-accent', 'text-studio-900');
+                    b.classList.remove('active', 'bg-accent', 'text-studio-900');
                     b.classList.add('bg-studio-800', 'text-studio-300');
                 }
             });
