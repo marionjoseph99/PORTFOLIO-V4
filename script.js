@@ -268,26 +268,76 @@ function initDistanceRuler() {
     const distanceFill = document.getElementById('distanceFill');
     const distanceMarker = document.getElementById('distanceMarker');
     const distanceValue = document.getElementById('distanceValue');
+    const ruler = document.getElementById('distanceRuler');
+    const track = ruler ? ruler.querySelector('.scroll-meter-track') : null;
+    const mainContent = document.getElementById('main-content');
 
     if (!distanceFill || !distanceValue) return;
 
-    const updateRuler = () => {
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (docHeight <= 0) return;
+    const getScrollMetrics = () => {
+        if (mainContent && mainContent.scrollHeight > mainContent.clientHeight) {
+            return {
+                scrollPos: mainContent.scrollTop,
+                maxScroll: mainContent.scrollHeight - mainContent.clientHeight,
+                container: mainContent
+            };
+        }
+        const docElem = document.documentElement;
+        return {
+            scrollPos: window.scrollY || window.pageYOffset || docElem.scrollTop || 0,
+            maxScroll: docElem.scrollHeight - window.innerHeight,
+            container: window
+        };
+    };
 
-        const scrollPos = window.scrollY || window.pageYOffset;
-        const scrollPct = Math.min(100, Math.max(0, (scrollPos / docHeight) * 100));
+    const updateRuler = () => {
+        const { scrollPos, maxScroll } = getScrollMetrics();
+
+        if (maxScroll <= 0) {
+            distanceFill.style.width = '0%';
+            if (distanceMarker) distanceMarker.style.left = '0%';
+            distanceValue.textContent = '0m';
+            return;
+        }
+
+        const scrollPct = Math.min(100, Math.max(0, (scrollPos / maxScroll) * 100));
 
         distanceFill.style.width = `${scrollPct}%`;
         if (distanceMarker) distanceMarker.style.left = `${scrollPct}%`;
 
-        // Scale distance value to a realistic architectural building axis length (e.g. 0m to 120m)
-        const meters = ((scrollPct / 100) * 128.5).toFixed(1);
-        distanceValue.textContent = `${meters} m`;
+        // Scale distance value to an architectural grid axis length (e.g. 0m to 128m)
+        const meters = Math.round((scrollPct / 100) * 128.5);
+        distanceValue.textContent = `${meters}m`;
     };
 
+    // Listen on both mainContent (the actual scroll container) and window
+    if (mainContent) {
+        mainContent.addEventListener('scroll', updateRuler, { passive: true });
+    }
     window.addEventListener('scroll', updateRuler, { passive: true });
+    window.addEventListener('resize', updateRuler, { passive: true });
+
+    // Interactive scrub/click on ruler track to jump directly to scroll position
+    if (track) {
+        track.addEventListener('click', (e) => {
+            const rect = track.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const pct = Math.max(0, Math.min(1, clickX / rect.width));
+            const { maxScroll, container } = getScrollMetrics();
+            const targetPos = pct * maxScroll;
+
+            if (container === mainContent) {
+                mainContent.scrollTo({ top: targetPos, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: targetPos, behavior: 'smooth' });
+            }
+        });
+    }
+
+    // Initial update and delayed updates after layout settles
     updateRuler();
+    setTimeout(updateRuler, 300);
+    setTimeout(updateRuler, 1000);
 }
 
 // ==========================================================================
@@ -439,17 +489,25 @@ function initProjectModal() {
         if (photoCountEl) photoCountEl.textContent = '1 PLATE';
 
         modal.classList.remove('hidden');
+        modal.classList.add('flex');
         document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         modal.classList.add('hidden');
+        modal.classList.remove('flex');
         document.body.style.overflow = '';
     };
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
     });
 
     if (prevBtn) {
@@ -988,12 +1046,14 @@ function initServiceModal() {
             }
 
             modal.classList.remove('hidden');
+            modal.classList.add('flex');
             document.body.style.overflow = 'hidden';
         });
     });
 
     const closeModal = () => {
         modal.classList.add('hidden');
+        modal.classList.remove('flex');
         document.body.style.overflow = '';
     };
 
@@ -1002,12 +1062,19 @@ function initServiceModal() {
         if (e.target === modal) closeModal();
     });
 
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
     if (inquireBtn) {
         inquireBtn.addEventListener('click', () => {
             closeModal();
             const inqModal = document.getElementById('inquiry-modal');
             if (inqModal) {
                 inqModal.classList.remove('hidden');
+                inqModal.classList.add('flex');
                 document.body.style.overflow = 'hidden';
             }
         });
@@ -1018,6 +1085,7 @@ function initServiceModal() {
             const inqModal = document.getElementById('inquiry-modal');
             if (inqModal) {
                 inqModal.classList.remove('hidden');
+                inqModal.classList.add('flex');
                 document.body.style.overflow = 'hidden';
             }
         });
@@ -1093,6 +1161,7 @@ function initInquiryModal() {
 
     const closeModal = () => {
         modal.classList.add('hidden');
+        modal.classList.remove('flex');
         document.body.style.overflow = '';
     };
 
@@ -1166,11 +1235,13 @@ function initCVModal() {
 
     const openCV = () => {
         modal.classList.remove('hidden');
+        modal.classList.add('flex');
         document.body.style.overflow = 'hidden';
     };
 
     const closeCV = () => {
         modal.classList.add('hidden');
+        modal.classList.remove('flex');
         document.body.style.overflow = '';
     };
 
@@ -1264,11 +1335,13 @@ function initLightbox() {
         showItem(found >= 0 ? found : 0);
 
         lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
         document.body.style.overflow = 'hidden';
     };
 
     const closeLightbox = () => {
         lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
         document.body.style.overflow = '';
     };
 
