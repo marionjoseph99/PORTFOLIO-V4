@@ -5,7 +5,14 @@
  * and mobile-optimized render presentation.
  */
 
+// Force desktop cursor visibility immediately upon script load
+try {
+    document.documentElement.style.setProperty('cursor', 'default', 'important');
+    if (document.body) document.body.style.setProperty('cursor', 'default', 'important');
+} catch (e) {}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initDesktopCursor();
     initPreloader();
     initTheme();
     initMobileMenu();
@@ -22,6 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
     initLightbox();
     initDynamicYear();
 });
+
+// ==========================================================================
+// 00. DESKTOP CURSOR NORMALIZATION
+// ==========================================================================
+function initDesktopCursor() {
+    try {
+        document.documentElement.style.setProperty('cursor', 'default', 'important');
+        if (document.body) {
+            document.body.style.setProperty('cursor', 'default', 'important');
+        }
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.style.setProperty('cursor', 'default', 'important');
+        }
+        // Remove any obsolete custom cursor elements
+        document.querySelectorAll('.cursor-dot, .cursor-outline').forEach(el => el.remove());
+    } catch (e) {
+        console.warn('Desktop cursor error:', e);
+    }
+}
 
 // ==========================================================================
 // 01. PRELOADER & INITIALIZATION

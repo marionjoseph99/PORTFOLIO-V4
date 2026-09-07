@@ -81,7 +81,35 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css?v=2.3">
+    <!-- Desktop Pointer Restoration (Guarantees visible standard mouse cursor across all desktop elements) -->
+    <style>
+        html, body, #main-content, section, div, p, span, h1, h2, h3, h4, h5, h6, aside, header, footer, main {
+            cursor: default !important;
+        }
+        a, button, [role="button"], input[type="submit"], input[type="button"],
+        .cursor-pointer, .hover-trigger, .gallery-card, .service-card, .project-card, .model-select-btn {
+            cursor: pointer !important;
+        }
+        input[type="text"], input[type="email"], textarea {
+            cursor: text !important;
+        }
+        .cursor-grab {
+            cursor: grab !important;
+        }
+        .cursor-grab:active, .cursor-grabbing {
+            cursor: grabbing !important;
+        }
+        .cursor-zoom-in {
+            cursor: zoom-in !important;
+        }
+        .cursor-dot, .cursor-outline {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css?v=3.0.0">
 </head>
 <body class="bg-studio-900 text-studio-100 font-sans antialiased flex flex-col md:flex-row h-screen overflow-hidden selection:bg-accent selection:text-studio-900">
     <!-- Architectural Blueprint Loading Screen -->
@@ -116,9 +144,6 @@
             </div>
         </div>
     </div>
-    <!-- Custom Cursor Elements -->
-    <div class="cursor-dot hidden md:block"></div>
-    <div class="cursor-outline hidden md:block"></div>
 
     <!-- Mobile Header (Visible only on small screens) -->
     <header class="md:hidden flex justify-between items-center px-4 sm:px-6 py-3 border-b border-studio-700 bg-studio-900/90 backdrop-blur-md z-50">
@@ -3215,6 +3240,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js?v=2.3"></script>
+    <script src="script.js?v=3.0.0"></script>
 </body>
 </html>

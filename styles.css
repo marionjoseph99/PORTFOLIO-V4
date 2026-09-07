@@ -157,13 +157,17 @@ body, aside, header, nav, section, div, button, input, textarea, a {
 }
 
 /* --- CURSOR & INTERACTION STYLES (RESTORE VISIBLE DESKTOP POINTER) --- */
-body {
-    cursor: default;
+html,
+body,
+#main-content {
+    cursor: default !important;
 }
 
 .cursor-dot,
 .cursor-outline {
     display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 /* Scroll Reveal Animations */

@@ -21,6 +21,9 @@ app.use(express.static(path.join(__dirname, '.'), {
 
 // Fallback to index.html for any SPA navigation
 app.get('*', (req, res) => {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
