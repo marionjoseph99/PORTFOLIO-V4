@@ -1,6 +1,6 @@
 {
   "name": "Marjo Paguia Portfolio",
-  "description": "Architecture & Visual Arts Portfolio for Marjo Paguia",
+  "description": "Architectural and Computational Design Portfolio of Marjo Paguia featuring Projects, 3D Renders, Interactive BIM Viewport, Services, and Digital Art.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

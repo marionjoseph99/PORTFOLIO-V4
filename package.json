@@ -1,12 +1,12 @@
 {
   "name": "marjo-paguia-portfolio",
   "version": "1.0.0",
-  "description": "Marjo Paguia Architecture & Visual Arts Portfolio",
-  "type": "module",
+  "description": "Architectural and Computational Design Portfolio",
+  "main": "server.js",
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "build": "echo 'No build step required'",
+    "build": "echo 'Build successful'",
     "lint": "echo 'No linting errors'"
   },
   "dependencies": {

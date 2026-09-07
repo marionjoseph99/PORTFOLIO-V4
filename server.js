@@ -1,21 +1,24 @@
-import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const express = require('express');
+const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Serve static assets from the root directory
-app.use(express.static(__dirname));
+// Serve static assets with appropriate cache control
+app.use(express.static(path.join(__dirname, '.'), {
+    maxAge: '1h',
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.glb')) {
+            res.setHeader('Content-Type', 'model/gltf-binary');
+        }
+    }
+}));
 
-// Fallback to index.html for SPA/HTML navigation if route not found
+// Fallback to index.html for any SPA navigation
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server is running on http://0.0.0.0:${PORT}`);
+    console.log(`Portfolio server active at http://0.0.0.0:${PORT}`);
 });

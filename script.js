@@ -1,1745 +1,70 @@
-// --- NEW: Architectural Blueprint Loader Logic ---
-const loader = document.getElementById('loader');
-const loaderBar = document.getElementById('loader-bar');
-const loaderPercent = document.getElementById('loader-percent');
+/**
+ * Marjo Paguia Portfolio - Master Application Script
+ * Full-stack architectural portfolio engine including 3D WebGL viewport,
+ * responsive gallery filtering, interactive modal HUDs, theme toggles,
+ * and mobile-optimized render presentation.
+ */
 
-if (loader && loaderBar && loaderPercent) {
+document.addEventListener('DOMContentLoaded', () => {
+    initPreloader();
+    initTheme();
+    initMobileMenu();
+    initDistanceRuler();
+    initScrollReveal();
+    initProjectSection();
+    init3DRendersSection();
+    initModelViewer();
+    initArtGallerySection();
+    initServiceModal();
+    initInquiryModal();
+    initCVModal();
+    initLightbox();
+    initDynamicYear();
+});
+
+// ==========================================================================
+// 01. PRELOADER & INITIALIZATION
+// ==========================================================================
+function initPreloader() {
+    const loader = document.getElementById('loader');
+    const loaderBar = document.getElementById('loader-bar');
+    const loaderPercent = document.getElementById('loader-percent');
+
+    if (!loader) return;
+
     let progress = 0;
     const interval = setInterval(() => {
-        // Increment progress with slight randomness for a natural technical feel
-        progress += Math.floor(Math.random() * 14) + 6;
+        progress += Math.floor(Math.random() * 20) + 10;
         if (progress > 100) progress = 100;
 
-        loaderBar.style.width = `${progress}%`;
-        loaderPercent.textContent = `${progress}%`;
+        if (loaderBar) loaderBar.style.width = `${progress}%`;
+        if (loaderPercent) loaderPercent.textContent = `${progress}%`;
 
-        if (progress === 100) {
+        if (progress >= 100) {
             clearInterval(interval);
-            // Brief pause at 100% before triggering smooth fade-out
             setTimeout(() => {
-                loader.classList.add('loader-hidden');
-            }, 450);
+                loader.style.opacity = '0';
+                loader.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 400);
+            }, 200);
         }
-    }, 60);
-}
-
-
-// --- Background Image Cache & Fast Preloader ---
-// Preloads modal & lightbox high-res images in idle time so they appear instantly on click
-const preloadedImageCache = new Set();
-
-function preloadImages(imageUrls) {
-    if (!Array.isArray(imageUrls)) return;
-    imageUrls.forEach(url => {
-        if (!url || preloadedImageCache.has(url)) return;
-        const img = new Image();
-        img.decoding = 'async';
-        img.src = url;
-        img.onload = () => preloadedImageCache.add(url);
-    });
-}
-
-// Automatically start warm-up preloading after initial page load (idle time)
-if (typeof window !== 'undefined') {
-    window.addEventListener('load', () => {
-        const schedulePreload = window.requestIdleCallback || ((cb) => setTimeout(cb, 500));
-        schedulePreload(() => {
-            // Collect all project modal images
-            const allProjImages = [];
-            if (typeof projectData !== 'undefined') {
-                Object.values(projectData).forEach(proj => {
-                    if (proj.images) {
-                        proj.images.forEach(img => allProjImages.push(img.src));
-                    }
-                });
-            }
-            preloadImages(allProjImages);
-        });
-    });
-}
-
-
-// --- NEW: Custom Cursor Logic ---
-const cursorDot = document.querySelector('.cursor-dot');
-const cursorOutline = document.querySelector('.cursor-outline');
-
-if (window.matchMedia("(pointer: fine)").matches) {
-    window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
-
-        // Animate outline for smooth trailing effect
-        cursorOutline.animate({
-            left: `${posX}px`,
-            top: `${posY}px`
-        }, { duration: 250, fill: "forwards" });
-    });
-
-    // Expand cursor on interactive elements using event delegation
-    document.addEventListener('mouseover', (e) => {
-        if (e.target.closest('a, button, .hover-trigger')) {
-            cursorOutline?.classList.add('cursor-hover');
-        }
-    });
-    document.addEventListener('mouseout', (e) => {
-        if (e.target.closest('a, button, .hover-trigger')) {
-            cursorOutline?.classList.remove('cursor-hover');
-        }
-    });
-}
-
-// --- NEW: Scroll Reveal Animation Logic ---
-const revealElements = document.querySelectorAll('.gs-reveal');
-
-const revealOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px" // Triggers slightly before element enters view
-};
-
-const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-active');
-            observer.unobserve(entry.target); // Reveal only once
-        }
-    });
-}, revealOptions);
-
-revealElements.forEach(el => {
-    revealOnScroll.observe(el);
-});
-
-// Mobile Menu Logic
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const closeMenuBtn = document.getElementById('close-menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-const mobileLinks = document.querySelectorAll('.mobile-link');
-
-if(mobileMenuBtn && closeMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('hidden');
-        mobileMenu.classList.add('flex');
-        document.body.style.overflow = 'hidden'; 
-    });
-
-    const closeMenu = () => {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-        document.body.style.overflow = 'auto';
-    };
-
-    closeMenuBtn.addEventListener('click', closeMenu);
-    mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-}
-
-// Active State for Sidebar Navigation
-const mainContent = document.getElementById('main-content');
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-link');
-const sidebarProfile = document.getElementById('sidebar-profile');
-const distanceFill = document.getElementById('distanceFill');
-const distanceRuler = document.getElementById('distanceRuler');
-const distanceMarker = document.getElementById('distanceMarker');
-const distanceValue = document.getElementById('distanceValue');
-
-const updateDistanceRuler = () => {
-    if (!mainContent || !distanceFill || !distanceRuler || !distanceMarker || !distanceValue) return;
-
-    const maxScroll = mainContent.scrollHeight - mainContent.clientHeight;
-    const progress = maxScroll > 0 ? mainContent.scrollTop / maxScroll : 0;
-    const clampedProgress = Math.max(0, Math.min(1, progress));
-    const meters = (clampedProgress * 10).toFixed(1);
-
-    distanceFill.style.width = `${clampedProgress * 100}%`;
-    distanceMarker.style.left = `${clampedProgress * 100}%`;
-    distanceValue.textContent = `${meters}m`;
-    distanceRuler.style.opacity = clampedProgress > 0.98 ? '1' : '0.95';
-};
-
-if(mainContent && sections && navLinks) {
-    let rulerRaf = null;
-
-    const onMainScroll = () => {
-        if (rulerRaf) {
-            cancelAnimationFrame(rulerRaf);
-        }
-
-        rulerRaf = requestAnimationFrame(() => {
-            let current = '';
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                // Offset calculation to detect active section comfortably
-                if (mainContent.scrollTop >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                const isMatch = Boolean(current && link.getAttribute('href') && link.getAttribute('href').includes(current));
-                link.classList.toggle('active', isMatch);
-                if (isMatch) {
-                    link.classList.remove('text-studio-400');
-                    link.classList.add('text-accent');
-                } else {
-                    link.classList.remove('text-accent');
-                    link.classList.add('text-studio-400');
-                }
-            });
-
-            // Update sidebar indicator subtly on scroll without hiding profile
-            if (sidebarProfile) {
-                if (mainContent.scrollTop > 100) {
-                    sidebarProfile.classList.add('scrolled-masthead');
-                } else {
-                    sidebarProfile.classList.remove('scrolled-masthead');
-                }
-            }
-
-            updateDistanceRuler();
-        });
-    };
-
-    mainContent.addEventListener('scroll', onMainScroll, { passive: true });
-
-    window.addEventListener('resize', updateDistanceRuler);
-
-    updateDistanceRuler();
-}
-
-// --- Services Modal Logic ---
-const serviceData = {
-    "3D Modelling": {
-        category: "3D DESIGN",
-        title: "3D Modelling",
-        desc: "High-quality 3D models for architectural design, product visualization, and creative projects—bringing concepts to life with precision and flair.",
-        deliverables: "3D CAD Files, OBJ/FBX, SketchUp / Revit Files",
-        tools: "SketchUp Pro, Autodesk Revit, AutoCAD",
-        audience: "Architecture Students, Design Studios, Commissions"
-    },
-    "Rendering": {
-        category: "VISUALIZATION",
-        title: "Rendering",
-        desc: "Photorealistic architectural and interior renderings that present your designs with depth, realism, and visual impact.",
-        deliverables: "High-Res Renderings (4K), Post-processed Images, Lighting Variations",
-        tools: "Lumion, Adobe Photoshop, SketchUp",
-        audience: "Property Developers, Designers, Presentation Boards"
-    },
-    "Manual Drawings": {
-        category: "ILLUSTRATION",
-        title: "Manual Drawings",
-        desc: "Hand-crafted architectural and artistic drawings that convey concepts with authenticity, detail, and a personal touch.",
-        deliverables: "Ink/Graphite Sketches, Scanned High-Res Digital Art, Physical Originals",
-        tools: "Technical Pens, Markers, Watercolors, Sketching Paper",
-        audience: "Conceptual Design, Competitions, Framed Artwork"
-    },
-    "Presentation Board Layout": {
-        category: "LAYOUT",
-        title: "Presentation Board Layout",
-        desc: "Clean and professional layouts that clearly present design ideas, concepts, and technical details for impactful reviews.",
-        deliverables: "Print-ready PDF Boards, Modular Grids, High-Res Graphics",
-        tools: "Adobe Photoshop, Illustrator, InDesign",
-        audience: "Architecture Jury Reviews, Client Proposals, Competitions"
-    },
-    "Architectural Walkthrough": {
-        category: "WALKTHROUGH",
-        title: "Architectural Walkthrough",
-        desc: "Immersive visual experiences that highlight spatial relationships, materials, and the overall design atmosphere.",
-        deliverables: "1080p/4K Video Walkthrough, Cinematic Lighting, BG Music Track",
-        tools: "Lumion, Premiere Pro, After Effects",
-        audience: "Virtual Tours, Client Presentations, Video Portfolios"
-    },
-    "Personal Portfolio Website": {
-        category: "WEB DESIGN & DEVELOPMENT",
-        title: "Personal Portfolio Website",
-        desc: "Custom-coded portfolio sites for architecture students and pros—clean, mobile-friendly, and built from scratch.",
-        deliverables: "Responsive Portfolio Website, Clean Source Code, Deployment Setup",
-        tools: "HTML5, Tailwind CSS, JavaScript, Node.js",
-        audience: "Architecture Students, Freelancers, Creative Professionals"
-    }
-};
-
-const serviceModal = document.getElementById('service-modal');
-const closeServiceModal = document.getElementById('close-service-modal');
-const modalCategory = document.getElementById('modal-service-category');
-const modalTitle = document.getElementById('modal-service-title');
-const modalDesc = document.getElementById('modal-service-desc');
-const modalDeliverables = document.getElementById('modal-service-deliverables');
-const modalTools = document.getElementById('modal-service-tools');
-const modalAudience = document.getElementById('modal-service-audience');
-const modalInquireBtn = document.getElementById('modal-inquire-btn');
-
-let currentSelectedService = "3D Modelling";
-
-function openServiceModalByKey(key) {
-    const data = serviceData[key];
-    if (data && serviceModal) {
-        currentSelectedService = key;
-        if (modalCategory) modalCategory.textContent = data.category;
-        if (modalTitle) modalTitle.textContent = data.title;
-        if (modalDesc) modalDesc.textContent = data.desc;
-        if (modalDeliverables) modalDeliverables.textContent = data.deliverables;
-        if (modalTools) modalTools.textContent = data.tools;
-        if (modalAudience) modalAudience.textContent = data.audience;
-
-        serviceModal.classList.remove('hidden');
-        serviceModal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-document.querySelectorAll('.see-more-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const key = btn.getAttribute('data-service');
-        if (key) openServiceModalByKey(key);
-    });
-});
-
-document.querySelectorAll('.service-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const key = card.getAttribute('data-service');
-        if (key) openServiceModalByKey(key);
-    });
-});
-
-if (closeServiceModal && serviceModal) {
-    const hideServiceModal = () => {
-        serviceModal.classList.add('hidden');
-        serviceModal.classList.remove('flex');
-        document.body.style.overflow = 'auto';
-    };
-
-    closeServiceModal.addEventListener('click', hideServiceModal);
-
-    serviceModal.addEventListener('click', (e) => {
-        if (e.target === serviceModal) {
-            hideServiceModal();
-        }
-    });
-
-    if (modalInquireBtn) {
-        modalInquireBtn.addEventListener('click', () => {
-            hideServiceModal();
-            if (typeof openInquiryModal === 'function') {
-                openInquiryModal(currentSelectedService);
-            }
-        });
-    }
-}
-
-// --- Project Popup Modal Window Logic & Typology Filtering ---
-const projectModal = document.getElementById('project-modal');
-const closeProjectModalBtn = document.getElementById('close-project-modal');
-const projModalTitle = document.getElementById('proj-modal-title');
-const projModalSubtitle = document.getElementById('proj-modal-subtitle');
-const projModalLocation = document.getElementById('proj-modal-location');
-const projModalArea = document.getElementById('proj-modal-area');
-const projModalCategory = document.getElementById('proj-modal-category');
-const projModalYear = document.getElementById('proj-modal-year');
-const projModalDesc = document.getElementById('proj-modal-desc');
-const projModalTypologySpec = document.getElementById('proj-modal-typology-spec');
-const projModalToolsSpec = document.getElementById('proj-modal-tools-spec');
-const projModalFeatures = document.getElementById('proj-modal-features');
-const projModalInquireBtn = document.getElementById('proj-modal-inquire-btn');
-const projModalEmptyState = document.getElementById('proj-modal-empty-state');
-const projCollage = document.getElementById('proj-collage');
-const projPhotoSection = document.getElementById('proj-photo-section');
-const projPhotoCount = document.getElementById('proj-photo-count');
-const projModalInspectBtn = document.getElementById('proj-modal-inspect-btn');
-const projModalPrevBtn = document.getElementById('proj-modal-prev-btn');
-const projModalNextBtn = document.getElementById('proj-modal-next-btn');
-const projModalIndexBadge = document.getElementById('proj-modal-index-badge');
-
-let currentProjImages = [];
-let openLightboxWithItems;
-let currentSelectedProjectKey = 'airport';
-
-// Project datasets mapping project keys to comprehensive architectural specifications and plates
-const projectData = {
-    "airport": {
-        title: "Layag Airport",
-        subtitle: "",
-        location: "Sangley Point, Cavite City",
-        siteArea: "147 Hectares",
-        year: "2024",
-        category: "ARCHITECTURE • TERMINAL DESIGN",
-        typologySpec: "Civic Aviation & Terminal Infrastructure",
-        toolsSpec: "AutoCAD • SketchUp Pro • Enscape • Photoshop",
-        features: ["Aerodynamic Sail Canopies", "Departures / Arrivals Separation", "Passive Daylight Optimization", "High-Volume Concourse Flow"],
-        desc: "A 147-hectare domestic airport proposal for Sangley Point, Cavite City that harmonizes passenger movement, structural sail canopies, and visual clarity. Inspired by traditional Filipino seafaring vessels ('Layag'), the aerodynamic roof profiles scoop indirect natural illumination into terminal departure halls while shading drop-off lanes. The interior layout enforces clear multi-level vertical circulation separating arrival passenger streams from departures check-in and gate boarding piers.",
-        images: [
-            { src: "gallery/exterior/Airport Exterior.png", alt: "Layag Airport - Main Terminal Runway & Apron Perspective", plateTitle: "PLATE 01: Runway & Apron Perspective (Exterior)" },
-            { src: "gallery/exterior/Airport Exterior 1.png", alt: "Layag Airport - Main Terminal Facade & Approach", plateTitle: "PLATE 02: Main Terminal Facade (Exterior)" },
-            { src: "gallery/exterior/Airport Exterior2.jpg", alt: "Layag Airport - Sail Roof Canopy & Structural Framing", plateTitle: "PLATE 03: Roof Canopy & Structure (Exterior)" },
-            { src: "gallery/exterior/Airport Exterior 3.jpg", alt: "Layag Airport - Passenger Concourse & Drop-off Approach", plateTitle: "PLATE 04: Concourse & Drop-off Approach (Exterior)" },
-            { src: "portfolio/airport/1.webp", alt: "Layag Airport - Master Elevation Plate", plateTitle: "PLATE 05: Master Elevation & Section" },
-            { src: "portfolio/airport/2.webp", alt: "Layag Airport - Roof Structural Geometry Study", plateTitle: "PLATE 06: Structural Geometry & Sail Analysis" },
-            { src: "portfolio/airport/3.webp", alt: "Layag Airport - Terminal Concourse Circulation", plateTitle: "PLATE 07: Concourse Spatial Distribution" },
-            { src: "portfolio/airport/4.webp", alt: "Layag Airport - Passenger Departure Lounge Interior", plateTitle: "PLATE 08: Departure Lounge Interior & Gate Access" }
-        ]
-    },
-    "amping": {
-        title: "Amping Children's Hospital",
-        subtitle: "Specialized Pediatric Healthcare Facility",
-        location: "Panglao Island, Bohol",
-        siteArea: "5 Hectares",
-        year: "2023",
-        category: "HEALTHCARE • SPATIAL PLANNING",
-        typologySpec: "Specialized Pediatric Healthcare Facility",
-        toolsSpec: "AutoCAD • Revit BIM • SketchUp Pro • Lumion 3D",
-        features: ["Biophilic Healing Courtyards", "Child-Friendly Intuitive Wayfinding", "Strict Sterile vs Outpatient Zoning", "Direct Emergency Ambulance Triage"],
-        desc: "A 5-hectare dedicated pediatric healthcare facility located on Panglao Island, Bohol, centered on gentle circulation, healing garden courtyards, and clinical efficiency. The spatial layout organizes outpatient clinics, sterile operating surgical suites, and emergency response zones with clear, intuitive color-coded wayfinding designed to reduce anxiety for young patients and their families.",
-        images: [
-            { src: "portfolio/amping/1.webp", alt: "Amping Children's Hospital - Main Facade Render", plateTitle: "PLATE 01: Main Facade & Shading Entrance Canopy" },
-            { src: "portfolio/amping/2.webp", alt: "Amping Children's Hospital - Aerial Site Development Plan", plateTitle: "PLATE 02: Master Site Development & Healing Courtyard" },
-            { src: "portfolio/amping/3.webp", alt: "Amping Children's Hospital - Floor Plan & Circulation Layout", plateTitle: "PLATE 03: Clinical Flow & Outpatient Ward Layout" },
-            { src: "portfolio/amping/4.webp", alt: "Amping Children's Hospital - Interior Emergency Ward", plateTitle: "PLATE 04: Pediatric Emergency Ward & Triage Interior" },
-            { src: "portfolio/amping/5.webp", alt: "Amping Children's Hospital - Spatial Flow Diagram", plateTitle: "PLATE 05: Infection Control & Functional Adjacency" },
-            { src: "portfolio/amping/7.webp", alt: "Amping Children's Hospital - Elevation Study", plateTitle: "PLATE 06: Exterior Solar Louver Elevation & Thermal Buffer" },
-            { src: "portfolio/amping/8.webp", alt: "Amping Children's Hospital - Master Site Plan", plateTitle: "PLATE 07: Comprehensive Master Site Plan & Logistics" }
-        ]
-    },
-    "marahuyo": {
-        title: "Marahuyo Park",
-        subtitle: "Calamba Baywalk Waterfront Promenade",
-        location: "Calamba Baywalk, Calamba City",
-        siteArea: "1.5 Hectares",
-        year: "2024",
-        category: "PLANNING • PUBLIC REALM",
-        typologySpec: "Coastal Landscape & Community Waterfront Promenade",
-        toolsSpec: "AutoCAD • SketchUp Pro • Enscape • Photoshop",
-        features: ["Elevated Boardwalk Network", "Native Riparian Bio-Buffers", "Modular Gathering Pavilions", "Coastal Flood-Adaptive Design"],
-        desc: "A 1.5-hectare waterfront landscape architecture and master circulation study situated at the Calamba Baywalk in Calamba City, shaped for open community gathering, contemplation, and natural ecology. Features integrated elevated timber boardwalks, flood-resilient coastal edge buffers, native wetland riparian zones, and shaded community gathering pavilions providing panoramic water views.",
-        images: [
-            { src: "portfolio/marahuyo/1.webp", alt: "Marahuyo Park - Waterfront Master Plan", plateTitle: "PLATE 01: Waterfront Master Plan & Ecological Zoning" },
-            { src: "portfolio/marahuyo/2.webp", alt: "Marahuyo Park - Park Plan and Elevations", plateTitle: "PLATE 02: Park Master Plan, Elevations & Sectional Relief" },
-            { src: "portfolio/marahuyo/3.webp", alt: "Marahuyo Park - Perspective Studies", plateTitle: "PLATE 03: Community Pavilion, Amphitheater & Perspectives" }
-        ]
-    },
-    "marikina": {
-        title: "Marikina Riverside Park",
-        subtitle: "Urban Riverfront Revitalization & Flood-Resilient Promenade",
-        location: "Marikina Riverside",
-        siteArea: "1 Hectare",
-        year: "2024",
-        category: "PLANNING • URBAN RENEWAL",
-        typologySpec: "Urban Waterfront Revitalization & Flood-Adaptive Corridor",
-        toolsSpec: "AutoCAD • SketchUp Pro • Enscape • Illustrator",
-        features: ["Multi-Tiered Flood Terraces", "Continuous Active Mobility Spine", "Amphitheater Water Steps", "Urban Micro-Park Nodes"],
-        desc: "A 1-hectare riverfront master plan along the Marikina Riverside highlighting pedestrian mobility, flood-adaptive riverbank conditions, and civic identity. The master plan introduces multi-tiered promenade terraces that absorb seasonal river fluctuations while serving as vibrant civic promenades with active bike lanes, commercial food pods, and scenic overlook plazas during dry months.",
-        images: [
-            { src: "portfolio/marikina/1.webp", alt: "Marikina Riverside - Riverfront Master Plan", plateTitle: "PLATE 01: Urban Riverfront Master Plan & Mobility Spine" },
-            { src: "portfolio/marikina/2.webp", alt: "Marikina Riverside - Site Development Plan", plateTitle: "PLATE 02: Stepped Promenade Site Plan & Sections" },
-            { src: "portfolio/marikina/3.webp", alt: "Marikina Riverside - Design Strategy Board", plateTitle: "PLATE 03: Design Strategy, Flood Zones & Active Plazas" },
-            { src: "portfolio/marikina/4.webp", alt: "Marikina Riverside - Landscape Perspective Studies", plateTitle: "PLATE 04: Riverbank Amphitheater & Walkway Perspectives" }
-        ]
-    },
-    "subdivision": {
-        title: "Hinabi Heights Subdivision",
-        subtitle: "Master-Planned Mountain Residential Community",
-        location: "Manggahan, General Trias, Cavite",
-        siteArea: "3.5 Hectares",
-        year: "2024",
-        category: "RESIDENTIAL • SITE PLANNING",
-        typologySpec: "Master-Planned Mountain Residential Community",
-        toolsSpec: "AutoCAD Civil • SketchUp Pro • Enscape • Photoshop",
-        features: ["Hierarchical Collector Road Grid", "Central Community Clubhouse & Parks", "Topographic Cut & Fill Adaptation", "Integrated Storm Runoff Retention"],
-        desc: "A 3.5-hectare master-planned residential community in Manggahan, General Trias, Cavite, organized around neighborhood livability, road hierarchy, and environmental sustainability. Includes standardized residential lotting layouts, interconnected greenway corridors, community recreation hubs, swimming nodes, and engineered topographic cut-and-fill slope grading with sustainable storm retention routing.",
-        images: [
-            { src: "portfolio/subdivision/PAGE 1.webp", alt: "Hinabi Heights Subdivision - Master Planning Board", plateTitle: "PLATE 01: Master Subdivision Lotting & Road Infrastructure" },
-            { src: "portfolio/subdivision/PAGE 2.webp", alt: "Hinabi Heights Subdivision - Residential Plans and Perspectives", plateTitle: "PLATE 02: Residential Streetscape & Housing Typology Models" },
-            { src: "portfolio/subdivision/PAGE 3.webp", alt: "Hinabi Heights Subdivision - Housing Design Studies", plateTitle: "PLATE 03: Community Amenity Node & Clubhouse Design" },
-            { src: "portfolio/subdivision/PAGE 4.webp", alt: "Hinabi Heights Subdivision - Site and Unit Development", plateTitle: "PLATE 04: Topographic Slope Analysis & Drainage Flow" }
-        ]
-    },
-    "plaza": {
-        title: "Jagna De Plaza",
-        subtitle: "Historic Town Center Civic Plaza Revitalization",
-        location: "Población, Jagna, Bohol",
-        siteArea: "5,200 sqm",
-        year: "2024",
-        category: "PLANNING • CIVIC SPACE",
-        typologySpec: "Historic Town Center Civic Plaza Revitalization",
-        toolsSpec: "AutoCAD • Hand Conceptual Sketches • Adobe Photoshop",
-        features: ["Modular Tensile Canopy Architecture", "Civic Assembly & Event Concourse", "Pedestrian-First Urban Spine", "Heritage Market & Activity Zones"],
-        desc: "A 5,200 sqm comprehensive civic plaza revitalization study in Población, Jagna, Bohol, focused on public gathering, civic pride, and shaded outdoor comfort. The proposal incorporates modular seating, architectural canopy structures, pedestrianized promenades, water monument anchor nodes, and dedicated zones for local heritage events and weekend markets.",
-        images: [
-            { src: "portfolio/plaza/plaza.webp", alt: "Jagna De Plaza - Architectural Site Plan & Flow", plateTitle: "PLATE 01: Comprehensive Master Site Plan & Civic Concourse Study" }
-        ]
-    }
-};
-
-const projectKeyList = ["airport", "amping", "marahuyo", "marikina", "subdivision", "plaza"];
-let currentProjectIndex = 0;
-
-function updateProjectModalByIndex(index) {
-    if (index < 0) index = projectKeyList.length - 1;
-    if (index >= projectKeyList.length) index = 0;
-    currentProjectIndex = index;
-    const projKey = projectKeyList[currentProjectIndex];
-    openProjectModal(projKey);
-}
-
-function openProjectModal(projKey) {
-    const data = projectData[projKey];
-    if (!data || !projectModal) return;
-
-    currentSelectedProjectKey = projKey;
-    currentProjectIndex = projectKeyList.indexOf(projKey);
-    if (currentProjectIndex === -1) currentProjectIndex = 0;
-
-    // Preload next and previous project images immediately in the background
-    const prevKey = projectKeyList[(currentProjectIndex - 1 + projectKeyList.length) % projectKeyList.length];
-    const nextKey = projectKeyList[(currentProjectIndex + 1) % projectKeyList.length];
-    if (projectData[prevKey]?.images) preloadImages(projectData[prevKey].images.map(i => i.src));
-    if (projectData[nextKey]?.images) preloadImages(projectData[nextKey].images.map(i => i.src));
-
-    if (projModalIndexBadge) {
-        projModalIndexBadge.textContent = `${String(currentProjectIndex + 1).padStart(2, '0')} / ${String(projectKeyList.length).padStart(2, '0')}`;
-    }
-
-    if (projModalTitle) projModalTitle.textContent = data.title;
-    if (projModalSubtitle) {
-        projModalSubtitle.textContent = data.subtitle || '';
-        projModalSubtitle.classList.toggle('hidden', !data.subtitle);
-    }
-    if (projModalLocation) {
-        projModalLocation.innerHTML = `<i class="ph ph-map-pin text-accent"></i> <span>${data.location || 'Cavite, Philippines'}</span>`;
-    }
-    if (projModalArea) {
-        projModalArea.textContent = data.siteArea || 'N/A';
-    }
-    if (projModalCategory) projModalCategory.textContent = data.category;
-    if (projModalYear) projModalYear.textContent = data.year;
-    if (projModalDesc) projModalDesc.textContent = data.desc;
-    if (projModalTypologySpec) projModalTypologySpec.textContent = data.typologySpec || data.category;
-    if (projModalToolsSpec) projModalToolsSpec.textContent = data.toolsSpec || 'AutoCAD • SketchUp • Photoshop';
-    
-    // Render key architectural feature pills
-    if (projModalFeatures) {
-        projModalFeatures.innerHTML = '';
-        const features = data.features || [];
-        features.forEach(feat => {
-            const pill = document.createElement('span');
-            pill.className = 'inline-block bg-studio-800 border border-studio-700 text-studio-200 px-2 py-0.5 text-[10px] whitespace-nowrap hover:border-accent transition-colors';
-            pill.textContent = feat;
-            projModalFeatures.appendChild(pill);
-        });
-    }
-
-    currentProjImages = data.images || [];
-
-    // Preload current project's full images
-    preloadImages(currentProjImages.map(i => i.src));
-
-    if (projPhotoCount) projPhotoCount.textContent = currentProjImages.length;
-    if (projPhotoSection) projPhotoSection.classList.toggle('hidden', currentProjImages.length === 0);
-    if (projModalEmptyState) projModalEmptyState.classList.toggle('hidden', currentProjImages.length > 0);
-
-    if (projCollage) {
-        projCollage.innerHTML = '';
-        const collageTileWidth = currentProjImages.length === 1
-            ? 'w-full'
-            : currentProjImages.length === 2 || currentProjImages.length === 4
-                ? 'w-full sm:w-[calc(50%-0.375rem)]'
-                : 'w-full sm:w-[calc(33.333%-0.5rem)]';
-
-        currentProjImages.forEach((img, idx) => {
-            const btn = document.createElement('button');
-            btn.className = `group relative ${collageTileWidth} flex-grow aspect-[16/10] overflow-hidden border border-studio-700 hover:border-accent transition-all hover-trigger cursor-pointer bg-studio-900`;
-            btn.setAttribute('aria-label', `Open ${img.plateTitle || img.alt}`);
-            
-            const plateLabel = `PLATE ${String(idx + 1).padStart(2, '0')}`;
-            const shortCaption = img.plateTitle ? img.plateTitle.replace(/^PLATE \d+:\s*/i, '') : img.alt;
-
-            // Build responsive image tile with plate badge and hover caption
-            btn.innerHTML = `
-                <div class="absolute inset-0 bg-studio-800/80 animate-pulse modal-img-skeleton pointer-events-none"></div>
-                <img src="${img.src}" alt="${img.alt}" loading="eager" decoding="async" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 opacity-0 modal-thumb-img">
-                
-                <!-- Plate index tag badge -->
-                <div class="absolute top-2 left-2 z-10 bg-studio-900/90 border border-studio-700 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-wider font-bold shadow-md">
-                    ${plateLabel}
-                </div>
-
-                <!-- Hover overlay with expansion icon and caption -->
-                <div class="absolute inset-0 flex flex-col justify-between p-3 bg-studio-900/0 group-hover:bg-studio-900/60 transition-all duration-200">
-                    <div class="flex justify-end">
-                        <span class="w-7 h-7 rounded-none bg-accent/90 text-studio-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md">
-                            <i class="ph ph-magnifying-glass-plus text-sm"></i>
-                        </span>
-                    </div>
-                    <div class="opacity-0 group-hover:opacity-100 transition-opacity">
-                        <p class="font-mono text-[10px] text-studio-100 font-bold truncate bg-studio-900/95 border border-studio-700 px-2 py-1">${shortCaption}</p>
-                    </div>
-                </div>`;
-            
-            const thumbImg = btn.querySelector('.modal-thumb-img');
-            const skeleton = btn.querySelector('.modal-img-skeleton');
-            
-            if (thumbImg) {
-                if (thumbImg.complete) {
-                    thumbImg.classList.remove('opacity-0');
-                    if (skeleton) skeleton.remove();
-                } else {
-                    thumbImg.onload = () => {
-                        thumbImg.classList.remove('opacity-0');
-                        if (skeleton) skeleton.remove();
-                    };
-                }
-            }
-
-            btn.addEventListener('click', () => {
-                if (openLightboxWithItems) openLightboxWithItems(currentProjImages, idx);
-            });
-            projCollage.appendChild(btn);
-        });
-    }
-
-    projectModal.classList.remove('hidden');
-    projectModal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeProjectModal() {
-    if (!projectModal) return;
-    projectModal.classList.add('hidden');
-    projectModal.classList.remove('flex');
-    document.body.style.overflow = 'auto';
-}
-
-if (projectModal) {
-    if (closeProjectModalBtn) closeProjectModalBtn.addEventListener('click', closeProjectModal);
-    if (projModalPrevBtn) {
-        projModalPrevBtn.addEventListener('click', () => {
-            updateProjectModalByIndex(currentProjectIndex - 1);
-        });
-    }
-    if (projModalNextBtn) {
-        projModalNextBtn.addEventListener('click', () => {
-            updateProjectModalByIndex(currentProjectIndex + 1);
-        });
-    }
-    if (projModalInquireBtn) {
-        projModalInquireBtn.addEventListener('click', () => {
-            const currentProj = projectData[currentSelectedProjectKey];
-            closeProjectModal();
-            if (typeof openInquiryModal === 'function') {
-                openInquiryModal(currentProj ? currentProj.title : 'Architectural Design');
-            }
-        });
-    }
-    if (projModalInspectBtn) {
-        projModalInspectBtn.addEventListener('click', () => {
-            if (currentProjImages && currentProjImages.length > 0 && typeof openLightboxWithItems === 'function') {
-                openLightboxWithItems(currentProjImages, 0);
-            }
-        });
-    }
-
-    projectModal.addEventListener('click', (e) => {
-        if (e.target === projectModal) {
-            closeProjectModal();
-        }
-    });
-
-    window.addEventListener('keydown', (e) => {
-        const lightboxIsOpen = galleryLightbox && !galleryLightbox.classList.contains('hidden');
-        if (!projectModal.classList.contains('hidden') && !lightboxIsOpen) {
-            if (e.key === 'Escape') closeProjectModal();
-            if (e.key === 'ArrowLeft') updateProjectModalByIndex(currentProjectIndex - 1);
-            if (e.key === 'ArrowRight') updateProjectModalByIndex(currentProjectIndex + 1);
-        }
-    });
-}
-
-// --- Gallery Filtering, Pagination (See More) & Lightbox Logic ---
-const galleryFilterBtns = document.querySelectorAll('.gallery-filter-btn');
-const galleryItemsList = document.querySelectorAll('.gallery-item');
-const galleryEmptyState = document.getElementById('gallery-empty-state');
-const gallerySeeMoreContainer = document.getElementById('gallery-see-more-container');
-const gallerySeeMoreBtn = document.getElementById('gallery-see-more-btn');
-const gallerySeeMoreText = document.getElementById('gallery-see-more-text');
-const gallerySeeMoreIcon = document.getElementById('gallery-see-more-icon');
-const projectCards = document.querySelectorAll('.project-card');
-const galleryLightbox = document.getElementById('gallery-lightbox');
-const closeLightboxBtn = document.getElementById('close-lightbox-btn');
-const prevLightboxBtn = document.getElementById('prev-lightbox-btn');
-const nextLightboxBtn = document.getElementById('next-lightbox-btn');
-const lightboxImg = document.getElementById('lightbox-img');
-const lightboxCaption = document.getElementById('lightbox-caption');
-const lightboxCounter = document.getElementById('lightbox-counter');
-const lightboxZoomBtn = document.getElementById('lightbox-zoom-btn');
-const lightboxViewport = document.getElementById('lightbox-viewport');
-
-let isLightboxZoomed = false;
-
-const toggleLightboxZoom = () => {
-    if (!lightboxImg) return;
-    isLightboxZoomed = !isLightboxZoomed;
-    lightboxImg.classList.toggle('is-zoomed', isLightboxZoomed);
-    if (lightboxZoomBtn) {
-        lightboxZoomBtn.innerHTML = isLightboxZoomed
-            ? '<i class="ph ph-magnifying-glass-minus text-base"></i> <span class="hidden md:inline">FIT</span>'
-            : '<i class="ph ph-magnifying-glass-plus text-base"></i> <span class="hidden md:inline">ZOOM</span>';
-    }
-};
-
-const resetLightboxZoom = () => {
-    isLightboxZoomed = false;
-    if (lightboxImg) {
-        lightboxImg.classList.remove('is-zoomed');
-    }
-    if (lightboxZoomBtn) {
-        lightboxZoomBtn.innerHTML = '<i class="ph ph-magnifying-glass-plus text-base"></i> <span class="hidden md:inline">ZOOM</span>';
-    }
-};
-
-const INITIAL_ALL_LIMIT = 8;
-let isGalleryExpanded = false;
-let galleryItems = [];
-let currentGalleryIndex = 0;
-let currentFilter = 'all';
-
-// Function to get all currently visible gallery items
-function getVisibleGalleryItems() {
-    const visibleCards = [];
-    galleryItemsList.forEach((item) => {
-        if (!item.classList.contains('gallery-item-hidden')) {
-            const img = item.querySelector('img');
-            const captionElem = item.querySelector('p');
-            if (img) {
-                visibleCards.push({
-                    element: item,
-                    src: img.getAttribute('src'),
-                    alt: img.getAttribute('alt') || captionElem?.textContent || 'Gallery Artwork'
-                });
-            }
-        }
-    });
-    return visibleCards;
-}
-
-// Function to filter gallery items and manage see more visibility
-function filterGallery(filterCategory, preserveExpandState = false) {
-    currentFilter = filterCategory;
-    if (!preserveExpandState && filterCategory !== 'all') {
-        isGalleryExpanded = false;
-    }
-
-    let matchingCount = 0;
-    let visibleCount = 0;
-
-    // Update filter buttons appearance
-    galleryFilterBtns.forEach((btn) => {
-        const btnFilter = btn.getAttribute('data-filter');
-        if (btnFilter === filterCategory) {
-            btn.classList.add('active');
-            btn.classList.remove('text-studio-400');
-            btn.classList.add('text-studio-100');
-        } else {
-            btn.classList.remove('active');
-            btn.classList.remove('text-studio-100');
-            btn.classList.add('text-studio-400');
-        }
-    });
-
-    // Show/hide gallery items
-    galleryItemsList.forEach((item) => {
-        const itemCategory = item.getAttribute('data-category');
-        const matchesCategory = (filterCategory === 'all' || itemCategory === filterCategory);
-
-        if (matchesCategory) {
-            matchingCount++;
-            const shouldShow = (filterCategory !== 'all') || isGalleryExpanded || (matchingCount <= INITIAL_ALL_LIMIT);
-
-            if (shouldShow) {
-                item.classList.remove('gallery-item-hidden');
-                item.classList.add('is-active');
-                item.classList.remove('gallery-item-fadeout');
-                item.classList.add('gallery-item-fadein');
-                visibleCount++;
-            } else {
-                item.classList.add('gallery-item-fadeout');
-                item.classList.remove('gallery-item-fadein');
-                item.classList.add('gallery-item-hidden');
-            }
-        } else {
-            item.classList.add('gallery-item-fadeout');
-            item.classList.remove('gallery-item-fadein');
-            item.classList.add('gallery-item-hidden');
-        }
-    });
-
-    // Handle See More button state
-    if (gallerySeeMoreContainer && gallerySeeMoreBtn && gallerySeeMoreText && gallerySeeMoreIcon) {
-        if (filterCategory === 'all' && matchingCount > INITIAL_ALL_LIMIT) {
-            gallerySeeMoreContainer.classList.remove('hidden');
-            if (isGalleryExpanded) {
-                gallerySeeMoreText.textContent = 'Show Less Works';
-                gallerySeeMoreIcon.className = 'ph ph-arrow-up text-base text-accent group-hover:-translate-y-1 transition-transform';
-            } else {
-                const remaining = matchingCount - INITIAL_ALL_LIMIT;
-                gallerySeeMoreText.textContent = `Load More Works (${remaining} Remaining)`;
-                gallerySeeMoreIcon.className = 'ph ph-arrow-down text-base text-accent group-hover:translate-y-1 transition-transform';
-            }
-        } else {
-            gallerySeeMoreContainer.classList.add('hidden');
-        }
-    }
-
-    if (galleryEmptyState) {
-        if (visibleCount === 0) {
-            galleryEmptyState.classList.remove('hidden');
-        } else {
-            galleryEmptyState.classList.add('hidden');
-        }
-    }
-}
-
-// Attach click listeners to filter buttons
-if (galleryFilterBtns.length > 0) {
-    galleryFilterBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const filter = btn.getAttribute('data-filter') || 'all';
-            filterGallery(filter, false);
-        });
-    });
-}
-
-// Attach click listener to See More button
-if (gallerySeeMoreBtn) {
-    gallerySeeMoreBtn.addEventListener('click', () => {
-        if (isGalleryExpanded) {
-            isGalleryExpanded = false;
-            filterGallery('all', true);
-            const allWorksSection = document.getElementById('all-works');
-            if (allWorksSection) {
-                allWorksSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        } else {
-            isGalleryExpanded = true;
-            filterGallery('all', true);
-        }
-    });
-}
-
-// Initial gallery filtering setup
-filterGallery('all', false);
-
-if (galleryLightbox) {
-    openLightboxWithItems = (items, startIndex = 0) => {
-        galleryItems = items;
-        currentGalleryIndex = startIndex;
-        resetLightboxZoom();
-        updateLightboxContent();
-        galleryLightbox.classList.remove('hidden');
-        galleryLightbox.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-    };
-
-    const closeLightbox = () => {
-        resetLightboxZoom();
-        galleryLightbox.classList.add('hidden');
-        galleryLightbox.classList.remove('flex');
-        document.body.style.overflow = projectModal && !projectModal.classList.contains('hidden') ? 'hidden' : 'auto';
-    };
-
-    const updateLightboxContent = () => {
-        if (!galleryItems[currentGalleryIndex]) return;
-        const item = galleryItems[currentGalleryIndex];
-        resetLightboxZoom();
-        
-        // Immediately preload adjacent images (prev & next) in the background
-        if (galleryItems.length > 1) {
-            const nextIdx = (currentGalleryIndex + 1) % galleryItems.length;
-            const prevIdx = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
-            if (galleryItems[nextIdx]) preloadImages([galleryItems[nextIdx].src]);
-            if (galleryItems[prevIdx]) preloadImages([galleryItems[prevIdx].src]);
-        }
-
-        if (lightboxImg) {
-            lightboxImg.decoding = 'async';
-            lightboxImg.loading = 'eager';
-            lightboxImg.src = item.src;
-            lightboxImg.alt = item.plateTitle || item.alt || 'Architectural Plate';
-            lightboxImg.style.opacity = '1';
-        }
-        if (lightboxCaption) {
-            lightboxCaption.innerHTML = item.plateTitle 
-                ? `<span class="text-accent font-bold">${item.plateTitle.split(':')[0]}:</span> <span class="text-studio-100">${item.plateTitle.split(':').slice(1).join(':') || item.alt}</span>`
-                : `<span class="text-studio-100 font-bold">${item.alt}</span>`;
-        }
-        if (lightboxCounter) {
-            lightboxCounter.textContent = `${String(currentGalleryIndex + 1).padStart(2, '0')} / ${String(galleryItems.length).padStart(2, '0')}`;
-        }
-    };
-
-    // Attach click & hover preloader listeners to gallery cards with filtered context
-    galleryItemsList.forEach((item) => {
-        const card = item.querySelector('.gallery-card');
-        if (card) {
-            card.addEventListener('pointerenter', () => {
-                const img = item.querySelector('img');
-                if (img) {
-                    const src = img.getAttribute('src');
-                    if (src) preloadImages([src]);
-                }
-            }, { passive: true });
-
-            card.addEventListener('click', () => {
-                const currentVisible = getVisibleGalleryItems();
-                const clickedIndex = currentVisible.findIndex(v => v.element === item);
-                if (clickedIndex !== -1) {
-                    openLightboxWithItems(currentVisible, clickedIndex);
-                }
-            });
-        }
-    });
-
-    const showNext = () => {
-        if (galleryItems.length <= 1) return;
-        currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
-        updateLightboxContent();
-    };
-
-    const showPrev = () => {
-        if (galleryItems.length <= 1) return;
-        currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
-        updateLightboxContent();
-    };
-
-    if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', closeLightbox);
-    if (nextLightboxBtn) nextLightboxBtn.addEventListener('click', showNext);
-    if (prevLightboxBtn) prevLightboxBtn.addEventListener('click', showPrev);
-    if (lightboxZoomBtn) lightboxZoomBtn.addEventListener('click', toggleLightboxZoom);
-    if (lightboxImg) lightboxImg.addEventListener('click', toggleLightboxZoom);
-
-    galleryLightbox.addEventListener('click', (e) => {
-        if (e.target === galleryLightbox || e.target === lightboxViewport) {
-            closeLightbox();
-        }
-    });
-
-    window.addEventListener('keydown', (e) => {
-        if (!galleryLightbox.classList.contains('hidden')) {
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowRight') showNext();
-            if (e.key === 'ArrowLeft') showPrev();
-            if (e.key.toLowerCase() === 'z') toggleLightboxZoom();
-        }
-    });
-}
-
-// --- 3D Visualization Filtering, See More & Lightbox Logic ---
-const vizFilterBtns = document.querySelectorAll('.viz-filter-btn');
-const vizItemsList = document.querySelectorAll('.viz-item');
-const vizEmptyState = document.getElementById('viz-empty-state');
-const vizSeeMoreContainer = document.getElementById('viz-see-more-container');
-const vizSeeMoreBtn = document.getElementById('viz-see-more-btn');
-const vizSeeMoreText = document.getElementById('viz-see-more-text');
-const vizSeeMoreIcon = document.getElementById('viz-see-more-icon');
-
-const VIZ_LIMITS = {
-    all: 12,      // 3 full rows on desktop
-    exterior: 12, // Show all exterior renders including all Layag Airport exterior plates
-    interior: 12  // 3 full rows on desktop
-};
-
-let currentVizFilter = 'all';
-const vizExpandedState = {
-    all: false,
-    exterior: false,
-    interior: false
-};
-
-function getVisibleVizItems() {
-    const visibleCards = [];
-    vizItemsList.forEach((item) => {
-        if (!item.classList.contains('viz-item-hidden') && !item.classList.contains('hidden') && item.style.display !== 'none') {
-            const img = item.querySelector('img');
-            const titleElem = item.querySelector('.font-bold.text-studio-100');
-            const codeElem = item.querySelector('.text-accent.font-bold');
-            const altText = img?.getAttribute('alt') || '3D Architectural Visualization';
-            const plateTitle = codeElem ? codeElem.textContent.trim() : altText;
-
-            if (img) {
-                visibleCards.push({
-                    element: item,
-                    src: img.getAttribute('src'),
-                    alt: altText,
-                    plateTitle: plateTitle
-                });
-            }
-        }
-    });
-    return visibleCards;
-}
-
-function filterViz(filterCategory) {
-    currentVizFilter = filterCategory;
-    let visibleCount = 0;
-    let matchingTotal = 0;
-
-    vizFilterBtns.forEach((btn) => {
-        const btnFilter = btn.getAttribute('data-viz-filter');
-        const countBadge = btn.querySelector('.filter-count');
-        if (btnFilter === filterCategory) {
-            btn.classList.add('active', 'text-studio-100', 'bg-studio-800');
-            btn.classList.remove('text-studio-400', 'bg-studio-800/80');
-            if (countBadge) {
-                countBadge.classList.add('text-studio-200');
-                countBadge.classList.remove('text-studio-400');
-            }
-        } else {
-            btn.classList.remove('active', 'text-studio-100', 'bg-studio-800');
-            btn.classList.add('text-studio-400', 'bg-studio-800/80');
-            if (countBadge) {
-                countBadge.classList.remove('text-studio-200');
-                countBadge.classList.add('text-studio-400');
-            }
-        }
-    });
-
-    const isExpanded = vizExpandedState[filterCategory] || false;
-    const initialLimit = VIZ_LIMITS[filterCategory] || 8;
-
-    vizItemsList.forEach((item) => {
-        const itemCategories = (item.getAttribute('data-viz-cat') || '').split(',').map(s => s.trim());
-        const matches = (filterCategory === 'all' || itemCategories.includes(filterCategory));
-
-        if (matches) {
-            matchingTotal++;
-            const shouldShow = isExpanded || (matchingTotal <= initialLimit);
-
-            if (shouldShow) {
-                item.classList.remove('viz-item-hidden', 'hidden');
-                item.classList.add('is-active', 'viz-item-fadein');
-                item.classList.remove('viz-item-fadeout');
-                item.style.display = '';
-                visibleCount++;
-            } else {
-                item.classList.add('viz-item-fadeout', 'viz-item-hidden', 'hidden');
-                item.classList.remove('viz-item-fadein', 'is-active');
-                item.style.display = 'none';
-            }
-        } else {
-            item.classList.add('viz-item-fadeout', 'viz-item-hidden', 'hidden');
-            item.classList.remove('viz-item-fadein', 'is-active');
-            item.style.display = 'none';
-        }
-    });
-
-    // Handle See More button state
-    if (vizSeeMoreContainer && vizSeeMoreBtn && vizSeeMoreText && vizSeeMoreIcon) {
-        if (matchingTotal > initialLimit) {
-            vizSeeMoreContainer.classList.remove('hidden');
-            const categoryLabel = filterCategory === 'exterior' ? 'Exterior ' : filterCategory === 'interior' ? 'Interior ' : '';
-            if (isExpanded) {
-                vizSeeMoreText.textContent = `Show Less ${categoryLabel}Renders`;
-                vizSeeMoreIcon.className = 'ph ph-arrow-up text-base text-accent group-hover:-translate-y-1 transition-transform';
-            } else {
-                const remaining = matchingTotal - initialLimit;
-                vizSeeMoreText.textContent = `Load More ${categoryLabel}Renders (${remaining} Remaining)`;
-                vizSeeMoreIcon.className = 'ph ph-arrow-down text-base text-accent group-hover:translate-y-1 transition-transform';
-            }
-        } else {
-            vizSeeMoreContainer.classList.add('hidden');
-        }
-    }
-
-    if (vizEmptyState) {
-        if (visibleCount === 0) {
-            vizEmptyState.classList.remove('hidden');
-        } else {
-            vizEmptyState.classList.add('hidden');
-        }
-    }
-}
-
-if (vizFilterBtns.length > 0) {
-    vizFilterBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const filter = btn.getAttribute('data-viz-filter') || 'all';
-            filterViz(filter);
-        });
-    });
-}
-
-if (vizSeeMoreBtn) {
-    vizSeeMoreBtn.addEventListener('click', () => {
-        const isCurrentlyExpanded = vizExpandedState[currentVizFilter] || false;
-        if (isCurrentlyExpanded) {
-            vizExpandedState[currentVizFilter] = false;
-            filterViz(currentVizFilter);
-            const vizSection = document.getElementById('visualization') || document.getElementById('visualizations');
-            if (vizSection) {
-                vizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        } else {
-            vizExpandedState[currentVizFilter] = true;
-            filterViz(currentVizFilter);
-        }
-    });
-}
-
-function updateVizFilterCounts() {
-    if (!vizItemsList || vizItemsList.length === 0) return;
-    const totalAll = vizItemsList.length;
-    let totalExt = 0;
-    let totalInt = 0;
-    vizItemsList.forEach(item => {
-        const cat = item.getAttribute('data-viz-cat') || '';
-        if (cat.includes('exterior')) totalExt++;
-        if (cat.includes('interior')) totalInt++;
-    });
-    vizFilterBtns.forEach(btn => {
-        const f = btn.getAttribute('data-viz-filter');
-        const badge = btn.querySelector('.filter-count');
-        if (badge) {
-            if (f === 'all') badge.textContent = totalAll;
-            else if (f === 'exterior') badge.textContent = totalExt;
-            else if (f === 'interior') badge.textContent = totalInt;
-        }
-    });
-}
-updateVizFilterCounts();
-
-// Initial 3D visualization filtering setup
-filterViz('all');
-
-if (vizItemsList.length > 0) {
-    vizItemsList.forEach((item) => {
-        const card = item.querySelector('.viz-card');
-        if (card) {
-            card.addEventListener('pointerenter', () => {
-                const img = item.querySelector('img');
-                if (img) {
-                    const src = img.getAttribute('src');
-                    if (src) preloadImages([src]);
-                }
-            }, { passive: true });
-
-            card.addEventListener('click', () => {
-                const visible = getVisibleVizItems();
-                const clickedIndex = visible.findIndex(v => v.element === item);
-                if (clickedIndex !== -1 && typeof openLightboxWithItems === 'function') {
-                    openLightboxWithItems(visible, clickedIndex);
-                }
-            });
-        }
-    });
-}
-
-// Attach click and hover-preloader listeners to project cards to open project popup modal instantly
-if (projectCards.length > 0) {
-    projectCards.forEach((card) => {
-        const projKey = card.getAttribute('data-project');
-        if (projKey) {
-            // Preload images on mouse hover / touch start so opening is instant
-            card.addEventListener('pointerenter', () => {
-                if (projectData[projKey]?.images) {
-                    preloadImages(projectData[projKey].images.map(i => i.src));
-                }
-            }, { passive: true });
-
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-                openProjectModal(projKey);
-            });
-        }
-    });
-}
-
-// --- Typology Filtering for Projects Section ---
-const projectFilterBtns = document.querySelectorAll('.project-filter-btn');
-const projectEmptyState = document.getElementById('project-empty-state');
-
-function filterProjects(typology) {
-    let visibleCount = 0;
-
-    projectFilterBtns.forEach(btn => {
-        const btnTypology = btn.getAttribute('data-typology');
-        if (btnTypology === typology) {
-            btn.classList.add('active', 'text-studio-100');
-            btn.classList.remove('text-studio-400');
-            const countBadge = btn.querySelector('.proj-filter-count');
-            if (countBadge) {
-                countBadge.classList.add('text-studio-200');
-                countBadge.classList.remove('text-studio-400');
-            }
-        } else {
-            btn.classList.remove('active', 'text-studio-100');
-            btn.classList.add('text-studio-400');
-            const countBadge = btn.querySelector('.proj-filter-count');
-            if (countBadge) {
-                countBadge.classList.remove('text-studio-200');
-                countBadge.classList.add('text-studio-400');
-            }
-        }
-    });
-
-    projectCards.forEach(card => {
-        const cardTypology = card.getAttribute('data-typology');
-        const matches = (typology === 'all' || cardTypology === typology);
-
-        if (matches) {
-            card.classList.remove('hidden');
-            card.classList.add('flex');
-            visibleCount++;
-        } else {
-            card.classList.add('hidden');
-            card.classList.remove('flex');
-        }
-    });
-
-    if (projectEmptyState) {
-        if (visibleCount === 0) {
-            projectEmptyState.classList.remove('hidden');
-        } else {
-            projectEmptyState.classList.add('hidden');
-        }
-    }
-}
-
-if (projectFilterBtns.length > 0) {
-    projectFilterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const typ = btn.getAttribute('data-typology') || 'all';
-            filterProjects(typ);
-        });
-    });
-}
-
-// --- Interactive Commission Inquiry Modal Logic ---
-const inquiryModal = document.getElementById('inquiry-modal');
-const closeInquiryModalBtn = document.getElementById('close-inquiry-modal');
-const openInquiryDirectBtn = document.getElementById('open-inquiry-direct-btn');
-const inquiryForm = document.getElementById('inquiry-form');
-const inqClientName = document.getElementById('inq-client-name');
-const inqClientContact = document.getElementById('inq-client-contact');
-const inqServiceType = document.getElementById('inq-service-type');
-const inqTypology = document.getElementById('inq-typology');
-const inqTimeline = document.getElementById('inq-timeline');
-const inqNotes = document.getElementById('inq-notes');
-const inqCopyBtn = document.getElementById('inq-copy-btn');
-const inquiryToast = document.getElementById('inquiry-toast');
-const inquiryToastMsg = document.getElementById('inquiry-toast-msg');
-
-let toastTimer = null;
-
-function showInquiryToast(msg) {
-    if (!inquiryToast || !inquiryToastMsg) return;
-    inquiryToastMsg.textContent = msg;
-    inquiryToast.classList.remove('hidden');
-    if (toastTimer) clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-        inquiryToast.classList.add('hidden');
-    }, 4000);
-}
-
-function getFormattedInquiryBrief() {
-    const name = inqClientName ? inqClientName.value.trim() || 'Client' : 'Client';
-    const contact = inqClientContact ? inqClientContact.value.trim() || 'Not specified' : 'Not specified';
-    const service = inqServiceType ? inqServiceType.value : 'Architectural Commission';
-    const typology = inqTypology ? inqTypology.value : 'General';
-    const timeline = inqTimeline ? inqTimeline.value : 'Standard';
-    const notes = inqNotes ? inqNotes.value.trim() : '';
-
-    return `[COMMISSION INQUIRY BRIEF]
-------------------------------------
-• Client/Studio: ${name}
-• Contact/Handle: ${contact}
-• Requested Scope: ${service}
-• Project Typology: ${typology}
-• Target Timeline: ${timeline}
-• Scope Notes & Links:
-${notes ? notes : '(No additional notes provided)'}
-------------------------------------
-Recipient: Marjo Paguia <norioniomarjo@gmail.com>`;
-}
-
-function openInquiryModal(preselectedService) {
-    if (!inquiryModal) return;
-    if (preselectedService && inqServiceType) {
-        // Try to match option
-        const options = Array.from(inqServiceType.options);
-        const match = options.find(opt => opt.value.toLowerCase().includes(preselectedService.toLowerCase()) || preselectedService.toLowerCase().includes(opt.value.toLowerCase()));
-        if (match) {
-            inqServiceType.value = match.value;
-        }
-    }
-    inquiryModal.classList.remove('hidden');
-    inquiryModal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeInquiryModal() {
-    if (!inquiryModal) return;
-    inquiryModal.classList.add('hidden');
-    inquiryModal.classList.remove('flex');
-    document.body.style.overflow = 'auto';
-}
-
-if (inquiryModal) {
-    if (closeInquiryModalBtn) closeInquiryModalBtn.addEventListener('click', closeInquiryModal);
-    if (openInquiryDirectBtn) {
-        openInquiryDirectBtn.addEventListener('click', () => openInquiryModal('Full Comprehensive Package'));
-    }
-
-    inquiryModal.addEventListener('click', (e) => {
-        if (e.target === inquiryModal) closeInquiryModal();
-    });
-
-    if (inquiryForm) {
-        inquiryForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const service = inqServiceType ? inqServiceType.value : 'Commission';
-            const name = inqClientName ? inqClientName.value.trim() : 'Client';
-            const subject = encodeURIComponent(`[Commission Brief] ${service} - ${name}`);
-            const body = encodeURIComponent(getFormattedInquiryBrief());
-            
-            showInquiryToast('[BRIEF PREPARED — LAUNCHING EMAIL CLIENT]');
-            
-            setTimeout(() => {
-                window.location.href = `mailto:norioniomarjo@gmail.com?subject=${subject}&body=${body}`;
-            }, 600);
-        });
-    }
-
-    if (inqCopyBtn) {
-        inqCopyBtn.addEventListener('click', () => {
-            const brief = getFormattedInquiryBrief();
-            navigator.clipboard.writeText(brief).then(() => {
-                showInquiryToast('[BRIEF COPIED TO CLIPBOARD — PASTE DIRECTLY IN DMs / EMAIL]');
-            }).catch(() => {
-                showInquiryToast('[COPY FAILED — PLEASE MANUALLY SELECT TEXT]');
-            });
-        });
-    }
-
-    window.addEventListener('keydown', (e) => {
-        if (!inquiryModal.classList.contains('hidden') && e.key === 'Escape') {
-            closeInquiryModal();
-        }
-    });
-}
-
-// --- Architectural CV & Resume Sheet Modal Logic ---
-const cvModal = document.getElementById('cv-modal');
-const cvSheetContainer = document.getElementById('cv-sheet-container');
-const closeCvModalBtn = document.getElementById('close-cv-modal');
-const openCvBtn = document.getElementById('open-cv-btn');
-const specsCvBtn = document.getElementById('specs-cv-btn');
-const cvPrintBtn = document.getElementById('cv-print-btn');
-const cvDownloadPngBtn = document.getElementById('cv-download-png-btn');
-const cvDownloadBtnText = document.getElementById('cv-download-btn-text');
-const cvThemeModeBtns = document.querySelectorAll('.cv-theme-mode-btn');
-const cvOrientBtns = document.querySelectorAll('.cv-orient-btn');
-const cvSheetIdLabel = document.getElementById('cv-sheet-id-label');
-
-let currentCvThemeMode = 'auto'; // 'auto', 'light', 'dark'
-let currentCvOrientation = 'portrait'; // 'portrait', 'landscape'
-
-function setCvOrientation(orientation) {
-    currentCvOrientation = orientation;
-
-    // Update active button state
-    cvOrientBtns.forEach(btn => {
-        const btnOrient = btn.getAttribute('data-cv-orient');
-        if (btnOrient === orientation) {
-            btn.classList.add('active', 'text-studio-100', 'bg-studio-700');
-            btn.classList.remove('text-studio-400');
-        } else {
-            btn.classList.remove('active', 'text-studio-100', 'bg-studio-700');
-            btn.classList.add('text-studio-400');
-        }
-    });
-
-    // Update container classes
-    if (cvSheetContainer) {
-        cvSheetContainer.classList.remove('cv-orient-portrait', 'cv-orient-landscape');
-        cvSheetContainer.classList.add(`cv-orient-${orientation}`);
-    }
-
-    // Update sheet ID stamp
-    if (cvSheetIdLabel) {
-        if (orientation === 'landscape') {
-            cvSheetIdLabel.textContent = 'ARCH-CV-01-L (A4 LANDSCAPE)';
-        } else {
-            cvSheetIdLabel.textContent = 'ARCH-CV-01-P (A4 PORTRAIT)';
-        }
-    }
-
-    // Update button text hint
-    if (cvDownloadBtnText) {
-        cvDownloadBtnText.textContent = orientation === 'landscape' ? 'Download CV (Landscape)' : 'Download CV';
-    }
-
-    // Update body print orientation class
-    if (orientation === 'landscape') {
-        document.body.classList.add('cv-print-landscape');
-    } else {
-        document.body.classList.remove('cv-print-landscape');
-    }
-}
-
-function setCvThemeMode(mode) {
-    currentCvThemeMode = mode;
-
-    // Update active button state
-    cvThemeModeBtns.forEach(btn => {
-        const btnMode = btn.getAttribute('data-cv-mode');
-        if (btnMode === mode) {
-            btn.classList.add('active', 'text-studio-100', 'bg-studio-700');
-            btn.classList.remove('text-studio-400');
-            const icon = btn.querySelector('i');
-            if (icon && !icon.classList.contains('text-accent')) {
-                icon.classList.add('text-accent');
-            }
-        } else {
-            btn.classList.remove('active', 'text-studio-100', 'bg-studio-700');
-            btn.classList.add('text-studio-400');
-            const icon = btn.querySelector('i');
-            if (icon) {
-                icon.classList.remove('text-accent');
-            }
-        }
-    });
-
-    // Apply class to CV sheet container
-    if (cvSheetContainer) {
-        cvSheetContainer.classList.remove('cv-theme-auto', 'cv-theme-light', 'cv-theme-dark');
-        if (mode === 'light') {
-            cvSheetContainer.classList.add('cv-theme-light');
-        } else if (mode === 'dark') {
-            cvSheetContainer.classList.add('cv-theme-dark');
-        } else {
-            cvSheetContainer.classList.add('cv-theme-auto');
-        }
-    }
-}
-
-function exportCvAsA4Png() {
-    if (!cvSheetContainer) return;
-
-    if (typeof html2canvas === 'undefined') {
-        alert("Preparing rendering engine... Please try again in a second.");
-        return;
-    }
-
-    const downloadBtn = document.getElementById('cv-download-png-btn');
-    const originalBtnHTML = downloadBtn ? downloadBtn.innerHTML : '';
-    const isLandscape = currentCvOrientation === 'landscape';
-
-    if (downloadBtn) {
-        downloadBtn.innerHTML = `<i class="ph ph-spinner animate-spin text-base"></i><span>RENDERING ${isLandscape ? 'LANDSCAPE' : 'PORTRAIT'} PNG...</span>`;
-        downloadBtn.disabled = true;
-    }
-
-    // Determine current active mode (if auto, check document class)
-    const isDocDark = document.documentElement.classList.contains('dark') || !document.documentElement.classList.contains('light');
-    let effectiveTheme = currentCvThemeMode;
-    if (effectiveTheme === 'auto') {
-        effectiveTheme = isDocDark ? 'dark' : 'light';
-    }
-
-    // Clone the container for clean off-screen A4 canvas rendering
-    const clone = cvSheetContainer.cloneNode(true);
-    
-    // A4 Standard Dimensions at 96 DPI: 
-    // Portrait: 820px x 1160px | Landscape: 1160px x 820px
-    const targetA4Width = isLandscape ? 1160 : 820; 
-    const targetA4Height = isLandscape ? 820 : 1160;
-
-    clone.id = 'cv-export-clone';
-    clone.style.width = `${targetA4Width}px`;
-    clone.style.height = `${targetA4Height}px`;
-    clone.style.minHeight = `${targetA4Height}px`;
-    clone.style.maxHeight = `${targetA4Height}px`;
-    clone.style.position = 'fixed';
-    clone.style.left = '-9999px';
-    clone.style.top = '0';
-    clone.style.zIndex = '-1000';
-    clone.style.margin = '0';
-    clone.style.padding = isLandscape ? '24px 28px' : '26px 30px';
-    clone.style.boxSizing = 'border-box';
-    clone.style.borderRadius = '0';
-    clone.style.overflow = 'hidden';
-    clone.style.display = 'flex';
-    clone.style.flexDirection = 'column';
-    clone.style.justifyContent = 'space-between';
-
-    // Remove buttons & interactive controls from the export clone
-    const cloneOrientSel = clone.querySelector('#cv-orient-selector');
-    if (cloneOrientSel) cloneOrientSel.remove();
-    const cloneThemeSel = clone.querySelector('#cv-theme-selector');
-    if (cloneThemeSel) cloneThemeSel.remove();
-    const clonePrintBtn = clone.querySelector('#cv-print-btn');
-    if (clonePrintBtn) clonePrintBtn.remove();
-    const cloneDlBtn = clone.querySelector('#cv-download-png-btn');
-    if (cloneDlBtn) cloneDlBtn.remove();
-    const cloneCloseBtn = clone.querySelector('#close-cv-modal');
-    if (cloneCloseBtn) cloneCloseBtn.remove();
-
-    // Apply color theme explicitly to the export clone
-    if (effectiveTheme === 'light') {
-        clone.classList.remove('cv-theme-auto', 'cv-theme-dark');
-        clone.classList.add('cv-theme-light');
-        clone.style.backgroundColor = '#ffffff';
-        clone.style.color = '#0f172a';
-        clone.style.borderColor = '#cbd5e1';
-    } else {
-        clone.classList.remove('cv-theme-auto', 'cv-theme-light');
-        clone.classList.add('cv-theme-dark');
-        clone.style.backgroundColor = '#121212';
-        clone.style.color = '#f1f5f9';
-        clone.style.borderColor = '#27272a';
-    }
-
-    document.body.appendChild(clone);
-
-    // Render using html2canvas at scale 2 for ultra crisp text and photo
-    html2canvas(clone, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: effectiveTheme === 'light' ? '#ffffff' : '#121212',
-        logging: false,
-        windowWidth: targetA4Width,
-        width: targetA4Width
-    }).then(canvas => {
-        // Remove temporary clone from DOM
-        document.body.removeChild(clone);
-
-        // Convert canvas to downloadable PNG
-        const imageURI = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        const timestamp = new Date().toISOString().slice(0, 10);
-        const orientTag = isLandscape ? 'LANDSCAPE' : 'PORTRAIT';
-        link.download = `Marjo_Paguia_Architectural_CV_${effectiveTheme.toUpperCase()}_A4_${orientTag}_${timestamp}.png`;
-        link.href = imageURI;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        if (downloadBtn) {
-            downloadBtn.innerHTML = `<i class="ph ph-check-circle text-base"></i><span>SAVED PNG!</span>`;
-            setTimeout(() => {
-                downloadBtn.innerHTML = originalBtnHTML;
-                downloadBtn.disabled = false;
-            }, 2500);
-        }
-
-        if (typeof showInquiryToast === 'function') {
-            showInquiryToast(`ARCHITECTURAL CV EXPORTED AS A4 ${orientTag} PNG (${effectiveTheme.toUpperCase()} MODE)`);
-        }
-    }).catch(err => {
-        console.error('CV PNG Generation Error:', err);
-        if (clone.parentNode) {
-            document.body.removeChild(clone);
-        }
-        if (downloadBtn) {
-            downloadBtn.innerHTML = originalBtnHTML;
-            downloadBtn.disabled = false;
-        }
-        alert("Failed to export image. You can also use the Print button to save as PDF or image.");
-    });
-}
-
-function openCvModal() {
-    if (!cvModal) return;
-    cvModal.classList.remove('hidden');
-    cvModal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeCvModal() {
-    if (!cvModal) return;
-    cvModal.classList.add('hidden');
-    cvModal.classList.remove('flex');
-    document.body.style.overflow = 'auto';
-}
-
-if (cvModal) {
-    const sidebarCvBtn = document.getElementById('sidebar-cv-btn');
-    if (sidebarCvBtn) sidebarCvBtn.addEventListener('click', openCvModal);
-    if (openCvBtn) openCvBtn.addEventListener('click', openCvModal);
-    if (specsCvBtn) specsCvBtn.addEventListener('click', openCvModal);
-    if (closeCvModalBtn) closeCvModalBtn.addEventListener('click', closeCvModal);
-    
-    cvOrientBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const orient = btn.getAttribute('data-cv-orient') || 'portrait';
-            setCvOrientation(orient);
-        });
-    });
-
-    cvThemeModeBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const mode = btn.getAttribute('data-cv-mode') || 'auto';
-            setCvThemeMode(mode);
-        });
-    });
-
-    if (cvDownloadPngBtn) {
-        cvDownloadPngBtn.addEventListener('click', exportCvAsA4Png);
-    }
-
-    if (cvPrintBtn) {
-        cvPrintBtn.addEventListener('click', () => {
-            window.print();
-        });
-    }
-
-    cvModal.addEventListener('click', (e) => {
-        if (e.target === cvModal) closeCvModal();
-    });
-
-    window.addEventListener('keydown', (e) => {
-        if (!cvModal.classList.contains('hidden') && e.key === 'Escape') {
-            closeCvModal();
-        }
-    });
-}
-
-// --- NEW: Services Milestones Counter Animation ---
-const milestonesGrid = document.getElementById('milestones-grid');
-const milestoneCounters = document.querySelectorAll('.milestone-counter');
-
-if (milestonesGrid && milestoneCounters.length > 0) {
-    const animateCounter = (el) => {
-        const target = parseInt(el.getAttribute('data-target'), 10) || 0;
-        const suffix = el.getAttribute('data-suffix') || '';
-        const duration = 1800; // Animation duration in milliseconds
-        const startTime = performance.now();
-
-        const updateNumber = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-
-            // Ease-out cubic for natural deceleration as it nears the target number
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            const currentVal = Math.floor(easeOut * target);
-
-            el.textContent = `${currentVal}${progress === 1 ? suffix : ''}`;
-
-            if (progress < 1) {
-                requestAnimationFrame(updateNumber);
-            } else {
-                el.textContent = `${target}${suffix}`;
-            }
-        };
-
-        requestAnimationFrame(updateNumber);
-    };
-
-    const milestoneObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                milestoneCounters.forEach(counter => animateCounter(counter));
-                observer.unobserve(entry.target); // Runs only once per page load
-            }
-        });
-    }, {
-        threshold: 0.35 // Triggers when 35% of the milestones bar is visible
-    });
-
-    milestoneObserver.observe(milestonesGrid);
-}
-
-
-
-
-
-
-// --- NEW: Testimonials Auto-Scroll, Drag-to-Scroll & Mouse Wheel ---
-const testimonialsTrack = document.getElementById('testimonials-track');
-
-if (testimonialsTrack) {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let isHovered = false;
-    let autoScrollSpeed = 0.6; // Adjust lower for slower, higher for faster
-    let animationFrameId;
-
-    // 1. Automatic Slow Scrolling
-    const startAutoScroll = () => {
-        const scroll = () => {
-            if (!isHovered && !isDown) {
-                testimonialsTrack.scrollLeft += autoScrollSpeed;
-                
-                // Optional: Loop back to start when reaching the end
-                if (testimonialsTrack.scrollLeft >= (testimonialsTrack.scrollWidth - testimonialsTrack.clientWidth - 1)) {
-                    testimonialsTrack.scrollLeft = 0;
-                }
-            }
-            animationFrameId = requestAnimationFrame(scroll);
-        };
-        animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    // Pause auto-scroll when hovering over the testimonials section
-    testimonialsTrack.addEventListener('mouseenter', () => { isHovered = true; });
-    testimonialsTrack.addEventListener('mouseleave', () => { 
-        isHovered = false; 
-        isDown = false;
-    });
-
-    // 2. Click-and-Drag (Grab to Scroll)
-    testimonialsTrack.addEventListener('mousedown', (e) => {
-        isDown = true;
-        testimonialsTrack.classList.add('cursor-grabbing');
-        testimonialsTrack.classList.remove('cursor-grab');
-        startX = e.pageX - testimonialsTrack.offsetLeft;
-        scrollLeft = testimonialsTrack.scrollLeft;
-    });
-
-    testimonialsTrack.addEventListener('mouseup', () => {
-        isDown = false;
-        testimonialsTrack.classList.remove('cursor-grabbing');
-        testimonialsTrack.classList.add('cursor-grab');
-    });
-
-    testimonialsTrack.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - testimonialsTrack.offsetLeft;
-        const walk = (x - startX) * 1.5; // Drag sensitivity multiplier
-        testimonialsTrack.scrollLeft = scrollLeft - walk;
-    });
-
-    // 3. Mouse Wheel Support (Converts vertical scroll to horizontal)
-    testimonialsTrack.addEventListener('wheel', (e) => {
-        // Prevent default page scroll if scrolling over the cards
-        if (Math.abs(e.deltaY) > 0) {
-            e.preventDefault();
-            testimonialsTrack.scrollLeft += e.deltaY;
-        }
-    }, { passive: false });
-
-    // Initialize auto-scroll
-    startAutoScroll();
+    }, 40);
 }
 
 // ==========================================================================
-// ARCHITECTURAL THEME MANAGER (DARK BLUEPRINT DEFAULT / DRAFTING LIGHT MODE)
+// 02. THEME ENGINE (DARK BLUEPRINT / LIGHT DRAFTING)
 // ==========================================================================
-const THEME_STORAGE_KEY = 'mp_portfolio_theme';
+const THEME_STORAGE_KEY = 'marjo_portfolio_theme';
 
-function initThemeManager() {
-    const desktopThemeBtn = document.getElementById('desktop-theme-btn');
+function initTheme() {
     const mobileThemeBtn = document.getElementById('mobile-theme-btn');
     const menuThemeBtn = document.getElementById('menu-theme-btn');
-    const themeSidebarText = document.querySelector('.theme-sidebar-text');
-    const themeSidebarBadge = document.querySelector('.theme-sidebar-badge');
-    const themeMenuText = document.querySelector('.theme-menu-text');
-    const themeMenuBadge = document.querySelector('.theme-menu-badge');
+    const desktopThemeBtn = document.getElementById('desktop-theme-btn');
+    const themeSidebarText = desktopThemeBtn ? desktopThemeBtn.querySelector('span:not(.text-accent)') : null;
+    const themeSidebarBadge = desktopThemeBtn ? desktopThemeBtn.querySelector('.text-accent') : null;
+    const viewportCard = document.getElementById('model-viewport-card');
 
     const getStoredTheme = () => {
         try {
@@ -1761,8 +86,6 @@ function initThemeManager() {
             document.body.classList.remove('light-mode');
         }
 
-        // Synchronize 3D Model Viewport Card theme state (both standard and fullscreen)
-        const viewportCard = document.getElementById('model-viewport-card');
         if (viewportCard) {
             viewportCard.classList.toggle('light', isLight);
             viewportCard.classList.toggle('dark', !isLight);
@@ -1774,78 +97,350 @@ function initThemeManager() {
             } catch (e) {}
         }
 
-        // Update Desktop Sidebar button text & badge (fixed width labels)
         if (themeSidebarText) {
             themeSidebarText.textContent = isLight ? 'Light Mode' : 'Dark Mode';
         }
         if (themeSidebarBadge) {
             themeSidebarBadge.textContent = isLight ? 'LIGHT' : 'DARK';
         }
-
-        // Update Mobile Menu button text & badge
-        if (themeMenuText) {
-            themeMenuText.textContent = isLight ? 'Light Palette' : 'Dark Blueprint';
-        }
-        if (themeMenuBadge) {
-            themeMenuBadge.textContent = isLight ? 'LIGHT' : 'DARK';
-        }
-
-        // Update icons inside all toggle buttons smoothly without layout shifts
-        document.querySelectorAll('.theme-toggle-btn .theme-icon').forEach(icon => {
-            if (isLight) {
-                icon.classList.remove('ph-moon');
-                icon.classList.add('ph-sun');
-            } else {
-                icon.classList.remove('ph-sun');
-                icon.classList.add('ph-moon');
-            }
-        });
     };
 
-    // Determine initial theme: Strictly dark mode by default unless user saved 'light'
-    const saved = getStoredTheme();
-    const initialTheme = saved === 'light' ? 'light' : 'dark';
-    applyTheme(initialTheme, false);
-
-    // Toggle handler
     const toggleTheme = () => {
-        const currentIsLight = document.documentElement.classList.contains('light');
-        const newTheme = currentIsLight ? 'dark' : 'light';
-        applyTheme(newTheme, true);
+        const currentIsLight = document.documentElement.classList.contains('light') || document.body.classList.contains('light-mode');
+        applyTheme(currentIsLight ? 'dark' : 'light');
     };
 
-    // Attach listeners
-    if (desktopThemeBtn) desktopThemeBtn.addEventListener('click', toggleTheme);
+    const savedTheme = getStoredTheme() || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    applyTheme(savedTheme, false);
+
     if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
     if (menuThemeBtn) menuThemeBtn.addEventListener('click', toggleTheme);
+    if (desktopThemeBtn) desktopThemeBtn.addEventListener('click', toggleTheme);
+}
 
-    // Keyboard shortcut (Alt + T or Ctrl + Shift + L)
-    window.addEventListener('keydown', (e) => {
-        if ((e.altKey && e.key.toLowerCase() === 't') || (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'l')) {
-            e.preventDefault();
-            toggleTheme();
-        }
+// ==========================================================================
+// 03. MOBILE NAVIGATION DRAWER
+// ==========================================================================
+function initMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (!mobileMenu || !mobileMenuBtn) return;
+
+    const openMenu = () => {
+        mobileMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+        mobileMenu.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+
+    const navLinks = mobileMenu.querySelectorAll('a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            closeMenu();
+        });
     });
 }
 
-// Initialize on DOM ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initThemeManager);
-} else {
-    initThemeManager();
+// ==========================================================================
+// 04. COMPUTATIONAL DISTANCE RULER & SCROLL METRICS
+// ==========================================================================
+function initDistanceRuler() {
+    const distanceFill = document.getElementById('distanceFill');
+    const distanceMarker = document.getElementById('distanceMarker');
+    const distanceValue = document.getElementById('distanceValue');
+
+    if (!distanceFill || !distanceValue) return;
+
+    const updateRuler = () => {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight <= 0) return;
+
+        const scrollPos = window.scrollY || window.pageYOffset;
+        const scrollPct = Math.min(100, Math.max(0, (scrollPos / docHeight) * 100));
+
+        distanceFill.style.width = `${scrollPct}%`;
+        if (distanceMarker) distanceMarker.style.left = `${scrollPct}%`;
+
+        // Scale distance value to a realistic architectural building axis length (e.g. 0m to 120m)
+        const meters = ((scrollPct / 100) * 128.5).toFixed(1);
+        distanceValue.textContent = `${meters} m`;
+    };
+
+    window.addEventListener('scroll', updateRuler, { passive: true });
+    updateRuler();
 }
 
-// --- 05. Interactive 3D Model Viewport Logic ---
-function initModelViewerControls() {
-    const modelViewer = document.getElementById('wellness-model-viewer');
-    if (!modelViewer) return;
+// ==========================================================================
+// 05. SCROLL REVEAL (MOBILE-SAFE OBSERVER)
+// ==========================================================================
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll('.gs-reveal');
+    if (!revealElements.length) return;
 
-    // Elements
-    const progressBar = document.getElementById('model-progress-bar');
-    const progressPercent = document.getElementById('model-progress-percent');
-    const progressFilename = document.getElementById('model-progress-filename');
-    const loadStatus = document.getElementById('model-load-status');
-    const loaderPoster = document.getElementById('model-loader-poster');
+    // Mobile fallback: On screens <= 768px or if IntersectionObserver is unavailable, activate all immediately
+    if (window.innerWidth <= 768 || !('IntersectionObserver' in window)) {
+        revealElements.forEach(el => el.classList.add('is-active'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-active');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.01,
+        rootMargin: '100px 0px 50px 0px'
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // Fallback safety timeout: ensure no content remains hidden if user doesn't trigger scroll
+    setTimeout(() => {
+        revealElements.forEach(el => el.classList.add('is-active'));
+    }, 2000);
+}
+
+// ==========================================================================
+// 06. ARCHITECTURAL PROJECTS SECTION & MODAL
+// ==========================================================================
+function initProjectSection() {
+    const filterBtns = document.querySelectorAll('.project-filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+    const emptyState = document.getElementById('project-empty-state');
+
+    // Filter Logic
+    if (filterBtns.length && projectCards.length) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter') || 'all';
+                let visibleCount = 0;
+
+                projectCards.forEach(card => {
+                    const category = card.getAttribute('data-category') || '';
+                    const match = filter === 'all' || category === filter || category.includes(filter);
+
+                    if (match) {
+                        card.style.display = '';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (emptyState) {
+                    emptyState.classList.toggle('hidden', visibleCount > 0);
+                }
+            });
+        });
+    }
+
+    // Project Detail Modal
+    initProjectModal();
+}
+
+function initProjectModal() {
+    const modal = document.getElementById('project-modal');
+    const closeBtn = document.getElementById('close-project-modal');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    if (!modal) return;
+
+    const titleEl = document.getElementById('proj-modal-title');
+    const subtitleEl = document.getElementById('proj-modal-subtitle');
+    const catEl = document.getElementById('proj-modal-category');
+    const yearEl = document.getElementById('proj-modal-year');
+    const descEl = document.getElementById('proj-modal-desc');
+    const locationEl = document.getElementById('proj-modal-location');
+    const areaEl = document.getElementById('proj-modal-area');
+    const typologyEl = document.getElementById('proj-modal-typology-spec');
+    const toolsEl = document.getElementById('proj-modal-tools-spec');
+    const collageEl = document.getElementById('proj-collage');
+    const photoCountEl = document.getElementById('proj-photo-count');
+    const prevBtn = document.getElementById('proj-modal-prev-btn');
+    const nextBtn = document.getElementById('proj-modal-next-btn');
+    const indexBadge = document.getElementById('proj-modal-index-badge');
+
+    let currentProjectIndex = 0;
+    const projectsData = [];
+
+    projectCards.forEach((card, idx) => {
+        const title = card.querySelector('h3')?.textContent.trim() || `Project ${idx + 1}`;
+        const cat = card.getAttribute('data-category') || 'Architecture';
+        const img = card.querySelector('img')?.getAttribute('src') || '';
+        const year = card.querySelector('.font-mono.text-accent')?.textContent.trim() || '2024';
+        const desc = card.querySelector('p')?.textContent.trim() || 'Comprehensive architectural design documentation and 3D computational model.';
+
+        projectsData.push({
+            title,
+            category: cat.toUpperCase(),
+            image: img,
+            year,
+            desc,
+            location: 'Philippines',
+            area: '3,500 sqm',
+            tools: 'Revit / SketchUp / Lumion / AutoCAD',
+            typology: cat.toUpperCase()
+        });
+
+        card.addEventListener('click', () => {
+            openProjectModal(idx);
+        });
+    });
+
+    const openProjectModal = (index) => {
+        currentProjectIndex = index;
+        const p = projectsData[index];
+        if (!p) return;
+
+        if (titleEl) titleEl.textContent = p.title;
+        if (subtitleEl) subtitleEl.textContent = `${p.category} Architectural Documentation`;
+        if (catEl) catEl.textContent = p.category;
+        if (yearEl) yearEl.textContent = p.year;
+        if (descEl) descEl.textContent = p.desc;
+        if (locationEl) locationEl.textContent = p.location;
+        if (areaEl) areaEl.textContent = p.area;
+        if (typologyEl) typologyEl.textContent = p.typology;
+        if (toolsEl) toolsEl.textContent = p.tools;
+        if (indexBadge) indexBadge.textContent = `${index + 1} / ${projectsData.length}`;
+
+        if (collageEl) {
+            collageEl.innerHTML = `
+                <div class="relative w-full aspect-video border border-studio-700 bg-studio-900 overflow-hidden shadow-xl">
+                    <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover">
+                </div>
+            `;
+        }
+        if (photoCountEl) photoCountEl.textContent = '1 PLATE';
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentProjectIndex = (currentProjectIndex - 1 + projectsData.length) % projectsData.length;
+            openProjectModal(currentProjectIndex);
+        });
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentProjectIndex = (currentProjectIndex + 1) % projectsData.length;
+            openProjectModal(currentProjectIndex);
+        });
+    }
+}
+
+// ==========================================================================
+// 07. 3D RENDERS SECTION (FILTERING, SEE MORE & MOBILE VISIBILITY)
+// ==========================================================================
+function init3DRendersSection() {
+    const filterBtns = document.querySelectorAll('.viz-filter-btn');
+    const vizItems = Array.from(document.querySelectorAll('.viz-item'));
+    const seeMoreBtn = document.getElementById('viz-see-more-btn');
+    const seeMoreText = document.getElementById('viz-see-more-text');
+    const seeMoreIcon = document.getElementById('viz-see-more-icon');
+    const emptyState = document.getElementById('viz-empty-state');
+
+    if (!vizItems.length) return;
+
+    let currentFilter = 'all';
+    let isExpanded = false;
+    const INITIAL_LIMIT = 12;
+
+    const updateVisibility = () => {
+        const filtered = vizItems.filter(item => {
+            const cat = item.getAttribute('data-viz-cat') || '';
+            return currentFilter === 'all' || cat === currentFilter;
+        });
+
+        vizItems.forEach(item => {
+            item.classList.add('viz-item-hidden');
+            item.style.display = 'none';
+        });
+
+        const limit = isExpanded ? filtered.length : INITIAL_LIMIT;
+        filtered.forEach((item, idx) => {
+            if (idx < limit) {
+                item.classList.remove('viz-item-hidden');
+                item.style.display = '';
+            }
+        });
+
+        if (emptyState) {
+            emptyState.classList.toggle('hidden', filtered.length > 0);
+        }
+
+        if (seeMoreBtn) {
+            if (filtered.length <= INITIAL_LIMIT) {
+                seeMoreBtn.parentElement?.classList.add('hidden');
+            } else {
+                seeMoreBtn.parentElement?.classList.remove('hidden');
+                if (seeMoreText) {
+                    seeMoreText.textContent = isExpanded ? 'Show Less' : `Load More Renders (${filtered.length - INITIAL_LIMIT} Remaining)`;
+                }
+                if (seeMoreIcon) {
+                    seeMoreIcon.className = isExpanded ? 'ph ph-caret-up' : 'ph ph-caret-down';
+                }
+            }
+        }
+    };
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-viz-filter') || 'all';
+            isExpanded = false;
+            updateVisibility();
+        });
+    });
+
+    if (seeMoreBtn) {
+        seeMoreBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            updateVisibility();
+            if (!isExpanded) {
+                const section = document.getElementById('visualization');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // Initial render setup
+    updateVisibility();
+}
+
+// ==========================================================================
+// 08. INTERACTIVE 3D MODEL VIEWPORT (WEBGL / MODEL-VIEWER)
+// ==========================================================================
+function initModelViewer() {
+    const modelViewer = document.getElementById('wellness-model-viewer');
+    const viewportCard = document.getElementById('model-viewport-card');
+    const hudTitle = document.getElementById('model-hud-title');
     const rotateToggle = document.getElementById('model-rotate-toggle');
     const rotateIcon = document.getElementById('model-rotate-icon');
     const rotateText = document.getElementById('model-rotate-text');
@@ -1855,341 +450,122 @@ function initModelViewerControls() {
     const lightText = document.getElementById('model-light-text');
     const fullscreenBtn = document.getElementById('model-fullscreen-btn');
     const fullscreenIcon = document.getElementById('model-fullscreen-icon');
-    const viewportCard = document.getElementById('model-viewport-card');
-    const cameraBtns = document.querySelectorAll('.model-camera-btn');
+    const orientationHint = document.getElementById('model-orientation-hint');
     const modelSelectBtns = document.querySelectorAll('.model-select-btn');
+    const cameraBtns = document.querySelectorAll('.model-camera-btn');
 
-    // Synchronize initial theme state on 3D viewport card
-    if (viewportCard) {
-        const isCurrentLight = document.documentElement.classList.contains('light') || document.body.classList.contains('light-mode');
-        viewportCard.classList.toggle('light', isCurrentLight);
-        viewportCard.classList.toggle('dark', !isCurrentLight);
-    }
+    if (!modelViewer) return;
 
-    // Dynamic HUD & Specs Elements
-    const hudTitle = document.getElementById('model-hud-title');
-    const hudSize = document.getElementById('model-hud-size');
-    const hudShaders = document.getElementById('model-hud-shaders');
-    const sectionDesc = document.getElementById('model-section-desc');
-    const specTypology = document.getElementById('meta-spec-typology');
-    const specTypologyDesc = document.getElementById('meta-spec-typology-desc');
-    const specPipeline = document.getElementById('meta-spec-pipeline');
-    const specPipelineDesc = document.getElementById('meta-spec-pipeline-desc');
-    const specMaterials = document.getElementById('meta-spec-materials');
-    const specMaterialsDesc = document.getElementById('meta-spec-materials-desc');
-    const specAsset = document.getElementById('meta-spec-asset');
-    const specAssetDesc = document.getElementById('meta-spec-asset-desc');
-
-    const MODELS_DATA = {
+    // 3D Model Catalog
+    const models = {
         'wellness': {
-            src: '3D%20Models/Wellness%20Center.glb',
-            alt: 'Wellness Center Architectural 3D Model',
+            src: '3D Models/Wellness Center.glb',
             title: 'WELLNESS CENTER COMPLEX',
-            filename: 'WELLNESS_CENTER.GLB',
-            size: '16 MB',
-            shaders: '84 SHADERS',
-            typology: 'Wellness & Therapy Center',
-            typologyDesc: 'Healthcare Community Complex',
-            pipeline: 'SketchUp & Blender',
-            pipelineDesc: 'Parametric Massing & Detailing',
-            materials: 'Red Cedar & Standing Seam',
-            materialsDesc: 'Zinc Sheeting, Low-E Glazing',
-            asset: '84 Materials / PBR',
-            assetDesc: 'Real-time glTF 2.0 Binary Format',
-            desc: 'Real-time interactive architectural viewport for the Wellness Center. Freely orbit 360°, zoom, and inspect architectural massing, cedar cladding, standing seam roofing, and structural canopies directly in your browser.',
-            orbit: '45deg 65deg auto',
-            target: 'auto auto auto',
-            fov: '35deg'
-        },
-        'event-place': {
-            src: '3D%20Models/event%20place.glb',
-            alt: 'Event Place Architectural 3D Model',
-            title: 'EVENT PLACE // CONTEMPORARY PAVILION',
-            filename: 'EVENT_PLACE.GLB',
-            size: '12.2 MB',
-            shaders: '37 SHADERS',
-            typology: 'Contemporary Event Pavilion',
-            typologyDesc: 'Banquet Hall & Social Gathering Venue',
-            pipeline: 'SketchUp & Blender',
-            pipelineDesc: 'Spatial Geometry & Ceiling Design',
-            materials: 'Polished Concrete & Oak',
-            materialsDesc: 'Western Red Cedar, Terrazzo, Glazing',
-            asset: '37 Materials / PBR',
-            assetDesc: 'Real-time glTF 2.0 Binary Format',
-            desc: 'Real-time interactive architectural viewport for the Event Place. Freely orbit 360°, zoom, and inspect the spacious banquet hall, polished concrete floorings, decorative ceiling stacks, and timber accents directly in your browser.',
-            orbit: '45deg 65deg auto',
-            target: 'auto auto auto',
-            fov: '38deg'
+            typology: 'Healthcare / Wellness Complex',
+            pipeline: 'Revit BIM + Lumion + Blender'
         },
         'airport': {
-            src: '3D%20Models/Airport.glb',
-            alt: 'Airport Terminal & Concourse Architectural 3D Model',
-            title: 'INTERNATIONAL AIRPORT COMPLEX',
-            filename: 'AIRPORT.GLB',
-            size: '17.9 MB',
-            shaders: '118 SHADERS',
-            typology: 'Aviation Infrastructure & Terminal',
-            typologyDesc: 'International Air Terminal & Passenger Concourse',
-            pipeline: 'SketchUp & Blender',
-            pipelineDesc: 'Large-Scale BIM & Curvilinear Roof Framing',
-            materials: 'Curtain Glazing & Metal Panels',
-            materialsDesc: 'Structural Steel, Aerodrome Pavement, Low-E Glass',
-            asset: '118 Materials / PBR',
-            assetDesc: 'Real-time glTF 2.0 Binary Format',
-            desc: 'Real-time interactive architectural viewport for the International Airport. Freely orbit 360°, zoom, and inspect terminal roof cantilevers, passenger concourses, structural trusses, and curtain wall glazing systems directly in your browser.',
-            orbit: '45deg 65deg auto',
-            target: 'auto auto auto',
-            fov: '35deg'
+            src: '3D Models/Airport.glb',
+            title: 'INTERNATIONAL AIRPORT TERMINAL',
+            typology: 'Aviation Infrastructure',
+            pipeline: 'BIM Massing + Rhino 3D + Lumion'
         },
         'domestic-airport': {
-            src: '3D%20Models/Domestic%20Airport.glb',
-            alt: 'Domestic Airport Terminal Architectural 3D Model',
-            title: 'DOMESTIC AIRPORT TERMINAL',
-            filename: 'DOMESTIC_AIRPORT.GLB',
-            size: '15.8 MB',
-            shaders: '82 SHADERS',
-            typology: 'Regional Aviation & Passenger Terminal',
-            typologyDesc: 'Domestic Air Terminal & Apron Facility',
-            pipeline: 'SketchUp & Blender',
-            pipelineDesc: 'Passenger Terminal Concourse & Airside Planning',
-            materials: 'White Stucco & Curtain Glazing',
-            materialsDesc: 'Oak Cladding, In-Situ Concrete, Granite Stack, Aluminium',
-            asset: '82 Materials / PBR',
-            assetDesc: 'Real-time glTF 2.0 Binary Format',
-            desc: 'Real-time interactive architectural viewport for the Domestic Airport. Freely orbit 360°, zoom, and inspect the passenger terminal concourse, white stucco facade envelope, aluminium accents, glass curtain walls, and airside pavement directly in your browser.',
-            orbit: '45deg 65deg auto',
-            target: 'auto auto auto',
-            fov: '35deg'
+            src: '3D Models/Domestic Airport.glb',
+            title: 'REGIONAL DOMESTIC AIRPORT',
+            typology: 'Transport Infrastructure',
+            pipeline: 'AutoCAD + SketchUp + Enscape'
         },
         'duplex': {
-            src: '3D%20Models/Duplex.glb',
-            alt: 'Duplex Residential Architectural 3D Model',
+            src: '3D Models/Duplex.glb',
             title: 'CONTEMPORARY DUPLEX RESIDENCE',
-            filename: 'DUPLEX.GLB',
-            size: '17.4 MB',
-            shaders: '29 SHADERS',
-            typology: 'Residential Twin-Unit Duplex',
-            typologyDesc: 'Two-Family Contemporary Residence',
-            pipeline: 'SketchUp & Blender',
-            pipelineDesc: 'Twin-Unit Massing & Spatial Planning',
-            materials: 'Western Red Cedar & Marble',
-            materialsDesc: 'Zinc Cladding, Carrera Marble, Dark Metal',
-            asset: '29 Materials / PBR',
-            assetDesc: 'Real-time glTF 2.0 Binary Format',
-            desc: 'Real-time interactive architectural viewport for the Contemporary Duplex. Freely orbit 360°, zoom, and inspect twin-unit spatial layouts, cedar vertical siding, standing seam metal accents, and Carrera marble detailing directly in your browser.',
-            orbit: '45deg 65deg auto',
-            target: 'auto auto auto',
-            fov: '35deg'
+            typology: 'Residential Architecture',
+            pipeline: 'Revit Architecture + SketchUp'
         },
         'rowhouse': {
-            src: '3D%20Models/Rowhouse.glb',
-            alt: 'Sustainable Solar Rowhouse Architectural 3D Model',
-            title: 'SOLAR SUSTAINABLE ROWHOUSE',
-            filename: 'ROWHOUSE.GLB',
-            size: '16.1 MB',
-            shaders: '17 SHADERS',
-            typology: 'Sustainable Urban Rowhouse',
-            typologyDesc: 'High-Density Solar Townhouse Unit',
-            pipeline: 'SketchUp & Blender',
-            pipelineDesc: 'Modular High-Density Unit & PV Array',
-            materials: 'Standing Seam Red & PV Panels',
-            materialsDesc: 'Monocrystalline Solar, Polished Concrete, Timber',
-            asset: '17 Materials / PBR',
-            assetDesc: 'Real-time glTF 2.0 Binary Format',
-            desc: 'Real-time interactive architectural viewport for the Solar Sustainable Rowhouse. Freely orbit 360°, zoom, and inspect the rooftop photovoltaic solar panel array, standing seam red metal roof, timber finishes, and modular envelope directly in your browser.',
-            orbit: '45deg 65deg auto',
-            target: 'auto auto auto',
-            fov: '35deg'
+            src: '3D Models/event place.glb',
+            title: 'COMMUNITY EVENT PAVILION',
+            typology: 'Commercial / Civic Center',
+            pipeline: 'SketchUp 3D + Lumion Engine'
+        },
+        'event-place': {
+            src: '3D Models/event place.glb',
+            title: 'MODERN EVENT PAVILION',
+            typology: 'Commercial Hospitality',
+            pipeline: '3D Modeling + Lumion Engine'
         }
     };
 
-    let currentModelId = 'wellness';
-
-    // 1. Loading Progress Handler
-    modelViewer.addEventListener('progress', (event) => {
-        const progress = Math.min(Math.max(event.detail.totalProgress || 0, 0), 1);
-        const percent = Math.round(progress * 100);
-        if (progressBar) progressBar.style.width = `${percent}%`;
-        if (progressPercent) progressPercent.textContent = `${percent}%`;
-        if (loadStatus) {
-            const currentData = MODELS_DATA[currentModelId] || MODELS_DATA['wellness'];
-            if (percent < 40) {
-                loadStatus.textContent = `STREAMING ${currentData.filename}...`;
-            } else if (percent < 85) {
-                loadStatus.textContent = `COMPILING ${currentData.shaders}...`;
-            } else if (percent < 100) {
-                loadStatus.textContent = 'FINALIZING BIM GEOMETRY...';
-            } else {
-                loadStatus.textContent = 'READY FOR 3D INSPECTION';
-            }
-        }
-    });
-
-    modelViewer.addEventListener('load', () => {
-        if (progressBar) progressBar.style.width = '100%';
-        if (progressPercent) progressPercent.textContent = '100%';
-        if (loadStatus) loadStatus.textContent = 'VIEWPORT ONLINE';
-        setTimeout(() => {
-            if (loaderPoster) {
-                loaderPoster.classList.add('opacity-0', 'pointer-events-none', 'transition-opacity', 'duration-500');
-                setTimeout(() => {
-                    loaderPoster.style.display = 'none';
-                }, 500);
-            }
-        }, 350);
-    });
-
-    // Function to switch active model
-    function switchModel(modelId) {
-        const data = MODELS_DATA[modelId];
-        if (!data || (modelId === currentModelId && modelViewer.src.includes(data.src))) return;
-
-        currentModelId = modelId;
-
-        // Update Button Styles
-        modelSelectBtns.forEach(btn => {
-            const isMatch = btn.getAttribute('data-model-id') === modelId;
-            btn.classList.toggle('active', isMatch);
-            if (isMatch) {
-                btn.classList.add('text-studio-100');
-                btn.classList.remove('text-studio-400');
-            } else {
-                btn.classList.remove('text-studio-100');
-                btn.classList.add('text-studio-400');
-            }
-        });
-
-        // Show Preloader
-        if (loaderPoster) {
-            loaderPoster.style.display = 'flex';
-            loaderPoster.classList.remove('opacity-0', 'pointer-events-none');
-        }
-        if (progressBar) progressBar.style.width = '0%';
-        if (progressPercent) progressPercent.textContent = '0%';
-        if (progressFilename) progressFilename.textContent = data.filename;
-        if (loadStatus) loadStatus.textContent = `INITIALIZING ${data.filename}...`;
-
-        // Update HUD & Specs
-        if (hudTitle) hudTitle.textContent = data.title;
-        if (hudSize) hudSize.textContent = data.size;
-        if (hudShaders) hudShaders.textContent = data.shaders;
-        if (sectionDesc) sectionDesc.textContent = data.desc;
-
-        if (specTypology) specTypology.textContent = data.typology;
-        if (specTypologyDesc) specTypologyDesc.textContent = data.typologyDesc;
-        if (specPipeline) specPipeline.textContent = data.pipeline;
-        if (specPipelineDesc) specPipelineDesc.textContent = data.pipelineDesc;
-        if (specMaterials) specMaterials.textContent = data.materials;
-        if (specMaterialsDesc) specMaterialsDesc.textContent = data.materialsDesc;
-        if (specAsset) specAsset.textContent = data.asset;
-        if (specAssetDesc) specAssetDesc.textContent = data.assetDesc;
-
-        // Reset Camera Presets to Isometric
-        cameraBtns.forEach((b, idx) => {
-            if (idx === 0) {
-                b.classList.add('active', 'bg-accent', 'text-studio-900');
-                b.classList.remove('bg-studio-800', 'text-studio-300');
-            } else {
-                b.classList.remove('active', 'bg-accent', 'text-studio-900');
-                b.classList.add('bg-studio-800', 'text-studio-300');
-            }
-        });
-
-        // Update model-viewer
-        modelViewer.src = data.src;
-        modelViewer.alt = data.alt;
-        modelViewer.cameraOrbit = data.orbit;
-        modelViewer.cameraTarget = data.target;
-        modelViewer.fieldOfView = data.fov;
-    }
-
-    // Attach Model Selector Button Listeners
+    // Model Selector Tabs
     modelSelectBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            modelSelectBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
             const modelId = btn.getAttribute('data-model-id');
-            if (modelId) switchModel(modelId);
+            const data = models[modelId];
+            if (data) {
+                modelViewer.src = data.src;
+                if (hudTitle) hudTitle.textContent = data.title;
+            }
         });
     });
 
-    // 2. Camera Preset Controls
+    // Camera Presets
     cameraBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const orbit = btn.getAttribute('data-orbit');
-            const fov = btn.getAttribute('data-fov');
-            if (orbit) modelViewer.cameraOrbit = orbit;
-            if (fov) modelViewer.fieldOfView = fov;
+            cameraBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-            cameraBtns.forEach(b => {
-                b.classList.remove('active', 'bg-accent', 'text-studio-900');
-                b.classList.add('bg-studio-800', 'text-studio-300');
-            });
-            btn.classList.add('active', 'bg-accent', 'text-studio-900');
-            btn.classList.remove('bg-studio-800', 'text-studio-300');
+            const orbit = btn.getAttribute('data-orbit');
+            if (orbit) {
+                modelViewer.cameraOrbit = orbit;
+            }
         });
     });
 
-    // 3. Auto-Rotate Turntable Toggle
-    let isRotating = true;
+    // Turntable Rotation
+    let autoRotate = true;
     if (rotateToggle) {
         rotateToggle.addEventListener('click', () => {
-            isRotating = !isRotating;
-            modelViewer.autoRotate = isRotating;
-            if (isRotating) {
-                if (rotateIcon) rotateIcon.className = 'ph ph-arrows-clockwise text-sm text-accent';
-                if (rotateText) rotateText.textContent = 'Rotation: On';
-                rotateToggle.classList.remove('border-studio-700');
-                rotateToggle.classList.add('border-accent');
-            } else {
-                if (rotateIcon) rotateIcon.className = 'ph ph-pause text-sm text-studio-400';
-                if (rotateText) rotateText.textContent = 'Rotation: Paused';
-                rotateToggle.classList.add('border-studio-700');
-                rotateToggle.classList.remove('border-accent');
+            autoRotate = !autoRotate;
+            modelViewer.autoRotate = autoRotate;
+            if (rotateIcon) {
+                rotateIcon.className = autoRotate ? 'ph ph-arrows-clockwise text-sm text-accent' : 'ph ph-pause text-sm text-studio-400';
+            }
+            if (rotateText) {
+                rotateText.textContent = autoRotate ? 'Rotate' : 'Paused';
             }
         });
     }
 
-    // 4. Reset Camera Viewport
+    // Reset Camera
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-            const currentData = MODELS_DATA[currentModelId] || MODELS_DATA['wellness'];
-            modelViewer.cameraOrbit = currentData.orbit;
-            modelViewer.cameraTarget = currentData.target;
-            modelViewer.fieldOfView = currentData.fov;
-
-            // Reset active preset button to 3D Isometric
-            cameraBtns.forEach((b, idx) => {
-                if (idx === 0) {
-                    b.classList.add('active', 'bg-accent', 'text-studio-900');
-                    b.classList.remove('bg-studio-800', 'text-studio-300');
-                } else {
-                    b.classList.remove('active', 'bg-accent', 'text-studio-900');
-                    b.classList.add('bg-studio-800', 'text-studio-300');
-                }
-            });
+            modelViewer.cameraOrbit = '45deg 65deg 105%';
+            modelViewer.cameraTarget = 'auto auto auto';
+            modelViewer.fieldOfView = 'auto';
         });
     }
 
-    // 5. Lighting Mode Toggle (Studio vs Neutral Daylight)
+    // Lighting Mode Toggle
     let isStudioLight = true;
     if (lightBtn) {
         lightBtn.addEventListener('click', () => {
             isStudioLight = !isStudioLight;
-            if (isStudioLight) {
-                modelViewer.exposure = 1.0;
-                modelViewer.shadowIntensity = 1.4;
-                if (lightIcon) lightIcon.className = 'ph ph-sun text-sm text-accent';
-                if (lightText) lightText.textContent = 'Studio';
-            } else {
-                modelViewer.exposure = 1.35;
-                modelViewer.shadowIntensity = 0.8;
-                if (lightIcon) lightIcon.className = 'ph ph-sun-dim text-sm text-studio-300';
-                if (lightText) lightText.textContent = 'Daylight';
+            modelViewer.exposure = isStudioLight ? 1.0 : 1.35;
+            modelViewer.shadowIntensity = isStudioLight ? 1.4 : 0.8;
+            if (lightIcon) {
+                lightIcon.className = isStudioLight ? 'ph ph-sun text-sm text-accent' : 'ph ph-sun-dim text-sm text-studio-300';
+            }
+            if (lightText) {
+                lightText.textContent = isStudioLight ? 'Studio' : 'Daylight';
             }
         });
     }
 
-    // 6. Fullscreen Viewport Mode & Forced Landscape Orientation for Mobile
-    const orientationHint = document.getElementById('model-orientation-hint');
+    // Fullscreen & Forced Mobile Landscape Orientation
+    let isPseudoFullscreen = false;
 
     const lockLandscape = async () => {
         try {
@@ -2198,14 +574,8 @@ function initModelViewerControls() {
                 return true;
             } else if (screen.lockOrientation) {
                 return screen.lockOrientation('landscape');
-            } else if (screen.mozLockOrientation) {
-                return screen.mozLockOrientation('landscape');
-            } else if (screen.msLockOrientation) {
-                return screen.msLockOrientation('landscape');
             }
-        } catch (err) {
-            // Orientation lock may not be supported by OS (e.g. iOS Safari) or requires explicit prompt
-        }
+        } catch (e) {}
         return false;
     };
 
@@ -2215,119 +585,94 @@ function initModelViewerControls() {
                 screen.orientation.unlock();
             } else if (screen.unlockOrientation) {
                 screen.unlockOrientation();
-            } else if (screen.mozUnlockOrientation) {
-                screen.mozUnlockOrientation();
-            } else if (screen.msUnlockOrientation) {
-                screen.msUnlockOrientation();
             }
         } catch (e) {}
     };
 
+    const checkLandscapeOrientation = () => {
+        const isFull = document.fullscreenElement === viewportCard ||
+                       document.webkitFullscreenElement === viewportCard ||
+                       isPseudoFullscreen;
+        const isPortrait = window.innerWidth < window.innerHeight;
+        const isMobile = window.innerWidth <= 1024;
+
+        if (isFull && isPortrait && isMobile) {
+            if (orientationHint) {
+                orientationHint.classList.remove('hidden');
+                orientationHint.classList.add('flex');
+            }
+        } else {
+            if (orientationHint) {
+                orientationHint.classList.add('hidden');
+                orientationHint.classList.remove('flex');
+            }
+        }
+    };
+
+    const updateFullscreenUI = () => {
+        const isFull = document.fullscreenElement === viewportCard ||
+                       document.webkitFullscreenElement === viewportCard ||
+                       isPseudoFullscreen;
+
+        if (fullscreenIcon) {
+            fullscreenIcon.className = isFull ? 'ph ph-corners-in text-accent' : 'ph ph-corners-out';
+        }
+
+        if (isFull) {
+            lockLandscape().then(() => checkLandscapeOrientation());
+            checkLandscapeOrientation();
+        } else {
+            isPseudoFullscreen = false;
+            if (viewportCard) viewportCard.classList.remove('is-mobile-fullscreen');
+            unlockOrientation();
+            checkLandscapeOrientation();
+        }
+
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 100);
+    };
+
     if (fullscreenBtn && viewportCard) {
-        let isPseudoFullscreen = false;
-
-        const checkLandscapeOrientation = () => {
-            const isFull = document.fullscreenElement === viewportCard || 
-                           document.webkitFullscreenElement === viewportCard || 
-                           isPseudoFullscreen;
-            const isPortrait = window.innerWidth < window.innerHeight;
-            const isMobile = window.innerWidth <= 1024;
-
-            if (isFull && isPortrait && isMobile) {
-                if (orientationHint) {
-                    orientationHint.classList.remove('hidden');
-                    orientationHint.classList.add('flex');
-                }
-            } else {
-                if (orientationHint) {
-                    orientationHint.classList.add('hidden');
-                    orientationHint.classList.remove('flex');
-                }
-            }
-        };
-
-        const updateFullscreenUI = () => {
-            const isFull = document.fullscreenElement === viewportCard || 
-                           document.webkitFullscreenElement === viewportCard || 
-                           isPseudoFullscreen;
-
-            if (fullscreenIcon) {
-                fullscreenIcon.className = isFull ? 'ph ph-corners-in text-accent' : 'ph ph-corners-out';
-            }
-
-            // Ensure theme classes on viewportCard match current website theme
-            const isCurrentLight = document.documentElement.classList.contains('light') || document.body.classList.contains('light-mode');
-            viewportCard.classList.toggle('light', isCurrentLight);
-            viewportCard.classList.toggle('dark', !isCurrentLight);
-
-            if (isFull) {
-                // Request mobile landscape orientation lock
-                lockLandscape().then(() => {
-                    checkLandscapeOrientation();
-                });
-                checkLandscapeOrientation();
-            } else {
-                isPseudoFullscreen = false;
-                viewportCard.classList.remove('is-mobile-fullscreen');
-                unlockOrientation();
-                checkLandscapeOrientation();
-            }
-
-            // Notify model-viewer to recompute its WebGL canvas aspect ratio
-            setTimeout(() => {
-                window.dispatchEvent(new Event('resize'));
-            }, 100);
-        };
-
-        const exitFullscreen = () => {
-            if (document.fullscreenElement || document.webkitFullscreenElement) {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen().catch(() => {});
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                }
-            } else if (isPseudoFullscreen) {
-                isPseudoFullscreen = false;
-                viewportCard.classList.remove('is-mobile-fullscreen');
-                updateFullscreenUI();
-            }
-        };
-
         fullscreenBtn.addEventListener('click', async () => {
-            const isCurrentlyFull = document.fullscreenElement === viewportCard || 
-                                    document.webkitFullscreenElement === viewportCard || 
-                                    isPseudoFullscreen;
+            const isFull = document.fullscreenElement === viewportCard ||
+                           document.webkitFullscreenElement === viewportCard ||
+                           isPseudoFullscreen;
 
-            if (!isCurrentlyFull) {
-                let enteredNative = false;
+            if (!isFull) {
+                let entered = false;
                 if (viewportCard.requestFullscreen) {
                     try {
                         await viewportCard.requestFullscreen();
-                        enteredNative = true;
-                    } catch (err) {
-                        enteredNative = false;
-                    }
+                        entered = true;
+                    } catch (err) {}
                 } else if (viewportCard.webkitRequestFullscreen) {
                     try {
                         viewportCard.webkitRequestFullscreen();
-                        enteredNative = true;
-                    } catch (err) {
-                        enteredNative = false;
-                    }
+                        entered = true;
+                    } catch (err) {}
                 }
 
-                if (!enteredNative) {
-                    // Fallback for mobile browsers with restricted fullscreen (such as iOS Safari)
+                if (!entered) {
                     isPseudoFullscreen = true;
                     viewportCard.classList.add('is-mobile-fullscreen');
                     updateFullscreenUI();
                 } else {
-                    // Lock to landscape once native fullscreen is activated
                     await lockLandscape();
                     checkLandscapeOrientation();
                 }
             } else {
-                exitFullscreen();
+                if (document.fullscreenElement || document.webkitFullscreenElement) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(() => {});
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                } else if (isPseudoFullscreen) {
+                    isPseudoFullscreen = false;
+                    viewportCard.classList.remove('is-mobile-fullscreen');
+                    updateFullscreenUI();
+                }
             }
         });
 
@@ -2343,8 +688,432 @@ function initModelViewerControls() {
     }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initModelViewerControls);
-} else {
-    initModelViewerControls();
+// ==========================================================================
+// 09. DIGITAL ART & MANUAL DRAWINGS GALLERY
+// ==========================================================================
+function initArtGallerySection() {
+    const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+    const galleryItems = Array.from(document.querySelectorAll('#gallery-grid > div'));
+    const seeMoreBtn = document.getElementById('gallery-see-more-btn');
+    const seeMoreText = document.getElementById('gallery-see-more-text');
+    const seeMoreIcon = document.getElementById('gallery-see-more-icon');
+    const emptyState = document.getElementById('gallery-empty-state');
+
+    if (!galleryItems.length) return;
+
+    let currentFilter = 'all';
+    let isExpanded = false;
+    const INITIAL_LIMIT = 9;
+
+    const updateGallery = () => {
+        const filtered = galleryItems.filter(item => {
+            const cat = item.getAttribute('data-cat') || '';
+            return currentFilter === 'all' || cat === currentFilter;
+        });
+
+        galleryItems.forEach(item => {
+            item.style.display = 'none';
+        });
+
+        const limit = isExpanded ? filtered.length : INITIAL_LIMIT;
+        filtered.forEach((item, idx) => {
+            if (idx < limit) {
+                item.style.display = '';
+            }
+        });
+
+        if (emptyState) {
+            emptyState.classList.toggle('hidden', filtered.length > 0);
+        }
+
+        if (seeMoreBtn) {
+            if (filtered.length <= INITIAL_LIMIT) {
+                seeMoreBtn.parentElement?.classList.add('hidden');
+            } else {
+                seeMoreBtn.parentElement?.classList.remove('hidden');
+                if (seeMoreText) {
+                    seeMoreText.textContent = isExpanded ? 'Show Less' : `Load More Works (${filtered.length - INITIAL_LIMIT} Remaining)`;
+                }
+                if (seeMoreIcon) {
+                    seeMoreIcon.className = isExpanded ? 'ph ph-caret-up' : 'ph ph-caret-down';
+                }
+            }
+        }
+    };
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-filter') || 'all';
+            isExpanded = false;
+            updateGallery();
+        });
+    });
+
+    if (seeMoreBtn) {
+        seeMoreBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            updateGallery();
+        });
+    }
+
+    updateGallery();
+}
+
+// ==========================================================================
+// 10. ARCHITECTURAL SERVICES MODAL
+// ==========================================================================
+function initServiceModal() {
+    const modal = document.getElementById('service-modal');
+    const closeBtn = document.getElementById('close-service-modal');
+    const serviceCards = document.querySelectorAll('.service-architectural-card');
+    const directInquiryBtn = document.getElementById('open-inquiry-direct-btn');
+
+    if (!modal) return;
+
+    const titleEl = document.getElementById('modal-service-title');
+    const catEl = document.getElementById('modal-service-category');
+    const descEl = document.getElementById('modal-service-desc');
+    const deliverablesEl = document.getElementById('modal-service-deliverables');
+    const toolsEl = document.getElementById('modal-service-tools');
+    const audienceEl = document.getElementById('modal-service-audience');
+    const inquireBtn = document.getElementById('modal-inquire-btn');
+
+    const serviceData = [
+        {
+            category: 'ARCHITECTURAL DESIGN',
+            title: 'Design Development & Spatial Planning',
+            desc: 'End-to-end conceptual and schematic architectural design, translating spatial requirements and site parameters into functional, aesthetic blueprint systems.',
+            deliverables: ['Schematic Architectural Plans', 'Elevations & Structural Sections', 'Site Massing & Zoning Compliance', 'Material Specification Schedules'],
+            tools: 'AutoCAD / Revit / SketchUp / Rhino',
+            audience: 'Residential Owners, Developers, Commercial Clients'
+        },
+        {
+            category: '3D VISUALIZATION',
+            title: 'Photorealistic Architectural Rendering',
+            desc: 'High-fidelity interior and exterior visualization creating realistic atmospheric lighting, material textures, and spatial volume for client presentations and marketing.',
+            deliverables: ['4K Exterior Twilight Renders', 'High-Res Interior Perspective Plates', 'Material & Texture Studies', 'Interactive 360 Panorama Views'],
+            tools: 'Lumion / Blender / SketchUp / Photoshop',
+            audience: 'Architects, Real Estate Developers, Design Studios'
+        },
+        {
+            category: 'BIM MODELING',
+            title: 'Building Information Modeling & Drafting',
+            desc: 'Coordinated parametric building models integrating architectural elements, schedules, and clash-free technical construction drawings.',
+            deliverables: ['Parametric BIM Models (Revit)', 'Automated Material Takeoff Schedules', 'Coordinated Construction Drawings', 'CAD-to-BIM Conversion'],
+            tools: 'Autodesk Revit / Navisworks / BIM 360',
+            audience: 'General Contractors, Engineers, Project Managers'
+        },
+        {
+            category: 'DIGITAL & MANUAL ART',
+            title: 'Architectural Illustrations & Perspectives',
+            desc: 'Hand-drawn watercolor architectural sketches and digital concept art capturing character, ambience, and artistic expression for portfolio presentation.',
+            deliverables: ['Watercolor Elevation Studies', 'Manual Perspective Drawings', 'Digital Architectural Concept Art', 'Competition Presentation Graphics'],
+            tools: 'Clip Studio Paint / Watercolor / Graphite / Procreate',
+            audience: 'Creative Agencies, Collectors, Competition Teams'
+        }
+    ];
+
+    serviceCards.forEach((card, idx) => {
+        card.addEventListener('click', () => {
+            const s = serviceData[idx] || serviceData[0];
+            if (titleEl) titleEl.textContent = s.title;
+            if (catEl) catEl.textContent = s.category;
+            if (descEl) descEl.textContent = s.desc;
+            if (toolsEl) toolsEl.textContent = s.tools;
+            if (audienceEl) audienceEl.textContent = s.audience;
+
+            if (deliverablesEl) {
+                deliverablesEl.innerHTML = s.deliverables.map(d => `
+                    <li class="flex items-center gap-2">
+                        <i class="ph ph-check-square text-accent shrink-0"></i>
+                        <span>${d}</span>
+                    </li>
+                `).join('');
+            }
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    if (inquireBtn) {
+        inquireBtn.addEventListener('click', () => {
+            closeModal();
+            const inqModal = document.getElementById('inquiry-modal');
+            if (inqModal) {
+                inqModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
+
+    if (directInquiryBtn) {
+        directInquiryBtn.addEventListener('click', () => {
+            const inqModal = document.getElementById('inquiry-modal');
+            if (inqModal) {
+                inqModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
+}
+
+// ==========================================================================
+// 11. PROJECT INQUIRY MODAL & EMAIL CLIENT DISPATCH
+// ==========================================================================
+function initInquiryModal() {
+    const modal = document.getElementById('inquiry-modal');
+    const closeBtn = document.getElementById('close-inquiry-modal');
+    const form = document.getElementById('inquiry-form');
+    const emailBtn = document.getElementById('inq-email-btn');
+    const copyBtn = document.getElementById('inq-copy-btn');
+    const toast = document.getElementById('inquiry-toast');
+    const toastMsg = document.getElementById('inquiry-toast-msg');
+
+    if (!modal) return;
+
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    const showToast = (msg) => {
+        if (!toast) return;
+        if (toastMsg) toastMsg.textContent = msg;
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 3500);
+    };
+
+    const getInquiryData = () => {
+        const name = (document.getElementById('inq-client-name')?.value || '').trim();
+        const contact = (document.getElementById('inq-client-contact')?.value || '').trim();
+        const service = document.getElementById('inq-service-type')?.value || 'Architectural Design';
+        const typology = document.getElementById('inq-typology')?.value || 'Residential';
+        const timeline = document.getElementById('inq-timeline')?.value || 'Flexible';
+        const notes = (document.getElementById('inq-notes')?.value || '').trim();
+
+        const summary = `ARCHITECTURAL INQUIRY\n-------------------\nClient: ${name || 'Prospective Client'}\nContact: ${contact || 'N/A'}\nService Required: ${service}\nProject Typology: ${typology}\nTarget Timeline: ${timeline}\nProject Notes:\n${notes || 'None specified'}\n-------------------\nSent from Marjo Paguia Portfolio`;
+
+        return { name, contact, service, typology, timeline, notes, summary };
+    };
+
+    if (emailBtn) {
+        emailBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const data = getInquiryData();
+            const subject = encodeURIComponent(`Project Inquiry: ${data.service} (${data.typology}) - ${data.name || 'Client'}`);
+            const body = encodeURIComponent(data.summary);
+            window.location.href = `mailto:noroniomarjo@gmail.com?subject=${subject}&body=${body}`;
+            showToast('Opening your default email client...');
+        });
+    }
+
+    if (copyBtn) {
+        copyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const data = getInquiryData();
+            navigator.clipboard.writeText(data.summary).then(() => {
+                showToast('Inquiry details copied to clipboard!');
+            }).catch(() => {
+                showToast('Could not access clipboard.');
+            });
+        });
+    }
+}
+
+// ==========================================================================
+// 12. PROFESSIONAL CURRICULUM VITAE (CV) MODAL
+// ==========================================================================
+function initCVModal() {
+    const modal = document.getElementById('cv-modal');
+    const closeBtn = document.getElementById('close-cv-modal');
+    const openBtns = [
+        document.getElementById('open-cv-btn'),
+        document.getElementById('sidebar-cv-btn'),
+        document.getElementById('specs-cv-btn')
+    ].filter(Boolean);
+
+    const printBtn = document.getElementById('cv-print-btn');
+    const sheetContainer = document.getElementById('cv-sheet-container');
+    const orientSelector = document.getElementById('cv-orient-selector');
+    const themeSelector = document.getElementById('cv-theme-selector');
+
+    if (!modal) return;
+
+    const openCV = () => {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeCV = () => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    openBtns.forEach(b => b.addEventListener('click', openCV));
+    if (closeBtn) closeBtn.addEventListener('click', closeCV);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeCV();
+    });
+
+    if (printBtn) {
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+    }
+
+    if (orientSelector && sheetContainer) {
+        orientSelector.addEventListener('change', () => {
+            if (orientSelector.value === 'landscape') {
+                sheetContainer.classList.add('cv-landscape');
+            } else {
+                sheetContainer.classList.remove('cv-landscape');
+            }
+        });
+    }
+
+    if (themeSelector && sheetContainer) {
+        themeSelector.addEventListener('change', () => {
+            if (themeSelector.value === 'blueprint') {
+                sheetContainer.classList.add('cv-blueprint');
+            } else {
+                sheetContainer.classList.remove('cv-blueprint');
+            }
+        });
+    }
+}
+
+// ==========================================================================
+// 13. GALLERY & 3D RENDERS LIGHTBOX
+// ==========================================================================
+function initLightbox() {
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const closeBtn = document.getElementById('close-lightbox-btn');
+    const prevBtn = document.getElementById('prev-lightbox-btn');
+    const nextBtn = document.getElementById('next-lightbox-btn');
+    const zoomBtn = document.getElementById('lightbox-zoom-btn');
+
+    if (!lightbox || !lightboxImg) return;
+
+    let items = [];
+    let currentIndex = 0;
+    let isZoomed = false;
+
+    // Collect all inspectable images
+    const collectItems = () => {
+        const renderCards = document.querySelectorAll('.viz-item:not(.viz-item-hidden) .viz-card, #gallery-grid > div');
+        items = [];
+        renderCards.forEach(card => {
+            const img = card.querySelector('img');
+            if (img) {
+                const title = card.querySelector('.text-accent.font-bold')?.textContent.trim() ||
+                              img.getAttribute('alt') ||
+                              'Architectural Plate';
+                items.push({
+                    src: img.getAttribute('src'),
+                    title: title
+                });
+            }
+        });
+    };
+
+    const showItem = (idx) => {
+        if (!items.length) return;
+        currentIndex = (idx + items.length) % items.length;
+        const it = items[currentIndex];
+
+        lightboxImg.src = it.src;
+        if (lightboxCaption) lightboxCaption.textContent = it.title;
+        if (lightboxCounter) lightboxCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+
+        isZoomed = false;
+        lightboxImg.style.transform = 'scale(1)';
+        lightboxImg.style.cursor = 'zoom-in';
+    };
+
+    const openLightbox = (src) => {
+        collectItems();
+        const found = items.findIndex(it => it.src === src);
+        showItem(found >= 0 ? found : 0);
+
+        lightbox.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+        lightbox.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    // Attach click listeners to cards
+    document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('.viz-card, #gallery-grid > div');
+        if (trigger) {
+            const img = trigger.querySelector('img');
+            if (img && img.src) {
+                openLightbox(img.getAttribute('src'));
+            }
+        }
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target.id === 'lightbox-viewport') {
+            closeLightbox();
+        }
+    });
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => showItem(currentIndex - 1));
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => showItem(currentIndex + 1));
+    }
+
+    if (zoomBtn || lightboxImg) {
+        const toggleZoom = () => {
+            isZoomed = !isZoomed;
+            lightboxImg.style.transform = isZoomed ? 'scale(1.75)' : 'scale(1)';
+            lightboxImg.style.cursor = isZoomed ? 'zoom-out' : 'zoom-in';
+        };
+        if (zoomBtn) zoomBtn.addEventListener('click', toggleZoom);
+        lightboxImg.addEventListener('click', toggleZoom);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('hidden')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showItem(currentIndex - 1);
+        if (e.key === 'ArrowRight') showItem(currentIndex + 1);
+    });
+}
+
+// ==========================================================================
+// 14. DYNAMIC YEAR
+// ==========================================================================
+function initDynamicYear() {
+    const yearEl = document.getElementById('year');
+    if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+    }
 }
