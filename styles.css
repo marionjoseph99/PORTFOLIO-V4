@@ -156,18 +156,136 @@ body, aside, header, nav, section, div, button, input, textarea, a {
     transition: opacity 0.2s ease, transform 0.3s ease;
 }
 
-/* --- CURSOR & INTERACTION STYLES (RESTORE VISIBLE DESKTOP POINTER) --- */
-html,
-body,
-#main-content {
-    cursor: default !important;
+/* ==========================================================================
+   ARCHITECTURAL PRECISION CUSTOM CURSOR
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+    /* Hide native cursor ONLY when custom cursor is actively tracking */
+    body.has-custom-cursor {
+        cursor: none !important;
+    }
+    body.has-custom-cursor a,
+    body.has-custom-cursor button,
+    body.has-custom-cursor [role="button"],
+    body.has-custom-cursor .cursor-pointer,
+    body.has-custom-cursor .hover-trigger,
+    body.has-custom-cursor .gallery-card,
+    body.has-custom-cursor .service-card,
+    body.has-custom-cursor .project-card,
+    body.has-custom-cursor .model-select-btn,
+    body.has-custom-cursor label {
+        cursor: none !important;
+    }
+
+    /* Form input accessibility: allow text cursor */
+    body.has-custom-cursor input[type="text"],
+    body.has-custom-cursor input[type="email"],
+    body.has-custom-cursor textarea {
+        cursor: text !important;
+    }
+
+    /* CAD Center Dot (6px sharp precision square) */
+    .cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: var(--cursor-color);
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-radius: 0 !important;
+        pointer-events: none;
+        z-index: 99999;
+        opacity: 0;
+        will-change: transform, opacity;
+        transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+        transition: opacity 0.2s ease, background-color 0.2s ease;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+
+    /* CAD Outer Box / Drafting Reticle (32px precision frame) */
+    .cursor-outline {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--cursor-border);
+        background-color: transparent;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-radius: 0 !important;
+        pointer-events: none;
+        z-index: 99998;
+        opacity: 0;
+        will-change: transform, width, height, background-color, border-color, opacity;
+        transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+        transition: width 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    height 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    background-color 0.25s ease,
+                    border-color 0.25s ease,
+                    opacity 0.2s ease,
+                    box-shadow 0.25s ease;
+    }
+
+    /* Subtle Drafting Crosshair Accents on Outer Frame */
+    .cursor-outline::before,
+    .cursor-outline::after {
+        content: '';
+        position: absolute;
+        background-color: var(--cursor-color);
+        pointer-events: none;
+        transition: opacity 0.2s ease, background-color 0.2s ease;
+    }
+    /* Horizontal crosshair ticks */
+    .cursor-outline::before {
+        top: 50%;
+        left: -4px;
+        right: -4px;
+        height: 1px;
+        transform: translateY(-50%);
+        opacity: 0.35;
+    }
+    /* Vertical crosshair ticks */
+    .cursor-outline::after {
+        left: 50%;
+        top: -4px;
+        bottom: -4px;
+        width: 1px;
+        transform: translateX(-50%);
+        opacity: 0.35;
+    }
+
+    /* Hover Interaction: Technical Drafting Target Expansion */
+    .cursor-outline.cursor-hover {
+        width: 52px;
+        height: 52px;
+        background-color: var(--cursor-hover-bg);
+        border-color: var(--cursor-color);
+        box-shadow: 0 0 20px rgba(var(--accent) / 0.28);
+    }
+    .cursor-outline.cursor-hover::before,
+    .cursor-outline.cursor-hover::after {
+        opacity: 0.8;
+    }
+
+    /* Click / Active State: CAD Lock Pulse */
+    .cursor-outline.cursor-active {
+        width: 24px;
+        height: 24px;
+        background-color: rgba(var(--accent) / 0.25);
+        border-color: var(--cursor-color);
+    }
 }
 
-.cursor-dot,
-.cursor-outline {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
+/* Touch & Mobile Fallback: Hide custom cursor unconditionally */
+@media (hover: none) or (pointer: coarse), (max-width: 768px) {
+    .cursor-dot,
+    .cursor-outline {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+    body {
+        cursor: auto !important;
+    }
 }
 
 /* Scroll Reveal Animations */

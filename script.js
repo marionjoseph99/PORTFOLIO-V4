@@ -5,14 +5,8 @@
  * and mobile-optimized render presentation.
  */
 
-// Force desktop cursor visibility immediately upon script load
-try {
-    document.documentElement.style.setProperty('cursor', 'default', 'important');
-    if (document.body) document.body.style.setProperty('cursor', 'default', 'important');
-} catch (e) {}
-
 document.addEventListener('DOMContentLoaded', () => {
-    initDesktopCursor();
+    initArchitecturalCursor();
     initPreloader();
     initTheme();
     initMobileMenu();
@@ -31,23 +25,113 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================================================
-// 00. DESKTOP CURSOR NORMALIZATION
+// 00. ARCHITECTURAL PRECISION CUSTOM CURSOR
 // ==========================================================================
-function initDesktopCursor() {
-    try {
-        document.documentElement.style.setProperty('cursor', 'default', 'important');
-        if (document.body) {
-            document.body.style.setProperty('cursor', 'default', 'important');
-        }
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.style.setProperty('cursor', 'default', 'important');
-        }
-        // Remove any obsolete custom cursor elements
-        document.querySelectorAll('.cursor-dot, .cursor-outline').forEach(el => el.remove());
-    } catch (e) {
-        console.warn('Desktop cursor error:', e);
+function initArchitecturalCursor() {
+    // Only initialize on desktop devices supporting fine hover pointer
+    const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!isFinePointer) return;
+
+    let dot = document.getElementById('cursor-dot');
+    let outline = document.getElementById('cursor-outline');
+
+    if (!dot) {
+        dot = document.createElement('div');
+        dot.id = 'cursor-dot';
+        dot.className = 'cursor-dot hidden md:block';
+        dot.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(dot);
     }
+    if (!outline) {
+        outline = document.createElement('div');
+        outline.id = 'cursor-outline';
+        outline.className = 'cursor-outline hidden md:block';
+        outline.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(outline);
+    }
+
+    let mouseX = -100;
+    let mouseY = -100;
+    let outlineX = -100;
+    let outlineY = -100;
+    let isVisible = false;
+
+    function renderLoop() {
+        if (isVisible) {
+            // Precision reticle dot tracks mouse with zero input lag
+            dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+
+            // Drafting inertia interpolation for outer frame (smooth 60fps lerp)
+            const ease = 0.22;
+            outlineX += (mouseX - outlineX) * ease;
+            outlineY += (mouseY - outlineY) * ease;
+            outline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+        }
+        requestAnimationFrame(renderLoop);
+    }
+
+    function onMouseMove(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        if (!isVisible) {
+            isVisible = true;
+            outlineX = mouseX;
+            outlineY = mouseY;
+            dot.style.opacity = '1';
+            outline.style.opacity = '1';
+            document.body.classList.add('has-custom-cursor');
+        }
+    }
+
+    function onMouseEnter() {
+        isVisible = true;
+        dot.style.opacity = '1';
+        outline.style.opacity = '1';
+        document.body.classList.add('has-custom-cursor');
+    }
+
+    function onMouseLeave() {
+        isVisible = false;
+        dot.style.opacity = '0';
+        outline.style.opacity = '0';
+        document.body.classList.remove('has-custom-cursor');
+    }
+
+    function onMouseDown() {
+        outline.classList.add('cursor-active');
+    }
+
+    function onMouseUp() {
+        outline.classList.remove('cursor-active');
+    }
+
+    // Attach event listeners
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseenter', onMouseEnter, { passive: true });
+    document.addEventListener('mouseleave', onMouseLeave, { passive: true });
+    window.addEventListener('mousedown', onMouseDown, { passive: true });
+    window.addEventListener('mouseup', onMouseUp, { passive: true });
+
+    // Interactive Hover Elements Detection (Delegated for dynamically loaded cards / buttons)
+    const hoverSelector = 'a, button, [role="button"], .hover-trigger, .gallery-card, .service-card, .project-card, .model-select-btn, .viz-card, input[type="submit"], input[type="button"], label, .theme-toggle-btn';
+
+    document.addEventListener('mouseover', (e) => {
+        const target = e.target.closest(hoverSelector);
+        if (target) {
+            outline.classList.add('cursor-hover');
+        }
+    }, { passive: true });
+
+    document.addEventListener('mouseout', (e) => {
+        const target = e.target.closest(hoverSelector);
+        if (target) {
+            outline.classList.remove('cursor-hover');
+        }
+    }, { passive: true });
+
+    // Start 60fps render loop
+    requestAnimationFrame(renderLoop);
 }
 
 // ==========================================================================
