@@ -1404,6 +1404,12 @@
                             </div>
                         </model-viewer>
 
+                        <!-- Mobile Landscape Orientation Tip (Visible in Fullscreen if still in Portrait) -->
+                        <div id="model-orientation-hint" class="hidden absolute top-4 left-4 sm:left-1/2 sm:-translate-x-1/2 z-30 px-3 py-1.5 bg-studio-900/95 border border-accent/70 text-accent font-mono text-[10px] sm:text-xs tracking-wider uppercase items-center gap-2 shadow-2xl backdrop-blur-md pointer-events-none transition-all duration-300">
+                            <i class="ph ph-device-rotate text-sm sm:text-base animate-pulse"></i>
+                            <span>Rotate device to landscape for wide drafting view</span>
+                        </div>
+
                         <!-- Floating Viewport Action Tools (Top Right) -->
                         <div class="model-floating-bar absolute top-4 right-4 z-20 flex items-center gap-1.5 font-mono text-xs bg-studio-900/90 backdrop-blur-md p-1.5 border border-studio-700 shadow-xl">
                             <!-- Turntable Toggle -->

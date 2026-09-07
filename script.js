@@ -2188,37 +2188,158 @@ function initModelViewerControls() {
         });
     }
 
-    // 6. Fullscreen Viewport Mode
+    // 6. Fullscreen Viewport Mode & Forced Landscape Orientation for Mobile
+    const orientationHint = document.getElementById('model-orientation-hint');
+
+    const lockLandscape = async () => {
+        try {
+            if (screen.orientation && typeof screen.orientation.lock === 'function') {
+                await screen.orientation.lock('landscape');
+                return true;
+            } else if (screen.lockOrientation) {
+                return screen.lockOrientation('landscape');
+            } else if (screen.mozLockOrientation) {
+                return screen.mozLockOrientation('landscape');
+            } else if (screen.msLockOrientation) {
+                return screen.msLockOrientation('landscape');
+            }
+        } catch (err) {
+            // Orientation lock may not be supported by OS (e.g. iOS Safari) or requires explicit prompt
+        }
+        return false;
+    };
+
+    const unlockOrientation = () => {
+        try {
+            if (screen.orientation && typeof screen.orientation.unlock === 'function') {
+                screen.orientation.unlock();
+            } else if (screen.unlockOrientation) {
+                screen.unlockOrientation();
+            } else if (screen.mozUnlockOrientation) {
+                screen.mozUnlockOrientation();
+            } else if (screen.msUnlockOrientation) {
+                screen.msUnlockOrientation();
+            }
+        } catch (e) {}
+    };
+
     if (fullscreenBtn && viewportCard) {
+        let isPseudoFullscreen = false;
+
+        const checkLandscapeOrientation = () => {
+            const isFull = document.fullscreenElement === viewportCard || 
+                           document.webkitFullscreenElement === viewportCard || 
+                           isPseudoFullscreen;
+            const isPortrait = window.innerWidth < window.innerHeight;
+            const isMobile = window.innerWidth <= 1024;
+
+            if (isFull && isPortrait && isMobile) {
+                if (orientationHint) {
+                    orientationHint.classList.remove('hidden');
+                    orientationHint.classList.add('flex');
+                }
+            } else {
+                if (orientationHint) {
+                    orientationHint.classList.add('hidden');
+                    orientationHint.classList.remove('flex');
+                }
+            }
+        };
+
         const updateFullscreenUI = () => {
-            const isFull = document.fullscreenElement === viewportCard || document.webkitFullscreenElement === viewportCard;
+            const isFull = document.fullscreenElement === viewportCard || 
+                           document.webkitFullscreenElement === viewportCard || 
+                           isPseudoFullscreen;
+
             if (fullscreenIcon) {
                 fullscreenIcon.className = isFull ? 'ph ph-corners-in text-accent' : 'ph ph-corners-out';
             }
+
             // Ensure theme classes on viewportCard match current website theme
             const isCurrentLight = document.documentElement.classList.contains('light') || document.body.classList.contains('light-mode');
             viewportCard.classList.toggle('light', isCurrentLight);
             viewportCard.classList.toggle('dark', !isCurrentLight);
+
+            if (isFull) {
+                // Request mobile landscape orientation lock
+                lockLandscape().then(() => {
+                    checkLandscapeOrientation();
+                });
+                checkLandscapeOrientation();
+            } else {
+                isPseudoFullscreen = false;
+                viewportCard.classList.remove('is-mobile-fullscreen');
+                unlockOrientation();
+                checkLandscapeOrientation();
+            }
+
+            // Notify model-viewer to recompute its WebGL canvas aspect ratio
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            }, 100);
         };
 
-        fullscreenBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                if (viewportCard.requestFullscreen) {
-                    viewportCard.requestFullscreen().catch(() => {});
-                } else if (viewportCard.webkitRequestFullscreen) {
-                    viewportCard.webkitRequestFullscreen();
-                }
-            } else {
+        const exitFullscreen = () => {
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
                 if (document.exitFullscreen) {
                     document.exitFullscreen().catch(() => {});
                 } else if (document.webkitExitFullscreen) {
                     document.webkitExitFullscreen();
                 }
+            } else if (isPseudoFullscreen) {
+                isPseudoFullscreen = false;
+                viewportCard.classList.remove('is-mobile-fullscreen');
+                updateFullscreenUI();
+            }
+        };
+
+        fullscreenBtn.addEventListener('click', async () => {
+            const isCurrentlyFull = document.fullscreenElement === viewportCard || 
+                                    document.webkitFullscreenElement === viewportCard || 
+                                    isPseudoFullscreen;
+
+            if (!isCurrentlyFull) {
+                let enteredNative = false;
+                if (viewportCard.requestFullscreen) {
+                    try {
+                        await viewportCard.requestFullscreen();
+                        enteredNative = true;
+                    } catch (err) {
+                        enteredNative = false;
+                    }
+                } else if (viewportCard.webkitRequestFullscreen) {
+                    try {
+                        viewportCard.webkitRequestFullscreen();
+                        enteredNative = true;
+                    } catch (err) {
+                        enteredNative = false;
+                    }
+                }
+
+                if (!enteredNative) {
+                    // Fallback for mobile browsers with restricted fullscreen (such as iOS Safari)
+                    isPseudoFullscreen = true;
+                    viewportCard.classList.add('is-mobile-fullscreen');
+                    updateFullscreenUI();
+                } else {
+                    // Lock to landscape once native fullscreen is activated
+                    await lockLandscape();
+                    checkLandscapeOrientation();
+                }
+            } else {
+                exitFullscreen();
             }
         });
 
         document.addEventListener('fullscreenchange', updateFullscreenUI);
         document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+        window.addEventListener('resize', checkLandscapeOrientation, { passive: true });
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                checkLandscapeOrientation();
+                window.dispatchEvent(new Event('resize'));
+            }, 150);
+        }, { passive: true });
     }
 }
 
