@@ -375,9 +375,67 @@ html.light .scroll-meter-value {
         font-size: 8px !important;
         padding: 0.2rem 0.35rem !important;
     }
-    /* Compact project cover images on mobile */
+    /* Mobile 2-per-row layout for Projects */
+    #project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.5rem !important;
+    }
+    .project-card > div {
+        padding: 0.375rem !important;
+    }
     .project-img-wrapper {
-        height: 140px !important;
+        height: 105px !important;
+    }
+    .project-img-wrapper span.font-mono {
+        font-size: 8px !important;
+        padding: 0.15rem 0.35rem !important;
+        top: 0.35rem !important;
+        right: 0.35rem !important;
+    }
+    .project-card h3 {
+        font-size: 0.75rem !important; /* 12px */
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .project-card .font-mono.bg-studio-700 {
+        font-size: 8px !important;
+        padding: 0.1rem 0.3rem !important;
+    }
+    .project-card .bg-studio-900\/80 {
+        margin-top: 0.25rem !important;
+        margin-bottom: 0.25rem !important;
+        padding: 0.15rem 0.35rem !important;
+        font-size: 8px !important;
+        gap: 0.25rem !important;
+    }
+    .project-card .font-mono.text-studio-400.tracking-widest {
+        font-size: 8px !important;
+        margin-bottom: 0.25rem !important;
+        letter-spacing: 0.05em !important;
+    }
+    .project-card .project-meta {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        font-size: 9px !important;
+        line-height: 1.25 !important;
+        padding-left: 0.35rem !important;
+    }
+    .project-card .pt-4 {
+        padding-top: 0.35rem !important;
+    }
+    .project-card .mt-4 {
+        margin-top: 0.35rem !important;
+        padding-top: 0.25rem !important;
+    }
+    .project-card .mt-4 span:first-child {
+        font-size: 8px !important;
+    }
+    .project-card .mt-4 span:last-child {
+        display: none !important; /* Hide [SPEC #01] tag on compact 2-col mobile view */
     }
     /* Compact profile portrait photo on mobile */
     .hero-portrait-card {

@@ -81,7 +81,7 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2.1">
 </head>
 <body class="bg-studio-900 text-studio-100 font-sans antialiased flex flex-col md:flex-row h-screen overflow-hidden selection:bg-accent selection:text-studio-900">
     <!-- Architectural Blueprint Loading Screen -->
@@ -458,7 +458,7 @@
                 </div>
 
                 <!-- Grid Container -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 sm:gap-6 md:gap-8" id="project-grid">
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2.5 sm:gap-6 md:gap-8" id="project-grid">
                     
                     <!-- Project 1: Layag Airport -->
                     <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 transition-transform duration-500 hover:-translate-y-1" data-project="airport" data-typology="architecture">
@@ -1710,19 +1710,19 @@
 
                 <!-- Gallery Filter Controls -->
                 <div class="mb-6 sm:mb-10 flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[11px] sm:text-xs gs-reveal delay-100" id="gallery-filter-controls">
-                    <button class="gallery-filter-btn hover-trigger active px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800 text-studio-100 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="all">
+                    <button class="gallery-filter-btn hover-trigger active px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800 text-studio-100 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="all" data-category="all" data-cat="all">
                         <span>All Works</span>
                         <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-300">16</span>
                     </button>
-                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="manual">
+                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="manual" data-category="manual" data-cat="manual" data-cat="manual">
                         <span>Manual Ink Drafting</span>
                         <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">5</span>
                     </button>
-                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="watercolor">
+                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="watercolor" data-category="watercolor" data-cat="watercolor" data-cat="watercolor">
                         <span>Watercolor Studies</span>
                         <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">4</span>
                     </button>
-                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="digital">
+                    <button class="gallery-filter-btn hover-trigger px-3 sm:px-4 py-1.5 sm:py-2 border border-studio-700 bg-studio-800/80 text-studio-400 hover:text-studio-100 hover:border-studio-500 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all" data-filter="digital" data-category="digital" data-cat="digital" data-cat="digital">
                         <span>Digital Paintings</span>
                         <span class="filter-count text-[9px] sm:text-[10px] px-1.5 py-0.5 bg-studio-900 text-studio-400">7</span>
                     </button>
@@ -1732,7 +1732,7 @@
                 <div class="gallery-masonry-grid w-full" id="gallery-grid">
                     
                     <!-- 1. Digital Painting 1 (Wide Horizon) -->
-                    <div class="gallery-item gs-reveal" data-category="digital">
+                    <div class="gallery-item gs-reveal" data-category="digital" data-cat="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/digital paintings/DA2.webp" alt="Digital Painting - Architectural Sci-Fi Concept I" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1744,7 +1744,7 @@
                     </div>
 
                     <!-- 2. Manual Drawing 1 (Tall Architectural Plate) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="manual">
+                    <div class="gallery-item gs-reveal delay-100" data-category="manual" data-cat="manual">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[2/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/m1.jpg" alt="Manual Ink Drafting - Perspective Plate 01" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1756,7 +1756,7 @@
                     </div>
 
                     <!-- 3. Watercolor 1 (Landscape Wash) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="watercolor">
+                    <div class="gallery-item gs-reveal delay-200" data-category="watercolor" data-cat="watercolor">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/w1.jpg" alt="Watercolor Study - Architectural Wash Plate I" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1768,7 +1768,7 @@
                     </div>
 
                     <!-- 4. Digital Painting 2 (Cinematic) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="digital">
+                    <div class="gallery-item gs-reveal delay-300" data-category="digital" data-cat="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/digital paintings/DA2.webp" alt="Digital Painting - Conceptual Environment II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1780,7 +1780,7 @@
                     </div>
 
                     <!-- 5. Manual Drawing 2 (Portrait) -->
-                    <div class="gallery-item gs-reveal" data-category="manual">
+                    <div class="gallery-item gs-reveal" data-category="manual" data-cat="manual">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/m1.jpg" alt="Manual Ink Drafting - Isometric Geometric Study 02" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1792,7 +1792,7 @@
                     </div>
 
                     <!-- 6. Watercolor 2 (Square Detail) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="watercolor">
+                    <div class="gallery-item gs-reveal delay-100" data-category="watercolor" data-cat="watercolor">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-square overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/w1.jpg" alt="Watercolor Study - Color Field Vignette II" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1804,7 +1804,7 @@
                     </div>
 
                     <!-- 7. Digital Painting 3 (Atmospheric) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
+                    <div class="gallery-item gs-reveal delay-200" data-category="digital" data-cat="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/digital paintings/DA3.webp" alt="Digital Painting - Atmosphere Matte Painting III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1816,7 +1816,7 @@
                     </div>
 
                     <!-- 8. Manual Drawing 3 (Landscape Plate) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="manual">
+                    <div class="gallery-item gs-reveal delay-300" data-category="manual" data-cat="manual">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[4/3] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/m3.jpg" alt="Manual Ink Drafting - Elevation Technical Plate 03" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1828,7 +1828,7 @@
                     </div>
 
                     <!-- 9. Watercolor 3 (Tall Vertical) -->
-                    <div class="gallery-item gs-reveal" data-category="watercolor">
+                    <div class="gallery-item gs-reveal" data-category="watercolor" data-cat="watercolor">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[3/4] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/w3.jpg" alt="Watercolor Study - Architectural Render III" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1840,7 +1840,7 @@
                     </div>
 
                     <!-- 10. Digital Painting 4 (Megastructure) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="digital">
+                    <div class="gallery-item gs-reveal delay-100" data-category="digital" data-cat="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/digital paintings/DA3.webp" alt="Digital Painting - Megastructure Horizon IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1852,7 +1852,7 @@
                     </div>
 
                     <!-- 11. Manual Drawing 4 (Technical Section) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="manual">
+                    <div class="gallery-item gs-reveal delay-200" data-category="manual" data-cat="manual">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[4/5] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/m4.jpg" alt="Manual Ink Drafting - Section Drawing 04" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1864,7 +1864,7 @@
                     </div>
 
                     <!-- 12. Digital Painting 5 (Sky Study) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="digital">
+                    <div class="gallery-item gs-reveal delay-300" data-category="digital" data-cat="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/digital paintings/DA5.webp" alt="Digital Painting - Atmospheric Sky Study V" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1876,7 +1876,7 @@
                     </div>
 
                     <!-- 13. Watercolor 4 (Landscape Panorama) -->
-                    <div class="gallery-item gs-reveal" data-category="watercolor">
+                    <div class="gallery-item gs-reveal" data-category="watercolor" data-cat="watercolor">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/w3.jpg" alt="Watercolor Study - Architectural Landscape Plate IV" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1888,7 +1888,7 @@
                     </div>
 
                     <!-- 14. Manual Drawing 5 (Detailed Perspective) -->
-                    <div class="gallery-item gs-reveal delay-100" data-category="manual">
+                    <div class="gallery-item gs-reveal delay-100" data-category="manual" data-cat="manual">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-square overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/manual/m5.jpg" alt="Manual Ink Drafting - Axonometric Study 05" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1900,7 +1900,7 @@
                     </div>
 
                     <!-- 15. Digital Painting 6 (Futuristic Citadel) -->
-                    <div class="gallery-item gs-reveal delay-200" data-category="digital">
+                    <div class="gallery-item gs-reveal delay-200" data-category="digital" data-cat="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/10] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/digital paintings/DA6.webp" alt="Digital Painting - Futuristic Citadel Concept VI" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -1912,7 +1912,7 @@
                     </div>
 
                     <!-- 16. Digital Painting 7 (Ethereal Landscape) -->
-                    <div class="gallery-item gs-reveal delay-300" data-category="digital">
+                    <div class="gallery-item gs-reveal delay-300" data-category="digital" data-cat="digital">
                         <div class="gallery-card hover-trigger cursor-pointer aspect-[16/9] overflow-hidden border border-studio-700 bg-studio-800 relative group transition-all duration-300 hover:border-accent">
                             <img src="gallery/digital paintings/DA5.webp" alt="Digital Painting - Ethereal Sci-Fi Environment VII" loading="lazy" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                             <div class="absolute inset-0 bg-studio-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
@@ -3149,6 +3149,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
+    <script src="script.js?v=2.1"></script>
 </body>
 </html>

@@ -4,12 +4,17 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static assets with appropriate cache control
+// Serve static assets with appropriate cache control (no-cache for code assets during updates)
 app.use(express.static(path.join(__dirname, '.'), {
-    maxAge: '1h',
+    maxAge: 0,
     setHeaders: (res, filePath) => {
         if (filePath.endsWith('.glb')) {
             res.setHeader('Content-Type', 'model/gltf-binary');
+        }
+        if (filePath.endsWith('.js') || filePath.endsWith('.css') || filePath.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
         }
     }
 }));

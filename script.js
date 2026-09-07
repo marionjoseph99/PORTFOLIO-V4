@@ -226,12 +226,12 @@ function initProjectSection() {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                const filter = btn.getAttribute('data-filter') || 'all';
+                const filter = btn.getAttribute('data-typology') || btn.getAttribute('data-filter') || 'all';
                 let visibleCount = 0;
 
                 projectCards.forEach(card => {
-                    const category = card.getAttribute('data-category') || '';
-                    const match = filter === 'all' || category === filter || category.includes(filter);
+                    const category = card.getAttribute('data-typology') || card.getAttribute('data-category') || '';
+                    const match = filter === 'all' || category.toLowerCase() === filter.toLowerCase() || category.toLowerCase().includes(filter.toLowerCase());
 
                     if (match) {
                         card.style.display = '';
@@ -693,7 +693,7 @@ function initModelViewer() {
 // ==========================================================================
 function initArtGallerySection() {
     const filterBtns = document.querySelectorAll('.gallery-filter-btn');
-    const galleryItems = Array.from(document.querySelectorAll('#gallery-grid > div'));
+    const galleryItems = Array.from(document.querySelectorAll('#gallery-grid .gallery-item, #gallery-grid > div'));
     const seeMoreBtn = document.getElementById('gallery-see-more-btn');
     const seeMoreText = document.getElementById('gallery-see-more-text');
     const seeMoreIcon = document.getElementById('gallery-see-more-icon');
@@ -706,31 +706,57 @@ function initArtGallerySection() {
     const INITIAL_LIMIT = 9;
 
     const updateGallery = () => {
+        const filter = (currentFilter || 'all').toLowerCase().trim();
+
         const filtered = galleryItems.filter(item => {
-            const cat = item.getAttribute('data-cat') || '';
-            return currentFilter === 'all' || cat === currentFilter;
+            if (filter === 'all') return true;
+
+            const cat = (item.getAttribute('data-category') || item.getAttribute('data-cat') || '').toLowerCase().trim();
+            const alt = (item.querySelector('img')?.getAttribute('alt') || '').toLowerCase();
+
+            if (cat && (cat === filter || cat.includes(filter))) return true;
+            if (filter === 'manual' && (cat.includes('manual') || alt.includes('manual') || alt.includes('drafting'))) return true;
+            if (filter === 'watercolor' && (cat.includes('watercolor') || alt.includes('watercolor') || alt.includes('wash'))) return true;
+            if (filter === 'digital' && (cat.includes('digital') || alt.includes('digital') || alt.includes('concept'))) return true;
+
+            return false;
         });
 
+        // Hide all items first
         galleryItems.forEach(item => {
             item.style.display = 'none';
         });
 
+        // Show items up to limit
         const limit = isExpanded ? filtered.length : INITIAL_LIMIT;
         filtered.forEach((item, idx) => {
             if (idx < limit) {
                 item.style.display = '';
+                // Ensure scroll-reveal does not keep filtered items invisible
+                item.classList.add('is-active');
+                item.style.visibility = 'visible';
+                item.style.opacity = '1';
             }
         });
 
+        // Toggle empty state
         if (emptyState) {
-            emptyState.classList.toggle('hidden', filtered.length > 0);
+            if (filtered.length > 0) {
+                emptyState.classList.add('hidden');
+                emptyState.style.display = 'none';
+            } else {
+                emptyState.classList.remove('hidden');
+                emptyState.style.display = 'block';
+            }
         }
 
+        // Toggle see more button
         if (seeMoreBtn) {
+            const container = seeMoreBtn.closest('#gallery-see-more-container') || seeMoreBtn.parentElement;
             if (filtered.length <= INITIAL_LIMIT) {
-                seeMoreBtn.parentElement?.classList.add('hidden');
+                if (container) container.classList.add('hidden');
             } else {
-                seeMoreBtn.parentElement?.classList.remove('hidden');
+                if (container) container.classList.remove('hidden');
                 if (seeMoreText) {
                     seeMoreText.textContent = isExpanded ? 'Show Less' : `Load More Works (${filtered.length - INITIAL_LIMIT} Remaining)`;
                 }
@@ -745,7 +771,7 @@ function initArtGallerySection() {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            currentFilter = btn.getAttribute('data-filter') || 'all';
+            currentFilter = (btn.getAttribute('data-filter') || btn.getAttribute('data-category') || btn.getAttribute('data-cat') || 'all').toLowerCase().trim();
             isExpanded = false;
             updateGallery();
         });
