@@ -156,28 +156,14 @@ body, aside, header, nav, section, div, button, input, textarea, a {
     transition: opacity 0.2s ease, transform 0.3s ease;
 }
 
-/* --- ANIMATION & CURSOR STYLES (TECHNICAL SHARP DRAFTING CURSOR) --- */
-@media (hover: hover) and (pointer: fine) {
-    body { cursor: none; }
-    .cursor-dot {
-        width: 6px; height: 6px; background: var(--cursor-color);
-        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-        border-radius: 0 !important; z-index: 9999; pointer-events: none;
-        transition: background-color 0.2s ease;
-    }
-    .cursor-outline {
-        width: 30px; height: 30px; border: 1px solid var(--cursor-border);
-        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-        border-radius: 0 !important; z-index: 9998; pointer-events: none;
-        transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
-    }
-    /* Class toggled via JS on hover - expands as a technical precision square */
-    .cursor-outline.cursor-hover {
-        width: 48px; height: 48px; 
-        background-color: var(--cursor-hover-bg); 
-        border-color: var(--cursor-color); 
-        border-radius: 0 !important;
-    }
+/* --- CURSOR & INTERACTION STYLES (RESTORE VISIBLE DESKTOP POINTER) --- */
+body {
+    cursor: default;
+}
+
+.cursor-dot,
+.cursor-outline {
+    display: none !important;
 }
 
 /* Scroll Reveal Animations */
@@ -440,6 +426,110 @@ html.light .scroll-meter-value {
     /* Compact profile portrait photo on mobile */
     .hero-portrait-card {
         max-width: 180px !important;
+    }
+
+    /* Mobile 3-in-a-row for Milestones */
+    #milestones-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 0.35rem !important;
+        margin-bottom: 2rem !important;
+    }
+    .milestone-hud-card {
+        padding: 0.5rem 0.35rem !important;
+    }
+    .milestone-hud-card .flex.items-center.justify-between {
+        margin-bottom: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+    }
+    .milestone-hud-card .font-mono.text-\[9px\],
+    .milestone-hud-card .font-mono.text-\[10px\] {
+        font-size: 7.5px !important;
+        letter-spacing: 0.02em !important;
+    }
+    .milestone-hud-card .milestone-counter {
+        font-size: 1.5rem !important; /* 24px */
+        line-height: 1 !important;
+    }
+    .milestone-hud-card .text-xs {
+        font-size: 0.65rem !important;
+    }
+    .milestone-hud-card p.font-mono.text-studio-300 {
+        font-size: 8px !important;
+        line-height: 1.15 !important;
+        margin-top: 0.15rem !important;
+    }
+
+    /* Mobile 3-in-a-row for Services Spec Cards */
+    #services-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 0.35rem !important;
+    }
+    .service-architectural-card {
+        padding: 0.4rem 0.3rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .service-corner-decor {
+        display: none !important;
+    }
+    .service-icon-box {
+        width: 1.65rem !important;
+        height: 1.65rem !important;
+        font-size: 0.85rem !important;
+    }
+    .service-architectural-card .flex.items-center.justify-between.border-b {
+        margin-bottom: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+        gap: 0.25rem !important;
+    }
+    .service-architectural-card .text-right span:first-child {
+        font-size: 6.5px !important;
+        letter-spacing: 0.02em !important;
+    }
+    .service-architectural-card .text-right span:last-child {
+        display: none !important;
+    }
+    .service-architectural-card h3 {
+        font-size: 0.7rem !important; /* 11px */
+        line-height: 1.15 !important;
+        margin-bottom: 0.2rem !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .service-architectural-card h3 i {
+        display: none !important;
+    }
+    .service-architectural-card p.font-mono.text-studio-300 {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        font-size: 7.5px !important;
+        line-height: 1.2 !important;
+    }
+    .service-architectural-card .service-pill-tag {
+        font-size: 6.5px !important;
+        padding: 0.1rem 0.2rem !important;
+    }
+    .service-architectural-card .mb-5.pt-3 {
+        margin-bottom: 0.25rem !important;
+        padding-top: 0.25rem !important;
+        display: none !important; /* Scope pill tags available upon clicking modal */
+    }
+    .service-architectural-card .pt-3.border-t.border-studio-700\/60 {
+        padding-top: 0.25rem !important;
+        margin-top: auto !important;
+    }
+    .service-architectural-card .pt-3.border-t.border-studio-700\/60 > span {
+        display: none !important;
+    }
+    .service-architectural-card .see-more-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.25rem 0.2rem !important;
+        font-size: 7.5px !important;
+        letter-spacing: 0.02em !important;
     }
 }
 .viz-item {

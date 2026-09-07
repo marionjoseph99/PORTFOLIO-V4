@@ -81,7 +81,7 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css?v=2.1">
+    <link rel="stylesheet" href="styles.css?v=2.3">
 </head>
 <body class="bg-studio-900 text-studio-100 font-sans antialiased flex flex-col md:flex-row h-screen overflow-hidden selection:bg-accent selection:text-studio-900">
     <!-- Architectural Blueprint Loading Screen -->
@@ -1965,62 +1965,62 @@
                 </div>
 
                 <!-- Services Milestones Bar (Architectural Metric HUD Cards) -->
-                <div id="milestones-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16 gs-reveal delay-100">
+                <div id="milestones-grid" class="grid grid-cols-3 gap-2 sm:gap-6 mb-8 sm:mb-16 gs-reveal delay-100">
                     
                     <!-- Milestone 1: Years Freelancing -->
                     <div class="milestone-hud-card group hover-trigger">
-                        <div class="flex items-center justify-between mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-widest flex items-center gap-1.5">
+                        <div class="flex items-center justify-between mb-2 sm:mb-3 border-b border-studio-700/60 pb-1.5 sm:pb-2">
+                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest flex items-center gap-1 sm:gap-1.5">
                                 <span class="w-1.5 h-1.5 bg-accent"></span> M-01 // TENURE
                             </span>
-                            <i class="ph ph-calendar-check text-studio-400 group-hover:text-accent transition-colors"></i>
+                            <i class="ph ph-calendar-check text-studio-400 group-hover:text-accent transition-colors hidden sm:block"></i>
                         </div>
-                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5">
-                            <span class="milestone-counter" data-target="5" data-suffix="">0</span>
-                            <span class="text-xl sm:text-2xl text-studio-400 font-normal">YRS</span>
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-2xl sm:text-5xl md:text-6xl text-accent mb-1">
+                            <span class="milestone-counter" data-target="5" data-suffix="">5</span>
+                            <span class="text-xs sm:text-2xl text-studio-400 font-normal">YRS</span>
                         </div>
-                        <p class="font-mono text-studio-300 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                        <p class="font-mono text-studio-300 text-[10px] sm:text-sm font-semibold uppercase tracking-wider leading-tight">
                             Years Freelancing
                         </p>
-                        <p class="font-mono text-studio-500 text-[10px] sm:text-[11px] mt-0.5">
+                        <p class="font-mono text-studio-500 text-[9px] sm:text-[11px] mt-0.5 hidden sm:block">
                             Active Architectural Practice &amp; Visual Commissions
                         </p>
                     </div>
 
                     <!-- Milestone 2: Commissioned Projects -->
                     <div class="milestone-hud-card group hover-trigger">
-                        <div class="flex items-center justify-between mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-widest flex items-center gap-1.5">
+                        <div class="flex items-center justify-between mb-2 sm:mb-3 border-b border-studio-700/60 pb-1.5 sm:pb-2">
+                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest flex items-center gap-1 sm:gap-1.5">
                                 <span class="w-1.5 h-1.5 bg-accent"></span> M-02 // DELIVERIES
                             </span>
-                            <i class="ph ph-buildings text-studio-400 group-hover:text-accent transition-colors"></i>
+                            <i class="ph ph-buildings text-studio-400 group-hover:text-accent transition-colors hidden sm:block"></i>
                         </div>
-                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5">
-                            <span class="milestone-counter" data-target="120" data-suffix="+">0</span>
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-2xl sm:text-5xl md:text-6xl text-accent mb-1">
+                            <span class="milestone-counter" data-target="120" data-suffix="+">120+</span>
                         </div>
-                        <p class="font-mono text-studio-300 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                        <p class="font-mono text-studio-300 text-[10px] sm:text-sm font-semibold uppercase tracking-wider leading-tight">
                             Commissioned Projects
                         </p>
-                        <p class="font-mono text-studio-500 text-[10px] sm:text-[11px] mt-0.5">
+                        <p class="font-mono text-studio-500 text-[9px] sm:text-[11px] mt-0.5 hidden sm:block">
                             Plates, 3D Renders, Working Sets &amp; Layouts
                         </p>
                     </div>
 
                     <!-- Milestone 3: Awards -->
                     <div class="milestone-hud-card group hover-trigger">
-                        <div class="flex items-center justify-between mb-3 border-b border-studio-700/60 pb-2">
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-widest flex items-center gap-1.5">
+                        <div class="flex items-center justify-between mb-2 sm:mb-3 border-b border-studio-700/60 pb-1.5 sm:pb-2">
+                            <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest flex items-center gap-1 sm:gap-1.5">
                                 <span class="w-1.5 h-1.5 bg-accent"></span> M-03 // RECOGNITION
                             </span>
-                            <i class="ph ph-trophy text-studio-400 group-hover:text-accent transition-colors"></i>
+                            <i class="ph ph-trophy text-studio-400 group-hover:text-accent transition-colors hidden sm:block"></i>
                         </div>
-                        <div class="flex items-baseline gap-1 font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-accent mb-1.5">
-                            <span class="milestone-counter" data-target="15" data-suffix="+">0</span>
+                        <div class="flex items-baseline gap-1 font-mono font-bold text-2xl sm:text-5xl md:text-6xl text-accent mb-1">
+                            <span class="milestone-counter" data-target="15" data-suffix="+">15+</span>
                         </div>
-                        <p class="font-mono text-studio-300 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                        <p class="font-mono text-studio-300 text-[10px] sm:text-sm font-semibold uppercase tracking-wider leading-tight">
                             Awards &amp; Merits
                         </p>
-                        <p class="font-mono text-studio-500 text-[10px] sm:text-[11px] mt-0.5">
+                        <p class="font-mono text-studio-500 text-[9px] sm:text-[11px] mt-0.5 hidden sm:block">
                             Academic &amp; Regional Design Honors
                         </p>
                     </div>
@@ -2028,7 +2028,7 @@
                 </div>
 
                 <!-- Services Grid (Blueprint Architectural Spec Cards) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+                <div id="services-grid" class="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6 md:gap-7">
                     
                     <!-- Card 01: 3D Modelling -->
                     <div class="service-card service-architectural-card hover-trigger p-5 sm:p-6 group cursor-pointer gs-reveal delay-100" data-service="3D Modelling">
@@ -2342,19 +2342,30 @@
                         <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         
                         <div>
-                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                            <div class="flex justify-between items-center mb-2.5 border-b border-studio-700/60 pb-2">
                                 <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.01 // 3D MODEL]</span>
-                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                                <i class="ph-fill ph-quotes text-accent text-base sm:text-lg"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-accent text-xs mb-2.5">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <span class="font-mono text-[10px] text-studio-400 font-bold ml-1 tracking-wider">5.0</span>
                             </div>
                             <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
                                 "Grabe, super linaw ng 3D model at ang bilis kausap! Saved my arki plate deadline. Very clean ng SketchUp file, will definitely commission again!"
                             </p>
                         </div>
 
-                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                            <img src="testimonials/Christian%20S.%20TSU.png" alt="Christian S." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                        <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Christian%20S.%20TSU.png" alt="Christian S. - Tarlac State University" class="w-10 h-10 border border-studio-600 object-cover bg-studio-900 shrink-0 shadow-xs">
                             <div>
-                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Christian S.</h4>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Christian S.</h4>
+                                    <i class="ph-fill ph-check-circle text-accent text-xs" title="Verified Architecture Client"></i>
+                                </div>
                                 <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Tarlac State University</p>
                             </div>
                         </div>
@@ -2366,19 +2377,30 @@
                         <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         
                         <div>
-                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                            <div class="flex justify-between items-center mb-2.5 border-b border-studio-700/60 pb-2">
                                 <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.02 // RENDERING]</span>
-                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                                <i class="ph-fill ph-quotes text-accent text-base sm:text-lg"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-accent text-xs mb-2.5">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <span class="font-mono text-[10px] text-studio-400 font-bold ml-1 tracking-wider">5.0</span>
                             </div>
                             <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
                                 "Solid ng lighting at textures sa Lumion render! Our jury panel really appreciated the depth and atmosphere of the walkthrough video."
                             </p>
                         </div>
 
-                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                            <img src="testimonials/Edgar%20U.%20FEU%20Manila.png" alt="Edgar U." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                        <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Edgar%20U.%20FEU%20Manila.png" alt="Edgar U. - Far Eastern University" class="w-10 h-10 border border-studio-600 object-cover bg-studio-900 shrink-0 shadow-xs">
                             <div>
-                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Edgar U.</h4>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Edgar U.</h4>
+                                    <i class="ph-fill ph-check-circle text-accent text-xs" title="Verified Architecture Client"></i>
+                                </div>
                                 <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Far Eastern University - Manila</p>
                             </div>
                         </div>
@@ -2390,19 +2412,30 @@
                         <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         
                         <div>
-                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                            <div class="flex justify-between items-center mb-2.5 border-b border-studio-700/60 pb-2">
                                 <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.03 // MANUAL ART]</span>
-                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                                <i class="ph-fill ph-quotes text-accent text-base sm:text-lg"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-accent text-xs mb-2.5">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <span class="font-mono text-[10px] text-studio-400 font-bold ml-1 tracking-wider">5.0</span>
                             </div>
                             <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
                                 "Sobrang pulido ng linework at perspective sa manual architectural drawings. Very professional ka-transaction from start to final scan!"
                             </p>
                         </div>
 
-                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                            <img src="testimonials/Harvey%20M.%20UP%20Manila.png" alt="Harvey M." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                        <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Harvey%20M.%20UP%20Manila.png" alt="Harvey M. - UP Manila" class="w-10 h-10 border border-studio-600 object-cover bg-studio-900 shrink-0 shadow-xs">
                             <div>
-                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Harvey M.</h4>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Harvey M.</h4>
+                                    <i class="ph-fill ph-check-circle text-accent text-xs" title="Verified Architecture Client"></i>
+                                </div>
                                 <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">University of the Philippines Manila</p>
                             </div>
                         </div>
@@ -2414,20 +2447,31 @@
                         <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         
                         <div>
-                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                            <div class="flex justify-between items-center mb-2.5 border-b border-studio-700/60 pb-2">
                                 <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.04 // BOARD LAYOUT]</span>
-                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                                <i class="ph-fill ph-quotes text-accent text-base sm:text-lg"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-accent text-xs mb-2.5">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <span class="font-mono text-[10px] text-studio-400 font-bold ml-1 tracking-wider">5.0</span>
                             </div>
                             <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
                                 "Ang ganda ng hierarchy at modular grid ng presentation boards ko! Grabe 'yung eye for detail sa layouting. Maraming salamat!"
                             </p>
                         </div>
 
-                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                            <img src="testimonials/Lhea%20G.%20UST%20Manila.png" alt="Lhea G." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                        <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Lhea%20G.%20UST%20Manila.png" alt="Lhea G. - UST Manila" class="w-10 h-10 border border-studio-600 object-cover bg-studio-900 shrink-0 shadow-xs">
                             <div>
-                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Lhea G.</h4>
-                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">University of Santo Thomas - Manila</p>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Lhea G.</h4>
+                                    <i class="ph-fill ph-check-circle text-accent text-xs" title="Verified Architecture Client"></i>
+                                </div>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">University of Santo Tomas - Manila</p>
                             </div>
                         </div>
                     </div>
@@ -2438,19 +2482,30 @@
                         <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         
                         <div>
-                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                            <div class="flex justify-between items-center mb-2.5 border-b border-studio-700/60 pb-2">
                                 <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.05 // CAD DRAFTING]</span>
-                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                                <i class="ph-fill ph-quotes text-accent text-base sm:text-lg"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-accent text-xs mb-2.5">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <span class="font-mono text-[10px] text-studio-400 font-bold ml-1 tracking-wider">5.0</span>
                             </div>
                             <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
                                 "Highly recommended! Even with revisions, napaka-responsive at nakuha agad 'yung design intent ng CAD floor plans namin. Highly technical!"
                             </p>
                         </div>
 
-                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                            <img src="testimonials/Mark%20T.%20BatSU%20Main.png" alt="Mark T." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                        <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Mark%20T.%20BatSU%20Main.png" alt="Mark T. - Batangas State University" class="w-10 h-10 border border-studio-600 object-cover bg-studio-900 shrink-0 shadow-xs">
                             <div>
-                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Mark T.</h4>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Mark T.</h4>
+                                    <i class="ph-fill ph-check-circle text-accent text-xs" title="Verified Architecture Client"></i>
+                                </div>
                                 <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Batangas State University - Main</p>
                             </div>
                         </div>
@@ -2462,20 +2517,31 @@
                         <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         
                         <div>
-                            <div class="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-studio-700/60 pb-2">
+                            <div class="flex justify-between items-center mb-2.5 border-b border-studio-700/60 pb-2">
                                 <span class="font-mono text-[9px] sm:text-[10px] text-accent uppercase tracking-widest">[LOG.06 // DEADLINE & QUALITY]</span>
-                                <i class="ph ph-quotes text-studio-500 text-sm sm:text-base group-hover:text-accent transition-colors"></i>
+                                <i class="ph-fill ph-quotes text-accent text-base sm:text-lg"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-accent text-xs mb-2.5">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <span class="font-mono text-[10px] text-studio-400 font-bold ml-1 tracking-wider">5.0</span>
                             </div>
                             <p class="font-sans text-studio-200 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 italic">
                                 "Legit lifesaver sa plates! Super neat ng CAD drafting and 3D output, tapos on-time palagi mag-send ng deliverables prior to submission. 10/10!"
                             </p>
                         </div>
 
-                        <div class="flex items-center gap-2.5 sm:gap-3 pt-2.5 sm:pt-3 border-t border-studio-700/60">
-                            <img src="testimonials/Scarlet%20P.%20PUP%20Manila.png" alt="Scarlet P." class="w-8 h-8 sm:w-9 sm:h-9 border border-studio-600 object-cover bg-studio-900">
+                        <div class="flex items-center gap-3 pt-3 border-t border-studio-700/60">
+                            <img src="testimonials/Scarlet%20P.%20PUP%20Manila.png" alt="Scarlet P. - PUP Manila" class="w-10 h-10 border border-studio-600 object-cover bg-studio-900 shrink-0 shadow-xs">
                             <div>
-                                <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Scarlet P.</h4>
-                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Polythecnic University of the Philippines - Main</p>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-xs sm:text-sm text-studio-100 group-hover:text-accent transition-colors">Scarlet P.</h4>
+                                    <i class="ph-fill ph-check-circle text-accent text-xs" title="Verified Architecture Client"></i>
+                                </div>
+                                <p class="font-mono text-[9px] sm:text-[10px] text-studio-400 uppercase tracking-wider">Polytechnic University of the Philippines - Main</p>
                             </div>
                         </div>
                     </div>
@@ -3149,6 +3215,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js?v=2.1"></script>
+    <script src="script.js?v=2.3"></script>
 </body>
 </html>

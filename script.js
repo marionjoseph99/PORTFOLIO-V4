@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initDistanceRuler();
     initScrollReveal();
+    initMilestoneCounters();
     initProjectSection();
     init3DRendersSection();
     initModelViewer();
@@ -808,36 +809,52 @@ function initServiceModal() {
 
     const serviceData = [
         {
-            category: 'ARCHITECTURAL DESIGN',
-            title: 'Design Development & Spatial Planning',
-            desc: 'End-to-end conceptual and schematic architectural design, translating spatial requirements and site parameters into functional, aesthetic blueprint systems.',
-            deliverables: ['Schematic Architectural Plans', 'Elevations & Structural Sections', 'Site Massing & Zoning Compliance', 'Material Specification Schedules'],
-            tools: 'AutoCAD / Revit / SketchUp / Rhino',
-            audience: 'Residential Owners, Developers, Commercial Clients'
+            category: '01 // 3D DESIGN',
+            title: '3D Architectural Modelling & BIM',
+            desc: 'High-quality 3D models for architectural design, massing studies, and complex built forms—bringing conceptual spatial ideas to life with millimeter precision.',
+            deliverables: ['Massing & Schematic Models', 'Detailed Building Information Models', 'Parametric Component Families', 'OBJ, FBX & IFC Exchange Files'],
+            tools: 'SketchUp Pro / Autodesk Revit / AutoCAD 3D / Rhino',
+            audience: 'Architects, Developers, Contractors, Interior Designers'
         },
         {
-            category: '3D VISUALIZATION',
+            category: '02 // VISUALIZATION',
             title: 'Photorealistic Architectural Rendering',
-            desc: 'High-fidelity interior and exterior visualization creating realistic atmospheric lighting, material textures, and spatial volume for client presentations and marketing.',
-            deliverables: ['4K Exterior Twilight Renders', 'High-Res Interior Perspective Plates', 'Material & Texture Studies', 'Interactive 360 Panorama Views'],
-            tools: 'Lumion / Blender / SketchUp / Photoshop',
+            desc: 'Photorealistic architectural, exterior, and interior visualizations configured with authentic natural lighting, realistic materiality, and atmospheric depth.',
+            deliverables: ['4K Exterior Twilight & Daytime Renders', 'High-Res Interior Perspective Plates', 'Atmospheric Lighting & Material Studies', 'Interactive 360 Panorama Views'],
+            tools: 'Lumion Pro / Photoshop Post-Prod / SketchUp / Blender',
             audience: 'Architects, Real Estate Developers, Design Studios'
         },
         {
-            category: 'BIM MODELING',
-            title: 'Building Information Modeling & Drafting',
-            desc: 'Coordinated parametric building models integrating architectural elements, schedules, and clash-free technical construction drawings.',
-            deliverables: ['Parametric BIM Models (Revit)', 'Automated Material Takeoff Schedules', 'Coordinated Construction Drawings', 'CAD-to-BIM Conversion'],
-            tools: 'Autodesk Revit / Navisworks / BIM 360',
-            audience: 'General Contractors, Engineers, Project Managers'
+            category: '03 // ILLUSTRATION',
+            title: 'Manual Drawings & Watercolor Studies',
+            desc: 'Hand-drawn architectural plates, fine technical pen illustrations, and expressive watercolor sketches celebrating the tactile heritage of architectural craft.',
+            deliverables: ['Technical Pen & Stippling Plates', 'Watercolor Elevation Studies', 'Manual Perspective Drawings', 'Archival High-Resolution Digital Scans'],
+            tools: 'Technical Drafting Pens / Watercolor Medium / Cold-Press Paper',
+            audience: 'Design Jurors, Academic Reviewers, Collectors, Creative Teams'
         },
         {
-            category: 'DIGITAL & MANUAL ART',
-            title: 'Architectural Illustrations & Perspectives',
-            desc: 'Hand-drawn watercolor architectural sketches and digital concept art capturing character, ambience, and artistic expression for portfolio presentation.',
-            deliverables: ['Watercolor Elevation Studies', 'Manual Perspective Drawings', 'Digital Architectural Concept Art', 'Competition Presentation Graphics'],
-            tools: 'Clip Studio Paint / Watercolor / Graphite / Procreate',
-            audience: 'Creative Agencies, Collectors, Competition Teams'
+            category: '04 // BOARD LAYOUT',
+            title: 'Presentation Board Layout & Graphic Design',
+            desc: 'Professional architectural presentation boards structured with clean visual hierarchy, diagrammatic narrative flow, and high-impact jury formatting.',
+            deliverables: ['A1 / A0 Competition Sheet Layouts', 'Analytical Concept Diagrams & Axonometrics', 'Consistent Typographic & Grid Systems', 'High-Resolution Print-Ready Vectors & PDFs'],
+            tools: 'Adobe Photoshop / Illustrator / InDesign',
+            audience: 'Architecture Students, Competition Entrants, Studio Teams'
+        },
+        {
+            category: '05 // ANIMATION',
+            title: 'Cinematic 3D Architectural Walkthroughs',
+            desc: 'Cinematic walkthrough animations that illustrate circulation paths, light penetration, acoustic feel, and real-time spatial experiences of proposed designs.',
+            deliverables: ['4K 60FPS Camera Flythroughs', 'Interior Spatial Flow Sequences', 'Natural Daylight Transition Studies', 'Curated Audio-Visual Soundtrack & Editing'],
+            tools: 'Lumion Cinematic / Adobe Premiere Pro / After Effects',
+            audience: 'Commercial Clients, Real Estate Sales, Project Pitches'
+        },
+        {
+            category: '06 // WEB ARCHITECTURE',
+            title: 'Bespoke Portfolio & Technical Websites',
+            desc: 'Bespoke, technical websites designed specifically for architects and designers—responsive, typography-driven, and built to present creative work flawlessly.',
+            deliverables: ['Interactive 3D WebGL Model Viewers', 'High-Res Filterable Project Galleries', 'Responsive Dark / Light Blueprint Architecture', 'Production Cloud Run & Vercel Deployment'],
+            tools: 'HTML5 / CSS3 / Tailwind CSS / Modern JavaScript / Three.js',
+            audience: 'Architects, Designers, Creative Professionals, Studios'
         }
     ];
 
@@ -893,6 +910,59 @@ function initServiceModal() {
                 document.body.style.overflow = 'hidden';
             }
         });
+    }
+}
+
+// ==========================================================================
+// 10B. ARCHITECTURAL MILESTONE COUNTERS
+// ==========================================================================
+function initMilestoneCounters() {
+    const counters = document.querySelectorAll('.milestone-counter');
+    if (!counters.length) return;
+
+    let hasAnimated = false;
+
+    const runCount = () => {
+        if (hasAnimated) return;
+        hasAnimated = true;
+
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+            const suffix = counter.getAttribute('data-suffix') || '';
+            if (isNaN(target) || target <= 0) return;
+
+            const duration = 1400;
+            const startTime = performance.now();
+
+            const update = (now) => {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - (1 - progress) * (1 - progress);
+                const current = Math.floor(ease * target);
+                counter.textContent = `${current}${progress >= 1 ? suffix : ''}`;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    counter.textContent = `${target}${suffix}`;
+                }
+            };
+
+            requestAnimationFrame(update);
+        });
+    };
+
+    const milestonesGrid = document.getElementById('milestones-grid') || document.getElementById('services');
+    if (milestonesGrid && 'IntersectionObserver' in window && window.innerWidth > 768) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0] && entries[0].isIntersecting) {
+                runCount();
+                observer.disconnect();
+            }
+        }, { threshold: 0.1 });
+        observer.observe(milestonesGrid);
+    } else {
+        runCount();
     }
 }
 
