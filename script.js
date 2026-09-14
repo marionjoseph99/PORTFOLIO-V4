@@ -410,9 +410,246 @@ function initProjectSection() {
         });
     }
 
+    // Synchronize photo count badges on project cards to exact plate count
+    projectCards.forEach(card => {
+        const key = card.getAttribute('data-project');
+        const p = PORTFOLIO_PROJECTS_DATA[key];
+        if (p && p.photos) {
+            const badge = card.querySelector('.project-img-wrapper span');
+            if (badge) {
+                const count = p.photos.filter(ph => !ph.src.includes('/cover/')).length;
+                badge.textContent = `${count} ${count === 1 ? 'PHOTO' : 'PHOTOS'}`;
+            }
+        }
+    });
+
     // Project Detail Modal
     initProjectModal();
 }
+
+const PORTFOLIO_PROJECTS_DATA = {
+    airport: {
+        id: 'airport',
+        title: 'Layag Airport',
+        category: 'ARCHITECTURE',
+        year: '2024',
+        location: 'Sangley Point, Cavite City',
+        area: '147 Hectares',
+        typology: 'Civic & Aviation Architecture • Terminal Design',
+        tools: 'AutoCAD • SketchUp Pro • Enscape • Lumion • Photoshop',
+        desc: 'A 147-hectare domestic airport proposal balancing rapid passenger movement, structural sail canopies inspired by coastal maritime heritage, natural passive ventilation, and expansive visual clarity across terminals.',
+        features: [
+            'Parametric Sail Canopies',
+            'Curved Steel Space Frames',
+            'Biophilic Departure Concourse',
+            'Multi-Modal Transit Interchange',
+            'BIM Architectural Drafting'
+        ],
+        photos: [
+            {
+                src: 'portfolio/airport/1.webp',
+                title: 'Site Master Plan & Terminal Spatial Organization',
+                spec: 'PLATE 01 // SITE & LEVEL PLAN'
+            },
+            {
+                src: 'portfolio/airport/2.webp',
+                title: 'Architectural Section & Canopy Engineering',
+                spec: 'PLATE 02 // STRUCTURAL SECTION'
+            },
+            {
+                src: 'portfolio/airport/3.webp',
+                title: 'Concourse & Boarding Gate Spatial Layout',
+                spec: 'PLATE 03 // INTERIOR CONCOURSE'
+            },
+            {
+                src: 'portfolio/airport/4.webp',
+                title: 'Terminal Facade & Aerodynamic Canopy Structure',
+                spec: 'PLATE 04 // EXTERIOR PERSPECTIVE'
+            }
+        ]
+    },
+    amping: {
+        id: 'amping',
+        title: "Amping Children's Hospital",
+        category: 'HEALTHCARE',
+        year: '2023',
+        location: 'Panglao Island, Bohol',
+        area: '5 Hectares',
+        typology: 'Healthcare Architecture • Pediatric Hospital',
+        tools: 'Revit BIM • SketchUp • Lumion Pro • Photoshop',
+        desc: 'A 5-hectare pediatric healthcare facility centered on biophilic circulation, child-friendly healing courtyards, natural daylight penetration, and emergency triage zoning.',
+        features: [
+            'Biophilic Central Healing Atrium',
+            'Pediatric Inpatient Unit Zoning',
+            'Therapeutic Rooftop Play Garden',
+            'Natural Daylight Louver Optimization',
+            'Positive Distraction Wayfinding'
+        ],
+        photos: [
+            {
+                src: 'portfolio/amping/1.webp',
+                title: 'Master Site Development & Healthcare Flow',
+                spec: 'PLATE 01 // MASTER SITE PLAN'
+            },
+            {
+                src: 'portfolio/amping/2.webp',
+                title: 'Pediatric Inpatient Ward & Circulation Plan',
+                spec: 'PLATE 02 // LEVEL FLOOR PLAN'
+            },
+            {
+                src: 'portfolio/amping/3.webp',
+                title: 'Central Daylight Healing Atrium & Biophilic Section',
+                spec: 'PLATE 03 // SECTIONAL PERSPECTIVE'
+            },
+            {
+                src: 'portfolio/amping/4.webp',
+                title: 'Pediatric Clinic & Diagnostic Department Zoning',
+                spec: 'PLATE 04 // CLINICAL ZONING'
+            },
+            {
+                src: 'portfolio/amping/5.webp',
+                title: 'South Elevation & Sunshading Analysis',
+                spec: 'PLATE 05 // EXTERIOR FACADE'
+            },
+            {
+                src: 'portfolio/amping/6.webp',
+                title: 'Pediatric Therapy & Patient Care Units',
+                spec: 'PLATE 06 // SPECIALIZED CARE WARD'
+            },
+            {
+                src: 'portfolio/amping/7.webp',
+                title: 'Emergency & Diagnostic Wing Technical Layout',
+                spec: 'PLATE 07 // TECHNICAL ZONING'
+            }
+        ]
+    },
+    marahuyo: {
+        id: 'marahuyo',
+        title: 'Marahuyo Park',
+        category: 'PLANNING',
+        year: '2024',
+        location: 'Calamba Baywalk, Calamba City',
+        area: '1.5 Hectares',
+        typology: 'Landscape Architecture & Urban Planning',
+        tools: 'AutoCAD • SketchUp • Lumion • Photoshop',
+        desc: 'An ecological waterfront community park and cultural amphitheater integrating natural topography, native flora terraces, sustainable stormwater bioswales, and panoramic viewing decks overlooking scenic baywalk terrain.',
+        features: [
+            'Contour-Adaptive Open-Air Amphitheater',
+            'Native Flora Terraces & Swales',
+            'Elevated Canopy Boardwalk',
+            'Permeable Trail Circulation Network'
+        ],
+        photos: [
+            {
+                src: 'portfolio/marahuyo/1.webp',
+                title: 'Zoning & Pedestrian Boardwalk Network',
+                spec: 'PLATE 01 // SITE DEVELOPMENT PLAN'
+            }
+        ]
+    },
+    marikina: {
+        id: 'marikina',
+        title: 'Marikina Riverside Park',
+        category: 'PLANNING',
+        year: '2024',
+        location: 'Marikina Riverbanks, Marikina City',
+        area: '2.5 Hectares',
+        typology: 'Urban Planning & Flood Resilient Design',
+        tools: 'AutoCAD Civil • SketchUp • Lumion • Photoshop',
+        desc: 'A climate-adaptive urban linear park revitalization along the Marikina River, featuring tiered floodable retention terraces, active community promenades, multi-modal cycling infrastructure, and native riparian buffers.',
+        features: [
+            'Tiered Flood-Resilient Embankments',
+            'Active Promenade & Bike Trail Network',
+            'Riparian Wetland Bio-Filtration',
+            'Community Waterfront Plaza'
+        ],
+        photos: [
+            {
+                src: 'portfolio/marikina/1.webp',
+                title: 'Flood-Resilient Embankment & Terraces',
+                spec: 'PLATE 01 // EMBANKMENT SECTION'
+            },
+            {
+                src: 'portfolio/marikina/2.webp',
+                title: 'Active Recreation & Multi-Use Trail',
+                spec: 'PLATE 02 // PROMENADE PERSPECTIVE'
+            },
+            {
+                src: 'portfolio/marikina/3.webp',
+                title: 'Stepped Waterfront Plaza & Riparian Ecology',
+                spec: 'PLATE 03 // WATERFRONT PLAZA'
+            },
+            {
+                src: 'portfolio/marikina/4.webp',
+                title: 'Riparian Buffer & Architectural Lighting',
+                spec: 'PLATE 04 // TWILIGHT RENDER'
+            }
+        ]
+    },
+    subdivision: {
+        id: 'subdivision',
+        title: 'Hinabi Heights Subdivision',
+        category: 'RESIDENTIAL',
+        year: '2024',
+        location: 'Manggahan, General Trias, Cavite',
+        area: '3.5 Hectares',
+        typology: 'Residential & Community Master Planning',
+        tools: 'AutoCAD • SketchUp • Lumion • InDesign',
+        desc: 'A 3.5-hectare master-planned residential community organized around neighborhood livability, hierarchical road networks, integrated pocket parks, and architectural guidelines that ensure coherent design continuity.',
+        features: [
+            'Hierarchical Road & Pedestrian Grid',
+            'Central Community Clubhouse & Amenities',
+            'Continuous Green Spine Linear Park',
+            'Architectural Deed of Restrictions & Standards'
+        ],
+        photos: [
+            {
+                src: 'portfolio/subdivision/PAGE 1.webp',
+                title: 'Master Plan Overview & Community Zoning',
+                spec: 'PLATE 01 // MASTER SITE PLAN'
+            },
+            {
+                src: 'portfolio/subdivision/PAGE 2.webp',
+                title: 'Master Site Development & Circulation Plan',
+                spec: 'PLATE 02 // SUBDIVISION LAYOUT'
+            },
+            {
+                src: 'portfolio/subdivision/PAGE 3.webp',
+                title: 'Community Clubhouse & Green Spine Network',
+                spec: 'PLATE 03 // AMENITIES COMPLEX'
+            },
+            {
+                src: 'portfolio/subdivision/PAGE 4.webp',
+                title: 'Standard Lot Typologies & Design Guidelines',
+                spec: 'PLATE 04 // ARCHITECTURAL GUIDELINES'
+            }
+        ]
+    },
+    plaza: {
+        id: 'plaza',
+        title: 'Jagna De Plaza',
+        category: 'PLANNING',
+        year: '2024',
+        location: 'Población, Jagna, Bohol',
+        area: '5,200 sqm',
+        typology: 'Civic Space & Heritage Revitalization',
+        tools: 'AutoCAD • SketchUp • Lumion • Photoshop',
+        desc: 'A 5,200 sqm municipal town plaza revitalization study focused on civic gathering, geometric proportion, coastal heritage integration, and architectural shade structures accommodating cultural celebrations and public assembly.',
+        features: [
+            'Heritage Gathering Pavilion',
+            'Geometric Shaded Arcades',
+            'Integrated Civic Water Feature',
+            'Native Coastal Landscaping'
+        ],
+        photos: [
+            {
+                src: 'portfolio/plaza/plaza.webp',
+                title: 'Civic Plaza Revitalization Plan & Pavilion',
+                spec: 'PLATE 01 // MASTER PLAN & PERSPECTIVE'
+            }
+        ]
+    }
+};
 
 function initProjectModal() {
     const modal = document.getElementById('project-modal');
@@ -430,63 +667,151 @@ function initProjectModal() {
     const areaEl = document.getElementById('proj-modal-area');
     const typologyEl = document.getElementById('proj-modal-typology-spec');
     const toolsEl = document.getElementById('proj-modal-tools-spec');
+    const featuresEl = document.getElementById('proj-modal-features');
     const collageEl = document.getElementById('proj-collage');
     const photoCountEl = document.getElementById('proj-photo-count');
     const prevBtn = document.getElementById('proj-modal-prev-btn');
     const nextBtn = document.getElementById('proj-modal-next-btn');
     const indexBadge = document.getElementById('proj-modal-index-badge');
 
+    // Active Plate Viewport Stage elements
+    const activeImg = document.getElementById('proj-active-image');
+    const activePlateBadge = document.getElementById('proj-active-plate-badge');
+    const activePlateTitle = document.getElementById('proj-active-plate-title');
+    const stagePrevBtn = document.getElementById('proj-stage-prev-btn');
+    const stageNextBtn = document.getElementById('proj-stage-next-btn');
+    const plateZoomBtn = document.getElementById('proj-plate-zoom-btn');
+
+    const projectKeys = ['airport', 'amping', 'marahuyo', 'marikina', 'subdivision', 'plaza'];
     let currentProjectIndex = 0;
-    const projectsData = [];
+    let currentPlateIndex = 0;
 
     projectCards.forEach((card, idx) => {
-        const title = card.querySelector('h3')?.textContent.trim() || `Project ${idx + 1}`;
-        const cat = card.getAttribute('data-category') || 'Architecture';
-        const img = card.querySelector('img')?.getAttribute('src') || '';
-        const year = card.querySelector('.font-mono.text-accent')?.textContent.trim() || '2024';
-        const desc = card.querySelector('p')?.textContent.trim() || 'Comprehensive architectural design documentation and 3D computational model.';
-
-        projectsData.push({
-            title,
-            category: cat.toUpperCase(),
-            image: img,
-            year,
-            desc,
-            location: 'Philippines',
-            area: '3,500 sqm',
-            tools: 'Revit / SketchUp / Lumion / AutoCAD',
-            typology: cat.toUpperCase()
-        });
-
         card.addEventListener('click', () => {
-            openProjectModal(idx);
+            const key = card.getAttribute('data-project');
+            const foundIdx = projectKeys.indexOf(key);
+            openProjectModal(foundIdx >= 0 ? foundIdx : idx);
         });
     });
 
+    const getProjectPhotos = (projectKey) => {
+        const p = PORTFOLIO_PROJECTS_DATA[projectKey];
+        if (!p || !p.photos) return [];
+        return p.photos.filter(photo => !photo.src.includes('/cover/'));
+    };
+
+    const setActivePlate = (plateIdx) => {
+        const projectKey = projectKeys[currentProjectIndex];
+        const p = PORTFOLIO_PROJECTS_DATA[projectKey];
+        const plates = getProjectPhotos(projectKey);
+        if (!p || !plates.length) return;
+
+        currentPlateIndex = (plateIdx + plates.length) % plates.length;
+        const currentPhoto = plates[currentPlateIndex];
+
+        if (activeImg) {
+            activeImg.style.opacity = '0.4';
+            activeImg.src = currentPhoto.src;
+            activeImg.alt = `${p.title} - ${currentPhoto.title}`;
+            setTimeout(() => {
+                activeImg.style.opacity = '1';
+            }, 100);
+        }
+
+        if (activePlateBadge) {
+            activePlateBadge.textContent = `PLATE ${String(currentPlateIndex + 1).padStart(2, '0')} / ${String(plates.length).padStart(2, '0')}`;
+        }
+        if (activePlateTitle) {
+            activePlateTitle.textContent = currentPhoto.title;
+        }
+
+        // Highlight active thumbnail in collage
+        if (collageEl) {
+            const thumbs = collageEl.querySelectorAll('.proj-thumb-card');
+            thumbs.forEach((th, idx) => {
+                if (idx === currentPlateIndex) {
+                    th.classList.add('active');
+                } else {
+                    th.classList.remove('active');
+                }
+            });
+        }
+    };
+
     const openProjectModal = (index) => {
-        currentProjectIndex = index;
-        const p = projectsData[index];
+        currentProjectIndex = (index + projectKeys.length) % projectKeys.length;
+        const projectKey = projectKeys[currentProjectIndex];
+        const p = PORTFOLIO_PROJECTS_DATA[projectKey];
         if (!p) return;
+
+        const plates = getProjectPhotos(projectKey);
+        currentPlateIndex = 0;
 
         if (titleEl) titleEl.textContent = p.title;
         if (subtitleEl) subtitleEl.textContent = `${p.category} Architectural Documentation`;
         if (catEl) catEl.textContent = p.category;
         if (yearEl) yearEl.textContent = p.year;
         if (descEl) descEl.textContent = p.desc;
-        if (locationEl) locationEl.textContent = p.location;
+        if (locationEl) {
+            locationEl.innerHTML = `<i class="ph ph-map-pin text-accent"></i> <span>${p.location}</span>`;
+        }
         if (areaEl) areaEl.textContent = p.area;
         if (typologyEl) typologyEl.textContent = p.typology;
         if (toolsEl) toolsEl.textContent = p.tools;
-        if (indexBadge) indexBadge.textContent = `${index + 1} / ${projectsData.length}`;
+        if (indexBadge) indexBadge.textContent = `${currentProjectIndex + 1} / ${projectKeys.length} PROJECTS`;
 
-        if (collageEl) {
-            collageEl.innerHTML = `
-                <div class="relative w-full aspect-video border border-studio-700 bg-studio-900 overflow-hidden shadow-xl">
-                    <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover">
-                </div>
-            `;
+        if (featuresEl && p.features) {
+            featuresEl.innerHTML = p.features
+                .map(feat => `<span class="px-2 py-0.5 bg-studio-800 text-studio-300 border border-studio-700 text-[10px] font-mono">${feat}</span>`)
+                .join('');
         }
-        if (photoCountEl) photoCountEl.textContent = '1 PLATE';
+
+        // Photo count badge
+        const count = plates.length;
+        if (photoCountEl) {
+            photoCountEl.textContent = `${count} ${count === 1 ? 'PLATE' : 'PLATES'}`;
+        }
+
+        // Stage controls visibility
+        if (stagePrevBtn && stageNextBtn) {
+            if (count > 1) {
+                stagePrevBtn.classList.remove('hidden');
+                stagePrevBtn.classList.add('flex');
+                stageNextBtn.classList.remove('hidden');
+                stageNextBtn.classList.add('flex');
+            } else {
+                stagePrevBtn.classList.add('hidden');
+                stagePrevBtn.classList.remove('flex');
+                stageNextBtn.classList.add('hidden');
+                stageNextBtn.classList.remove('flex');
+            }
+        }
+
+        // Populate thumbnails collage
+        if (collageEl && plates.length) {
+            collageEl.innerHTML = plates.map((photo, idx) => `
+                <button type="button" class="proj-thumb-card group relative aspect-video border border-studio-700 bg-studio-900 overflow-hidden text-left cursor-pointer ${idx === 0 ? 'active' : ''}" data-plate-index="${idx}" title="${photo.title}">
+                    <img src="${photo.src}" alt="${photo.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-1 left-1.5 right-1.5 flex items-center justify-between font-mono text-[9px] text-studio-200">
+                        <span class="text-accent font-bold">${String(idx + 1).padStart(2, '0')}</span>
+                        <span class="truncate text-[8px] text-studio-400 hidden sm:inline ml-1">${photo.spec.replace(/^PLATE\s*\d+\s*\/\/\s*/i, '')}</span>
+                    </div>
+                </button>
+            `).join('');
+
+            // Bind thumbnail click events
+            const thumbButtons = collageEl.querySelectorAll('.proj-thumb-card');
+            thumbButtons.forEach((btn, idx) => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    setActivePlate(idx);
+                });
+            });
+        }
+
+        // Set initial plate
+        setActivePlate(0);
 
         modal.classList.remove('hidden');
         modal.classList.add('flex');
@@ -499,27 +824,65 @@ function initProjectModal() {
         document.body.style.overflow = '';
     };
 
+    // Stage Next / Prev Plate handlers
+    if (stagePrevBtn) {
+        stagePrevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setActivePlate(currentPlateIndex - 1);
+        });
+    }
+
+    if (stageNextBtn) {
+        stageNextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setActivePlate(currentPlateIndex + 1);
+        });
+    }
+
+    // Lightbox inspection triggers
+    const triggerProjectLightbox = () => {
+        const projectKey = projectKeys[currentProjectIndex];
+        const plates = getProjectPhotos(projectKey);
+        if (plates.length && window.openCustomLightbox) {
+            window.openCustomLightbox(plates, currentPlateIndex);
+        }
+    };
+
+    if (activeImg) {
+        activeImg.addEventListener('click', triggerProjectLightbox);
+    }
+    if (plateZoomBtn) {
+        plateZoomBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerProjectLightbox();
+        });
+    }
+
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
 
     window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-            closeModal();
+        if (!modal.classList.contains('hidden')) {
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowLeft') {
+                setActivePlate(currentPlateIndex - 1);
+            } else if (e.key === 'ArrowRight') {
+                setActivePlate(currentPlateIndex + 1);
+            }
         }
     });
 
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
-            currentProjectIndex = (currentProjectIndex - 1 + projectsData.length) % projectsData.length;
-            openProjectModal(currentProjectIndex);
+            openProjectModal(currentProjectIndex - 1);
         });
     }
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
-            currentProjectIndex = (currentProjectIndex + 1) % projectsData.length;
-            openProjectModal(currentProjectIndex);
+            openProjectModal(currentProjectIndex + 1);
         });
     }
 }
@@ -1334,6 +1697,21 @@ function initLightbox() {
         const found = items.findIndex(it => it.src === src);
         showItem(found >= 0 ? found : 0);
 
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.openCustomLightbox = (customItems, startIdx = 0) => {
+        if (!customItems || !customItems.length) return;
+        items = customItems.map(item => {
+            if (typeof item === 'string') return { src: item, title: 'Architectural Plate' };
+            return {
+                src: item.src,
+                title: item.title || item.spec || 'Architectural Plate'
+            };
+        });
+        showItem(startIdx);
         lightbox.classList.remove('hidden');
         lightbox.classList.add('flex');
         document.body.style.overflow = 'hidden';

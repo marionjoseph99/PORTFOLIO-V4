@@ -182,6 +182,43 @@ html.light #service-modal {
     transition: opacity 0.2s ease, transform 0.3s ease;
 }
 
+/* Project Modal Multi-Photo Viewer & Thumbnails */
+.proj-thumb-card {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.proj-thumb-card.active {
+    border-color: var(--accent-hex, #eab308) !important;
+    box-shadow: 0 0 0 1px var(--accent-hex, #eab308), 0 4px 14px rgba(0, 0, 0, 0.6);
+    opacity: 1 !important;
+}
+
+.proj-thumb-card:not(.active) {
+    opacity: 0.75;
+}
+
+.proj-thumb-card:hover {
+    opacity: 1;
+    border-color: rgba(234, 179, 8, 0.7);
+}
+
+#proj-active-image {
+    transition: opacity 0.25s ease;
+}
+
+/* Focused UI Elements Style Overrides */
+#hero-position-badge {
+    font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 21px;
+    text-align: justify;
+}
+
+#home #open-cv-btn {
+    border-radius: 0 !important;
+}
+
 /* ==========================================================================
    ARCHITECTURAL PRECISION CUSTOM CURSOR
    ========================================================================== */

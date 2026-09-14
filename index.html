@@ -343,7 +343,7 @@
                 <!-- Text Content -->
                 <div class="lg:col-span-7 order-2 lg:order-1 gs-reveal">
                     <div class="font-mono text-accent text-xs sm:text-sm tracking-widest mb-4 sm:mb-6 flex items-center gap-3 sm:gap-4">
-                        <span class="w-8 sm:w-12 h-px bg-accent shrink-0"></span> <span id="hero-position-badge">CAD Technician Specialist | 3D Visualizer & 3D Renderer</span>
+                        <span class="w-8 sm:w-12 h-px bg-accent shrink-0"></span> <span id="hero-position-badge" class="font-bold not-italic text-[16px] leading-[21px] text-justify">CAD Technician Specialist | 3D Visualizer & 3D Renderer</span>
                     </div>
                     <h2 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.15] mb-6 sm:mb-8 text-studio-100">
                         Architecture is <br>
@@ -358,7 +358,7 @@
                             <span>View Project Index</span> 
                             <i class="ph ph-arrow-right group-hover:translate-x-2 transition-transform"></i>
                         </a>
-                        <button id="open-cv-btn" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-2.5 border border-studio-600 hover:border-accent text-studio-200 hover:text-accent bg-studio-800/80 transition-all hover-trigger">
+                        <button id="open-cv-btn" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-2.5 border border-studio-600 hover:border-accent text-studio-200 hover:text-accent bg-studio-800/80 transition-all hover-trigger rounded-none">
                             <i class="ph ph-download-simple text-accent text-base"></i>
                             <span>Download CV</span>
                         </button>
@@ -462,6 +462,7 @@
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2.5 sm:gap-6 md:gap-8" id="project-grid">
                     
                     <!-- Project 1: Layag Airport -->
+                    <!-- Project 1: Layag Airport -->
                     <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-100 transition-transform duration-500 hover:-translate-y-1" data-project="airport" data-typology="architecture">
                         <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
                             <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
@@ -562,7 +563,7 @@
                                 <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <span class="absolute top-2.5 right-2.5 font-mono text-[9px] sm:text-[10px] px-2 py-0.5 bg-studio-900/90 border border-studio-700 text-accent uppercase tracking-wider backdrop-blur-sm">
-                                    3 PHOTOS
+                                    1 PHOTO
                                 </span>
                             </div>
                             <div class="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between">
@@ -692,7 +693,7 @@
                     <div class="project-card hover-trigger relative w-full group cursor-pointer gs-reveal delay-600 transition-transform duration-500 hover:-translate-y-1" data-project="plaza" data-typology="planning">
                         <div class="w-full bg-studio-800 border border-studio-700 p-2.5 sm:p-3 flex flex-col h-full">
                             <div class="project-img-wrapper relative h-52 sm:h-64 md:h-72 overflow-hidden bg-studio-900 border border-studio-700 transition-colors duration-500 group-hover:border-accent group-hover:bg-studio-800">
-                                <img src="portfolio/cover/hinabi.webp" alt="Jagna De Plaza" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                <img src="portfolio/cover/plaza.webp" alt="Jagna De Plaza" class="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
                                 <div class="absolute inset-0 bg-gradient-to-t from-studio-900/70 via-transparent to-transparent pointer-events-none"></div>
                                 <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -2682,17 +2683,55 @@
             </div>
 
             <!-- Project Plates & Visual Renders Gallery Section -->
-            <div id="proj-photo-section" class="space-y-2.5">
-                <div class="flex items-center justify-between font-mono text-xs text-studio-400">
+            <div id="proj-photo-section" class="space-y-3">
+                <div class="flex flex-wrap items-center justify-between font-mono text-xs text-studio-400 gap-2">
                     <div class="flex items-center gap-2 uppercase tracking-wider text-studio-200">
                         <i class="ph ph-images text-accent text-sm"></i>
-                        <span>Project Plates &amp; Renderings (<span id="proj-photo-count" class="text-accent font-bold">4</span>)</span>
+                        <span>Project Plates &amp; Renderings (<span id="proj-photo-count" class="text-accent font-bold">4 PLATES</span>)</span>
                     </div>
-                    <span class="text-[11px] text-studio-400 hidden sm:flex items-center gap-1">
-                        <i class="ph ph-magnifying-glass-plus text-accent"></i> Click any plate to inspect high-resolution
+                    <span class="text-[11px] text-studio-400 flex items-center gap-1.5">
+                        <i class="ph ph-magnifying-glass-plus text-accent"></i> Click plate to inspect in high-resolution lightbox
                     </span>
                 </div>
-                <div id="proj-collage" class="grid grid-cols-3 gap-2 sm:gap-3 w-full"></div>
+
+                <!-- Featured Plate Active Stage -->
+                <div id="proj-active-stage" class="relative w-full aspect-video sm:aspect-[21/10] md:aspect-[16/9] border border-studio-700 bg-studio-950 overflow-hidden shadow-2xl group select-none">
+                    <img id="proj-active-image" src="" alt="Active Project Plate" class="w-full h-full object-contain bg-black/50 cursor-pointer transition-opacity duration-300">
+                    
+                    <!-- HUD Top Left: Plate Tag -->
+                    <div class="absolute top-2.5 left-2.5 max-w-[80%] flex items-center gap-2 pointer-events-none z-10">
+                        <span id="proj-active-plate-badge" class="font-mono text-[10px] sm:text-xs px-2.5 py-1 bg-studio-900/90 text-accent border border-studio-700 uppercase tracking-wider backdrop-blur-md">
+                            PLATE 01 / 04
+                        </span>
+                        <span id="proj-active-plate-title" class="font-mono text-[10px] sm:text-xs px-2.5 py-1 bg-studio-900/90 text-studio-200 border border-studio-700 uppercase tracking-wider backdrop-blur-md truncate hidden sm:inline">
+                            Master Plan
+                        </span>
+                    </div>
+
+                    <!-- HUD Top Right: Lightbox Inspector Trigger -->
+                    <div class="absolute top-2.5 right-2.5 flex items-center gap-2 z-10">
+                        <button id="proj-plate-zoom-btn" type="button" class="font-mono text-[10px] sm:text-xs px-2.5 py-1 bg-studio-900/90 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent transition-all flex items-center gap-1.5 backdrop-blur-md hover-trigger" title="Inspect Fullscreen (Z)">
+                            <i class="ph ph-arrows-out-simple text-sm"></i> <span class="hidden md:inline">FULLSCREEN</span>
+                        </button>
+                    </div>
+
+                    <!-- Previous & Next Plate In-Stage Controls -->
+                    <button id="proj-stage-prev-btn" type="button" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 bg-studio-900/85 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent transition-all flex items-center justify-center backdrop-blur-md hover-trigger z-10" title="Previous Plate (Left Arrow)">
+                        <i class="ph ph-caret-left text-lg"></i>
+                    </button>
+                    <button id="proj-stage-next-btn" type="button" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 bg-studio-900/85 hover:bg-accent text-studio-200 hover:text-studio-900 border border-studio-700 hover:border-accent transition-all flex items-center justify-center backdrop-blur-md hover-trigger z-10" title="Next Plate (Right Arrow)">
+                        <i class="ph ph-caret-right text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- All Plates Interactive Thumbnails Strip / Collage -->
+                <div>
+                    <div class="flex items-center justify-between font-mono text-[10px] sm:text-[11px] text-studio-400 uppercase tracking-wider mb-1.5">
+                        <span>All Available Project Plates</span>
+                        <span class="text-studio-500">Select thumbnail to switch</span>
+                    </div>
+                    <div id="proj-collage" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 w-full"></div>
+                </div>
             </div>
             <p id="proj-modal-empty-state" class="hidden font-mono text-sm text-studio-400 text-center py-12">Project photos are not available yet.</p>
 
