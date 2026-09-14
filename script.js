@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initInquiryModal();
     initCVModal();
     initLightbox();
+    initTestimonialsTrack();
     initDynamicYear();
 });
 
@@ -341,37 +342,143 @@ function initDistanceRuler() {
 }
 
 // ==========================================================================
-// 05. SCROLL REVEAL (MOBILE-SAFE OBSERVER)
+// ==========================================================================
+// 05. SCROLL REVEAL (BIDIRECTIONAL UP & DOWN REPEATABLE OBSERVER)
 // ==========================================================================
 function initScrollReveal() {
-    const revealElements = document.querySelectorAll('.gs-reveal');
-    if (!revealElements.length) return;
-
-    // Mobile fallback: On screens <= 768px or if IntersectionObserver is unavailable, activate all immediately
-    if (window.innerWidth <= 768 || !('IntersectionObserver' in window)) {
-        revealElements.forEach(el => el.classList.add('is-active'));
-        return;
-    }
-
-    const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-active');
-                obs.unobserve(entry.target);
+    const mainContent = document.getElementById('main-content');
+    
+    // Automatically equip all visualization cards with .gs-reveal and column stagger
+    const vizItems = document.querySelectorAll('.viz-item');
+    vizItems.forEach((item, idx) => {
+        if (!item.classList.contains('gs-reveal')) {
+            item.classList.add('gs-reveal');
+            const colDelay = (idx % 3) * 80;
+            if (colDelay > 0) {
+                item.style.transitionDelay = `${colDelay}ms`;
             }
-        });
-    }, {
-        threshold: 0.01,
-        rootMargin: '100px 0px 50px 0px'
+        }
     });
 
-    revealElements.forEach(el => observer.observe(el));
+    const revealElements = Array.from(document.querySelectorAll('.gs-reveal')).filter(el => {
+        // Keep fixed sidebar permanently visible
+        return el.id !== 'desktop-sidebar' && !el.closest('#desktop-sidebar');
+    });
 
-    // Fallback safety timeout: ensure no content remains hidden if user doesn't trigger scroll
-    setTimeout(() => {
-        revealElements.forEach(el => el.classList.add('is-active'));
-    }, 2000);
+    if (!revealElements.length) return;
+
+    // Track scroll direction (UP vs DOWN)
+    let lastScrollY = mainContent ? mainContent.scrollTop : window.scrollY;
+    let scrollDirection = 'down';
+
+    const getViewportHeight = () => window.innerHeight || document.documentElement.clientHeight;
+
+    // Core element evaluator: checks whether element is on screen or off-screen,
+    // and correctly sets its entrance direction (reveal-from-top vs standard reveal from bottom)
+    const evaluateElement = (el) => {
+        const rect = el.getBoundingClientRect();
+        const vHeight = getViewportHeight();
+
+        // Trigger thresholds: activate when element is visibly entering the viewport
+        // so the user actually sees the smooth entrance animation in their field of view.
+        const enterBottomThreshold = Math.min(80, vHeight * 0.12);
+        const enterTopThreshold = Math.min(70, vHeight * 0.1);
+
+        const isEnteringFromBottom = rect.top < (vHeight - enterBottomThreshold) && rect.bottom > 0;
+        const isEnteringFromTop = rect.bottom > enterTopThreshold && rect.top < vHeight;
+        const isInViewport = (scrollDirection === 'down' ? isEnteringFromBottom : isEnteringFromTop);
+
+        if (isInViewport) {
+            if (!el.classList.contains('is-active')) {
+                // If scrolling UP and element is appearing from above, animate downwards from top
+                // If scrolling DOWN and element is appearing from below, animate upwards from bottom
+                if (scrollDirection === 'up') {
+                    el.classList.add('reveal-from-top');
+                } else {
+                    el.classList.remove('reveal-from-top');
+                }
+
+                el.classList.add('is-active');
+                el.classList.add('just-revealed');
+                setTimeout(() => el.classList.remove('just-revealed'), 500);
+            }
+        } else {
+            // Element is outside the visible viewport: RESET so it re-animates every time!
+            // Use hysteresis buffer (40px outside viewport) to prevent flickering near edges
+            if (rect.bottom < -40) {
+                // Exited completely off the TOP of the viewport
+                if (el.classList.contains('is-active')) {
+                    el.classList.remove('is-active');
+                }
+                // Prime it to slide down from top when user scrolls back UP
+                el.classList.add('reveal-from-top');
+            } else if (rect.top > vHeight + 40) {
+                // Exited completely off the BOTTOM of the viewport
+                if (el.classList.contains('is-active')) {
+                    el.classList.remove('is-active');
+                }
+                // Prime it to slide up from bottom when user scrolls DOWN
+                el.classList.remove('reveal-from-top');
+            }
+        }
+    };
+
+    // Initial check: only elements in the upper part of the starting viewport activate immediately.
+    // Lower sections (projects, services, etc.) stay primed for their entrance scroll animation!
+    revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const vHeight = getViewportHeight();
+        if (rect.top < vHeight * 0.7 && rect.bottom > 20) {
+            el.classList.add('is-active');
+        } else if (rect.bottom <= 0) {
+            el.classList.add('reveal-from-top');
+        }
+    });
+
+    // 1. Native IntersectionObserver for immediate response on boundary crossing
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                evaluateElement(entry.target);
+            });
+        }, {
+            root: null,
+            threshold: [0, 0.1, 0.25],
+            rootMargin: '10px 0px 10px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+    }
+
+    // 2. High-performance scroll listener with requestAnimationFrame
+    // Guarantees continuous evaluations on rapid or slow scroll in either direction
+    let isScrollTicking = false;
+    const handleScroll = () => {
+        const currentScrollY = mainContent ? mainContent.scrollTop : window.scrollY;
+        const delta = currentScrollY - lastScrollY;
+
+        if (Math.abs(delta) >= 2) {
+            scrollDirection = delta > 0 ? 'down' : 'up';
+            lastScrollY = Math.max(0, currentScrollY);
+        }
+
+        revealElements.forEach(evaluateElement);
+        isScrollTicking = false;
+    };
+
+    const onScroll = () => {
+        if (!isScrollTicking) {
+            requestAnimationFrame(handleScroll);
+            isScrollTicking = true;
+        }
+    };
+
+    if (mainContent) {
+        mainContent.addEventListener('scroll', onScroll, { passive: true });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
 }
+
 
 // ==========================================================================
 // 06. ARCHITECTURAL PROJECTS SECTION & MODAL
@@ -677,7 +784,6 @@ function initProjectModal() {
     // Active Plate Viewport Stage elements
     const activeImg = document.getElementById('proj-active-image');
     const activePlateBadge = document.getElementById('proj-active-plate-badge');
-    const activePlateTitle = document.getElementById('proj-active-plate-title');
     const stagePrevBtn = document.getElementById('proj-stage-prev-btn');
     const stageNextBtn = document.getElementById('proj-stage-next-btn');
     const plateZoomBtn = document.getElementById('proj-plate-zoom-btn');
@@ -720,9 +826,6 @@ function initProjectModal() {
 
         if (activePlateBadge) {
             activePlateBadge.textContent = `PLATE ${String(currentPlateIndex + 1).padStart(2, '0')} / ${String(plates.length).padStart(2, '0')}`;
-        }
-        if (activePlateTitle) {
-            activePlateTitle.textContent = currentPhoto.title;
         }
 
         // Highlight active thumbnail in collage
@@ -1016,10 +1119,10 @@ function initModelViewer() {
             pipeline: 'Revit Architecture + SketchUp'
         },
         'rowhouse': {
-            src: '3D Models/event place.glb',
-            title: 'COMMUNITY EVENT PAVILION',
-            typology: 'Commercial / Civic Center',
-            pipeline: 'SketchUp 3D + Lumion Engine'
+            src: '3D Models/Rowhouse.glb',
+            title: 'ROWHOUSE RESIDENTIAL DEVELOPMENT',
+            typology: 'Residential Architecture • Multi-Unit',
+            pipeline: 'Revit BIM + Lumion Engine'
         },
         'event-place': {
             src: '3D Models/event place.glb',
@@ -1040,6 +1143,11 @@ function initModelViewer() {
             if (data) {
                 modelViewer.src = data.src;
                 if (hudTitle) hudTitle.textContent = data.title;
+                const progressFilename = document.getElementById('model-progress-filename');
+                if (progressFilename) {
+                    const filename = data.src.split('/').pop().toUpperCase();
+                    progressFilename.textContent = filename;
+                }
             }
         });
     });
@@ -1265,10 +1373,8 @@ function initArtGallerySection() {
         filtered.forEach((item, idx) => {
             if (idx < limit) {
                 item.style.display = '';
-                // Ensure scroll-reveal does not keep filtered items invisible
+                // Ensure scroll-reveal activates filtered items
                 item.classList.add('is-active');
-                item.style.visibility = 'visible';
-                item.style.opacity = '1';
             }
         });
 
@@ -1773,5 +1879,223 @@ function initDynamicYear() {
     const yearEl = document.getElementById('year');
     if (yearEl) {
         yearEl.textContent = new Date().getFullYear();
+    }
+}
+
+// ==========================================================================
+// 15. CONTINUOUS TESTIMONIALS AUTO-SCROLL TRACK
+// ==========================================================================
+function initTestimonialsTrack() {
+    const track = document.getElementById('testimonials-track');
+    if (!track) return;
+
+    const originalCards = Array.from(track.children);
+    if (!originalCards.length) return;
+
+    // Clone all cards once to create a seamless infinite loop
+    originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+    });
+
+    let singleCycleWidth = 0;
+    const calculateCycleWidth = () => {
+        if (track.children.length > originalCards.length) {
+            const firstChild = track.children[0];
+            const firstClone = track.children[originalCards.length];
+            singleCycleWidth = firstClone.offsetLeft - firstChild.offsetLeft;
+        }
+        if (!singleCycleWidth || singleCycleWidth <= 0) {
+            singleCycleWidth = track.scrollWidth / 2;
+        }
+    };
+
+    // Calculate initial cycle width after DOM layout settling
+    setTimeout(calculateCycleWidth, 100);
+    window.addEventListener('resize', calculateCycleWidth);
+
+    let isAutoScrolling = true;
+    let isHovered = false;
+    let isDragging = false;
+    let isVisible = true;
+    let resumeTimeout = null;
+    let lastTime = performance.now();
+    const scrollSpeedPixelsPerSecond = 36; // Buttery smooth reading speed (~0.6px per frame at 60fps)
+
+    function animate(currentTime) {
+        const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.1);
+        lastTime = currentTime;
+
+        if (isAutoScrolling && !isHovered && !isDragging && isVisible && singleCycleWidth > 0) {
+            track.scrollLeft += scrollSpeedPixelsPerSecond * deltaTime;
+
+            if (track.scrollLeft >= singleCycleWidth) {
+                track.scrollLeft -= singleCycleWidth;
+            } else if (track.scrollLeft < 0) {
+                track.scrollLeft += singleCycleWidth;
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    // Pause on mouse hover so user can read review without rushing
+    track.addEventListener('mouseenter', () => {
+        isHovered = true;
+    });
+    track.addEventListener('mouseleave', () => {
+        isHovered = false;
+        lastTime = performance.now();
+    });
+
+    // Mouse & Touch Drag interactions
+    let startX = 0;
+    let scrollStart = 0;
+
+    const startDrag = (pageX) => {
+        isDragging = true;
+        startX = pageX;
+        scrollStart = track.scrollLeft;
+        track.classList.add('cursor-grabbing');
+        track.classList.remove('cursor-grab');
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+    };
+
+    const moveDrag = (pageX) => {
+        if (!isDragging) return;
+        const delta = pageX - startX;
+        track.scrollLeft = scrollStart - delta;
+
+        if (singleCycleWidth > 0) {
+            if (track.scrollLeft >= singleCycleWidth) {
+                track.scrollLeft -= singleCycleWidth;
+                scrollStart -= singleCycleWidth;
+            } else if (track.scrollLeft < 0) {
+                track.scrollLeft += singleCycleWidth;
+                scrollStart += singleCycleWidth;
+            }
+        }
+    };
+
+    const endDrag = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        track.classList.remove('cursor-grabbing');
+        track.classList.add('cursor-grab');
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+        resumeTimeout = setTimeout(() => {
+            lastTime = performance.now();
+        }, 1500);
+    };
+
+    track.addEventListener('mousedown', (e) => {
+        startDrag(e.pageX);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        moveDrag(e.pageX);
+    });
+
+    window.addEventListener('mouseup', () => {
+        endDrag();
+    });
+
+    track.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches.length) {
+            startDrag(e.touches[0].pageX);
+        }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches.length) {
+            moveDrag(e.touches[0].pageX);
+        }
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+        endDrag();
+    });
+
+    // Prev / Next button step navigation
+    const prevBtn = document.getElementById('testimonials-prev-btn');
+    const nextBtn = document.getElementById('testimonials-next-btn');
+    const pauseBtn = document.getElementById('testimonials-pause-btn');
+    const statusText = document.getElementById('testimonials-status-text');
+    const pulseDot = document.getElementById('testimonials-pulse-dot');
+
+    const getCardStepDistance = () => {
+        if (track.children.length > 1) {
+            return track.children[1].offsetLeft - track.children[0].offsetLeft;
+        }
+        return 340;
+    };
+
+    const pauseTemporarily = (duration = 3500) => {
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+        const wasAuto = isAutoScrolling;
+        isAutoScrolling = false;
+        resumeTimeout = setTimeout(() => {
+            isAutoScrolling = wasAuto;
+            lastTime = performance.now();
+        }, duration);
+    };
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const step = getCardStepDistance();
+            track.scrollBy({ left: step, behavior: 'smooth' });
+            pauseTemporarily();
+            setTimeout(() => {
+                if (singleCycleWidth > 0 && track.scrollLeft >= singleCycleWidth) {
+                    track.scrollLeft -= singleCycleWidth;
+                }
+            }, 600);
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const step = getCardStepDistance();
+            if (track.scrollLeft <= 10 && singleCycleWidth > 0) {
+                track.scrollLeft += singleCycleWidth;
+            }
+            track.scrollBy({ left: -step, behavior: 'smooth' });
+            pauseTemporarily();
+        });
+    }
+
+    // Toggle Auto-Scroll Button
+    if (pauseBtn) {
+        pauseBtn.addEventListener('click', () => {
+            if (resumeTimeout) clearTimeout(resumeTimeout);
+            isAutoScrolling = !isAutoScrolling;
+            if (statusText) {
+                statusText.textContent = isAutoScrolling ? 'AUTO' : 'PAUSED';
+            }
+            if (pulseDot) {
+                if (isAutoScrolling) {
+                    pulseDot.className = 'w-2 h-2 rounded-full bg-accent animate-pulse';
+                } else {
+                    pulseDot.className = 'w-2 h-2 rounded-full bg-studio-600';
+                }
+            }
+            lastTime = performance.now();
+        });
+    }
+
+    // IntersectionObserver to pause loop when section is scrolled out of view
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isVisible = entry.isIntersecting;
+                if (isVisible) {
+                    lastTime = performance.now();
+                    calculateCycleWidth();
+                }
+            });
+        }, { threshold: 0.05 });
+        observer.observe(track);
     }
 }

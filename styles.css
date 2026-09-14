@@ -351,34 +351,149 @@ html.light #service-modal {
     }
 }
 
-/* Scroll Reveal Animations */
-.gs-reveal {
-    opacity: 0; visibility: hidden; transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.gs-reveal.is-active {
-    opacity: 1; visibility: visible; transform: translateY(0);
+/* ==========================================================================
+   BIDIRECTIONAL SCROLL REVEAL ANIMATIONS (SCROLL UP & DOWN)
+   ========================================================================== */
+.gs-reveal,
+.viz-item {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 36px, 0);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
 }
 
-/* Mobile & Touch Resilience: Ensure content is never hidden if observer fails or on touch devices */
+/* When exiting or offscreen: no transition delay so it resets instantly while out of view */
+.gs-reveal:not(.is-active),
+.viz-item:not(.is-active) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translate3d(0, 36px, 0) !important;
+    transition-delay: 0s !important;
+}
+
+/* Entering from above when scrolling UP */
+.gs-reveal.reveal-from-top:not(.is-active),
+.viz-item.reveal-from-top:not(.is-active) {
+    transform: translate3d(0, -36px, 0) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition-delay: 0s !important;
+}
+
+/* Active / In-View State */
+.gs-reveal.is-active,
+.viz-item.is-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate3d(0, 0, 0) !important;
+}
+
+/* Micro architectural highlight pulse when element re-enters viewport */
+.gs-reveal.just-revealed.service-architectural-card,
+.gs-reveal.just-revealed.project-card,
+.viz-item.just-revealed .viz-card {
+    border-color: rgba(245, 158, 11, 0.6) !important;
+    transition: border-color 0.4s ease;
+}
+
+/* Stagger transition delays for fluid visual rhythm */
+.delay-50  { transition-delay: 0.04s; }
+.delay-100 { transition-delay: 0.08s; }
+.delay-150 { transition-delay: 0.12s; }
+.delay-200 { transition-delay: 0.16s; }
+.delay-250 { transition-delay: 0.20s; }
+.delay-300 { transition-delay: 0.24s; }
+.delay-400 { transition-delay: 0.28s; }
+.delay-500 { transition-delay: 0.32s; }
+.delay-600 { transition-delay: 0.36s; }
+
+/* Dedicated High-Specificity Rules for Project Cards & Service Cards */
+.gs-reveal.project-card,
+.gs-reveal.service-architectural-card {
+    will-change: transform, opacity;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                box-shadow 0.3s ease !important;
+}
+
+.gs-reveal.project-card:not(.is-active),
+.gs-reveal.service-architectural-card:not(.is-active) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translate3d(0, 48px, 0) !important;
+    transition-delay: 0s !important;
+}
+
+.gs-reveal.project-card.reveal-from-top:not(.is-active),
+.gs-reveal.service-architectural-card.reveal-from-top:not(.is-active) {
+    transform: translate3d(0, -48px, 0) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition-delay: 0s !important;
+}
+
+.gs-reveal.project-card.is-active,
+.gs-reveal.service-architectural-card.is-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate3d(0, 0, 0) !important;
+}
+
+/* Hover effects only when the card is active/visible */
+.gs-reveal.project-card.is-active:hover {
+    transform: translate3d(0, -6px, 0) !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                box-shadow 0.3s ease !important;
+}
+
+.gs-reveal.service-architectural-card.is-active:hover {
+    transform: translate3d(0, -6px, 0) !important;
+    border-color: var(--accent-hex) !important;
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(var(--accent) / 0.12) !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                box-shadow 0.3s ease !important;
+}
+
+/* Mobile & Touch Responsive Adaptation: Fast, buttery 60fps GPU transforms */
 @media (max-width: 768px) {
-    .gs-reveal {
+    .gs-reveal,
+    .viz-item {
+        transform: translate3d(0, 24px, 0);
+        transition-duration: 0.5s;
+    }
+    .gs-reveal.reveal-from-top,
+    .viz-item.reveal-from-top {
+        transform: translate3d(0, -24px, 0);
+    }
+    .gs-reveal.project-card:not(.is-active),
+    .gs-reveal.service-architectural-card:not(.is-active) {
+        transform: translate3d(0, 28px, 0) !important;
+    }
+    .gs-reveal.project-card.reveal-from-top:not(.is-active),
+    .gs-reveal.service-architectural-card.reveal-from-top:not(.is-active) {
+        transform: translate3d(0, -28px, 0) !important;
+    }
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .gs-reveal,
+    .viz-item {
         opacity: 1 !important;
         visibility: visible !important;
         transform: none !important;
+        transition: none !important;
     }
 }
-@media (hover: none) and (pointer: coarse) {
-    .viz-card img,
-    .gallery-card img,
-    .project-card img {
-        filter: none !important;
-        opacity: 1 !important;
-    }
-}
-.delay-100 { transition-delay: 0.1s; }
-.delay-200 { transition-delay: 0.2s; }
-.delay-300 { transition-delay: 0.3s; }
+
 
 /* Proficiency Animation */
 @keyframes pulse-op {
@@ -1719,6 +1834,15 @@ body.light-mode .nav-link.active .nav-text {
 html.light .nav-link.active .nav-num,
 body.light-mode .nav-link.active .nav-num {
     color: #d97706 !important;
+}
+
+/* Testimonials client photos: completely borderless and transparent background */
+#testimonials-track img {
+    border: 0 !important;
+    border-width: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 
 
