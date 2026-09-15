@@ -90,6 +90,27 @@ body, aside, header, nav, section, div, button, input, textarea, a {
     background-size: 50px 50px;
 }
 
+/* High-Performance 120Hz Native Scrolling Engine */
+#main-content {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
+    will-change: scroll-position;
+    transform: translateZ(0);
+}
+
+/* Smooth scrolling on pointer devices; native 120Hz physics on touch screens */
+@media (hover: hover) and (pointer: fine) {
+    #main-content {
+        scroll-behavior: smooth;
+    }
+}
+@media (hover: none) or (pointer: coarse) {
+    #main-content {
+        scroll-behavior: auto !important;
+    }
+}
+
 /* Hide scrollbar for clean horizontal scroll */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -414,9 +435,9 @@ html.light #service-modal {
 /* Dedicated High-Specificity Rules for Project Cards & Service Cards */
 .gs-reveal.project-card {
     will-change: transform, opacity;
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.75s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.3s ease,
                 box-shadow 0.4s ease;
 }
@@ -431,7 +452,13 @@ html.light #service-modal {
                 background-color 0.3s ease;
 }
 
-.gs-reveal.project-card:not(.is-active),
+.gs-reveal.project-card:not(.is-active) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translate3d(0, 48px, 0) scale(0.96) !important;
+    transition-delay: 0s !important;
+}
+
 .gs-reveal.service-architectural-card:not(.is-active) {
     opacity: 0 !important;
     visibility: hidden !important;
@@ -439,7 +466,13 @@ html.light #service-modal {
     transition-delay: 0s !important;
 }
 
-.gs-reveal.project-card.reveal-from-top:not(.is-active),
+.gs-reveal.project-card.reveal-from-top:not(.is-active) {
+    transform: translate3d(0, -48px, 0) scale(0.96) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition-delay: 0s !important;
+}
+
 .gs-reveal.service-architectural-card.reveal-from-top:not(.is-active) {
     transform: translate3d(0, -48px, 0) !important;
     opacity: 0 !important;
@@ -447,16 +480,27 @@ html.light #service-modal {
     transition-delay: 0s !important;
 }
 
-.gs-reveal.project-card.is-active,
+.gs-reveal.project-card.is-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate3d(0, 0, 0) scale(1) !important;
+}
+
 .gs-reveal.service-architectural-card.is-active {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translate3d(0, 0, 0);
 }
 
+/* Micro architectural highlight pulse when project card slides into viewport */
+.gs-reveal.just-revealed.project-card {
+    border-color: rgba(var(--accent) / 0.8) !important;
+    box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(var(--accent) / 0.25) !important;
+}
+
 /* Hover effects when card is active/revealed */
 .gs-reveal.project-card.is-active:hover {
-    transform: translate3d(0, -6px, 0);
+    transform: translate3d(0, -4px, 0) scale(1.005);
 }
 
 .gs-reveal.service-architectural-card.is-active:hover {
@@ -465,7 +509,7 @@ html.light #service-modal {
     box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(var(--accent) / 0.15) !important;
 }
 
-/* Mobile & Touch Responsive Adaptation: Fast, buttery 60fps GPU transforms */
+/* Mobile & Touch Responsive Adaptation: Fast, buttery 120fps GPU transforms */
 @media (max-width: 768px) {
     .gs-reveal,
     .viz-item {
@@ -476,14 +520,28 @@ html.light #service-modal {
     .viz-item.reveal-from-top {
         transform: translate3d(0, -24px, 0);
     }
-    .gs-reveal.project-card:not(.is-active),
+    .gs-reveal.project-card:not(.is-active) {
+        transform: translate3d(0, 36px, 0) scale(0.95) !important;
+        opacity: 0 !important;
+    }
     .gs-reveal.service-architectural-card:not(.is-active) {
         transform: translate3d(0, 28px, 0) !important;
     }
-    .gs-reveal.project-card.reveal-from-top:not(.is-active),
+    .gs-reveal.project-card.reveal-from-top:not(.is-active) {
+        transform: translate3d(0, -36px, 0) scale(0.95) !important;
+        opacity: 0 !important;
+    }
     .gs-reveal.service-architectural-card.reveal-from-top:not(.is-active) {
         transform: translate3d(0, -28px, 0) !important;
     }
+
+    /* Mobile 2-Column Grid Cascading Stagger */
+    .project-card:nth-child(1) { transition-delay: 0.04s !important; }
+    .project-card:nth-child(2) { transition-delay: 0.10s !important; }
+    .project-card:nth-child(3) { transition-delay: 0.16s !important; }
+    .project-card:nth-child(4) { transition-delay: 0.22s !important; }
+    .project-card:nth-child(5) { transition-delay: 0.28s !important; }
+    .project-card:nth-child(6) { transition-delay: 0.34s !important; }
 }
 
 /* Accessibility: Respect Reduced Motion */
@@ -704,9 +762,11 @@ html.light .scroll-meter-value {
             max-width: none !important;
             height: 520px !important;
             transition: flex 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 0.3s ease,
                         box-shadow 0.4s ease !important;
-            will-change: flex, border-color, box-shadow;
+            will-change: flex, transform, opacity, border-color, box-shadow;
         }
 
         /* Hover Expansion on Desktop */
@@ -836,7 +896,11 @@ html.light .scroll-meter-value {
             flex: none !important;
             border-radius: 4px !important;
             box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.6) !important;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease !important;
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.25s ease,
+                        box-shadow 0.25s ease !important;
+            will-change: transform, opacity;
         }
 
         .project-card:hover,
@@ -904,7 +968,7 @@ html.light .scroll-meter-value {
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
-            color: rgb(var(--studio-100)) !important;
+            color: #f8fafc !important;
             margin: 0 !important;
         }
 
@@ -2044,6 +2108,118 @@ body.light-mode .nav-link.active .nav-num {
     background-color: transparent !important;
     box-shadow: none !important;
 }
+
+/* ==========================================================================
+   01 PROJECTS SECTION - LIGHT MODE HIGH-CONTRAST READABILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* Project Cards Container & Baseline in Light Mode */
+html.light .project-card,
+body.light-mode .project-card {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06) !important;
+}
+
+html.light .project-card:hover,
+html.light .project-card:focus-within,
+html.light .project-card.is-expanded,
+html.light .project-card.touch-active,
+body.light-mode .project-card:hover,
+body.light-mode .project-card:focus-within,
+body.light-mode .project-card.is-expanded,
+body.light-mode .project-card.touch-active {
+    border-color: var(--accent-hex) !important;
+    box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.14), 0 0 16px rgba(var(--accent) / 0.18) !important;
+}
+
+/* Project Card Overlay in Light Mode - High Contrast White Drafting Gradient */
+html.light .project-info-overlay,
+body.light-mode .project-info-overlay {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.93) 65%, rgba(255, 255, 255, 0.35) 90%, transparent 100%) !important;
+    border-top: 1px solid rgba(var(--accent) / 0.45) !important;
+}
+
+/* Project Card Title in Light Mode: Crisp, Deep Charcoal Ink with Maximum Legibility */
+html.light .project-info-overlay h3,
+body.light-mode .project-info-overlay h3,
+html.light .project-card h3,
+body.light-mode .project-card h3 {
+    color: #0f172a !important;
+    text-shadow: none !important;
+}
+
+html.light .project-card:hover h3,
+html.light .project-card:active h3,
+body.light-mode .project-card:hover h3,
+body.light-mode .project-card:active h3 {
+    color: var(--accent-hex) !important;
+}
+
+/* Desktop Resting Slat Vertical Title in Light Mode */
+html.light .project-slat-vertical-title,
+body.light-mode .project-slat-vertical-title {
+    background-color: rgba(255, 255, 255, 0.96) !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Desktop Slat Resting Preview Badges in Light Mode */
+html.light .project-preview-hud .bg-studio-950\/90,
+body.light-mode .project-preview-hud .bg-studio-950\/90,
+html.light .project-slat-preview .bg-studio-950\/90,
+body.light-mode .project-slat-preview .bg-studio-950\/90 {
+    background-color: rgba(255, 255, 255, 0.94) !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+/* Expanded Card Specification Details in Light Mode */
+html.light .project-info-overlay .project-meta,
+body.light-mode .project-info-overlay .project-meta {
+    color: #334155 !important;
+    background-color: rgba(241, 245, 249, 0.9) !important;
+    border-left-color: var(--accent-hex) !important;
+}
+
+html.light .project-info-overlay .bg-studio-900\/90,
+body.light-mode .project-info-overlay .bg-studio-900\/90 {
+    background-color: rgba(248, 250, 252, 0.94) !important;
+    border-color: #e2e8f0 !important;
+    color: #334155 !important;
+}
+
+html.light .project-info-overlay .text-studio-200,
+body.light-mode .project-info-overlay .text-studio-200 {
+    color: #1e293b !important;
+}
+
+html.light .project-info-overlay .text-studio-300,
+body.light-mode .project-info-overlay .text-studio-300 {
+    color: #334155 !important;
+}
+
+html.light .project-info-overlay .text-studio-400,
+body.light-mode .project-info-overlay .text-studio-400 {
+    color: #475569 !important;
+}
+
+/* Mobile Filter Dropdown in Light Mode */
+html.light #project-mobile-filter-dropdown,
+body.light-mode #project-mobile-filter-dropdown {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 12px 30px -5px rgba(15, 23, 42, 0.15) !important;
+}
+
+html.light .gs-reveal.just-revealed.project-card,
+body.light-mode .gs-reveal.just-revealed.project-card {
+    border-color: var(--accent-hex) !important;
+    box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.15), 0 0 20px rgba(var(--accent) / 0.25) !important;
+}
+
+
 
 
 

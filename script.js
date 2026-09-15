@@ -311,12 +311,24 @@ function initDistanceRuler() {
         distanceValue.textContent = `${meters}m`;
     };
 
+    // Throttled scroll listener with requestAnimationFrame for 120Hz smooth scrolling
+    let isRulerTicking = false;
+    const onRulerScroll = () => {
+        if (!isRulerTicking) {
+            requestAnimationFrame(() => {
+                updateRuler();
+                isRulerTicking = false;
+            });
+            isRulerTicking = true;
+        }
+    };
+
     // Listen on both mainContent (the actual scroll container) and window
     if (mainContent) {
-        mainContent.addEventListener('scroll', updateRuler, { passive: true });
+        mainContent.addEventListener('scroll', onRulerScroll, { passive: true });
     }
-    window.addEventListener('scroll', updateRuler, { passive: true });
-    window.addEventListener('resize', updateRuler, { passive: true });
+    window.addEventListener('scroll', onRulerScroll, { passive: true });
+    window.addEventListener('resize', onRulerScroll, { passive: true });
 
     // Interactive scrub/click on ruler track to jump directly to scroll position
     if (track) {
@@ -367,111 +379,74 @@ function initScrollReveal() {
 
     if (!revealElements.length) return;
 
-    // Track scroll direction (UP vs DOWN)
+    // Zero-overhead scroll direction tracker: pure arithmetic, zero layout thrashing
     let lastScrollY = mainContent ? mainContent.scrollTop : window.scrollY;
     let scrollDirection = 'down';
 
-    const getViewportHeight = () => window.innerHeight || document.documentElement.clientHeight;
-
-    // Core element evaluator: checks whether element is on screen or off-screen,
-    // and correctly sets its entrance direction (reveal-from-top vs standard reveal from bottom)
-    const evaluateElement = (el) => {
-        const rect = el.getBoundingClientRect();
-        const vHeight = getViewportHeight();
-
-        // Active visible zone: at least 40px enters the visible viewport
-        const isInViewport = rect.top < (vHeight - 40) && rect.bottom > 40;
-
-        if (isInViewport) {
-            if (!el.classList.contains('is-active')) {
-                // If scrolling UP (or entering from upper half), reveal from top.
-                // If scrolling DOWN (or entering from lower half), reveal from bottom.
-                const isFromTop = scrollDirection === 'up' || ((rect.top + rect.height / 2) < (vHeight / 2));
-                if (isFromTop) {
-                    el.classList.add('reveal-from-top');
-                } else {
-                    el.classList.remove('reveal-from-top');
-                }
-
-                el.classList.add('is-active');
-                el.classList.add('just-revealed');
-                setTimeout(() => el.classList.remove('just-revealed'), 500);
-            }
-        } else {
-            // Element is outside the visible viewport: RESET so it re-animates smoothly every time!
-            // Hysteresis buffer prevents flickering right at edge boundaries
-            if (rect.bottom < -30) {
-                // Exited completely off the TOP of the viewport
-                if (el.classList.contains('is-active')) {
-                    el.classList.remove('is-active');
-                }
-                // Prime it to slide down from top when user scrolls back UP
-                el.classList.add('reveal-from-top');
-            } else if (rect.top > vHeight + 30) {
-                // Exited completely off the BOTTOM of the viewport
-                if (el.classList.contains('is-active')) {
-                    el.classList.remove('is-active');
-                }
-                // Prime it to slide up from bottom when user scrolls DOWN
-                el.classList.remove('reveal-from-top');
-            }
+    const onDirectionUpdate = () => {
+        const curY = mainContent ? mainContent.scrollTop : window.scrollY;
+        const delta = curY - lastScrollY;
+        if (Math.abs(delta) >= 2) {
+            scrollDirection = delta > 0 ? 'down' : 'up';
+            lastScrollY = curY;
         }
     };
 
-    // Initial check: only elements in the upper part of the starting viewport activate immediately.
-    // Lower sections (projects, services, etc.) stay primed for their entrance scroll animation!
+    if (mainContent) {
+        mainContent.addEventListener('scroll', onDirectionUpdate, { passive: true });
+    }
+    window.addEventListener('scroll', onDirectionUpdate, { passive: true });
+
+    // Initial check for elements already in initial view
+    const vHeight = window.innerHeight || document.documentElement.clientHeight;
     revealElements.forEach(el => {
         const rect = el.getBoundingClientRect();
-        const vHeight = getViewportHeight();
-        if (rect.top < vHeight * 0.7 && rect.bottom > 20) {
+        if (rect.top < vHeight * 0.8 && rect.bottom > 20) {
             el.classList.add('is-active');
         } else if (rect.bottom <= 0) {
             el.classList.add('reveal-from-top');
         }
     });
 
-    // 1. Native IntersectionObserver for immediate response on boundary crossing
+    // Native compositor-driven IntersectionObserver (runs off main thread, zero jank at 120Hz)
     if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                evaluateElement(entry.target);
+                const el = entry.target;
+                if (entry.isIntersecting) {
+                    if (!el.classList.contains('is-active')) {
+                        const viewportH = entry.rootBounds ? entry.rootBounds.height : window.innerHeight;
+                        const isFromTop = scrollDirection === 'up' || (entry.boundingClientRect.top < (viewportH / 2));
+                        if (isFromTop) {
+                            el.classList.add('reveal-from-top');
+                        } else {
+                            el.classList.remove('reveal-from-top');
+                        }
+
+                        el.classList.add('is-active');
+                        el.classList.add('just-revealed');
+                        setTimeout(() => el.classList.remove('just-revealed'), 500);
+                    }
+                } else {
+                    // When element scrolls completely out of viewport, reset so it re-animates smoothly
+                    const viewportH = entry.rootBounds ? entry.rootBounds.height : window.innerHeight;
+                    if (entry.boundingClientRect.bottom < -40) {
+                        el.classList.remove('is-active');
+                        el.classList.add('reveal-from-top');
+                    } else if (entry.boundingClientRect.top > viewportH + 40) {
+                        el.classList.remove('is-active');
+                        el.classList.remove('reveal-from-top');
+                    }
+                }
             });
         }, {
             root: null,
-            threshold: [0, 0.1, 0.25],
-            rootMargin: '10px 0px 10px 0px'
+            threshold: [0, 0.15],
+            rootMargin: '24px 0px 24px 0px'
         });
 
         revealElements.forEach(el => observer.observe(el));
     }
-
-    // 2. High-performance scroll listener with requestAnimationFrame
-    // Guarantees continuous evaluations on rapid or slow scroll in either direction
-    let isScrollTicking = false;
-    const handleScroll = () => {
-        const currentScrollY = mainContent ? mainContent.scrollTop : window.scrollY;
-        const delta = currentScrollY - lastScrollY;
-
-        if (Math.abs(delta) >= 2) {
-            scrollDirection = delta > 0 ? 'down' : 'up';
-            lastScrollY = Math.max(0, currentScrollY);
-        }
-
-        revealElements.forEach(evaluateElement);
-        isScrollTicking = false;
-    };
-
-    const onScroll = () => {
-        if (!isScrollTicking) {
-            requestAnimationFrame(handleScroll);
-            isScrollTicking = true;
-        }
-    };
-
-    if (mainContent) {
-        mainContent.addEventListener('scroll', onScroll, { passive: true });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 
@@ -2034,6 +2009,18 @@ function initTestimonialsTrack() {
         requestAnimationFrame(animate);
     }
     requestAnimationFrame(animate);
+
+    // Observe testimonials visibility to pause animation loop when offscreen, saving CPU/GPU on 120Hz displays
+    if ('IntersectionObserver' in window) {
+        const testimonialsSection = document.getElementById('testimonials') || track;
+        const observer = new IntersectionObserver((entries) => {
+            isVisible = entries[0].isIntersecting;
+            if (isVisible) {
+                lastTime = performance.now();
+            }
+        }, { threshold: 0.05 });
+        observer.observe(testimonialsSection);
+    }
 
     // Pause on mouse hover so user can read review without rushing
     track.addEventListener('mouseenter', () => {
