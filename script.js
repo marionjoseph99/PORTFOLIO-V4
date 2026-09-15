@@ -379,20 +379,15 @@ function initScrollReveal() {
         const rect = el.getBoundingClientRect();
         const vHeight = getViewportHeight();
 
-        // Trigger thresholds: activate when element is visibly entering the viewport
-        // so the user actually sees the smooth entrance animation in their field of view.
-        const enterBottomThreshold = Math.min(80, vHeight * 0.12);
-        const enterTopThreshold = Math.min(70, vHeight * 0.1);
-
-        const isEnteringFromBottom = rect.top < (vHeight - enterBottomThreshold) && rect.bottom > 0;
-        const isEnteringFromTop = rect.bottom > enterTopThreshold && rect.top < vHeight;
-        const isInViewport = (scrollDirection === 'down' ? isEnteringFromBottom : isEnteringFromTop);
+        // Active visible zone: at least 40px enters the visible viewport
+        const isInViewport = rect.top < (vHeight - 40) && rect.bottom > 40;
 
         if (isInViewport) {
             if (!el.classList.contains('is-active')) {
-                // If scrolling UP and element is appearing from above, animate downwards from top
-                // If scrolling DOWN and element is appearing from below, animate upwards from bottom
-                if (scrollDirection === 'up') {
+                // If scrolling UP (or entering from upper half), reveal from top.
+                // If scrolling DOWN (or entering from lower half), reveal from bottom.
+                const isFromTop = scrollDirection === 'up' || ((rect.top + rect.height / 2) < (vHeight / 2));
+                if (isFromTop) {
                     el.classList.add('reveal-from-top');
                 } else {
                     el.classList.remove('reveal-from-top');
@@ -403,16 +398,16 @@ function initScrollReveal() {
                 setTimeout(() => el.classList.remove('just-revealed'), 500);
             }
         } else {
-            // Element is outside the visible viewport: RESET so it re-animates every time!
-            // Use hysteresis buffer (40px outside viewport) to prevent flickering near edges
-            if (rect.bottom < -40) {
+            // Element is outside the visible viewport: RESET so it re-animates smoothly every time!
+            // Hysteresis buffer prevents flickering right at edge boundaries
+            if (rect.bottom < -30) {
                 // Exited completely off the TOP of the viewport
                 if (el.classList.contains('is-active')) {
                     el.classList.remove('is-active');
                 }
                 // Prime it to slide down from top when user scrolls back UP
                 el.classList.add('reveal-from-top');
-            } else if (rect.top > vHeight + 40) {
+            } else if (rect.top > vHeight + 30) {
                 // Exited completely off the BOTTOM of the viewport
                 if (el.classList.contains('is-active')) {
                     el.classList.remove('is-active');
@@ -517,17 +512,36 @@ function initProjectSection() {
         });
     }
 
-    // Synchronize photo count badges on project cards to exact plate count
+    // Row Navigation Controls for Single-Row Showcase
+    const track = document.getElementById('project-grid');
+    const rowPrevBtn = document.getElementById('project-row-prev');
+    const rowNextBtn = document.getElementById('project-row-next');
+
+    if (track && rowPrevBtn && rowNextBtn) {
+        const getScrollStep = () => {
+            const firstCard = track.querySelector('.project-card:not([style*="display: none"])');
+            return firstCard ? firstCard.offsetWidth + 24 : 380;
+        };
+
+        rowPrevBtn.addEventListener('click', () => {
+            track.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+        });
+
+        rowNextBtn.addEventListener('click', () => {
+            track.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+        });
+    }
+
+    // Touch support: Tap on touch device highlights card info overlay
     projectCards.forEach(card => {
-        const key = card.getAttribute('data-project');
-        const p = PORTFOLIO_PROJECTS_DATA[key];
-        if (p && p.photos) {
-            const badge = card.querySelector('.project-img-wrapper span');
-            if (badge) {
-                const count = p.photos.filter(ph => !ph.src.includes('/cover/')).length;
-                badge.textContent = `${count} ${count === 1 ? 'PHOTO' : 'PHOTOS'}`;
+        card.addEventListener('touchstart', () => {
+            if (window.matchMedia('(hover: none)').matches) {
+                projectCards.forEach(c => {
+                    if (c !== card) c.classList.remove('touch-active');
+                });
+                card.classList.toggle('touch-active');
             }
-        }
+        }, { passive: true });
     });
 
     // Project Detail Modal

@@ -412,14 +412,23 @@ html.light #service-modal {
 .delay-600 { transition-delay: 0.36s; }
 
 /* Dedicated High-Specificity Rules for Project Cards & Service Cards */
-.gs-reveal.project-card,
+.gs-reveal.project-card {
+    will-change: transform, opacity;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                box-shadow 0.4s ease;
+}
+
 .gs-reveal.service-architectural-card {
     will-change: transform, opacity;
     transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
                 transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                 visibility 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.3s ease,
-                box-shadow 0.3s ease !important;
+                box-shadow 0.35s ease,
+                background-color 0.3s ease;
 }
 
 .gs-reveal.project-card:not(.is-active),
@@ -442,24 +451,18 @@ html.light #service-modal {
 .gs-reveal.service-architectural-card.is-active {
     opacity: 1 !important;
     visibility: visible !important;
-    transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0);
 }
 
-/* Hover effects only when the card is active/visible */
+/* Hover effects when card is active/revealed */
 .gs-reveal.project-card.is-active:hover {
-    transform: translate3d(0, -6px, 0) !important;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.3s ease,
-                box-shadow 0.3s ease !important;
+    transform: translate3d(0, -6px, 0);
 }
 
 .gs-reveal.service-architectural-card.is-active:hover {
-    transform: translate3d(0, -6px, 0) !important;
+    transform: translate3d(0, -6px, 0);
     border-color: var(--accent-hex) !important;
-    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(var(--accent) / 0.12) !important;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.3s ease,
-                box-shadow 0.3s ease !important;
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(var(--accent) / 0.15) !important;
 }
 
 /* Mobile & Touch Responsive Adaptation: Fast, buttery 60fps GPU transforms */
@@ -661,73 +664,176 @@ html.light .scroll-meter-value {
         font-size: 8px !important;
         padding: 0.2rem 0.35rem !important;
     }
-    /* Mobile 2-per-row layout for Projects */
-    #project-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* ==========================================================================
+   ARCHITECTURAL PROJECTS ADAPTIVE NON-SCROLLING ACCORDION
+   - Width automatically adapts to screen size (all cards share row width)
+   - Thin ~1:5 ratio resting state
+   - Non-scrollable horizontally (overflow: hidden)
+   - Hover expands card and shows project information WITHOUT blurring the photo
+   ========================================================================== */
+    .project-row-track {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: stretch !important;
         gap: 0.5rem !important;
-    }
-    .project-card > div {
-        padding: 0.375rem !important;
-    }
-    .project-img-wrapper {
-        height: 105px !important;
-    }
-    .project-img-wrapper span.font-mono {
-        font-size: 8px !important;
-        padding: 0.15rem 0.35rem !important;
-        top: 0.35rem !important;
-        right: 0.35rem !important;
-    }
-    .project-card h3 {
-        font-size: 0.75rem !important; /* 12px */
-        line-height: 1.2 !important;
-        white-space: nowrap !important;
+        width: 100% !important;
         overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        overflow-x: hidden !important;
+        overflow-y: hidden !important;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none !important;
     }
-    .project-card .font-mono.bg-studio-700 {
-        font-size: 8px !important;
-        padding: 0.1rem 0.3rem !important;
+    .project-row-track::-webkit-scrollbar {
+        display: none !important;
     }
-    .project-card .bg-studio-900\/80 {
-        margin-top: 0.25rem !important;
-        margin-bottom: 0.25rem !important;
-        padding: 0.15rem 0.35rem !important;
-        font-size: 8px !important;
-        gap: 0.25rem !important;
-    }
-    .project-card .font-mono.text-studio-400.tracking-widest {
-        font-size: 8px !important;
-        margin-bottom: 0.25rem !important;
-        letter-spacing: 0.05em !important;
-    }
-    .project-card .project-meta {
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2 !important;
-        -webkit-box-orient: vertical !important;
+
+    /* Adaptive Project Card: All 6 cards share 100% width, adapting automatically to screen size */
+    .project-card {
+        position: relative !important;
+        cursor: pointer !important;
         overflow: hidden !important;
-        font-size: 9px !important;
-        line-height: 1.25 !important;
-        padding-left: 0.35rem !important;
+        border: 1px solid rgb(var(--studio-700)) !important;
+        background-color: rgb(var(--studio-900)) !important;
+
+        /* Resting thin state (~1:5 ratio): each card takes equal fraction of the container width */
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
+        width: auto !important;
+        max-width: none !important;
+        height: 520px !important;
+
+        transition: flex 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.3s ease,
+                    box-shadow 0.4s ease !important;
+        will-change: flex, border-color, box-shadow;
     }
-    .project-card .pt-4 {
-        padding-top: 0.35rem !important;
+
+    @media (max-width: 1023px) {
+        .project-card {
+            height: 470px !important;
+        }
     }
-    .project-card .mt-4 {
-        margin-top: 0.35rem !important;
-        padding-top: 0.25rem !important;
+
+    @media (max-width: 767px) {
+        .project-row-track {
+            gap: 0.25rem !important;
+        }
+        .project-card {
+            height: 420px !important;
+        }
     }
-    .project-card .mt-4 span:first-child {
-        font-size: 8px !important;
+
+    @media (max-width: 639px) {
+        .project-card {
+            height: 380px !important;
+        }
+        .project-card h3 {
+            font-size: 1.125rem !important;
+            line-height: 1.25 !important;
+        }
     }
-    .project-card .mt-4 span:last-child {
-        display: none !important; /* Hide [SPEC #01] tag on compact 2-col mobile view */
+
+    /* Hover Expansion: Hovered card expands to ~45% of row width, siblings compress smoothly */
+    .project-card:hover,
+    .project-card:focus-within,
+    .project-card.is-expanded,
+    .project-card.touch-active {
+        flex: 4 1 0% !important;
+        border-color: rgb(var(--accent)) !important;
+        box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.2) !important;
+        z-index: 20;
+    }
+
+    .project-row-track:hover .project-card:not(:hover):not(:focus-within):not(.is-expanded):not(.touch-active) {
+        flex: 0.65 1 0% !important;
+    }
+
+    /* Cover Photo Container & Image: 100% full bleed, crystal-sharp, ABSOLUTELY NO BLUR */
+    .project-card .project-img-wrapper {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    .project-card .project-img-wrapper img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        filter: grayscale(100%) !important;
+        -webkit-filter: grayscale(100%) !important;
+        opacity: 0.88;
+        transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                    -webkit-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 0.4s ease,
+                    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .project-card:hover .project-img-wrapper img,
+    .project-card:focus-within .project-img-wrapper img,
+    .project-card.is-expanded .project-img-wrapper img,
+    .project-card.touch-active .project-img-wrapper img {
+        opacity: 1 !important;
+        transform: scale(1.03) !important;
+        filter: grayscale(0%) !important;
+        -webkit-filter: grayscale(0%) !important;
+    }
+
+    /* Thin ~1:5 Resting Preview: Spec number, vertical title, and year */
+    .project-slat-preview,
+    .project-preview-hud {
+        opacity: 1;
+        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+    }
+    .project-card:hover .project-preview-hud,
+    .project-card:focus-within .project-preview-hud,
+    .project-card.is-expanded .project-preview-hud,
+    .project-card.touch-active .project-preview-hud,
+    .project-card:hover .project-slat-preview,
+    .project-card:focus-within .project-slat-preview,
+    .project-card.is-expanded .project-slat-preview,
+    .project-card.touch-active .project-slat-preview {
+        opacity: 0 !important;
+        transform: translateY(-8px);
+        pointer-events: none !important;
+    }
+
+    /* Vertical Title for thin resting cards */
+    .project-slat-vertical-title {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        letter-spacing: 0.18em;
+    }
+
+    /* Full Specification Overlay: Revealed cleanly on hover WITHOUT blurring the cover photo */
+    .project-info-overlay {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateY(16px) !important;
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        /* Crisp gradient scrim at the bottom - NO BLUR FILTER */
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: linear-gradient(to top, rgba(10, 12, 16, 0.98) 0%, rgba(10, 12, 16, 0.90) 50%, rgba(10, 12, 16, 0.35) 85%, transparent 100%) !important;
+    }
+    .project-card:hover .project-info-overlay,
+    .project-card:focus-within .project-info-overlay,
+    .project-card.is-expanded .project-info-overlay,
+    .project-card.touch-active .project-info-overlay {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transform: translateY(0) !important;
     }
     /* Compact profile portrait photo on mobile */
     .hero-portrait-card {
         max-width: 180px !important;
     }
 
+@media (max-width: 639px) {
     /* Mobile 3-in-a-row for Milestones */
     #milestones-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
