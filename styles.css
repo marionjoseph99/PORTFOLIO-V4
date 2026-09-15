@@ -667,21 +667,17 @@ html.light .scroll-meter-value {
 }
 
 /* ==========================================================================
-   ARCHITECTURAL PROJECTS ADAPTIVE NON-SCROLLING ACCORDION
-   - Width automatically adapts to screen size (all cards share row width)
-   - Thin ~1:5 ratio resting state
-   - Non-scrollable horizontally (overflow: hidden)
-   - Hover expands card and shows project information WITHOUT blurring the photo
+   ARCHITECTURAL PROJECTS SHOWCASE (DESKTOP ACCORDION + MOBILE VERTICAL FEED)
+   - Desktop (>= 768px): Thin ~1:5 resting slats, non-scrollable row, hover expansion
+   - Mobile (< 768px): Vertical full-width architectural plates, grayscale-to-color on scroll/tap
+   - Black & white cover resting, transitions to vivid color on hover/in-view
+   - Absolutely no blur filter applied to cover photos
    ========================================================================== */
     .project-row-track {
         display: flex !important;
-        flex-direction: row !important;
-        align-items: stretch !important;
-        gap: 0.5rem !important;
+        flex-direction: column !important;
+        gap: 1.25rem !important;
         width: 100% !important;
-        overflow: hidden !important;
-        overflow-x: hidden !important;
-        overflow-y: hidden !important;
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
         scrollbar-width: none !important;
@@ -690,65 +686,106 @@ html.light .scroll-meter-value {
         display: none !important;
     }
 
-    /* Adaptive Project Card: All 6 cards share 100% width, adapting automatically to screen size */
+    /* Desktop View (768px and up): Non-scrollable horizontal slat accordion */
+    @media (min-width: 768px) {
+        .project-row-track {
+            flex-direction: row !important;
+            align-items: stretch !important;
+            gap: 0.5rem !important;
+            overflow: hidden !important;
+            overflow-x: hidden !important;
+            overflow-y: hidden !important;
+        }
+
+        .project-card {
+            flex: 1 1 0% !important;
+            min-width: 0 !important;
+            width: auto !important;
+            max-width: none !important;
+            height: 520px !important;
+            transition: flex 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.4s ease !important;
+            will-change: flex, border-color, box-shadow;
+        }
+
+        /* Hover Expansion on Desktop */
+        .project-card:hover,
+        .project-card:focus-within,
+        .project-card.is-expanded,
+        .project-card.touch-active {
+            flex: 4 1 0% !important;
+            border-color: rgb(var(--accent)) !important;
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.2) !important;
+            z-index: 20;
+        }
+
+        .project-row-track:hover .project-card:not(:hover):not(:focus-within):not(.is-expanded):not(.touch-active) {
+            flex: 0.65 1 0% !important;
+        }
+
+        /* Vertical Title for thin resting cards on Desktop */
+        .project-slat-vertical-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            letter-spacing: 0.18em;
+            display: inline-block;
+        }
+
+        /* Resting preview is visible at rest, hides on hover on Desktop */
+        .project-slat-preview,
+        .project-preview-hud {
+            opacity: 1;
+            transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+        .project-card:hover .project-preview-hud,
+        .project-card:focus-within .project-preview-hud,
+        .project-card.is-expanded .project-preview-hud,
+        .project-card.touch-active .project-preview-hud,
+        .project-card:hover .project-slat-preview,
+        .project-card:focus-within .project-slat-preview,
+        .project-card.is-expanded .project-slat-preview,
+        .project-card.touch-active .project-slat-preview {
+            opacity: 0 !important;
+            transform: translateY(-8px);
+            pointer-events: none !important;
+        }
+
+        /* Info overlay is hidden at rest on Desktop, slides up cleanly on hover */
+        .project-info-overlay {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateY(16px) !important;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            background: linear-gradient(to top, rgba(10, 12, 16, 0.98) 0%, rgba(10, 12, 16, 0.90) 50%, rgba(10, 12, 16, 0.35) 85%, transparent 100%) !important;
+        }
+        .project-card:hover .project-info-overlay,
+        .project-card:focus-within .project-info-overlay,
+        .project-card.is-expanded .project-info-overlay,
+        .project-card.touch-active .project-info-overlay {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: translateY(0) !important;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .project-card {
+            height: 470px !important;
+        }
+    }
+
+    /* Common Card Baseline */
     .project-card {
         position: relative !important;
         cursor: pointer !important;
         overflow: hidden !important;
         border: 1px solid rgb(var(--studio-700)) !important;
         background-color: rgb(var(--studio-900)) !important;
-
-        /* Resting thin state (~1:5 ratio): each card takes equal fraction of the container width */
-        flex: 1 1 0% !important;
-        min-width: 0 !important;
-        width: auto !important;
-        max-width: none !important;
-        height: 520px !important;
-
-        transition: flex 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-                    border-color 0.3s ease,
-                    box-shadow 0.4s ease !important;
-        will-change: flex, border-color, box-shadow;
-    }
-
-    @media (max-width: 1023px) {
-        .project-card {
-            height: 470px !important;
-        }
-    }
-
-    @media (max-width: 767px) {
-        .project-row-track {
-            gap: 0.25rem !important;
-        }
-        .project-card {
-            height: 420px !important;
-        }
-    }
-
-    @media (max-width: 639px) {
-        .project-card {
-            height: 380px !important;
-        }
-        .project-card h3 {
-            font-size: 1.125rem !important;
-            line-height: 1.25 !important;
-        }
-    }
-
-    /* Hover Expansion: Hovered card expands to ~45% of row width, siblings compress smoothly */
-    .project-card:hover,
-    .project-card:focus-within,
-    .project-card.is-expanded,
-    .project-card.touch-active {
-        flex: 4 1 0% !important;
-        border-color: rgb(var(--accent)) !important;
-        box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.2) !important;
-        z-index: 20;
-    }
-
-    .project-row-track:hover .project-card:not(:hover):not(:focus-within):not(.is-expanded):not(.touch-active) {
-        flex: 0.65 1 0% !important;
     }
 
     /* Cover Photo Container & Image: 100% full bleed, crystal-sharp, ABSOLUTELY NO BLUR */
@@ -774,59 +811,116 @@ html.light .scroll-meter-value {
     .project-card:hover .project-img-wrapper img,
     .project-card:focus-within .project-img-wrapper img,
     .project-card.is-expanded .project-img-wrapper img,
-    .project-card.touch-active .project-img-wrapper img {
+    .project-card.touch-active .project-img-wrapper img,
+    .project-card.in-view .project-img-wrapper img {
         opacity: 1 !important;
         transform: scale(1.03) !important;
         filter: grayscale(0%) !important;
         -webkit-filter: grayscale(0%) !important;
     }
 
-    /* Thin ~1:5 Resting Preview: Spec number, vertical title, and year */
-    .project-slat-preview,
-    .project-preview-hud {
-        opacity: 1;
-        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        pointer-events: none;
-    }
-    .project-card:hover .project-preview-hud,
-    .project-card:focus-within .project-preview-hud,
-    .project-card.is-expanded .project-preview-hud,
-    .project-card.touch-active .project-preview-hud,
-    .project-card:hover .project-slat-preview,
-    .project-card:focus-within .project-slat-preview,
-    .project-card.is-expanded .project-slat-preview,
-    .project-card.touch-active .project-slat-preview {
-        opacity: 0 !important;
-        transform: translateY(-8px);
-        pointer-events: none !important;
+    /* Mobile View (< 768px): 2 cards per row architectural grid with clean title bar */
+    @media (max-width: 767px) {
+        .project-row-track {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 0.65rem !important;
+            padding-top: 0.25rem !important;
+            padding-bottom: 0.5rem !important;
+            overflow: visible !important;
+        }
+
+        .project-card {
+            width: 100% !important;
+            height: 250px !important;
+            flex: none !important;
+            border-radius: 4px !important;
+            box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.6) !important;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease !important;
+        }
+
+        .project-card:hover,
+        .project-card:active,
+        .project-card.touch-active {
+            border-color: rgb(var(--accent)) !important;
+            box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.75), 0 0 15px rgba(245, 158, 11, 0.2) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Hide rotated vertical title on mobile */
+        .project-slat-vertical-title {
+            display: none !important;
+        }
+
+        /* Top spec number and year badge on mobile */
+        .project-slat-preview,
+        .project-preview-hud {
+            opacity: 1 !important;
+            transform: none !important;
+            pointer-events: none !important;
+            padding: 0.5rem !important;
+            z-index: 10 !important;
+        }
+
+        /* Hide the bottom row inside resting preview since the dedicated bottom title bar handles it */
+        .project-slat-preview > div:last-child {
+            display: none !important;
+        }
+
+        /* Minimal Project Title Bar on Mobile: Shows only the project title at the bottom */
+        .project-info-overlay {
+            opacity: 1 !important;
+            pointer-events: none !important;
+            transform: translateY(0) !important;
+            max-height: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            background: linear-gradient(to top, rgba(10, 12, 16, 0.96) 0%, rgba(10, 12, 16, 0.85) 60%, transparent 100%) !important;
+            padding: 0.65rem 0.6rem !important;
+            border-top: 1px solid rgba(245, 158, 11, 0.35) !important;
+        }
+
+        /* Hide all specification and metadata children on mobile cards */
+        .project-info-overlay > div > * {
+            display: none !important;
+        }
+
+        /* Keep only the first container that wraps the title */
+        .project-info-overlay > div > div:first-child {
+            display: block !important;
+        }
+
+        /* Hide the eyebrow and year tag inside the first container */
+        .project-info-overlay > div > div:first-child > span,
+        .project-info-overlay > div > div:first-child > div > span {
+            display: none !important;
+        }
+
+        .project-info-overlay h3 {
+            display: block !important;
+            font-size: 0.84rem !important;
+            line-height: 1.25 !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            color: rgb(var(--studio-100)) !important;
+            margin: 0 !important;
+        }
+
+        .project-card:hover h3,
+        .project-card:active h3 {
+            color: rgb(var(--accent)) !important;
+        }
     }
 
-    /* Vertical Title for thin resting cards */
-    .project-slat-vertical-title {
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-        letter-spacing: 0.18em;
-    }
-
-    /* Full Specification Overlay: Revealed cleanly on hover WITHOUT blurring the cover photo */
-    .project-info-overlay {
-        opacity: 0 !important;
-        pointer-events: none !important;
-        transform: translateY(16px) !important;
-        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        /* Crisp gradient scrim at the bottom - NO BLUR FILTER */
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: linear-gradient(to top, rgba(10, 12, 16, 0.98) 0%, rgba(10, 12, 16, 0.90) 50%, rgba(10, 12, 16, 0.35) 85%, transparent 100%) !important;
-    }
-    .project-card:hover .project-info-overlay,
-    .project-card:focus-within .project-info-overlay,
-    .project-card.is-expanded .project-info-overlay,
-    .project-card.touch-active .project-info-overlay {
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        transform: translateY(0) !important;
+    @media (max-width: 400px) {
+        .project-card {
+            height: 220px !important;
+        }
+        .project-info-overlay h3 {
+            font-size: 0.75rem !important;
+        }
     }
     /* Compact profile portrait photo on mobile */
     .hero-portrait-card {

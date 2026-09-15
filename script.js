@@ -482,17 +482,52 @@ function initProjectSection() {
     const filterBtns = document.querySelectorAll('.project-filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
     const emptyState = document.getElementById('project-empty-state');
+    const mobileFilterBtn = document.getElementById('project-mobile-filter-btn');
+    const mobileFilterDropdown = document.getElementById('project-mobile-filter-dropdown');
+    const mobileFilterLabel = document.getElementById('project-mobile-filter-label');
+    const mobileFilterCaret = document.getElementById('project-mobile-filter-caret');
+    const mobileCount = document.getElementById('project-mobile-count');
 
     // Filter Logic
     if (filterBtns.length && projectCards.length) {
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
                 const filter = btn.getAttribute('data-typology') || btn.getAttribute('data-filter') || 'all';
-                let visibleCount = 0;
 
+                // Synchronize active state across both desktop and mobile buttons
+                filterBtns.forEach(b => {
+                    const bFilter = b.getAttribute('data-typology') || b.getAttribute('data-filter') || 'all';
+                    if (bFilter === filter) {
+                        b.classList.add('active');
+                        // In mobile dropdown, set active visual styling
+                        if (b.closest('#project-mobile-filter-dropdown')) {
+                            b.classList.add('bg-studio-900', 'border-studio-700/60', 'text-studio-100');
+                            b.classList.remove('bg-transparent', 'border-transparent', 'text-studio-400');
+                        }
+                    } else {
+                        b.classList.remove('active');
+                        if (b.closest('#project-mobile-filter-dropdown')) {
+                            b.classList.remove('bg-studio-900', 'border-studio-700/60', 'text-studio-100');
+                            b.classList.add('bg-transparent', 'border-transparent', 'text-studio-400');
+                        }
+                    }
+                });
+
+                // Update mobile label text
+                if (mobileFilterLabel) {
+                    const labelText = btn.querySelector('span:first-child')?.textContent?.trim() || `[${filter.toUpperCase()}]`;
+                    mobileFilterLabel.textContent = labelText;
+                }
+
+                // Close mobile dropdown after selection
+                if (mobileFilterDropdown) {
+                    mobileFilterDropdown.classList.add('hidden');
+                    if (mobileFilterCaret) {
+                        mobileFilterCaret.classList.remove('rotate-180');
+                    }
+                }
+
+                let visibleCount = 0;
                 projectCards.forEach(card => {
                     const category = card.getAttribute('data-typology') || card.getAttribute('data-category') || '';
                     const match = filter === 'all' || category.toLowerCase() === filter.toLowerCase() || category.toLowerCase().includes(filter.toLowerCase());
@@ -505,10 +540,37 @@ function initProjectSection() {
                     }
                 });
 
+                if (mobileCount) {
+                    mobileCount.textContent = visibleCount;
+                }
+
                 if (emptyState) {
                     emptyState.classList.toggle('hidden', visibleCount > 0);
                 }
             });
+        });
+    }
+
+    // Mobile Filter Icon Toggle
+    if (mobileFilterBtn && mobileFilterDropdown) {
+        mobileFilterBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = mobileFilterDropdown.classList.contains('hidden');
+            if (isHidden) {
+                mobileFilterDropdown.classList.remove('hidden');
+                if (mobileFilterCaret) mobileFilterCaret.classList.add('rotate-180');
+            } else {
+                mobileFilterDropdown.classList.add('hidden');
+                if (mobileFilterCaret) mobileFilterCaret.classList.remove('rotate-180');
+            }
+        });
+
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!mobileFilterDropdown.contains(e.target) && !mobileFilterBtn.contains(e.target)) {
+                mobileFilterDropdown.classList.add('hidden');
+                if (mobileFilterCaret) mobileFilterCaret.classList.remove('rotate-180');
+            }
         });
     }
 
@@ -532,7 +594,25 @@ function initProjectSection() {
         });
     }
 
-    // Touch support: Tap on touch device highlights card info overlay
+    // Mobile and Touch support: Scroll & tap activates full-color vibrancy
+    if ('IntersectionObserver' in window) {
+        const mobileCardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (window.innerWidth < 768) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.35
+        });
+
+        projectCards.forEach(card => mobileCardObserver.observe(card));
+    }
+
     projectCards.forEach(card => {
         card.addEventListener('touchstart', () => {
             if (window.matchMedia('(hover: none)').matches) {

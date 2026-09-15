@@ -429,13 +429,10 @@
                             PROJECTS
                         </h2>
                     </div>
-                    <p class="font-mono text-studio-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed border-l border-studio-700 pl-4 sm:pl-6">
-                        Selected architecture, master planning, and spatial design works.
-                    </p>
                 </div>
 
-                <!-- Typology Filters -->
-                <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-8 sm:mb-10 gs-reveal delay-100" id="project-filter-bar">
+                <!-- Desktop Typology Filters -->
+                <div class="hidden md:flex flex-wrap items-center gap-2 sm:gap-3 mb-8 sm:mb-10 gs-reveal delay-100" id="project-filter-bar">
                     <button class="project-filter-btn active font-mono text-[10px] sm:text-xs px-3 sm:px-4 py-2 border border-studio-700 bg-studio-800 text-studio-100 hover:border-accent transition-all uppercase tracking-wider flex items-center gap-2 hover-trigger" data-typology="all">
                         <span>[ALL]</span>
                         <span class="proj-filter-count text-[9px] px-1.5 py-0.5 bg-studio-700 text-studio-200">6</span>
@@ -458,13 +455,56 @@
                     </button>
                 </div>
 
+                <!-- Mobile Typology Filter (Icon Button + Architectural Dropdown) -->
+                <div class="relative md:hidden mb-5 gs-reveal delay-100 z-30" id="project-mobile-filter-container">
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="relative">
+                            <button id="project-mobile-filter-btn" type="button" aria-label="Filter projects by typology" class="flex items-center gap-2.5 px-3 py-2 bg-studio-900 border border-studio-700 hover:border-accent text-studio-100 transition-all font-mono text-xs uppercase tracking-wider shadow-sm hover-trigger">
+                                <i class="ph-bold ph-faders text-accent text-base"></i>
+                                <span class="text-[10px] text-studio-400 uppercase tracking-widest">FILTER:</span>
+                                <span id="project-mobile-filter-label" class="text-accent font-bold">[ALL]</span>
+                                <i class="ph-bold ph-caret-down text-studio-400 text-xs transition-transform duration-200" id="project-mobile-filter-caret"></i>
+                            </button>
+
+                            <!-- Mobile Dropdown Menu -->
+                            <div id="project-mobile-filter-dropdown" class="hidden absolute left-0 top-full mt-2 w-64 bg-studio-950 border border-studio-700 shadow-2xl z-50 p-1.5 space-y-1">
+                                <button class="project-filter-btn active w-full flex items-center justify-between px-3 py-2 text-left font-mono text-[11px] border border-studio-700/60 bg-studio-900 text-studio-100 uppercase transition-all" data-typology="all">
+                                    <span>[ALL]</span>
+                                    <span class="proj-filter-count text-[9px] px-1.5 py-0.5 bg-studio-800 text-studio-300">6</span>
+                                </button>
+                                <button class="project-filter-btn w-full flex items-center justify-between px-3 py-2 text-left font-mono text-[11px] border border-transparent hover:border-studio-700 bg-transparent text-studio-400 hover:text-studio-100 uppercase transition-all" data-typology="architecture">
+                                    <span>CIVIC & AIRPORT</span>
+                                    <span class="proj-filter-count text-[9px] px-1.5 py-0.5 bg-studio-800 text-studio-400">1</span>
+                                </button>
+                                <button class="project-filter-btn w-full flex items-center justify-between px-3 py-2 text-left font-mono text-[11px] border border-transparent hover:border-studio-700 bg-transparent text-studio-400 hover:text-studio-100 uppercase transition-all" data-typology="healthcare">
+                                    <span>HEALTHCARE</span>
+                                    <span class="proj-filter-count text-[9px] px-1.5 py-0.5 bg-studio-800 text-studio-400">1</span>
+                                </button>
+                                <button class="project-filter-btn w-full flex items-center justify-between px-3 py-2 text-left font-mono text-[11px] border border-transparent hover:border-studio-700 bg-transparent text-studio-400 hover:text-studio-100 uppercase transition-all" data-typology="planning">
+                                    <span>URBAN & PARKS</span>
+                                    <span class="proj-filter-count text-[9px] px-1.5 py-0.5 bg-studio-800 text-studio-400">3</span>
+                                </button>
+                                <button class="project-filter-btn w-full flex items-center justify-between px-3 py-2 text-left font-mono text-[11px] border border-transparent hover:border-studio-700 bg-transparent text-studio-400 hover:text-studio-100 uppercase transition-all" data-typology="residential">
+                                    <span>RESIDENTIAL</span>
+                                    <span class="proj-filter-count text-[9px] px-1.5 py-0.5 bg-studio-800 text-studio-400">1</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <span class="font-mono text-[10px] text-studio-400 tracking-wider">
+                            <span id="project-mobile-count" class="text-accent font-bold">6</span> PROJECTS
+                        </span>
+                    </div>
+                </div>
+
                 <!-- Adaptive Non-Scrolling Showcase Wrapper -->
                 <div class="relative w-full">
                     <!-- Row Interaction Status Header -->
                     <div class="flex items-center justify-between gap-4 mb-3.5 gs-reveal delay-100">
                         <div class="flex items-center gap-2.5 font-mono text-[11px] sm:text-xs text-studio-400">
                             <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-                            <span class="uppercase tracking-widest text-studio-300">ARCHITECTURAL PORTFOLIO // HOVER COVERS TO EXPAND SPECIFICATIONS</span>
+                            <span class="hidden md:inline uppercase tracking-widest text-studio-300">ARCHITECTURAL PORTFOLIO // HOVER COVERS TO EXPAND SPECIFICATIONS</span>
+                            <span class="inline md:hidden uppercase tracking-widest text-studio-300">SELECTED WORKS // TAP ANY PROJECT FOR OVERVIEW</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="font-mono text-[10px] sm:text-xs text-accent bg-studio-800 border border-studio-700 px-2.5 py-1 whitespace-nowrap">
@@ -473,8 +513,8 @@
                         </div>
                     </div>
 
-                    <!-- The 1-Row Projects Track Container (Non-scrollable, auto-adapting widths) -->
-                    <div class="project-row-track flex flex-row flex-nowrap gap-1.5 sm:gap-2 w-full overflow-hidden pb-2 pt-1" id="project-grid">
+                    <!-- The Projects Track Container (Desktop: 1-Row Slat Accordion, Mobile: 2-Column Grid) -->
+                    <div class="project-row-track grid grid-cols-2 md:flex md:flex-row md:flex-nowrap gap-2.5 md:gap-2 w-full md:overflow-hidden pb-2 pt-1" id="project-grid">
                         
                         <!-- Project 1: Layag Airport -->
                         <div class="project-card hover-trigger relative group cursor-pointer gs-reveal delay-50" data-project="airport" data-typology="architecture">
